@@ -104,11 +104,11 @@ void Element::computeF(DOFS d, UniqueList<Point> points, ProblemConditions &cond
     this->f = Eigen::VectorXd::Zero(this->dofs.size());
     NaturalConstraints natural = conditions.constraints.getNaturalConstraints();
 
-    double bodyIntegral = BodyForceVector(p).computeVector(conditions.f, points.getList());
+    Pair<double> bodyForce = conditions.f->computeVector(p, points.getList());
 
     for (int i = 0; i < this->dofs.size(); ++i) {
-        this->f(i) = conditions.f->isApplicable(bodyIntegral, d.get(this->dofs[i]).getAxis()) +
-                natural.boundaryVector(points.getList(), p, i / 2, this->dofs[i]);
+        double bodyForceValue = i%2==0? bodyForce.first: bodyForce.second;
+        this->f(i) =  bodyForceValue + natural.boundaryVector(points.getList(), p, i / 2, this->dofs[i]);
     }
 }
 

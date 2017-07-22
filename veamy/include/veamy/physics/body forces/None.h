@@ -1,9 +1,15 @@
 #ifndef THESIS_NONE_H
 #define THESIS_NONE_H
 
-class None : public BodyForce{
+#include <veamy/physics/ConstantBodyForce.h>
+
+class None : public ConstantBodyForce{
 private:
-    double apply(double x, double y){
+    double applyX(double x, double y){
+        return 0;
+    }
+
+    double applyY(double x, double y){
         return 0;
     }
 };

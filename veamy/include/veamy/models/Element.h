@@ -6,7 +6,7 @@
 #include <mesher/models/polygon/Polygon.h>
 #include <veamy/lib/Eigen/Dense>
 #include <veamy/utilities/SegmentPair.h>
-#include <veamy/physics/BodyForce.h>
+#include <veamy/physics/VariableBodyForce.h>
 #include <iostream>
 #include <veamy/models/constraints/NaturalConstraints.h>
 #include <veamy/models/constraints/ConstraintsContainer.h>

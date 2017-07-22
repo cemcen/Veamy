@@ -6,11 +6,9 @@
 #include <veamy/physics/BodyForce.h>
 
 class BodyForceVector {
-private:
-    Polygon polygon;
 public:
-    BodyForceVector(Polygon p);
-    double computeVector(BodyForce *f, std::vector<Point> points);
+    Pair<double> computeConstantForceVector(BodyForce *f, Polygon p, std::vector<Point> points);
+    Pair<double> computeVariableForceVector(BodyForce *f, Polygon p, std::vector<Point> points);
 };
 
 

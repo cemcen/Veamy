@@ -94,7 +94,7 @@ ProblemConditions Veamer::getConditions() const {
 
 void Veamer::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
     std::string path = utilities::getPath();
-    path = path  + "ResultadosNumericos" + "\\" + fileName;
+    path = path  + "\\" + fileName;
 
     std::ofstream file;
     file.open(path, std::ios::out);
@@ -104,7 +104,8 @@ void Veamer::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
         double def_x = u[k];
         double def_y = u[k+1];
 
-        file << utilities::toString(point_index) << " " << utilities::toString(def_x) << " " << utilities::toString(def_y) << std::endl;
+        file << utilities::toString(point_index) << " " << utilities::toString(def_x) << " "
+             << utilities::toString(def_y) << std::endl;
     }
 
     file.close();

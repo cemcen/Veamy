@@ -84,22 +84,18 @@ TEST(VeamerTest, OnlyBodyForceTest){
     Region region(points);
     region.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 3, 3);
 
-    class Sum : public BodyForce{
+    class Sum : public VariableBodyForce{
     private:
-        double apply(double x, double y) override {
+        double applyX(double x, double y) override {
             return 1;
         }
 
-        double isApplicable(double result, DOF::Axis axis) override {
-            if(axis==DOF::Axis::y){
-                return result;
-            }
-
+        double applyY(double x, double y) override {
             return 0;
         }
     };
 
-    BodyForce* f = new Sum();
+    VariableBodyForce* f = new Sum();
 
     std::vector<Point> seeds = region.getSeedPoints();
     TriangleMeshGenerator g(seeds, region);

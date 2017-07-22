@@ -1,15 +1,12 @@
-#ifndef THESIS_BODYFORCE_H
-#define THESIS_BODYFORCE_H
+#ifndef VEAMY_BODYFORCE_H
+#define VEAMY_BODYFORCE_H
 
-#include <veamy/models/dof/DOF.h>
-
-class BodyForce {
+class BodyForce{
 public:
-    virtual double apply(double x, double y) = 0;
-    virtual double isApplicable(double result, DOF::Axis axis){
-        return result;
-    };
-};
+    virtual double applyX(double x, double y) = 0;
+    virtual double applyY(double x, double y) = 0;
 
+    virtual Pair<double> computeVector(Polygon p, std::vector<Point> points) = 0;
+};
 
 #endif
