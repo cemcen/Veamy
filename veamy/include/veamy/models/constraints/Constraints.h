@@ -21,6 +21,7 @@ protected:
     UniqueList<int> constrained_dofs;
 public:
     void addConstraint(Constraint c, std::vector<Point> p);
+    void addConstraint(Constraint c, UniqueList<Point> p);
     isConstrainedInfo isConstrained(std::vector<Point> points, IndexSegment p);
     bool isConstrained(int dof);
 

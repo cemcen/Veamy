@@ -14,6 +14,10 @@ void Constraints::addConstraint(Constraint c, std::vector<Point> p) {
     }
 }
 
+void Constraints::addConstraint(Constraint c, UniqueList<Point> p) {
+    addConstraint(c, p.getList());
+}
+
 isConstrainedInfo Constraints::isConstrained(std::vector<Point> points, IndexSegment s) {
     Angle angle(s.cartesianAngle(points));
     auto iter = constrained_segments.find(angle);

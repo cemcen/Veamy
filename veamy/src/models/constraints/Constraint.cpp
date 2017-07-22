@@ -23,6 +23,13 @@ Constraint::Constraint(PointSegment s, std::vector<Point> points, Constraint::Di
     this->constraints.push_back(int_segment);
 }
 
+Constraint::Constraint(PointSegment s, UniqueList<Point> points, Constraint::Direction d, ConstraintValue *value) {
+    this->v = value;
+    this->direction = d;
+    IndexSegment int_segment = fromPointToInt(s, points.getList());
+    this->constraints.push_back(int_segment);
+}
+
 Constraint::Constraint(std::vector<PointSegment> s, std::vector<Point> points, Constraint::Direction d,
                        ConstraintValue *value) {
     this->v = value;
@@ -30,6 +37,17 @@ Constraint::Constraint(std::vector<PointSegment> s, std::vector<Point> points, C
 
     for(int i = 0; i<s.size(); i++){
         IndexSegment int_segment = fromPointToInt(s[i], points);
+        this->constraints.push_back(int_segment);
+    }
+}
+
+Constraint::Constraint(std::vector<PointSegment> s, UniqueList<Point> points, Constraint::Direction d,
+                       ConstraintValue *value) {
+    this->v = value;
+    this->direction = d;
+
+    for(int i = 0; i<s.size(); i++){
+        IndexSegment int_segment = fromPointToInt(s[i], points.getList());
         this->constraints.push_back(int_segment);
     }
 }

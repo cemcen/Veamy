@@ -20,11 +20,11 @@ TEST(VeamerTest, OnlyEssentialTest){
     EssentialConstraints c;
     PointSegment constrained(Point(0,0),Point(0,1));
     PointSegment constrained2 (Point(2,0),Point(2,1));
-    Constraint const1 (constrained, m.getPoints().getList(), Constraint::Direction::Total, new Constant(0));
+    Constraint const1 (constrained, m.getPoints(), Constraint::Direction::Total, new Constant(0));
 
-    c.addConstraint(const1, m.getPoints().getList());
-    Constraint const2 (constrained2, m.getPoints().getList(), Constraint::Direction::Horizontal, new Constant(1));
-    c.addConstraint(const2, m.getPoints().getList());
+    c.addConstraint(const1, m.getPoints());
+    Constraint const2 (constrained2, m.getPoints(), Constraint::Direction::Horizontal, new Constant(1));
+    c.addConstraint(const2, m.getPoints());
 
    /* NaturalConstraints n;
     PointSegment const3(Point(0,0),Point(2,0));
@@ -56,14 +56,14 @@ TEST(VeamerTest, OnlyNaturalTest){
 
     EssentialConstraints c;
     PointSegment constrained(Point(0,0),Point(0,1));
-    Constraint const1 (constrained, m.getPoints().getList(), Constraint::Direction::Total, new Constant(0));
+    Constraint const1 (constrained, m.getPoints(), Constraint::Direction::Total, new Constant(0));
 
     c.addConstraint(const1, m.getPoints().getList());
 
     NaturalConstraints n;
     PointSegment const3(Point(2,0),Point(2,1));
-    Constraint constraint3(const3,m.getPoints().getList(), Constraint::Direction::Horizontal, new Constant(1000));
-    n.addConstraint(constraint3, m.getPoints().getList());
+    Constraint constraint3(const3,m.getPoints(), Constraint::Direction::Horizontal, new Constant(1000));
+    n.addConstraint(constraint3, m.getPoints());
 
     ConstraintsContainer container;
     container.addConstraints(c, m);
@@ -86,16 +86,16 @@ TEST(VeamerTest, OnlyBodyForceTest){
 
     class Sum : public BodyForce{
     private:
-        double apply(double x, double y){
+        double apply(double x, double y) override {
             return 1;
         }
 
-        double isApplicable(double result, DOF::Axis axis){
+        double isApplicable(double result, DOF::Axis axis) override {
             if(axis==DOF::Axis::y){
                 return result;
-            }else{
-                return 0;
             }
+
+            return 0;
         }
     };
 
@@ -108,9 +108,9 @@ TEST(VeamerTest, OnlyBodyForceTest){
 
     EssentialConstraints c;
     PointSegment constrained(Point(0,0),Point(0,1));
-    Constraint const1 (constrained, m.getPoints().getList(), Constraint::Direction::Total, new Constant(0));
+    Constraint const1 (constrained, m.getPoints(), Constraint::Direction::Total, new Constant(0));
 
-    c.addConstraint(const1, m.getPoints().getList());
+    c.addConstraint(const1, m.getPoints());
 
     ConstraintsContainer container;
     container.addConstraints(c, m);

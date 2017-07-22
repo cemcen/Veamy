@@ -4,7 +4,7 @@ file(GLOB_RECURSE HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/lib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-add_library(libveamy SHARED ${SRCS} ${HEADERS})
+add_library(libveamy STATIC ${SRCS} ${HEADERS})
 
 # Define headers for this library. PUBLIC headers are used for
 # compiling the library, and will be added to consumers' build
