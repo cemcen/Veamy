@@ -23,7 +23,7 @@ the documentation and use:
 <pre><code> make trilibrary </code></pre> 
 <li> Move the file to the <b>triangle</b> folder inside the <b>lib/mesher</b> folder.</li>
 <li> Once in the directory of the library, create the <b>build</b> folder. </li>
-<li> Inside the <b>build</b> folder, using the <b>Visual Studio Command Prompt</b>:
+<li> Inside the <b>build</b> folder:
 <pre><code>cmake ..
 make</code></pre></li></ol>
 
