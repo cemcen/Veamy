@@ -1,0 +1,41 @@
+#ifndef EIGEN_LU_MODULE_H
+#define EIGEN_LU_MODULE_H
+
+#include "Core"
+
+#include "veamy/lib/Eigen/src/Core/util/DisableStupidWarnings.h"
+
+/** \defgroup LU_Module LU module
+  * This module includes %LU decomposition and related notions such as matrix inversion and determinant.
+  * This module defines the following MatrixBase methods:
+  *  - MatrixBase::inverse()
+  *  - MatrixBase::determinant()
+  *
+  * \code
+  * #include <Eigen/LU>
+  * \endcode
+  */
+
+#include "veamy/lib/Eigen/src/misc/Solve.h"
+#include "veamy/lib/Eigen/src/misc/Kernel.h"
+#include "veamy/lib/Eigen/src/misc/Image.h"
+#include "veamy/lib/Eigen/src/LU/FullPivLU.h"
+#include "veamy/lib/Eigen/src/LU/PartialPivLU.h"
+#ifdef EIGEN_USE_LAPACKE
+#include "src/LU/PartialPivLU_MKL.h"
+#endif
+#include "veamy/lib/Eigen/src/LU/Determinant.h"
+#include "veamy/lib/Eigen/src/LU/Inverse.h"
+
+#if defined EIGEN_VECTORIZE_SSE
+  #include "src/LU/arch/Inverse_SSE.h"
+#endif
+
+#ifdef EIGEN2_SUPPORT
+  #include "src/Eigen2Support/LU.h"
+#endif
+
+#include "veamy/lib/Eigen/src/Core/util/ReenableStupidWarnings.h"
+
+#endif // EIGEN_LU_MODULE_H
+/* vim: set filetype=cpp et sw=2 ts=2 ai: */

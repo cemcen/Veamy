@@ -1,0 +1,48 @@
+#ifndef EIGEN_EIGENVALUES_MODULE_H
+#define EIGEN_EIGENVALUES_MODULE_H
+
+#include "Core"
+
+#include "veamy/lib/Eigen/src/Core/util/DisableStupidWarnings.h"
+
+#include "Cholesky"
+#include "Jacobi"
+#include "Householder"
+#include "LU"
+#include "Geometry"
+
+/** \defgroup Eigenvalues_Module Eigenvalues module
+  *
+  *
+  *
+  * This module mainly provides various eigenvalue solvers.
+  * This module also provides some MatrixBase methods, including:
+  *  - MatrixBase::eigenvalues(),
+  *  - MatrixBase::operatorNorm()
+  *
+  * \code
+  * #include <Eigen/Eigenvalues>
+  * \endcode
+  */
+
+#include "veamy/lib/Eigen/src/Eigenvalues/Tridiagonalization.h"
+#include "veamy/lib/Eigen/src/Eigenvalues/RealSchur.h"
+#include "veamy/lib/Eigen/src/Eigenvalues/EigenSolver.h"
+#include "veamy/lib/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h"
+#include "veamy/lib/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h"
+#include "veamy/lib/Eigen/src/Eigenvalues/HessenbergDecomposition.h"
+#include "veamy/lib/Eigen/src/Eigenvalues/ComplexSchur.h"
+#include "veamy/lib/Eigen/src/Eigenvalues/ComplexEigenSolver.h"
+#include "veamy/lib/Eigen/src/Eigenvalues/RealQZ.h"
+#include "veamy/lib/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h"
+#include "veamy/lib/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h"
+#ifdef EIGEN_USE_LAPACKE
+#include "src/Eigenvalues/RealSchur_MKL.h"
+#include "src/Eigenvalues/ComplexSchur_MKL.h"
+#include "src/Eigenvalues/SelfAdjointEigenSolver_MKL.h"
+#endif
+
+#include "veamy/lib/Eigen/src/Core/util/ReenableStupidWarnings.h"
+
+#endif // EIGEN_EIGENVALUES_MODULE_H
+/* vim: set filetype=cpp et sw=2 ts=2 ai: */
