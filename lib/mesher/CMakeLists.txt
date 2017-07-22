@@ -1,7 +1,7 @@
 file(GLOB_RECURSE SRCS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 file(GLOB_RECURSE HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 
-add_subdirectory(src/voronoi/lib)
+add_subdirectory(lib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_library(libmesher STATIC ${SRCS} ${HEADERS})
