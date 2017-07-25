@@ -28,6 +28,9 @@ namespace utilities {
         #endif
     }
 
+
+
+
     Pair<double> normalize(Pair<double> vector){
         double norm = std::sqrt(std::pow(vector.first,2) + std::pow(vector.second,2));
 
@@ -52,6 +55,18 @@ namespace utilities {
         key = key * c2;
         key = key ^ (key >> 15);
         return key;
+    }
+
+    std::vector<std::string> split(std::string s, char d) {
+        std::vector<std::string> result;
+        std::stringstream stream(s);
+        std::string segment;
+
+        while(std::getline(stream, segment, d)){
+            result.push_back(segment);
+        }
+
+        return result;
     }
 }
 

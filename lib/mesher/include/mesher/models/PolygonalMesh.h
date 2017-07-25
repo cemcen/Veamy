@@ -5,6 +5,7 @@
 #include <mesher/models/basic/Point.h>
 #include <mesher/models/basic/Segment.h>
 #include <algorithm>
+#include <fstream>
 #include <mesher/models/neighbourhood/EdgeData.h>
 #include <mesher/voronoi/structures/mapdata.h>
 #include <unordered_map>
@@ -13,6 +14,7 @@
 #include <mesher/models/structures/NeighbourInfo.h>
 #include <mesher/models/Mesh.h>
 #include "Region.h"
+#include <string>
 
 class PolygonalMesh : public Mesh{
 protected:
@@ -23,6 +25,7 @@ public:
     PolygonalMesh(const PolygonalMesh& m);
     PolygonalMesh();
     ~PolygonalMesh();
+    void createFromFile(std::string fileName);
 
     std::vector<Polygon>& getPolygons();
     std::vector<Polygon> getPolygons() const;
@@ -56,6 +59,7 @@ public:
     void getNeighboursByPoint(int poly, UniqueList<int> &neighbours);
     int numberOfPolygons();
     std::vector<NeighbourInfo> getAllNeighboursInPath(PointSegment direction);
+
 };
 
 

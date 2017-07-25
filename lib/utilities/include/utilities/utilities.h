@@ -35,6 +35,7 @@ namespace utilities{
     extern Pair<double> normalize(Pair<double> vector);
     extern double radian(double angle);
     extern double degrees(double angle);
+    extern std::vector<std::string> split(std::string s, char d);
 }
 
 #endif 

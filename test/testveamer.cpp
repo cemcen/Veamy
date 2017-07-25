@@ -119,3 +119,10 @@ TEST(VeamerTest, OnlyBodyForceTest){
     std::cout << x << std::endl;
     m.printInFile("second.txt");
 }
+
+TEST(VeamerTest, MeshFromFileTest){
+    PolygonalMesh mesh;
+    mesh.createFromFile("SquareMesh.txt");
+
+    Veamer v;
+}

@@ -1,5 +1,5 @@
-<h1> Veamy - a 2D Virtual Element Method for linear elasticity library </h1>
-This repository contains the code for an open source library for the resolution of 2D linear elasticity problems
+<h1> Veamy - A Virtual Element Method library for 2D linear elastostatics </h1>
+This repository contains the code for an open source library for the solution of 2D linear elasticity problems
 using Virtual Element Method.  
 
 Features:
@@ -8,7 +8,7 @@ Features:
 diagram. The meshes can be created in arbitrary domains, with or without holes, 
 with procedurally generated points.</li>
 <li> Meshes can also be read from OFF-style text files (an example can be found in the test folder).</li>
-<li> It allows easy input of boundary conditions of linear elasticity by constraining domain segments.</li>
+<li> It allows easy input of boundary conditions by constraining domain segments.</li>
 <li> The results of the computation can be either written into a file or used directly. </li>
 </ul>
 
