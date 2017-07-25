@@ -18,6 +18,8 @@ double NaturalConstraints::boundaryVector(std::vector<Point> points, Polygon p, 
         if(prevConst.isConstrained){
             Constraint c = segment_map[prevConst.container];
 
+            
+
             integral += (0.5*c.getValue(points[prev.getFirst()]) + 0.5*c.getValue(points[prev.getSecond()]))*prev.length(points);
         }
 

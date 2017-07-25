@@ -13,6 +13,13 @@ protected:
     std::vector<IndexSegment> segments;
 public:
     Hole(){};
+
+    Hole(std::vector<Point> points, Point center, std::vector<IndexSegment> seg){
+        this->center = center;
+        this->HolePoints.assign(points.begin(), points.end());
+        this->segments.assign(seg.begin(), seg.end());
+    }
+
     Hole(const Hole& other){
         this->center = other.center;
         this->HolePoints.assign(other.HolePoints.begin(), other.HolePoints.end());

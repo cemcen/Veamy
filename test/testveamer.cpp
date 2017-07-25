@@ -122,7 +122,7 @@ TEST(VeamerTest, OnlyBodyForceTest){
 
 TEST(VeamerTest, MeshFromFileTest){
     PolygonalMesh mesh;
-    mesh.createFromFile("SquareMesh.txt");
+    mesh.createFromFile("SquareWithHoleMesh.txt");
 
     Veamer v;
 }

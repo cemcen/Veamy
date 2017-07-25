@@ -108,7 +108,10 @@ void Element::computeF(DOFS d, UniqueList<Point> points, ProblemConditions &cond
 
     for (int i = 0; i < this->dofs.size(); ++i) {
         double bodyForceValue = i%2==0? bodyForce.first: bodyForce.second;
-        this->f(i) =  bodyForceValue + natural.boundaryVector(points.getList(), p, i / 2, this->dofs[i]);
+        this->f(i) =  bodyForceValue +
+
+
+                natural.boundaryVector(points.getList(), p, i / 2, this->dofs[i]);
     }
 }
 
