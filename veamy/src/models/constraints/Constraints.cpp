@@ -10,7 +10,8 @@ void Constraints::addConstraint(Constraint c, std::vector<Point> p) {
         std::vector<IndexSegment>& v = constrained_segments[angle];
         v.push_back(s);
 
-        segment_map.insert(std::make_pair(segments[i], c));
+        std::vector<Constraint>& relatedConstraints = segment_map[segments[i]];
+        relatedConstraints.push_back(c);
     }
 }
 
@@ -53,30 +54,33 @@ void Constraints::addConstrainedDOFBySegment(std::vector<Point> points, int DOF_
     isConstrainedInfo info = isConstrained(points, s);
 
     if(info.isConstrained){
-        Constraint constraint = segment_map[info.container];
-        Constraint::Direction direction = constraint.getDirection();
+        std::vector<Constraint> constraints = segment_map[info.container];
 
-        bool insert;
+        for (Constraint constraint: constraints) {
+            Constraint::Direction direction = constraint.getDirection();
 
-        switch(direction){
-            case(Constraint::Direction::Vertical):
-                insert = axis==DOF::Axis::y;
-                break;
-            case (Constraint::Direction::Horizontal):
-                insert = axis==DOF::Axis::x;
-                break;
-            default:
-                insert = true;
-        }
+            bool insert;
 
-        if(insert){
-            constrained_dofs.push_back(DOF_index);
-            constraints_map.insert(std::pair<int,Constraint>(DOF_index, constraint));
+            switch(direction){
+                case(Constraint::Direction::Vertical):
+                    insert = axis==DOF::Axis::y;
+                    break;
+                case (Constraint::Direction::Horizontal):
+                    insert = axis==DOF::Axis::x;
+                    break;
+                default:
+                    insert = true;
+            }
+
+            if(insert){
+                constrained_dofs.push_back(DOF_index);
+                constraints_map.insert(std::pair<int,Constraint>(DOF_index, constraint));
+            }
         }
     }
 }
 
-std::unordered_map<IndexSegment, Constraint, SegmentHasher> Constraints::getConstrainedSegments() {
+std::unordered_map<IndexSegment, std::vector<Constraint>, SegmentHasher> Constraints::getConstrainedSegments() {
     return this->segment_map;
 }
 

@@ -9,7 +9,7 @@ Eigen::VectorXd NaturalConstraints::boundaryVector(std::vector<Point> points, Po
         std::vector<int> polygonPoints = p.getPoints();
         int n = (int) polygonPoints.size();
 
-        Constraint c = segment_map[constrainedInfo.container];
+        std::vector<Constraint> constraints = segment_map[constrainedInfo.container];
 
         Eigen::MatrixXd Nbar;
         Nbar = Eigen::MatrixXd::Zero(2,4);
@@ -23,8 +23,10 @@ Eigen::VectorXd NaturalConstraints::boundaryVector(std::vector<Point> points, Po
 
         h = Eigen::VectorXd::Zero(2);
 
-        h(0) = c.getValue(points[segment.getFirst()])*c.isAffected(DOF::Axis::x);
-        h(1) = c.getValue(points[segment.getSecond()])*c.isAffected(DOF::Axis::y);
+        for(Constraint c: constraints){
+            h(0) += c.getValue(points[segment.getFirst()])*c.isAffected(DOF::Axis::x);
+            h(1) += c.getValue(points[segment.getSecond()])*c.isAffected(DOF::Axis::y);
+        }
 
         std::cout<< h << std::endl << std::endl;
         std::cout<< Nbar.transpose()*h << std::endl << std::endl;
