@@ -8,7 +8,7 @@
 class NaturalConstraints : public Constraints{
 public:
     NaturalConstraints();
-    double boundaryVector(std::vector<Point> points, Polygon p, int point, int DOF_index);
+    Eigen::VectorXd boundaryVector(std::vector<Point> points, Polygon p, IndexSegment segment);
 };
 
 

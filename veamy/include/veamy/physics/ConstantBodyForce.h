@@ -5,10 +5,10 @@
 
 class ConstantBodyForce : public BodyForce{
 public:
-    Pair<double> computeVector(Polygon p, std::vector<Point> points) override {
+    Eigen::VectorXd computeVector(Polygon p, std::vector<Point> points) override {
         auto* vector = new BodyForceVector;
 
-        Pair<double> value = vector->computeConstantForceVector(this, p, points);
+        Eigen::VectorXd value = vector->computeConstantForceVector(this, p, points);
         delete vector;
 
         return value;

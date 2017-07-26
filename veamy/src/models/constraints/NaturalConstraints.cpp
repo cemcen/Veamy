@@ -2,36 +2,43 @@
 
 NaturalConstraints::NaturalConstraints() {}
 
-double NaturalConstraints::boundaryVector(std::vector<Point> points, Polygon p, int point, int DOF_index) {
-    if(isConstrained(DOF_index)){
-        double integral = 0;
+Eigen::VectorXd NaturalConstraints::boundaryVector(std::vector<Point> points, Polygon p, IndexSegment segment) {
+    isConstrainedInfo constrainedInfo = isConstrained(points, segment);
 
+    if(constrainedInfo.isConstrained){
         std::vector<int> polygonPoints = p.getPoints();
         int n = (int) polygonPoints.size();
 
-        IndexSegment prev (polygonPoints[(n + point -1)%n], polygonPoints[point]);
-        IndexSegment next (polygonPoints[point], polygonPoints[(n + point + 1)%n]);
+        Constraint c = segment_map[constrainedInfo.container];
 
-        isConstrainedInfo prevConst = isConstrained(points, prev);
-        isConstrainedInfo nextConst = isConstrained(points, next);
+        Eigen::MatrixXd Nbar;
+        Nbar = Eigen::MatrixXd::Zero(2,4);
+        Nbar(0,0) = 1.0/2;
+        Nbar(1,1) = 1.0/2;
+        Nbar(0,2) = 1.0/2;
+        Nbar(1,3) = 1.0/2;
 
-        if(prevConst.isConstrained){
-            Constraint c = segment_map[prevConst.container];
+        std::cout<< Nbar << std::endl << std::endl;
+        Eigen::VectorXd h;
 
-            
+        h = Eigen::VectorXd::Zero(2);
 
-            integral += (0.5*c.getValue(points[prev.getFirst()]) + 0.5*c.getValue(points[prev.getSecond()]))*prev.length(points);
-        }
+        h(0) = c.getValue(points[segment.getFirst()])*c.isAffected(DOF::Axis::x);
+        h(1) = c.getValue(points[segment.getSecond()])*c.isAffected(DOF::Axis::y);
 
-        if(nextConst.isConstrained){
-            Constraint c = segment_map[nextConst.container];
+        std::cout<< h << std::endl << std::endl;
+        std::cout<< Nbar.transpose()*h << std::endl << std::endl;
 
-            integral += (0.5*c.getValue(points[next.getFirst()]) + 0.5*c.getValue(points[next.getSecond()]))*next.length(points);
-        }
+        double length = segment.length(points);
+        Eigen::VectorXd result = length*(Nbar.transpose()*h);
+        std::cout << result << std::endl << std::endl;
 
-        return integral;
+        return result;
     }
 
-    return 0;
+    Eigen::VectorXd zeros;
+    zeros = Eigen::VectorXd::Zero(4);
+
+    return zeros;
 }
 

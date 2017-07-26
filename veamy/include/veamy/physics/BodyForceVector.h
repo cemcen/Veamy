@@ -7,8 +7,8 @@
 
 class BodyForceVector {
 public:
-    Pair<double> computeConstantForceVector(BodyForce *f, Polygon p, std::vector<Point> points);
-    Pair<double> computeVariableForceVector(BodyForce *f, Polygon p, std::vector<Point> points);
+    Eigen::VectorXd computeConstantForceVector(BodyForce *f, Polygon p, std::vector<Point> points);
+    Eigen::VectorXd computeVariableForceVector(BodyForce *f, Polygon p, std::vector<Point> points);
 };
 
 

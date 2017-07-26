@@ -8,6 +8,7 @@
 #include <mesher/models/basic/IndexSegment.h>
 #include <utilities/UniqueList.h>
 #include <utilities/Pair.h>
+#include <veamy/models/dof/DOF.h>
 
 class Constraint{
 public:
@@ -32,6 +33,7 @@ public:
     double getValue(Point p);
     UniqueList<IndexSegment> getSegments();
     Direction getDirection();
+    int isAffected(DOF::Axis axis);
 
     Pair<int> getIndex(int point_index);
 

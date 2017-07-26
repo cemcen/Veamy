@@ -1,7 +1,7 @@
 #include <veamy/physics/BodyForceVector.h>
-#include <veamy/lib/Eigen/Dense>
 
-Pair<double> BodyForceVector::computeConstantForceVector(BodyForce *f, Polygon polygon, std::vector<Point> points){
+
+Eigen::VectorXd BodyForceVector::computeConstantForceVector(BodyForce *f, Polygon polygon, std::vector<Point> points){
     std::vector<int> polygonPoints = polygon.getPoints();
     int n = (int) polygonPoints.size();
 
@@ -19,12 +19,10 @@ Pair<double> BodyForceVector::computeConstantForceVector(BodyForce *f, Polygon p
     b(0) = f->applyX(0,0);
     b(1) = f->applyY(0,0);
 
-    Eigen::VectorXd result = polygon.getArea()*Nbar.transpose()*b;
-
-    return Pair<double>(result(0), result(1));
+    return polygon.getArea()*Nbar.transpose()*b;
 }
 
-Pair<double> BodyForceVector::computeVariableForceVector(BodyForce *f, Polygon polygon, std::vector<Point> points) {
+Eigen::VectorXd BodyForceVector::computeVariableForceVector(BodyForce *f, Polygon polygon, std::vector<Point> points) {
     double integralX = 0;
     double integralY = 0;
 
@@ -48,5 +46,13 @@ Pair<double> BodyForceVector::computeVariableForceVector(BodyForce *f, Polygon p
         integralY += area*f->applyX(point.getX(), point.getY());
     }
 
-    return Pair<double>(integralX, integralY);
+    Eigen::VectorXd result;
+    result = Eigen::VectorXd::Zero(2*n);
+
+    for (int j = 0; j < n; ++j) {
+        result(2*j) = integralX;
+        result(2*j+1) = integralY;
+    }
+
+    return result;
 }

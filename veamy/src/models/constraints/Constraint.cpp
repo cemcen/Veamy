@@ -88,6 +88,16 @@ IndexSegment Constraint::fromPointToInt(PointSegment s, std::vector<Point> point
     return IndexSegment(p1, p2);
 }
 
+int Constraint::isAffected(DOF::Axis axis) {
+    switch (direction){
+        case Total:
+            return 1;
+        case Horizontal:
+            return axis == DOF::Axis::x? 1 : 0;
+        case Vertical:
+            return axis == DOF::Axis::y? 1 : 0;
+    }
+}
 
 
 

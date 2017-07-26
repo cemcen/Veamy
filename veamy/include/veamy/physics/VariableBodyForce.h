@@ -7,10 +7,10 @@
 
 class VariableBodyForce: public BodyForce {
 public:
-     Pair<double> computeVector(Polygon p, std::vector<Point> points) override {
+     Eigen::VectorXd computeVector(Polygon p, std::vector<Point> points) override {
         auto* vector = new BodyForceVector;
 
-        Pair<double> value = vector->computeVariableForceVector(this, p, points);
+        Eigen::VectorXd value = vector->computeVariableForceVector(this, p, points);
         delete vector;
 
         return value;
