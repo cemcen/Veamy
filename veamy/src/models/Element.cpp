@@ -115,8 +115,8 @@ void Element::computeF(DOFS d, UniqueList<Point> points, ProblemConditions &cond
 
         this->f(2*i) =  bodyForce(2*i) + naturalConditions(0);
         this->f((2*i + 1)%n) = bodyForce(2*i+1) + naturalConditions(1);
-        this->f((2*(i+1))%n) =  bodyForce(2*i) + naturalConditions(2);
-        this->f((2*(i+1) + 1)%n) = bodyForce(2*i+1) + naturalConditions(3);
+        this->f((2*(i+1))%n) =  naturalConditions(2);
+        this->f((2*(i+1) + 1)%n) =  naturalConditions(3);
 
     }
 }
