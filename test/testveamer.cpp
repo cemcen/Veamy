@@ -38,133 +38,18 @@ double uY(double x, double y){
     return P/(6*Ebar*I)*(3*vBar*std::pow(y,2)*(L-x) + (3*L-x)*std::pow(x,2));
 }
 
-
-
-TEST(VeamerTest, OnlyEssentialTest){
-    Veamer v;
-    std::vector<Point> points = {Point(0,0), Point(2,0), Point(2,1), Point(0,1)};
-    Region region(points);
-    region.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 10, 10);
-
-    std::vector<Point> seeds = region.getSeedPoints();
-    TriangleMeshGenerator g(seeds, region);
-    PolygonalMesh m = g.getMesh();
-    m.printInFile("first.txt");
-
-    EssentialConstraints c;
-    PointSegment constrained(Point(0,0),Point(0,1));
-    PointSegment constrained2 (Point(2,0),Point(2,1));
-    Constraint const1 (constrained, m.getPoints(), Constraint::Direction::Total, new Constant(0));
-
-    c.addConstraint(const1, m.getPoints());
-    Constraint const2 (constrained2, m.getPoints(), Constraint::Direction::Horizontal, new Constant(1));
-    c.addConstraint(const2, m.getPoints());
-
-   /* NaturalConstraints n;
-    PointSegment const3(Point(0,0),Point(2,0));
-    Constraint constraint3(const3,m.getPoints().getList(), Constraint::Direction::Horizontal, new Constant(2));
-    n.addConstraint(constraint3, m.getPoints().getList());*/
-
-    ConstraintsContainer container;
-    container.addConstraints(c, m);
-    // container.addConstraints(n,m);
-
-    ProblemConditions conditions(container, Material(Materials::material::Steel));
-
-    v.initProblem(m, conditions);
-
-    Eigen::VectorXd x = v.simulate(m);
-    m.printInFile("second.txt");
+double uXPatch(double x, double y){
+    return x;
 }
 
-TEST(VeamerTest, OnlyNaturalTest){
-    Veamer v;
-    std::vector<Point> points = {Point(0,0), Point(2,0), Point(2,1), Point(0,1)};
-    Region region(points);
-    region.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 3, 3);
-
-    std::vector<Point> seeds = region.getSeedPoints();
-    TriangleMeshGenerator g(seeds, region);
-    PolygonalMesh m = g.getMesh();
-    m.printInFile("first.txt");
-
-    EssentialConstraints c;
-    PointSegment constrained(Point(0,0),Point(0,1));
-    Constraint const1 (constrained, m.getPoints(), Constraint::Direction::Total, new Constant(0));
-
-    c.addConstraint(const1, m.getPoints().getList());
-
-    NaturalConstraints n;
-    PointSegment const3(Point(2,0),Point(2,1));
-    Constraint constraint3(const3,m.getPoints(), Constraint::Direction::Horizontal, new Constant(1000));
-    n.addConstraint(constraint3, m.getPoints());
-
-    ConstraintsContainer container;
-    container.addConstraints(c, m);
-    container.addConstraints(n,m);
-
-    ProblemConditions conditions(container,  Material(Materials::material::Steel));
-
-    v.initProblem(m, conditions);
-
-    Eigen::VectorXd x = v.simulate(m);
-    //std::cout << x << std::endl;
-    m.printInFile("second.txt");
-}
-
-TEST(VeamerTest, OnlyBodyForceTest){
-    Veamer v;
-    std::vector<Point> points = {Point(0,0), Point(2,0), Point(2,1), Point(0,1)};
-    Region region(points);
-    region.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 3, 3);
-
-    class Sum : public VariableBodyForce{
-    private:
-        double applyX(double x, double y) override {
-            return 1;
-        }
-
-        double applyY(double x, double y) override {
-            return 0;
-        }
-    };
-
-    VariableBodyForce* f = new Sum();
-
-    std::vector<Point> seeds = region.getSeedPoints();
-    TriangleMeshGenerator g(seeds, region);
-    PolygonalMesh m = g.getMesh();
-    m.printInFile("first.txt");
-
-    EssentialConstraints c;
-    PointSegment constrained(Point(0,0),Point(0,1));
-    Constraint const1 (constrained, m.getPoints(), Constraint::Direction::Total, new Constant(0));
-
-    c.addConstraint(const1, m.getPoints());
-
-    ConstraintsContainer container;
-    container.addConstraints(c, m);
-
-    ProblemConditions conditions(container, f, Material(Materials::material::Steel));
-
-    v.initProblem(m, conditions);
-
-    Eigen::VectorXd x = v.simulate(m);
-    std::cout << x << std::endl;
-    m.printInFile("second.txt");
-}
-
-TEST(VeamerTest, MeshFromFileTest){
-    PolygonalMesh mesh;
-    mesh.createFromFile("SquareWithHoleMesh.txt");
-
-    Veamer v;
+double uYPatch(double x, double y){
+    return x + y;
 }
 
 TEST(VeamerTest, ParabolicBeamExampleTest){
     std::vector<Point> rectangle4x8_points = {Point(0, -2), Point(8, -2), Point(8, 2), Point(0, 2)};
     Region rectangle4x8(rectangle4x8_points);
-    rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 12, 6);
+    rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 24, 12);
 
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
     TriangleMeshGenerator meshGenerator = TriangleMeshGenerator (seeds, rectangle4x8);
@@ -204,6 +89,58 @@ TEST(VeamerTest, ParabolicBeamExampleTest){
     Eigen::VectorXd x = v.simulate(mesh);
     std::string fileName = "displacement.txt";
     v.writeDisplacements(fileName, x);
+}
 
 
+TEST(VeamerTest, ParabolicBeamPatchTest){
+    std::vector<Point> rectangle4x8_points = {Point(0, -2), Point(8, -2), Point(8, 2), Point(0, 2)};
+    Region rectangle4x8(rectangle4x8_points);
+    rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 48, 24);
+
+    std::vector<Point> seeds = rectangle4x8.getSeedPoints();
+    TriangleMeshGenerator meshGenerator = TriangleMeshGenerator (seeds, rectangle4x8);
+    PolygonalMesh mesh = meshGenerator.getMesh();
+    mesh.printInFile("rectangle4x8ConstantAlternating.txt");
+
+    Veamer v;
+
+    EssentialConstraints essential;
+    Function* uXConstraint = new Function(uXPatch);
+    Function* uYConstraint = new Function(uYPatch);
+
+    PointSegment leftSide(Point(0,-2), Point(0,2));
+    Constraint leftX (leftSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
+    essential.addConstraint(leftX, mesh.getPoints());
+    Constraint  leftY (leftSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
+    essential.addConstraint(leftY, mesh.getPoints());
+
+    PointSegment downSide(Point(0,-2), Point(8,-2));
+    Constraint downX (downSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
+    essential.addConstraint(downX, mesh.getPoints());
+    Constraint  downY (downSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
+    essential.addConstraint(downY, mesh.getPoints());
+
+    PointSegment rightSide(Point(8,-2), Point(8, 2));
+    Constraint rightX (rightSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
+    essential.addConstraint(rightX, mesh.getPoints());
+    Constraint  rightY (rightSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
+    essential.addConstraint(rightY, mesh.getPoints());
+
+    PointSegment topSide(Point(0, 2), Point(8, 2));
+    Constraint topX (topSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
+    essential.addConstraint(topX, mesh.getPoints());
+    Constraint  topY (topSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
+    essential.addConstraint(topY, mesh.getPoints());
+
+    ConstraintsContainer container;
+    container.addConstraints(essential, mesh);
+
+    Material m(1e7, 0.3);
+    ProblemConditions conditions(container, m);
+
+    v.initProblem(mesh, conditions);
+
+    Eigen::VectorXd x = v.simulate(mesh);
+    std::string fileName = "displacement.txt";
+    v.writeDisplacements(fileName, x);
 }

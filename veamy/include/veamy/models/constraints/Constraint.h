@@ -34,9 +34,6 @@ public:
     UniqueList<IndexSegment> getSegments();
     Direction getDirection();
     int isAffected(DOF::Axis axis);
-
-    Pair<int> getIndex(int point_index);
-
 };
 
 

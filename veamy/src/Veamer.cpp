@@ -99,13 +99,19 @@ void Veamer::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
     std::ofstream file;
     file.open(path, std::ios::out);
 
+    std::vector<std::string> results(this->points.size());
+
     for (int k = 0; k < u.rows(); k = k + 2) {
         int point_index = DOFs.get(k).pointIndex();
         double def_x = u[k];
         double def_y = u[k+1];
 
-        file << utilities::toString(point_index) << " " << utilities::toString(def_x) << " "
-             << utilities::toString(def_y) << std::endl;
+        results[point_index] = utilities::toString(point_index) + " " + utilities::toString(def_x) + " "
+                               + utilities::toString(def_y);
+    }
+
+    for (std::string s: results){
+        file << s << std::endl;
     }
 
     file.close();
