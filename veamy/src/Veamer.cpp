@@ -1,4 +1,5 @@
 #include <veamy/Veamer.h>
+#include <iomanip>
 
 Veamer::Veamer() {}
 
@@ -23,11 +24,12 @@ void Veamer::insertElement(Polygon p, int index) {
 }
 
 Eigen::VectorXd Veamer::simulate(PolygonalMesh &mesh) {
-    Eigen::MatrixXd K;
+    Eigen::MatrixXd K, Ks;
     Eigen::VectorXd f;
     int n = this->DOFs.size();
 
     K = Eigen::MatrixXd::Zero(n,n);
+    Ks = Eigen::MatrixXd::Zero(n,n);
     f = Eigen::VectorXd::Zero(n);
 
     for(int i=0;i<elements.size();i++){
@@ -35,6 +37,8 @@ Eigen::VectorXd Veamer::simulate(PolygonalMesh &mesh) {
         elements[i].computeF(DOFs, this->points, conditions);
         elements[i].assemble(DOFs, K, f);
     }
+
+    //std::cout << K << std::endl << std::endl;
 
     //Apply constrained_points
     EssentialConstraints essential = this->conditions.constraints.getEssentialConstraints();
@@ -53,6 +57,17 @@ Eigen::VectorXd Veamer::simulate(PolygonalMesh &mesh) {
         K(c[j], c[j]) = 1;
         f(c[j]) = boundary_values(j);
     }
+
+/*
+    for(int j = 0; j<c.size(); j++){
+        for(int i = 0; i < K.rows(); i++){
+            K(c[j],i) = 0;
+        }
+        K(c[j],c[j]) = 1;
+        f(c[j]) = boundary_values(j);
+    }
+*/
+   // std::cout << K << std::endl;
 
      //Solve the system
     Eigen::VectorXd x = K.fullPivHouseholderQr().solve(f);
@@ -98,6 +113,8 @@ void Veamer::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
 
     std::ofstream file;
     file.open(path, std::ios::out);
+    file << std::fixed;
+    file << std::setprecision(20);
 
     std::vector<std::string> results(this->points.size());
 

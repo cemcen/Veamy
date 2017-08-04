@@ -759,3 +759,19 @@ int Polygon::numberOfInteresectedSegments(PointSegment direction, std::vector<Po
 
     return count;
 }
+
+Point Polygon::getAverage(std::vector<Point> p) {
+    double x = 0;
+    double y = 0;
+
+    for (int v: points){
+        Point vertex = p[v];
+
+        x += vertex.getX();
+        y += vertex.getY();
+    }
+
+    x = x/this->numberOfSides(); y = y/this->numberOfSides();
+
+    return Point(x,y);
+}

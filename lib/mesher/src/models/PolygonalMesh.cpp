@@ -4,7 +4,6 @@ PolygonalMesh::PolygonalMesh(std::vector<Point> &p, std::vector<Polygon> &e, Seg
     this->points.push_list(p);
     this->polygons.assign(e.begin(), e.end());
     this->edges = s;
-    this->region = r;
 }
 
 PolygonalMesh::PolygonalMesh() {}
@@ -16,50 +15,6 @@ void PolygonalMesh::createFromFile(std::string fileName) {
     std::ifstream infile(completeName);
 
     std::string line;
-    std::getline(infile, line);
-    int numberRegionPoints = std::atoi(line.c_str());
-    std::vector<Point> regionPoints;
-
-    for(int i=0; i<numberRegionPoints;i++)    {
-        std::getline(infile, line);
-        std::vector<std::string> splittedLine = utilities::split(line, ' ');
-
-        regionPoints.push_back(Point(std::atof(splittedLine[0].c_str()), std::atof(splittedLine[1].c_str())));
-    }
-
-    this->region = Region(regionPoints);
-
-    std::getline(infile, line);
-    int numberHoles = std::atoi(line.c_str());
-    for (int i = 0; i < numberHoles; ++i) {
-        std::getline(infile, line);
-        std::vector<std::string> centerPoints = utilities::split(line, ' ');
-
-        Point center(std::atof(centerPoints[0].c_str()), std::atof(centerPoints[1].c_str()));
-
-        std::getline(infile, line);
-        int numberHolePoints = std::atoi(line.c_str());
-        std::vector<Point> holePoints;
-        for(int j = 0; j < numberHolePoints; j++){
-            std::getline(infile, line);
-            std::vector<std::string> splittedLine = utilities::split(line, ' ');
-
-            holePoints.push_back(Point(std::atof(splittedLine[0].c_str()), std::atof(splittedLine[1].c_str())));
-        }
-
-        std::getline(infile, line);
-        int numberHoleSegs = std::atoi(line.c_str());
-        std::vector<IndexSegment> holeSegments;
-        for(int j = 0; j < numberHoleSegs; j++){
-            std::getline(infile, line);
-            std::vector<std::string> splittedLine = utilities::split(line, ' ');
-
-            holeSegments.push_back(IndexSegment(std::atoi(splittedLine[0].c_str()), std::atoi(splittedLine[1].c_str())));
-        }
-
-        this->region.addHole(Hole(holePoints, center, holeSegments));
-    }
-
     std::getline(infile, line);
     int numberMeshPoints = std::atoi(line.c_str());
     for (int i = 0; i < numberMeshPoints; ++i) {
@@ -99,7 +54,6 @@ PolygonalMesh::PolygonalMesh(const PolygonalMesh &m) {
     this->points = m.getPoints();
     this->polygons = m.getPolygons();
     this->edges = m.getSegments();
-    this->region = m.region;
 }
 
 std::vector<Polygon>& PolygonalMesh::getPolygons() {
@@ -282,11 +236,6 @@ int PolygonalMesh::getNeighbourFromCommonVertexSet(PointSegment direction, std::
     return -1;
 }
 
-
-Region PolygonalMesh::getRegion() const{
-    return this->region;
-}
-
 bool PolygonalMesh::areNeighbours(int poly1, int poly2) {
     return areNeighbours(polygons[poly1], poly2);
 }
@@ -341,14 +290,6 @@ bool PolygonalMesh::polygonsTouch(int poly1, int poly2) {
     return false;
 }
 
-bool PolygonalMesh::isInDomain(Point p) {
-    return this->region.containsPoint(p);
-}
-
-bool PolygonalMesh::isInBorder(Point p) {
-    return this->region.inEdges(p);
-}
-
 void PolygonalMesh::getNeighboursByPoint(int poly, UniqueList<int> &neighbours) {
     this->getNeighboursBySegments(poly, neighbours);
     UniqueList<int> neighbours_neighbours;
@@ -365,6 +306,3 @@ void PolygonalMesh::getNeighboursByPoint(int poly, UniqueList<int> &neighbours) 
     }
 }
 
-int PolygonalMesh::numberOfPolygons() {
-    return this->polygons.size();
-}

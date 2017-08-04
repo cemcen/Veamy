@@ -19,7 +19,6 @@
 class PolygonalMesh : public Mesh{
 protected:
     std::vector<Polygon> polygons;
-    Region region;
 public:
     PolygonalMesh(std::vector<Point> &p, std::vector<Polygon> &e, SegmentMap s, Region r);
     PolygonalMesh(const PolygonalMesh& m);
@@ -53,12 +52,7 @@ public:
                                             std::vector<int> &previousPolygons, int vertexIndex);
     int getNeighbourFromCommonVertexSet(PointSegment direction, std::vector<int> vertexSet, NeighbourInfo& n);
 
-    Region getRegion() const;
-    bool isInDomain(Point p);
-    bool isInBorder(Point p);
     void getNeighboursByPoint(int poly, UniqueList<int> &neighbours);
-    int numberOfPolygons();
-    std::vector<NeighbourInfo> getAllNeighboursInPath(PointSegment direction);
 
 };
 

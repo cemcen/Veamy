@@ -36,8 +36,6 @@ void TriangleMeshGenerator::callTriangle(std::vector<Point> &point_list, std::ve
     pointList.push_list(point_list);
     std::vector<int> regionIndex = pointList.push_list(regionPoints);
 
-    writeInputInFile(pointList, region, regionIndex);
-
     in.numberofpoints = pointList.size();
     in.pointlist = (REAL*)malloc(in.numberofpoints*2*sizeof(REAL));
     in.numberofpointattributes = 1;

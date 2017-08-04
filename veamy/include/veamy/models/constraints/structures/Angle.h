@@ -8,6 +8,7 @@ struct Angle{
     double angle;
 
     Angle(double a){
+        a = a - 360.0*(a/360);
         if(a>=0 && a<180) {
             angle = a;
         }else{

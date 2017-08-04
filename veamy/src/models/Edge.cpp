@@ -16,5 +16,12 @@ double Edge::getLength(std::vector<Point> points) {
     Point P1 = points[p1];
     Point P2 = points[p2];
 
-    return sqrt(pow(P1.getX() - P2.getX(),2) + pow(P1.getY() - P2.getY(), 2));
+    return std::sqrt(std::pow(P1.getX() - P2.getX(),2) + std::pow(P1.getY() - P2.getY(), 2));
+}
+
+Point Edge::middlePoint(std::vector<Point> points) {
+    Point P1 = points[p1];
+    Point P2 = points[p2];
+
+    return Point((P2.getX()-P1.getX()), (P2.getY()-P1.getY()));
 }

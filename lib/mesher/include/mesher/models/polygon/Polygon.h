@@ -84,6 +84,7 @@ public:
     void insertVertex(int vertex, std::vector<Point> points);
     void replaceVertex(int oldVertex, int newVertex, SegmentMap &edges);
     int numberOfInteresectedSegments(PointSegment direction, std::vector<Point> points);
+    Point getAverage(std::vector<Point> p);
 };
 
 #endif

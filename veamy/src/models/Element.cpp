@@ -1,4 +1,5 @@
 #include <veamy/models/Element.h>
+#include <iomanip>
 
 Element::Element(ProblemConditions &conditions, Polygon &p, UniqueList<Point> &points, DOFS &out) {
     std::vector<int> vertex = p.getPoints();
@@ -16,6 +17,10 @@ Element::Element(ProblemConditions &conditions, Polygon &p, UniqueList<Point> &p
     this->p = p;
 }
 
+Element::Element(Polygon &p) {
+    this->p = p;
+}
+
 Polygon Element::getAssociatedPolygon() {
     return this->p;
 }
@@ -23,9 +28,15 @@ Polygon Element::getAssociatedPolygon() {
 void Element::computeK(DOFS d, UniqueList<Point> points, ProblemConditions &conditions) {
     std::vector<int> polygonPoints = p.getPoints();
     int n = (int) polygonPoints.size();
-    Point average = p.getCentroid();
+    Point average = p.getAverage(points.getList());
+
+    std::cout << std::fixed;
+    std::cout << std::setprecision(4);
 
     double area = p.getArea();
+
+    //std::cout << "Area" << std::endl;
+    //std::cout << area << std::endl << std::endl;
 
     Eigen::MatrixXd Hr;
     Eigen::MatrixXd Wr;
@@ -45,6 +56,17 @@ void Element::computeK(DOFS d, UniqueList<Point> points, ProblemConditions &cond
 
         Pair<double> prevNormal = utilities::normalize(prev.getNormal(points.getList()));
         Pair<double> nextNormal = utilities::normalize(next.getNormal(points.getList()));
+
+        Point middleP = prev.middlePoint(points.getList());
+        Point middleN = next.middlePoint(points.getList());
+
+        double p = xpoly_utilities::crossProduct(middleP, Point(prevNormal.first, prevNormal.second));
+        double ne = xpoly_utilities::crossProduct(middleN, Point(nextNormal.first, nextNormal.second));
+
+        /*std::cout <<  utilities::toString(prevNormal.first) << " " << utilities::toString(prevNormal.second) << std::endl;
+
+        std::cout << utilities::toString(xpoly_utilities::norm(Point(prevNormal.first, prevNormal.second))) << std::endl;
+        std::cout << utilities::toString(xpoly_utilities::norm(Point(nextNormal.first, nextNormal.second))) << std::endl;*/
 
         double prevLength = prev.getLength(points.getList());
         double nextLength = next.getLength(points.getList());
@@ -87,6 +109,16 @@ void Element::computeK(DOFS d, UniqueList<Point> points, ProblemConditions &cond
     Pr = Hr*(Wr.transpose());
     Pc = Hc*(Wc.transpose());
 
+    /*std::cout << "Hr" << std::endl;
+    std::cout << Hr << std::endl << std::endl;
+
+    std::cout << "Hc" << std::endl;
+    std::cout << Hc << std::endl << std::endl;
+
+    std::cout << "Wr" << std::endl;
+    std::cout << Wr.transpose() << std::endl << std::endl;*/
+
+
     Pp = Pc + Pr;
 
     Eigen::MatrixXd D = conditions.material.getMaterialMatrix();
@@ -96,8 +128,15 @@ void Element::computeK(DOFS d, UniqueList<Point> points, ProblemConditions &cond
     double alphaS = area*conditions.material.trace()/c;
     Eigen::MatrixXd Se;
     Se = config->getGamma()*alphaS*I;
+    Eigen::MatrixXd Stability;
+    Stability = (I - Pp).transpose()*Se*(I - Pp);
 
-    this->K = area*Wc*D*Wc.transpose() + (I - Pp).transpose()*Se*(I - Pp);
+    this->K = area*Wc*D*Wc.transpose() + Stability;
+    this->Ks = Stability;
+
+    //std::cout << K << std::endl << std::endl;
+    //std::cout << area*Wc*D*Wc.transpose() << std::endl << std::endl;
+    //std::cout << Ks << std::endl << std::endl;
 }
 
 void Element::computeF(DOFS d, UniqueList<Point> points, ProblemConditions &conditions) {
@@ -121,20 +160,33 @@ void Element::computeF(DOFS d, UniqueList<Point> points, ProblemConditions &cond
     }
 }
 
-void Element::assemble(DOFS out, Eigen::MatrixXd& Kglobal, Eigen::VectorXd& Fglobal) {
+void Element::assemble(DOFS out, Eigen::MatrixXd &Kglobal, Eigen::VectorXd &Fglobal) {
     for (int i = 0; i < this->K.rows(); i++) {
         int globalI = out.get(this->dofs[i]).globalIndex();
 
         for (int j = 0; j < this->K.cols(); j++) {
             int globalJ = out.get(this->dofs[j]).globalIndex();
+            double val = Kglobal(globalI, globalJ) + this->K(i, j);
 
-            Kglobal(globalI, globalJ) = Kglobal(globalI, globalJ) + this->K(i, j);
+            Kglobal(globalI, globalJ) = val;
         }
 
         Fglobal(globalI) = Fglobal(globalI) + this->f(i);
     }
 }
 
+void Element::checkStability(DOFS dofs, Eigen::VectorXd x) {
+    Eigen::VectorXd solution;
+    solution = Eigen::VectorXd::Zero(this->dofs.size());
+
+    for(int i=0;i<this->dofs.size();i++){
+        int dof_index = dofs.get(i).globalIndex();
+        solution(i) = x[dof_index];
+    }
+
+    //std::cout << Ks*solution << std::endl;
+
+}
 
 
 

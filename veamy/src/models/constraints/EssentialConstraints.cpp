@@ -10,7 +10,8 @@ Eigen::VectorXd EssentialConstraints::getBoundaryValues(std::vector<Point> point
         Constraint constraintI = constraints_map[constrained_dofs[i]];
         DOF dofI = dofs[constrained_dofs[i]];
 
-        values(i) = constraintI.getValue(points[dofI.pointIndex()]);
+        double val = constraintI.getValue(points[dofI.pointIndex()]);
+        values(i) = val;
     }
 
     return values;

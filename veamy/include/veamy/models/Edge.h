@@ -15,6 +15,7 @@ public:
 
     Pair<double> getNormal(std::vector<Point> points);
     double getLength(std::vector<Point> points);
+    Point middlePoint(std::vector<Point> points);
 };
 
 

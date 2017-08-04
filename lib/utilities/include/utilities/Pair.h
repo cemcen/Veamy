@@ -1,6 +1,7 @@
 #ifndef UTILITIES_PAIR_H
 #define UTILITIES_PAIR_H
 
+
 template <typename T>
 class Pair {
 public:
@@ -60,6 +61,5 @@ bool Pair<T>::operator<(const Pair &other) const {
 
     return this->first<other.first;
 }
-
 
 #endif

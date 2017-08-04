@@ -28,9 +28,6 @@ namespace utilities {
         #endif
     }
 
-
-
-
     Pair<double> normalize(Pair<double> vector){
         double norm = std::sqrt(std::pow(vector.first,2) + std::pow(vector.second,2));
 
