@@ -1,7 +1,79 @@
 #include <veamy/Veamer.h>
 #include <iomanip>
+#include <veamy/models/constraints/values/Constant.h>
 
 Veamer::Veamer() {}
+
+void Veamer::initProblemFromFile(std::string fileName, Material material) {
+    initProblemFromFile(fileName, material, new None());
+}
+
+void Veamer::initProblemFromFile(std::string fileName, Material material, BodyForce* force) {
+    PolygonalMesh mesh;
+    std::string completeName = utilities::getPath() + fileName;
+    std::ifstream infile(completeName);
+
+    mesh.createFromStream(infile);
+
+    EssentialConstraints essential;
+    std::vector<Point> constrainedPointsX;
+    std::vector<Point> constrainedPointsY;
+    std::vector<Point> constrainedPointsXY;
+
+    std::string line;
+    std::getline(infile, line);
+    int numberEssential = std::atoi(line.c_str());
+    for (int i = 0; i < numberEssential; ++i) {
+        std::getline(infile, line);
+        std::vector<std::string> splittedLine = utilities::split(line, ' ');
+
+        if(splittedLine[1] == "0" && splittedLine[2] == "0"){
+            Point p = mesh.getPoint(std::atoi(splittedLine[0].c_str()));
+            constrainedPointsXY.push_back(p);
+        }
+
+        if(splittedLine[1] == "0" && splittedLine[2] == "1"){
+            Point p = mesh.getPoint(std::atoi(splittedLine[0].c_str()));
+            constrainedPointsX.push_back(p);
+        }
+
+        if(splittedLine[1] == "1" && splittedLine[2] == "0"){
+            Point p = mesh.getPoint(std::atoi(splittedLine[0].c_str()));
+            constrainedPointsY.push_back(p);
+        }
+    }
+
+    PointConstraint xConstrained (constrainedPointsX, Constraint::Direction::Horizontal, new Constant(0));
+    PointConstraint yConstrained (constrainedPointsY, Constraint::Direction::Vertical, new Constant(0));
+    PointConstraint xyConstrained (constrainedPointsXY, Constraint::Direction::Total, new Constant(0));
+    essential.addConstraint(xConstrained);
+    essential.addConstraint(yConstrained);
+    essential.addConstraint(xyConstrained);
+
+    NaturalConstraints natural;
+    std::getline(infile, line);
+    int numberNatural = std::atoi(line.c_str());
+    for (int i = 0; i < numberNatural; ++i) {
+        std::getline(infile, line);
+        std::vector<std::string> splittedLine = utilities::split(line, ' ');
+
+        Point p = mesh.getPoint(std::atoi(splittedLine[0].c_str()));
+        PointConstraint xConstraint(p, Constraint::Direction::Horizontal, new Constant(std::atof(splittedLine[1].c_str())));
+        PointConstraint yConstraint(p, Constraint::Direction::Vertical, new Constant(std::atof(splittedLine[2].c_str()));
+
+        natural.addConstraint(xConstraint);
+        natural.addConstraint(yConstraint);
+    }
+
+    infile.close();
+    ConstraintsContainer container;
+    container.addConstraints(natural, mesh);
+    container.addConstraints(essential, mesh);
+
+    ProblemConditions conditions(container, force, material);
+    initProblem(mesh, conditions);
+}
+
 
 void Veamer::initProblem(PolygonalMesh m, ProblemConditions conditions) {
     std::vector<Point> meshPoints = m.getPoints().getList();
@@ -45,6 +117,7 @@ Eigen::VectorXd Veamer::simulate(PolygonalMesh &mesh) {
     std::vector<int> c = essential.getConstrainedDOF();
 
     Eigen::VectorXd boundary_values = essential.getBoundaryValues(this->points.getList(), this->DOFs.getDOFS());
+    std::cout << boundary_values << std::endl;
 
     for (int j = 0; j < c.size(); ++j) {
         for (int i = 0; i < K.rows(); ++i) {
@@ -57,17 +130,6 @@ Eigen::VectorXd Veamer::simulate(PolygonalMesh &mesh) {
         K(c[j], c[j]) = 1;
         f(c[j]) = boundary_values(j);
     }
-
-/*
-    for(int j = 0; j<c.size(); j++){
-        for(int i = 0; i < K.rows(); i++){
-            K(c[j],i) = 0;
-        }
-        K(c[j],c[j]) = 1;
-        f(c[j]) = boundary_values(j);
-    }
-*/
-   // std::cout << K << std::endl;
 
      //Solve the system
     Eigen::VectorXd x = K.fullPivHouseholderQr().solve(f);

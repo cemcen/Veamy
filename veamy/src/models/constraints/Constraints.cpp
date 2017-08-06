@@ -46,6 +46,16 @@ isConstrainedInfo Constraints::isConstrainedBySegment(std::vector <Point> points
     return isConstrainedInfo();
 }
 
+isConstrainedInfo Constraints::isConstrainedByPoint(Point p) {
+    auto iter = point_map.find(p);
+
+    if(iter == point_map.end()){
+        return isConstrainedInfo();
+    }
+
+    return isConstrainedInfo(true);
+}
+
 bool Constraints::isConstrained(int dof) {
     return constrained_dofs.contains(dof);
 }
@@ -140,7 +150,7 @@ Constraint Constraints::getAssociatedConstraint(int dof_index) {
 
     auto iter2 = point_constraints_map.find(dof_index);
     if(iter2 != point_constraints_map.end()){
-        return iter->second;
+        return iter2->second;
     }
 
     return Constraint();

@@ -29,6 +29,7 @@ public:
     void addConstraint(PointConstraint c);
 
     isConstrainedInfo isConstrainedBySegment(std::vector<Point> points, IndexSegment p);
+    isConstrainedInfo isConstrainedByPoint(Point p);
     bool isConstrained(int dof);
 
     std::vector<int> getConstrainedDOF();

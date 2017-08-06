@@ -2,7 +2,9 @@
 
 NaturalConstraints::NaturalConstraints() {}
 
-Eigen::VectorXd NaturalConstraints::boundaryVector(std::vector<Point> points, Polygon p, IndexSegment segment) {
+Eigen::VectorXd
+NaturalConstraints::boundaryVector(std::vector<Point> points, Polygon p, IndexSegment segment) {
+    Eigen::VectorXd result(4);
     isConstrainedInfo constrainedInfo = isConstrainedBySegment(points, segment);
 
     if(constrainedInfo.isConstrained){
@@ -31,15 +33,32 @@ Eigen::VectorXd NaturalConstraints::boundaryVector(std::vector<Point> points, Po
         Eigen::VectorXd resultFirst = length*(Nbar.transpose()*hFirst);
         Eigen::VectorXd resultSecond = length*(Nbar.transpose()*hSecond);
 
-        Eigen::VectorXd result(resultFirst.rows() + resultSecond.rows());
         result << resultFirst, resultSecond;
-
-        return result;
+    }else{
+        result = Eigen::VectorXd::Zero(4);
     }
 
-    Eigen::VectorXd zeros;
-    zeros = Eigen::VectorXd::Zero(4);
+    isConstrainedInfo isConstrainedInfoP1 = isConstrainedByPoint(points[segment.getFirst()]);
+    isConstrainedInfo isConstrainedInfoP2 = isConstrainedByPoint(points[segment.getSecond()]);
 
-    return zeros;
+    if(isConstrainedInfoP1.isConstrained){
+        std::vector<PointConstraint> constraints = point_map[points[segment.getFirst()]];
+
+        for (Constraint c: constraints){
+            result(0) += c.getValue(points[segment.getFirst()])*c.isAffected(DOF::Axis::x);
+            result(1) += c.getValue(points[segment.getFirst()])*c.isAffected(DOF::Axis::y);
+        }
+    }
+
+    if(isConstrainedInfoP2.isConstrained){
+        std::vector<PointConstraint> constraints = point_map[points[segment.getSecond()]];
+
+        for (Constraint c: constraints){
+            result(2) += c.getValue(points[segment.getSecond()])*c.isAffected(DOF::Axis::x);
+            result(3) += c.getValue(points[segment.getSecond()])*c.isAffected(DOF::Axis::y);
+        }
+    }
+
+    return result;
 }
 

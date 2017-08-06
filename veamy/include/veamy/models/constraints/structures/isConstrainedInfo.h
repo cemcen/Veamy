@@ -15,6 +15,10 @@ struct isConstrainedInfo{
     isConstrainedInfo(){
         isConstrained = false;
     }
+
+    isConstrainedInfo(bool i){
+        isConstrained = true;
+    }
 };
 
 

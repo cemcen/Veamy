@@ -1,6 +1,6 @@
-<h1> Veamy - A Virtual Element Method library for 2D linear elastostatics </h1>
-This repository contains the code for an open source library for the solution of 2D linear elasticity problems
-using Virtual Element Method.  
+<h1> Veamy: an extensible object-oriented C++ library for the virtual element method </h1>
+This repository contains the code for an open source C++ library that implements the virtual element method. The first 
+release of this library allows the solution of 2D linear elastostatic problems.  
 
 Features:
 <ul>
@@ -8,8 +8,10 @@ Features:
 diagram. The meshes can be created in arbitrary domains, with or without holes, 
 with procedurally generated points.</li>
 <li> Meshes can also be read from OFF-style text files (an example can be found in the test folder).</li>
-<li> It allows easy input of boundary conditions by constraining domain segments.</li>
+<li> It allows easy input of boundary conditions by constraining domain segments and nodes.</li>
 <li> The results of the computation can be either written into a file or used directly. </li>
+<li> PolyMesher meshes and boundary conditions can be read straightforwardly in Veamer to solve 2D linear elastostatic 
+problems.</li>
 </ul>
 
 <h2>Author</h2>
@@ -70,14 +72,14 @@ the boundary conditions:
 veamer.initProblem(mesh, conditions);</code></pre></li>
 <li>Compute the displacements: 
 <pre><code>Eigen::VectorXd displacements = veamer.simulate(m);</code></pre></li>
-<li>If required, print the obtained displacements in a text file:<br>
+<li>If required, print the obtained displacements to a text file:<br>
 <pre><code>veamer.writeDisplacements(fileName, displacements);</code></pre></li>
 </ol>
 
 The example presented previously can be found in the test folder alongside others. 
 
 <h2>Acknowledgements</h2>
-Veamy depends on three external open source libraries, which code is included in the repository. The mesher includes on:
+Veamy depends on three external open source libraries, whose code is included in the repository. 
 <ul>
 <li> <a href="https://www.cs.cmu.edu/~quake/triangle.html"> Triangle - A Two-Dimensional Quality Mesh Generator and 
 Delaunay Triangulator. </a></li>

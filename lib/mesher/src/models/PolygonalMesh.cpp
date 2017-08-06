@@ -14,6 +14,12 @@ void PolygonalMesh::createFromFile(std::string fileName) {
     std::string completeName = utilities::getPath() + fileName;
     std::ifstream infile(completeName);
 
+    createFromStream(infile);
+
+    infile.close();
+}
+
+void PolygonalMesh::createFromStream(std::ifstream &infile) {
     std::string line;
     std::getline(infile, line);
     int numberMeshPoints = std::atoi(line.c_str());
@@ -48,7 +54,6 @@ void PolygonalMesh::createFromFile(std::string fileName) {
     }
 
 }
-
 
 PolygonalMesh::PolygonalMesh(const PolygonalMesh &m) {
     this->points = m.getPoints();

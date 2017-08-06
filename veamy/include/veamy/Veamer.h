@@ -31,6 +31,8 @@ public:
     std::vector<Element> elements;
     Veamer();
 
+    void initProblemFromFile(std::string fileName, Material material);
+    void initProblemFromFile(std::string fileName, Material material, BodyForce* force);
     void initProblem(PolygonalMesh m, ProblemConditions conditions);
     Eigen::VectorXd simulate(PolygonalMesh &mesh);
 
