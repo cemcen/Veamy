@@ -19,9 +19,10 @@ void ConstraintsContainer::addConstraints(EssentialConstraints c, PolygonalMesh 
     this->essential = c;
 }
 
-void ConstraintsContainer::addConstrainedDOF(std::vector<Point> points, int DOF_index, DOF::Axis axis, SegmentPair pair) {
-    natural.addConstrainedDOF(points, DOF_index,axis,pair);
-    essential.addConstrainedDOF(points, DOF_index,axis,pair);
+void ConstraintsContainer::addConstrainedDOF(std::vector<Point> points, int DOF_index, DOF::Axis axis, SegmentPair pair,
+                                             int point_index) {
+    natural.addConstrainedDOF(points, DOF_index, axis, pair, point_index);
+    essential.addConstrainedDOF(points, DOF_index, axis, pair, point_index);
 }
 
 EssentialConstraints ConstraintsContainer::getEssentialConstraints() {

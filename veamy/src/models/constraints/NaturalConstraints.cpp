@@ -3,13 +3,13 @@
 NaturalConstraints::NaturalConstraints() {}
 
 Eigen::VectorXd NaturalConstraints::boundaryVector(std::vector<Point> points, Polygon p, IndexSegment segment) {
-    isConstrainedInfo constrainedInfo = isConstrained(points, segment);
+    isConstrainedInfo constrainedInfo = isConstrainedBySegment(points, segment);
 
     if(constrainedInfo.isConstrained){
         std::vector<int> polygonPoints = p.getPoints();
         int n = (int) polygonPoints.size();
 
-        std::vector<Constraint> constraints = segment_map[constrainedInfo.container];
+        std::vector<SegmentConstraint> constraints = segment_map[constrainedInfo.container];
 
         Eigen::MatrixXd Nbar;
         Nbar = Eigen::MatrixXd::Zero(2,2);

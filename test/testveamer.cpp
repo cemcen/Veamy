@@ -65,10 +65,10 @@ TEST(VeamerTest, ParabolicBeamExampleTest){
     Function* uYConstraint = new Function(uY);
 
     PointSegment leftSide(Point(0,-2), Point(0,2));
-    Constraint const1 (leftSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
+    SegmentConstraint const1 (leftSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
     essential.addConstraint(const1, mesh.getPoints());
 
-    Constraint const2 (leftSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
+    SegmentConstraint const2 (leftSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
     essential.addConstraint(const2, mesh.getPoints());
 
     NaturalConstraints natural;
@@ -76,7 +76,7 @@ TEST(VeamerTest, ParabolicBeamExampleTest){
     Function* tangencialLoad = new Function(tangencial);
     PointSegment rightSide(Point(8,-2), Point(8,2));
 
-    Constraint const3 (rightSide, mesh.getPoints(), Constraint::Direction::Vertical, tangencialLoad);
+    SegmentConstraint const3 (rightSide, mesh.getPoints(), Constraint::Direction::Vertical, tangencialLoad);
     natural.addConstraint(const3, mesh.getPoints());
 
     ConstraintsContainer container;
@@ -115,27 +115,27 @@ TEST(VeamerTest, ParabolicBeamPatchTest){
     Function* uYConstraint = new Function(uYPatch);
 
     PointSegment leftSide(Point(0,-2), Point(0,2));
-    Constraint leftX (leftSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
+    SegmentConstraint leftX (leftSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
     essential.addConstraint(leftX, mesh.getPoints());
-    Constraint  leftY (leftSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
+    SegmentConstraint  leftY (leftSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
     essential.addConstraint(leftY, mesh.getPoints());
 
     PointSegment downSide(Point(0,-2), Point(8,-2));
-    Constraint downX (downSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
+    SegmentConstraint downX (downSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
     essential.addConstraint(downX, mesh.getPoints());
-    Constraint  downY (downSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
+    SegmentConstraint  downY (downSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
     essential.addConstraint(downY, mesh.getPoints());
 
     PointSegment rightSide(Point(8,-2), Point(8, 2));
-    Constraint rightX (rightSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
+    SegmentConstraint rightX (rightSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
     essential.addConstraint(rightX, mesh.getPoints());
-    Constraint  rightY (rightSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
+    SegmentConstraint  rightY (rightSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
     essential.addConstraint(rightY, mesh.getPoints());
 
     PointSegment topSide(Point(0, 2), Point(8, 2));
-    Constraint topX (topSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
+    SegmentConstraint topX (topSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
     essential.addConstraint(topX, mesh.getPoints());
-    Constraint  topY (topSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
+    SegmentConstraint  topY (topSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
     essential.addConstraint(topY, mesh.getPoints());
 
     ConstraintsContainer container;
@@ -171,27 +171,27 @@ TEST(VeamerTest, UnitaryQuadrilateralTest){
     Function* uYConstraint = new Function(uYPatch);
 
     PointSegment leftSide(Point(0,-2), Point(0,2));
-    Constraint leftX (leftSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
+    SegmentConstraint leftX (leftSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
     essential.addConstraint(leftX, mesh.getPoints());
-    Constraint  leftY (leftSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
+    SegmentConstraint  leftY (leftSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
     essential.addConstraint(leftY, mesh.getPoints());
 
     PointSegment downSide(Point(0,-2), Point(8,-2));
-    Constraint downX (downSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
+    SegmentConstraint downX (downSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
     essential.addConstraint(downX, mesh.getPoints());
-    Constraint  downY (downSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
+    SegmentConstraint  downY (downSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
     essential.addConstraint(downY, mesh.getPoints());
 
     PointSegment rightSide(Point(8,-2), Point(8, 2));
-    Constraint rightX (rightSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
+    SegmentConstraint rightX (rightSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
     essential.addConstraint(rightX, mesh.getPoints());
-    Constraint  rightY (rightSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
+    SegmentConstraint  rightY (rightSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
     essential.addConstraint(rightY, mesh.getPoints());
 
     PointSegment topSide(Point(0, 2), Point(8, 2));
-    Constraint topX (topSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
+    SegmentConstraint topX (topSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
     essential.addConstraint(topX, mesh.getPoints());
-    Constraint  topY (topSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
+    SegmentConstraint  topY (topSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
     essential.addConstraint(topY, mesh.getPoints());
 
     ConstraintsContainer container;
@@ -222,9 +222,9 @@ TEST(VeamerTest, TwoQuadrilateralsTest){
     Function* uYConstraint = new Function(uYPatch);
 
     PointSegment leftSide(Point(0,0), Point(0,2));
-    Constraint leftX (leftSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
+    SegmentConstraint leftX (leftSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
     essential.addConstraint(leftX, mesh.getPoints());
-    Constraint  leftY (leftSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
+    SegmentConstraint  leftY (leftSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
     essential.addConstraint(leftY, mesh.getPoints());
 
     ConstraintsContainer container;
@@ -244,10 +244,10 @@ TEST(VeamerTest, EquilibriumPatchTest){
 
     EssentialConstraints essential;
     PointSegment downSide(Point(0,0), Point(1,0));
-    Constraint down (downSide, mesh.getPoints(), Constraint::Direction::Vertical, new Constant(0));
+    SegmentConstraint down (downSide, mesh.getPoints(), Constraint::Direction::Vertical, new Constant(0));
     essential.addConstraint(down, mesh.getPoints());
 
-    NaturalConstraints
+
 
     ConstraintsContainer container;
     container.addConstraints(essential, mesh);

@@ -12,4 +12,13 @@ struct intHasher {
     }
 };
 
+struct PointHasher {
+    std::size_t operator()(const Point &k) const {
+        using std::size_t;
+        using std::hash;
+
+        return utilities::hash32(k.getX()) | (utilities::hash32(k.getY()) << 15);
+    }
+};
+
 #endif

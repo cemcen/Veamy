@@ -17,8 +17,8 @@ Pair<int> DOFS::addDOF(ConstraintsContainer &constraints, std::vector<Point> poi
     int newIndex = list.push_back(newDOF);
     list.push_back(newDOF2);
 
-    constraints.addConstrainedDOF(points, newIndex, DOF::Axis::x, pair);
-    constraints.addConstrainedDOF(points, newIndex+1, DOF::Axis::y, pair);
+    constraints.addConstrainedDOF(points, newIndex, DOF::Axis::x, pair, point_index);
+    constraints.addConstrainedDOF(points, newIndex + 1, DOF::Axis::y, pair, point_index);
 
     occupied_point_indexes[point_index] = newIndex;
     Pair<int> dofPair(newIndex, newIndex+1);

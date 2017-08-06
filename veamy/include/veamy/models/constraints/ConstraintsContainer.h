@@ -16,7 +16,8 @@ public:
     void addConstraints(NaturalConstraints c, PolygonalMesh mesh);
     void addConstraints(EssentialConstraints c, PolygonalMesh mesh);
 
-    void addConstrainedDOF(std::vector<Point> points, int DOF_index,DOF::Axis axis, SegmentPair pair);
+    void addConstrainedDOF(std::vector<Point> points, int DOF_index, DOF::Axis axis, SegmentPair pair,
+                               int point_index);
 
     EssentialConstraints getEssentialConstraints();
     NaturalConstraints getNaturalConstraints();
