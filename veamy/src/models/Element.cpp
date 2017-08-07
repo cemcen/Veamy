@@ -35,9 +35,6 @@ void Element::computeK(DOFS d, UniqueList<Point> points, ProblemConditions &cond
 
     double area = p.getArea();
 
-    //std::cout << "Area" << std::endl;
-    //std::cout << area << std::endl << std::endl;
-
     Eigen::MatrixXd Hr;
     Eigen::MatrixXd Wr;
     Eigen::MatrixXd Hc;
@@ -62,11 +59,6 @@ void Element::computeK(DOFS d, UniqueList<Point> points, ProblemConditions &cond
 
         double p = xpoly_utilities::crossProduct(middleP, Point(prevNormal.first, prevNormal.second));
         double ne = xpoly_utilities::crossProduct(middleN, Point(nextNormal.first, nextNormal.second));
-
-        /*std::cout <<  utilities::toString(prevNormal.first) << " " << utilities::toString(prevNormal.second) << std::endl;
-
-        std::cout << utilities::toString(xpoly_utilities::norm(Point(prevNormal.first, prevNormal.second))) << std::endl;
-        std::cout << utilities::toString(xpoly_utilities::norm(Point(nextNormal.first, nextNormal.second))) << std::endl;*/
 
         double prevLength = prev.getLength(points.getList());
         double nextLength = next.getLength(points.getList());
@@ -109,16 +101,6 @@ void Element::computeK(DOFS d, UniqueList<Point> points, ProblemConditions &cond
     Pr = Hr*(Wr.transpose());
     Pc = Hc*(Wc.transpose());
 
-    /*std::cout << "Hr" << std::endl;
-    std::cout << Hr << std::endl << std::endl;
-
-    std::cout << "Hc" << std::endl;
-    std::cout << Hc << std::endl << std::endl;
-
-    std::cout << "Wr" << std::endl;
-    std::cout << Wr.transpose() << std::endl << std::endl;*/
-
-
     Pp = Pc + Pr;
 
     Eigen::MatrixXd D = conditions.material.getMaterialMatrix();
@@ -133,10 +115,6 @@ void Element::computeK(DOFS d, UniqueList<Point> points, ProblemConditions &cond
 
     this->K = area*Wc*D*Wc.transpose() + Stability;
     this->Ks = Stability;
-
-    //std::cout << K << std::endl << std::endl;
-    //std::cout << area*Wc*D*Wc.transpose() << std::endl << std::endl;
-    //std::cout << Ks << std::endl << std::endl;
 }
 
 void Element::computeF(DOFS d, UniqueList<Point> points, ProblemConditions &conditions) {
@@ -183,9 +161,6 @@ void Element::checkStability(DOFS dofs, Eigen::VectorXd x) {
         int dof_index = dofs.get(i).globalIndex();
         solution(i) = x[dof_index];
     }
-
-    //std::cout << Ks*solution << std::endl;
-
 }
 
 

@@ -40,7 +40,7 @@ void PolygonalMesh::createFromStream(std::ifstream &infile) {
 
         std::vector<int> polygonPoints;
         for (int j = 1; j < splittedLine.size(); ++j) {
-            polygonPoints.push_back(std::atoi(splittedLine[j].c_str()));
+            polygonPoints.push_back(std::atoi(splittedLine[j].c_str()) - 1);
         }
 
         Polygon newPolygon(polygonPoints, this->points.getList());

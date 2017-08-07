@@ -265,3 +265,14 @@ TEST(VeamerTest, EquilibriumPatchTest){
     v.initProblem(mesh, conditions);
     v.simulate(mesh);
 }
+
+TEST(VeamerTest, PolyMesherTest){
+    Veamer v;
+    Material m(3e7, 0.3);
+
+    PolygonalMesh mesh = v.initProblemFromFile("polymesher2veamy.txt", m);
+    mesh.printInFile("mesh.txt");
+    Eigen::VectorXd x = v.simulate(mesh);
+    std::string fileName = "displacements.txt";
+    v.writeDisplacements(fileName, x);
+}
