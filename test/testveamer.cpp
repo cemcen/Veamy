@@ -56,7 +56,7 @@ TEST(VeamerTest, ParabolicBeamExampleTest){
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
     TriangleMeshGenerator meshGenerator = TriangleMeshGenerator (seeds, rectangle4x8);
     PolygonalMesh mesh = meshGenerator.getMesh();
-    mesh.printInFile("rectangle4x8ConstantAlternating.txt");
+    mesh.printInFile("mesh24x12.txt");
 
     Veamer v;
 
@@ -88,9 +88,9 @@ TEST(VeamerTest, ParabolicBeamExampleTest){
 
     v.initProblem(mesh, conditions);
 
-    //Eigen::VectorXd x = v.simulate(mesh);
-    //std::string fileName = "displacement.txt";
-    //v.writeDisplacements(fileName, x);
+    Eigen::VectorXd x = v.simulate(mesh);
+    std::string fileName = "parabolic24x12.txt";
+    v.writeDisplacements(fileName, x);
     std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
     std::cout << duration << std::endl;
@@ -268,7 +268,7 @@ TEST(VeamerTest, EquilibriumPatchTest){
 
 TEST(VeamerTest, PolyMesherTest){
     Veamer v;
-    Material m(3e7, 0.3);
+    Material m(1e7, 0.3);
 
     PolygonalMesh mesh = v.initProblemFromFile("polymesher2veamy.txt", m);
     mesh.printInFile("mesh.txt");

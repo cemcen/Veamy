@@ -119,10 +119,11 @@ void Element::computeK(DOFS d, UniqueList<Point> points, ProblemConditions &cond
 
 void Element::computeF(DOFS d, UniqueList<Point> points, ProblemConditions &conditions) {
     int n = this->p.numberOfSides();
+    int m = this->dofs.size();
     std::vector<IndexSegment> segments;
     this->p.getSegments(segments);
 
-    this->f = Eigen::VectorXd::Zero(this->dofs.size());
+    this->f = Eigen::VectorXd::Zero(m);
     Eigen::VectorXd bodyForce = conditions.f->computeVector(p, points.getList());
 
     NaturalConstraints natural = conditions.constraints.getNaturalConstraints();
@@ -131,9 +132,9 @@ void Element::computeF(DOFS d, UniqueList<Point> points, ProblemConditions &cond
         Eigen::VectorXd naturalConditions = natural.boundaryVector(points.getList(), this->p, segments[i]);
 
         this->f(2*i) =  bodyForce(2*i) + naturalConditions(0);
-        this->f((2*i + 1)%n) = bodyForce(2*i+1) + naturalConditions(1);
-        this->f((2*(i+1))%n) =  naturalConditions(2);
-        this->f((2*(i+1) + 1)%n) =  naturalConditions(3);
+        this->f((2*i + 1)%m) = bodyForce(2*i+1) + naturalConditions(1);
+        this->f((2*(i+1))%m) =  naturalConditions(2);
+        this->f((2*(i+1) + 1)%m) =  naturalConditions(3);
 
     }
 }

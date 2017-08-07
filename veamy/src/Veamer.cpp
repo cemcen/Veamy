@@ -27,17 +27,17 @@ PolygonalMesh Veamer::initProblemFromFile(std::string fileName, Material materia
         std::getline(infile, line);
         std::vector<std::string> splittedLine = utilities::split(line, ' ');
 
-        if(splittedLine[1] == "0" && splittedLine[2] == "0"){
+        if(splittedLine[1] == "1" && splittedLine[2] == "1"){
             Point p = mesh.getPoint(std::atoi(splittedLine[0].c_str()) - 1);
             constrainedPointsXY.push_back(p);
         }
 
-        if(splittedLine[1] == "0" && splittedLine[2] == "1"){
+        if(splittedLine[1] == "1" && splittedLine[2] == "0"){
             Point p = mesh.getPoint(std::atoi(splittedLine[0].c_str()) - 1);
             constrainedPointsX.push_back(p);
         }
 
-        if(splittedLine[1] == "1" && splittedLine[2] == "0"){
+        if(splittedLine[1] == "0" && splittedLine[2] == "1"){
             Point p = mesh.getPoint(std::atoi(splittedLine[0].c_str()) - 1);
             constrainedPointsY.push_back(p);
         }
@@ -112,6 +112,8 @@ Eigen::VectorXd Veamer::simulate(PolygonalMesh &mesh) {
         elements[i].assemble(DOFs, K, f);
     }
 
+    //std::cout << K << std::endl;
+
     //Apply constrained_points
     EssentialConstraints essential = this->conditions.constraints.getEssentialConstraints();
     std::vector<int> c = essential.getConstrainedDOF();
@@ -130,7 +132,7 @@ Eigen::VectorXd Veamer::simulate(PolygonalMesh &mesh) {
         f(c[j]) = boundary_values(j);
     }
 
-     //Solve the system
+    //Solve the system
     Eigen::VectorXd x = K.fullPivHouseholderQr().solve(f);
 
     // Deform mesh
