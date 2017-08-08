@@ -66,11 +66,11 @@
 %
 % Input
 % =====
-% Node    : name of the file containing the polygonal mesh (string)
-% Element : name of the file containing the nodal displacements (string)
-% NElem   : title for the plot of nodal results in the X direction
-% Supp    : title for the plot of nodal results in the Y direction
-% Load    : title for the plot of the norm of nodal results
+% Node    : PolyMesher array containing the polygonal mesh
+% Element : PolyMesher cell array containing the nodal displacements 
+% NElem   : number of polygonal elements
+% Supp    : PolyMesher array containing nodal support conditions (0=free,1=fixed)
+% Load    : PolyMesher array containing nodal loads
 %
 % Output
 % ======
@@ -96,7 +96,7 @@ for el = 1:NElem
   end
   fprintf(fid,'%d\n', Element{el}(NVertex));
 end
-NFix = size(Supp,1);                   %Nodal constraints ( 0 = fixed, 1 = free)
+NFix = size(Supp,1);                   %Nodal constraints ( 0 = free, 1 = fixed)
 fprintf(fid,'%d\n',NFix);
 for fixnode = 1:NFix
   fprintf(fid,'%d %d %d\n', Supp(fixnode,1), Supp(fixnode,2),...
