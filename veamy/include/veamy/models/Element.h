@@ -21,15 +21,13 @@ private:
     Polygon p;
 
     Eigen::VectorXd f;
+    Eigen::MatrixXd K;
 public:
-    Eigen::MatrixXd K, Ks;
-
     Element(ProblemConditions &conditions, Polygon &p, UniqueList<Point> &points, DOFS &out);
     Element(Polygon& p);
     void assemble(DOFS out, Eigen::MatrixXd &Kglobal, Eigen::VectorXd &Fglobal);
     void computeK(DOFS d, UniqueList<Point> points, ProblemConditions &conditions);
     void computeF(DOFS d, UniqueList<Point> points, ProblemConditions &conditions);
-    void checkStability(DOFS dofs, Eigen::VectorXd x);
     Polygon getAssociatedPolygon();
 };
 

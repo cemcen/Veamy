@@ -112,8 +112,6 @@ Eigen::VectorXd Veamer::simulate(PolygonalMesh &mesh) {
         elements[i].assemble(DOFs, K, f);
     }
 
-    //std::cout << K << std::endl;
-
     //Apply constrained_points
     EssentialConstraints essential = this->conditions.constraints.getEssentialConstraints();
     std::vector<int> c = essential.getConstrainedDOF();

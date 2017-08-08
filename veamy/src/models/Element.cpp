@@ -30,9 +30,6 @@ void Element::computeK(DOFS d, UniqueList<Point> points, ProblemConditions &cond
     int n = (int) polygonPoints.size();
     Point average = p.getAverage(points.getList());
 
-    std::cout << std::fixed;
-    std::cout << std::setprecision(4);
-
     double area = p.getArea();
 
     Eigen::MatrixXd Hr;
@@ -108,13 +105,11 @@ void Element::computeK(DOFS d, UniqueList<Point> points, ProblemConditions &cond
     VeamyConfig* config = VeamyConfig::instance();
     double c = (Hc.transpose()*Hc).trace();
     double alphaS = area*conditions.material.trace()/c;
+
     Eigen::MatrixXd Se;
     Se = config->getGamma()*alphaS*I;
-    Eigen::MatrixXd Stability;
-    Stability = (I - Pp).transpose()*Se*(I - Pp);
 
-    this->K = area*Wc*D*Wc.transpose() + Stability;
-    this->Ks = Stability;
+    this->K = area*Wc*D*Wc.transpose() + (I - Pp).transpose()*Se*(I - Pp);
 }
 
 void Element::computeF(DOFS d, UniqueList<Point> points, ProblemConditions &conditions) {
@@ -131,11 +126,10 @@ void Element::computeF(DOFS d, UniqueList<Point> points, ProblemConditions &cond
     for (int i = 0; i < n; ++i) {
         Eigen::VectorXd naturalConditions = natural.boundaryVector(points.getList(), this->p, segments[i]);
 
-        this->f(2*i) =  bodyForce(2*i) + naturalConditions(0);
-        this->f((2*i + 1)%m) = bodyForce(2*i+1) + naturalConditions(1);
-        this->f((2*(i+1))%m) =  naturalConditions(2);
-        this->f((2*(i+1) + 1)%m) =  naturalConditions(3);
-
+        this->f(2*i) = this->f(2*i) + bodyForce(2*i) + naturalConditions(0);
+        this->f((2*i + 1)%m) = this->f((2*i + 1)%m) + bodyForce(2*i+1) + naturalConditions(1);
+        this->f((2*(i+1))%m) =  this->f((2*(i+1))%m) + naturalConditions(2);
+        this->f((2*(i+1) + 1)%m) =  this->f((2*(i+1) + 1)%m) + naturalConditions(3);
     }
 }
 
@@ -145,24 +139,15 @@ void Element::assemble(DOFS out, Eigen::MatrixXd &Kglobal, Eigen::VectorXd &Fglo
 
         for (int j = 0; j < this->K.cols(); j++) {
             int globalJ = out.get(this->dofs[j]).globalIndex();
-            double val = Kglobal(globalI, globalJ) + this->K(i, j);
 
-            Kglobal(globalI, globalJ) = val;
+            Kglobal(globalI, globalJ) = Kglobal(globalI, globalJ) + this->K(i, j);
         }
 
         Fglobal(globalI) = Fglobal(globalI) + this->f(i);
     }
 }
 
-void Element::checkStability(DOFS dofs, Eigen::VectorXd x) {
-    Eigen::VectorXd solution;
-    solution = Eigen::VectorXd::Zero(this->dofs.size());
 
-    for(int i=0;i<this->dofs.size();i++){
-        int dof_index = dofs.get(i).globalIndex();
-        solution(i) = x[dof_index];
-    }
-}
 
 
 

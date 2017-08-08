@@ -14,7 +14,9 @@ public:
     Material();
 
     Eigen::MatrixXd getMaterialMatrix();
+    Eigen::MatrixXd getPlaneStressMatrix();
     double trace();
+    double tracePlaneStress();
 
     double k();
     double v();

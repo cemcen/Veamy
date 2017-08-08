@@ -34,7 +34,7 @@ NaturalConstraints::boundaryVector(std::vector<Point> points, Polygon p, IndexSe
         Eigen::VectorXd resultSecond = length*(Nbar.transpose()*hSecond);
 
         result << resultFirst, resultSecond;
-    }else{
+    } else {
         result = Eigen::VectorXd::Zero(4);
     }
 

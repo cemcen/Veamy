@@ -66,8 +66,8 @@
 %
 % Input
 % =====
-% Node    : PolyMesher array containing the polygonal mesh
-% Element : PolyMesher cell array containing the nodal displacements 
+% Node    : PolyMesher array containing the nodal coordinates
+% Element : PolyMesher cell array containing the element connectivity 
 % NElem   : number of polygonal elements
 % Supp    : PolyMesher array containing nodal support conditions (0=free,1=fixed)
 % Load    : PolyMesher array containing nodal loads

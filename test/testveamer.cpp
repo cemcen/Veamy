@@ -13,7 +13,8 @@ double tangencial(double x, double y){
     double D =  4;
     double I = std::pow(D,3)/12;
 
-    return P/(2*I)*(std::pow(D,2)/4-std::pow(y,2));
+    double value = std::pow(D,2)/4-std::pow(y,2);
+    return P/(2*I)*value;
 }
 
 double uX(double x, double y){
@@ -23,7 +24,6 @@ double uX(double x, double y){
     double D = 4;
     double L = 8;
     double I = std::pow(D,3)/12;
-
 
     return -P*y/(6*Ebar*I)*((6*L - 3*x)*x + (2+vBar)*std::pow(y,2) - 3*std::pow(D,2)/2*(1+vBar));
 }
@@ -48,7 +48,6 @@ double uYPatch(double x, double y){
 }
 
 TEST(VeamerTest, ParabolicBeamExampleTest){
-    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
     std::vector<Point> rectangle4x8_points = {Point(0, -2), Point(8, -2), Point(8, 2), Point(0, 2)};
     Region rectangle4x8(rectangle4x8_points);
     rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 24, 12);
@@ -91,14 +90,10 @@ TEST(VeamerTest, ParabolicBeamExampleTest){
     Eigen::VectorXd x = v.simulate(mesh);
     std::string fileName = "parabolic24x12.txt";
     v.writeDisplacements(fileName, x);
-    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
-    std::cout << duration << std::endl;
 }
 
 
 TEST(VeamerTest, ParabolicBeamPatchTest){
-    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
     std::vector<Point> rectangle4x8_points = {Point(0, -2), Point(8, -2), Point(8, 2), Point(0, 2)};
     Region rectangle4x8(rectangle4x8_points);
     rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 24, 12);
@@ -149,9 +144,6 @@ TEST(VeamerTest, ParabolicBeamPatchTest){
     Eigen::VectorXd x = v.simulate(mesh);
     std::string fileName = "displacement.txt";
     v.writeDisplacements(fileName, x);
-    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
-    std::cout << duration << std::endl;
 }
 
 TEST(VeamerTest, UnitaryQuadrilateralTest){
@@ -257,13 +249,16 @@ TEST(VeamerTest, EquilibriumPatchTest){
 
     ConstraintsContainer container;
     container.addConstraints(essential, mesh);
+    container.addConstraints(natural, mesh);
 
     Material m(3e7, 0.3);
     ProblemConditions conditions(container, m);
 
     Veamer v;
     v.initProblem(mesh, conditions);
-    v.simulate(mesh);
+    Eigen::VectorXd x = v.simulate(mesh);
+    std::string fileName = "equilibriumPatchTest.txt";
+    v.writeDisplacements(fileName, x);
 }
 
 TEST(VeamerTest, PolyMesherTest){
