@@ -54,7 +54,8 @@ TriangleMeshGenerator generator (region.getSeedPoints(), region);
 PolygonalMesh mesh = generator.getMesh();</code></pre></li>
 <li>If using an externally generated mesh, for example, from PolyMesher. It is important to note that material properties
 are needed in this case: 
-<pre><code>PolygonalMesh mesh = v.initProblemFromFile("polymesher2veamy.txt", Material(E,v)); </code></pre>
+<pre><code>Veamer v;
+PolygonalMesh mesh = v.initProblemFromFile("polymesher2veamy.txt", Material(E,v)); </code></pre>
 <li>Create a boundary conditions container and fill it as desired: <br>
 <pre><code>EssentialConstraints e; NaturalConstraints n;
 PointSegment leftSide (Point(0,0), Point(0,1));
