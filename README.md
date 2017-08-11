@@ -8,7 +8,7 @@ Features:
 diagram. The meshes can be created in arbitrary domains, with or without holes, 
 with procedurally generated points.</li>
 <li> Meshes can also be read from OFF-style text files (an example can be found in the test folder).</li>
-<li> It allows easy input of boundary conditions by constraining domain segments and nodes.</li>
+<li> Allows easy input of boundary conditions by constraining domain segments and nodes.</li>
 <li> The results of the computation can be either written into a file or used directly. </li>
 <li> PolyMesher meshes and boundary conditions can be read straightforwardly in Veamer to solve 2D linear elastostatic 
 problems.</li>
@@ -52,10 +52,7 @@ Region region(points);
 region.generateSeedPoints(PointGenerator(functions::random_double(), functions::random_double()), 10, 10);
 TriangleMeshGenerator generator (region.getSeedPoints(), region);
 PolygonalMesh mesh = generator.getMesh();</code></pre></li>
-<li>If using an externally generated mesh, for example, from PolyMesher. It is important to note that material properties
-are needed in this case: 
-<pre><code>Veamer v;
-PolygonalMesh mesh = v.initProblemFromFile("polymesher2veamy.txt", Material(E,v)); </code></pre>
+<li>If using an externally generated mesh, for example, from PolyMesher, refer to the next section of this tutorial. </li>
 <li>Create a boundary conditions container and fill it as desired: <br>
 <pre><code>EssentialConstraints e; NaturalConstraints n;
 PointSegment leftSide (Point(0,0), Point(0,1));
@@ -77,9 +74,22 @@ veamer.initProblem(mesh, conditions);</code></pre></li>
 <pre><code>Eigen::VectorXd displacements = veamer.simulate(m);</code></pre></li>
 <li>If required, print the obtained displacements to a text file:<br>
 <pre><code>veamer.writeDisplacements(fileName, displacements);</code></pre></li>
+<li>The results can be plotted using the Matlab function <b>plotPolyMeshDisplacements</b>:
+<pre><code>[points,polygons,displacements] = plotPolyMeshDisplacements('mesh.txt','displacements.txt','$u_x^h$','$u_y^h$','$||u^h||$');</code></pre>
 </ol>
 
 The example presented previously can be found in the test folder alongside others. 
+
+<h2>Using PolyMesher</h2>
+<ol>
+<li>Use the Matlab function PolyMesher2Veamy included  in the <b>polymesher</b> folder and use it to generate a Veamer-format file, which
+default name is "polymesher2veamy.txt", from PolyMesher. </li>
+<li>Using the previously generated file as parameter of the <b>initProblemFromFile</b> method of the <b>Veamer</b> class. It 
+requires the definition of the material properties, and, in the case the problem includes them, a body force pointer:
+<pre><code>Veamer v;
+PolygonalMesh mesh = v.initProblemFromFile("polymesher2veamy.txt", Material(1e7,0.3)); </code></pre></li>
+<li>Proceed exactly as shown from step 5 forward, as boundary conditions are already defined.</li>
+</ol>
 
 <h2>Acknowledgements</h2>
 Veamy depends on three external open source libraries, whose code is included in the repository. 
