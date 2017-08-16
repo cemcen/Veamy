@@ -98,12 +98,11 @@ void Veamer::insertElement(Polygon p, int index) {
 }
 
 Eigen::VectorXd Veamer::simulate(PolygonalMesh &mesh) {
-    Eigen::MatrixXd K, Ks;
+    Eigen::MatrixXd K;
     Eigen::VectorXd f;
     int n = this->DOFs.size();
 
     K = Eigen::MatrixXd::Zero(n,n);
-    Ks = Eigen::MatrixXd::Zero(n,n);
     f = Eigen::VectorXd::Zero(n);
 
     for(int i=0;i<elements.size();i++){
