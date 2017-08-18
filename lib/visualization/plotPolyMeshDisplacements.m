@@ -46,10 +46,14 @@
 % This code has been used for plots production in Ref. [1].
 %
 % [1] A. Ortiz-Bernardin, C. Alvarez, N. Hitschfeld-Kahler, A. Russo, 
-%     R. Silva, A. Olate-Sanzana, "Veamy: an extensible object-oriented 
-%     C++ library for the virtual element method," XX-XX-XX-XX 2017; 
-%     XX(XX):XX-XX. http://camlab.cl/research/software/veamy
+%     R. Silva, A. Olate-Sanzana. Veamy: an extensible object-oriented 
+%     C++ library for the virtual element method. arXiv:1708.03438 [cs.MS]
 %
+% Part of this code has been taken from the plot_solution.m function provided in
+% the source code of:
+%
+% [2] O. J. Sutton. The virtual element method in 50 lines of MATLAB.
+%     Numerical Algorithms 2017; 75(4):1141–1159
 %-------------------------------------------------------------------------------
 % Purpose
 % =======
@@ -65,9 +69,9 @@
 % =====
 % meshfile : name of the file containing the polygonal mesh (string)
 % dispFile : name of the file containing the nodal displacements (string)
-% titleResultX : title for the plot of nodal results in the X direction
-% titleResultY : title for the plot of nodal results in the Y direction
-% titleResultNorm : title for the plot of the norm of nodal results
+% titleResultX : title for the plot of nodal results in the X direction (latex format)
+% titleResultY : title for the plot of nodal results in the Y direction (latex format)
+% titleResultNorm : title for the plot of the norm of nodal results (latex format)
 %
 % Output
 % ======
@@ -116,7 +120,7 @@ function [points,polygons,displacements] = ...
     displacementsY(index) = values(3);
   end 
   %set(gcf,'Renderer','painters')
-  figure; title(titleResultNorm,'Interpreter','latex','FontSize',16);
+  figure; title(titleResultNorm,'Interpreter','latex','FontSize',18);
   maxNumVertices = max(cellfun(@numel,polygons));
   padFunc = @(vertList) [vertList' NaN(1,maxNumVertices-numel(vertList))];
   elements = cellfun(padFunc,polygons,'UniformOutput',false);
@@ -129,11 +133,14 @@ function [points,polygons,displacements] = ...
   ylim([min(points(:, 2)) - 2.5, max(points(:, 2)) + 2.5])  
   zlim([min(displacements) - 0.1, max(displacements) + 0.1])
   %zlim([min(displacements) - 100, max(displacements) + 100])
-  xlabel('x','FontSize',14); ylabel('y','FontSize',14); zlabel('u','FontSize',14);
+  xlabel('$x$','Interpreter','latex','FontSize',18); 
+  ylabel('$y$','Interpreter','latex','FontSize',18); 
+  zlabel('$u$','Interpreter','latex','FontSize',18);
   colorbar
   colormap jet
   set(gcf,'Renderer','painters')    
-  figure; title(titleResultX,'Interpreter','latex','FontSize',16);
+  set(gca, 'FontSize', 12);
+  figure; title(titleResultX,'Interpreter','latex','FontSize',18);
   maxNumVertices = max(cellfun(@numel,polygons));
   padFunc = @(vertList) [vertList' NaN(1,maxNumVertices-numel(vertList))];
   elements = cellfun(padFunc,polygons,'UniformOutput',false);
@@ -145,11 +152,14 @@ function [points,polygons,displacements] = ...
   xlim([min(points(:,1)) - 0.5, max(points(:,1)) + 0.5])
   ylim([min(points(:,2)) - 2.5, max(points(:,2)) + 2.5])
   zlim([min(displacementsX) - 0.1, max(displacementsX) + 0.1])
-  xlabel('x','FontSize',14); ylabel('y','FontSize',14); zlabel('u','FontSize',14);
+  xlabel('$x$','Interpreter','latex','FontSize',18); 
+  ylabel('$y$','Interpreter','latex','FontSize',18); 
+  zlabel('$u$','Interpreter','latex','FontSize',18);
   colorbar
   colormap jet
   set(gcf,'Renderer','painters')  
-  figure; title(titleResultY,'Interpreter','latex','FontSize',16);
+  set(gca, 'FontSize', 12);
+  figure; title(titleResultY,'Interpreter','latex','FontSize',18);
   maxNumVertices = max(cellfun(@numel,polygons));
   padFunc = @(vertList) [vertList' NaN(1,maxNumVertices-numel(vertList))];
   elements = cellfun(padFunc,polygons,'UniformOutput',false);
@@ -161,8 +171,11 @@ function [points,polygons,displacements] = ...
   xlim([min(points(:,1)) - 0.5, max(points(:,1)) + 0.5])
   ylim([min(points(:,2)) - 2.5, max(points(:,2)) + 2.5])
   zlim([min(displacementsY) - 0.1, max(displacementsY) + 0.1])
-  xlabel('x','FontSize',14); ylabel('y','FontSize',14); zlabel('u','FontSize',14);
+  xlabel('$x$','Interpreter','latex','FontSize',18); 
+  ylabel('$y$','Interpreter','latex','FontSize',18); 
+  zlabel('$u$','Interpreter','latex','FontSize',18);
   colorbar
   colormap jet
   set(gcf,'Renderer','painters')    
+  set(gca, 'FontSize', 12);  
 end

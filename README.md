@@ -60,7 +60,7 @@ Constraint leftConstraint (leftSide, mesh.getPoints(), Constraint::Direction::To
 PointSegment rightSide (Point(1,0), Point(1,1));
 Constraint rightConstraint (rightSide, mesh.getPoints(), Constraint::Direction::Horizontal, new Constant(1000));
 e.addConstraint(leftConstraint, mesh.getPoints());
-n.addConstraint(rightConstraint, m.getPoints());
+n.addConstraint(rightConstraint, mesh.getPoints());
 ConstraintsContainer container;
 container.addConstraints(e, mesh);
 container.addConstraints(n, mesh);</code></pre></li>
@@ -71,7 +71,7 @@ the boundary conditions:
 <pre><code>Veamer veamer;
 veamer.initProblem(mesh, conditions);</code></pre></li>
 <li>Compute the displacements: 
-<pre><code>Eigen::VectorXd displacements = veamer.simulate(m);</code></pre></li>
+<pre><code>Eigen::VectorXd displacements = veamer.simulate(mesh);</code></pre></li>
 <li>If required, print the obtained displacements to a text file:<br>
 <pre><code>veamer.writeDisplacements(fileName, displacements);</code></pre></li>
 <li>The results can be plotted using the Matlab function <b>plotPolyMeshDisplacements</b>:
@@ -88,7 +88,7 @@ default name is "polymesher2veamy.txt", from PolyMesher. </li>
 requires the definition of the material properties, and, in the case the problem includes them, a body force pointer:
 <pre><code>Veamer v;
 PolygonalMesh mesh = v.initProblemFromFile("polymesher2veamy.txt", Material(1e7,0.3)); </code></pre></li>
-<li>Proceed exactly as shown from step 5 forward, as boundary conditions are already defined.</li>
+<li>Proceed exactly as shown from step 6 forward, as boundary conditions are already defined.</li>
 </ol>
 
 <h2>Acknowledgements</h2>
