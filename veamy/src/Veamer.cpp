@@ -129,8 +129,10 @@ Eigen::VectorXd Veamer::simulate(PolygonalMesh &mesh) {
         f(c[j]) = boundary_values(j);
     }
 
-    //Solve the system
-    Eigen::VectorXd x = K.fullPivHouseholderQr().solve(f);
+    /*Solve the system: There are various solvers available. The commented one is the slowest but most accurate. We
+    leave ldlt as it has the better trade off between speed and accuracy.*/
+    //Eigen::VectorXd x = K.fullPivHouseholderQr().solve(f);
+    Eigen::VectorXd x = K.ldlt().solve(f);
 
     // Deform mesh
     for (int k = 0; k < x.rows(); k = k + 2) {
