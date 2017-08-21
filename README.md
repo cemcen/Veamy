@@ -24,10 +24,10 @@ problems.</li>
 the documentation and use:
 <pre><code> make trilibrary </code></pre> 
 <li> Move the file to the <b>triangle</b> folder inside the <b>lib/mesher</b> folder.</li>
-<li> Once in the directory of the library, create the <b>build</b> folder. </li>
-<li> Inside the <b>build</b> folder:
+<li> Return to the root directory of the extracted files, create the <b>build</b> folder, alongside lib/ and veamy/. </li>
+<li> Inside the <b>build</b> folder (the installation requires sudo):
 <pre><code>cmake ..
-make</code></pre></li></ol>
+make install</code></pre></li></ol>
 
 <h3>For Windows:</h3>
 <ol>
@@ -37,10 +37,10 @@ make</code></pre></li></ol>
 ways to do this, but the recommended one is to use MinGW (32 or 64 depending on your system), and use the mingw-gcc executable:
 <pre><code> mingw-gcc -O -DNO_TIMER -DTRILIBRARY -c -o triangle.o triangle.c </code></pre> 
 <li> Move the file to the <b>triangle</b> folder inside the <b>lib/mesher</b> folder.</li>
-<li> Once in the directory of the library, create the <b>build</b> folder. </li>
+<li> Return to the root directory of the extracted files, create the <b>build</b> folder, alongside lib/ and veamy/. </li>
 <li> Inside the <b>build</b> folder, using the Command Line:
 <pre><code>cmake -G "MinGW MakeFiles" ..
-mingw32-make</code></pre></li></ol>
+mingw32-make install</code></pre></li></ol>
 
 
 <h2>Usage example</h2>

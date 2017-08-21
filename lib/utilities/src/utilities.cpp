@@ -8,6 +8,7 @@
 #include <ctime>
 #include <random>
 #include <math.h>
+#include <vector>
 
 namespace utilities {
     int random_integer(int min, int max){
@@ -23,7 +24,7 @@ namespace utilities {
                 std::string path = std::getenv("USERPROFILE");
                 return  path + "\\";
         #elif defined(__linux__)
-                std::string psth = std::getenv("HOME");
+                std::string path = std::getenv("HOME");
                 return path + "/";
         #endif
     }

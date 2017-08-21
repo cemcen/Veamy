@@ -15,6 +15,5 @@ install(TARGETS triangle EXPORT TriangleConfig
         ARCHIVE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY  DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME  DESTINATION ${CMAKE_INSTALL_BINDIR})  # This is for Windows
-install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(EXPORT TriangleConfig DESTINATION share/TriangleConfig/cmake)
 export(TARGETS triangle FILE TriangleConfig.cmake)
