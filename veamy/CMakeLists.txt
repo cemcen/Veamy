@@ -18,6 +18,12 @@ target_include_directories(libveamy PUBLIC
 # Depend on a library that we defined in the top-level file
 target_link_libraries(libveamy libmesher libutilities)
 
+#add_custom_target(libveamy_target ALL
+#        COMMAND ${CMAKE_AR} rc libveamy_target.a $<TARGET_FILE:libutilities> $<TARGET_FILE:libpoly> $<TARGET_FILE:libvem>)
+
+#add_library(libveamy STATIC IMPORTED)
+#set_target_properties(libveamy PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/libveamy_target.a)
+
 # 'make install' to the correct locations (provided by GNUInstallDirs).
 install(TARGETS libveamy EXPORT VeamyConfig
         ARCHIVE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -30,6 +36,4 @@ install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 # Put config file in per-project dir (name MUST match), can also
 # just go into 'cmake'.
 install(EXPORT VeamyConfig DESTINATION share/VeamyConfig/cmake)
-
-# This makes the project importable from the build directory
 export(TARGETS libveamy FILE VeamyConfig.cmake)

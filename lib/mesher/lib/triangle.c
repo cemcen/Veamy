@@ -1340,7 +1340,7 @@ int minus1mod3[3] = {2, 0, 1};
 /*                                                                           */
 /*  (2)  Define the symbol EXTERNAL_TEST (either by adding the definition    */
 /*  to this file, or by using the appropriate compiler switch).  This way,   */
-/*  you can compile triangle.c separately from your test.  Write your own    */
+/*  you can compile triangle.c separately from your google_test.  Write your own    */
 /*  `triunsuitable' procedure in a separate C file (using the same prototype */
 /*  as below).  Compile it and link the object code with triangle.o.         */
 /*                                                                           */
@@ -1694,7 +1694,7 @@ void info()
 "        link Triangle with a separate object file that implements\n");
   printf(
 "        triunsuitable().  In either case, the -u switch causes the user-\n");
-  printf("        defined test to be applied to every triangle.\n");
+  printf("        defined google_test to be applied to every triangle.\n");
   printf(
 "    -A  Assigns an additional floating-point attribute to each triangle\n");
   printf(
@@ -3002,7 +3002,7 @@ void info()
   printf(
 "    of bounding segments, or forgotten to use the -c switch.  Or you may\n");
   printf(
-"    have placed a hole badly, thereby eating all your triangles.  To test\n");
+"    have placed a hole badly, thereby eating all your triangles.  To google_test\n");
   printf("    these possibilities, try again with the -c and -O switches.\n");
   printf(
 "    Alternatively, all your input vertices may be collinear, in which case\n"
@@ -3065,7 +3065,7 @@ void info()
   printf(
 "    floating exception due to overflow when attempting to perform an\n");
   printf(
-"    orientation or incircle test.  (Read the section on exact arithmetic\n");
+"    orientation or incircle google_test.  (Read the section on exact arithmetic\n");
   printf(
 "    above.)  Again, I recommend compiling Triangle for double (rather\n");
   printf("    than single) precision arithmetic.\n\n");
@@ -6461,9 +6461,9 @@ REAL dheight;
 /*                                                                           */
 /*  If the -w switch is used, the points are lifted onto the parabolic       */
 /*  lifting map, then they are dropped according to their weights, then the  */
-/*  3D orientation test is applied.  If the -W switch is used, the points'   */
-/*  heights are already provided, so the 3D orientation test is applied      */
-/*  directly.  If neither switch is used, the incircle test is applied.      */
+/*  3D orientation google_test is applied.  If the -W switch is used, the points'   */
+/*  heights are already provided, so the 3D orientation google_test is applied      */
+/*  directly.  If neither switch is used, the incircle google_test is applied.      */
 /*                                                                           */
 /*****************************************************************************/
 
@@ -6550,7 +6550,7 @@ int offcenter;
     /*   reasonably accurate) result, avoiding any possibility of   */
     /*   division by zero.                                          */
     denominator = 0.5 / counterclockwise(m, b, tdest, tapex, torg);
-    /* Don't count the above as an orientation test. */
+    /* Don't count the above as an orientation google_test. */
     m->counterclockcount--;
   }
   dx = (yao * dodist - ydo * aodist) * denominator;
@@ -6718,7 +6718,7 @@ struct behavior *b;
          triangleloop.orient++) {
       org(triangleloop, triorg);
       dest(triangleloop, tridest);
-      if (triangleloop.orient == 0) {       /* Only test for inversion once. */
+      if (triangleloop.orient == 0) {       /* Only google_test for inversion once. */
         /* Test if the triangle is flat or inverted. */
         apex(triangleloop, triapex);
         if (counterclockwise(m, b, triorg, tridest, triapex) <= 0.0) {
@@ -6823,7 +6823,7 @@ struct behavior *b;
       apex(triangleloop, triapex);
       sym(triangleloop, oppotri);
       apex(oppotri, oppoapex);
-      /* Only test that the edge is locally Delaunay if there is an   */
+      /* Only google_test that the edge is locally Delaunay if there is an   */
       /*   adjoining triangle whose pointer is larger (to ensure that */
       /*   each pair isn't tested twice).                             */
       shouldbedelaunay = (oppotri.tri != m->dummytri) &&
@@ -6838,7 +6838,7 @@ struct behavior *b;
             (oppoapex != m->infvertex3);
       if (m->checksegments && shouldbedelaunay) {
         /* If a subsegment separates the triangles, then the edge is */
-        /*   constrained, so no local Delaunay test should be done.  */
+        /*   constrained, so no local Delaunay google_test should be done.  */
         tspivot(triangleloop, opposubseg);
         if (opposubseg.ss != m->dummysub){
           shouldbedelaunay = 0;
@@ -7666,7 +7666,7 @@ struct otri *searchtri;
   }
 
   /* If a recently encountered triangle has been recorded and has not been */
-  /*   deallocated, test it as a good starting point.                      */
+  /*   deallocated, google_test it as a good starting point.                      */
   if (m->recenttri.tri != (triangle *) NULL) {
     if (!deadtri(m->recenttri.tri)) {
       org(m->recenttri, torg);
@@ -8715,7 +8715,7 @@ int triflaws;
               printf("Internal error in insertvertex():\n");
               printf("  Clockwise triangle prior to edge flip (bottom).\n");
             }
-            /* The following test has been removed because constrainededge() */
+            /* The following google_test has been removed because constrainededge() */
             /*   sometimes generates inverted triangles that insertvertex()  */
             /*   removes.                                                    */
 /*
@@ -12071,7 +12071,7 @@ int leftside;
   if (counterclockwise(m, b, rightvertex, leftvertex, farvertex) > 0.0) {
     /* fartri is not an inverted triangle, and farvertex is not a reflex */
     /*   vertex.  As there are no reflex vertices, fixuptri isn't an     */
-    /*   inverted triangle, either.  Hence, test the edge between the    */
+    /*   inverted triangle, either.  Hence, google_test the edge between the    */
     /*   triangles to ensure it is locally Delaunay.                     */
     if (incircle(m, b, leftvertex, farvertex, rightvertex, nearvertex) <=
         0.0) {
@@ -13542,7 +13542,7 @@ struct badtriang *badtri;
       /*   (If the angle org-apex-dest exceeds 90 degrees, then the       */
       /*   circumcenter lies outside the org-dest edge, and eta is        */
       /*   negative.  Roundoff error might prevent eta from being         */
-      /*   negative when it should be, so I test eta against xi.)         */
+      /*   negative when it should be, so I google_test eta against xi.)         */
       if (eta < xi) {
         lprevself(badotri);
       }

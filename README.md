@@ -16,32 +16,22 @@ problems.</li>
 
 <h2>Author</h2>
 <a href="https://github.com/capalvarez">Catalina Alvarez</a> -  Master's Student at Universidad de Chile.
- 
-<h2>Installation</h2>
-<h3>For Linux:</h3>
-<li> Download the source code and unpack it. </li>
-<li> Download <a href="https://www.cs.cmu.edu/~quake/triangle.html">Triangle</a>, and obtain the callable <b>triangle.o</b> object. Follow
-the documentation and use:
-<pre><code> make trilibrary </code></pre> 
-<li> Move the file to the <b>triangle</b> folder inside the <b>lib/mesher</b> folder.</li>
-<li> Return to the root directory of the extracted files, create the <b>build</b> folder, alongside lib/ and veamy/. </li>
-<li> Inside the <b>build</b> folder (the installation requires sudo):
-<pre><code>cmake ..
-make install</code></pre></li></ol>
 
-<h3>For Windows:</h3>
+<h2>Running a Veamy program</h2>
+Veamy is currently only for Unix systems. Windows support will be added in 
+further releases.  
 <ol>
-<li> Install Cmake for Windows and MinGW/Cygwin.</li>
 <li> Download the source code and unpack it. </li>
-<li> Download <a href="https://www.cs.cmu.edu/~quake/triangle.html">Triangle</a>, and obtain the callable <b>triangle.o</b> object. There are various
-ways to do this, but the recommended one is to use MinGW (32 or 64 depending on your system), and use the mingw-gcc executable:
-<pre><code> mingw-gcc -O -DNO_TIMER -DTRILIBRARY -c -o triangle.o triangle.c </code></pre> 
-<li> Move the file to the <b>triangle</b> folder inside the <b>lib/mesher</b> folder.</li>
-<li> Return to the root directory of the extracted files, create the <b>build</b> folder, alongside lib/ and veamy/. </li>
-<li> Inside the <b>build</b> folder, using the Command Line:
-<pre><code>cmake -G "MinGW MakeFiles" ..
-mingw32-make install</code></pre></li></ol>
-
+<li> In the root directory of the Veamy library, create the <b>build</b> folder, alongside <b>lib/</b> and <b>veamy/</b>. </li>
+<li> To add any desired program using Veamy, the script must be in the <b>test/</b> folder. Modify the <b>CMakeLists.txt</b>, changing the
+file name <b>example.cpp</b> in <pre><code>set(SOURCE_FILES example.cpp)</pre></code></li> for the name of your script. 
+<li> Inside the <b>build</b> folder:
+<pre><code>cmake .. </code></pre></li>
+<li> To run your example, go to the <b>build/test/</b> folder and:
+<pre><code>make
+./Test
+</pre></code> 
+</ol>
 
 <h2>Usage example</h2>
 The complete procedure to compute the displacements using Virtual Element Method requires:
