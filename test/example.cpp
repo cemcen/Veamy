@@ -76,6 +76,9 @@ int main(){
     v.initProblem(mesh, conditions);
 
     Eigen::VectorXd x = v.simulate(mesh);
+
+    //By default, the file is created in home/, to create somewhere else, for example, /home/Documents/Veamy,
+    //create the fileName variable as "/Documents/Veamy/parabolic24x12.txt"
     std::string fileName = "parabolic24x12.txt";
     v.writeDisplacements(fileName, x);
 }

@@ -18,19 +18,17 @@ problems.</li>
 <a href="https://github.com/capalvarez">Catalina Alvarez</a> -  Master's Student at Universidad de Chile.
 
 <h2>Running a Veamy program</h2>
-Veamy is currently only for Unix systems. Windows support will be added in 
-further releases.  
+Veamy is currently only for Unix systems. 
 <ol>
 <li> Download the source code and unpack it. </li>
-<li> In the root directory of the Veamy library, create the <b>build</b> folder, alongside <b>lib/</b> and <b>veamy/</b>. </li>
-<li> To add any desired program using Veamy, the script must be in the <b>test/</b> folder. Modify the <b>CMakeLists.txt</b>, changing the
-file name <b>example.cpp</b> in <pre><code>set(SOURCE_FILES example.cpp)</pre></code></li> for the name of your script. 
+<li> To add any desired program using Veamy, the script must be in the <b>test/</b> folder. Go to the <b>test/</b> folder 
+and modify the <b>CMakeLists.txt</b>, changing the
+file name <b>example.cpp</b> in <pre><code>set(SOURCE_FILES example.cpp)</pre></code></li> by the name of your script. 
 <li> Inside the <b>build</b> folder:
-<pre><code>cmake .. </code></pre></li>
+<pre><code>cmake .. </code></pre> to create the makefiles, and, to compile the program:
+<pre><code>make </code></pre></li>
 <li> To run your example, go to the <b>build/test/</b> folder and:
-<pre><code>make
-./Test
-</pre></code> 
+<pre><code>./Test</pre></code> 
 </ol>
 
 <h2>Usage example</h2>

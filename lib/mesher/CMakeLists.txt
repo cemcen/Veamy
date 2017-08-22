@@ -4,6 +4,7 @@ file(GLOB_RECURSE SRCS ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp ${CMAKE_CURRENT_SOURCE_
 file(GLOB_RECURSE HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+add_subdirectory(lib)
 add_library(libmesher STATIC ${SRCS} ${HEADERS})
 
 # Define headers for this library. PUBLIC headers are used for
