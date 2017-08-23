@@ -18,17 +18,18 @@ problems.</li>
 <a href="https://github.com/capalvarez">Catalina Alvarez</a> -  Master's Student at Universidad de Chile.
 
 <h2>Running a Veamy program</h2>
-Veamy is currently only for Unix systems. 
+Veamy is currently for Unix systems only. 
 <ol>
 <li> Download the source code and unpack it. </li>
 <li> In the root directory of Veamy, create a <b>build/</b> folder.</li>
-<li> To add any desired program using Veamy, the script must be in the <b>test/</b> folder. Go to the <b>test/</b> folder 
-and modify the <b>CMakeLists.txt</b>, changing the
-file name <b>example.cpp</b> in <pre><code>set(SOURCE_FILES example.cpp)</pre></code></li> by the name of your script. 
-<li> Inside the <b>build</b> folder:
-<pre><code>cmake .. </code></pre> to create the makefiles, and, to compile the program:
+<li> Go to test/ folder located in the root directory of Veamy and: (a) add the main C++ file 
+(say, <b>mytest.cpp</b>) containing your test example problem, (b)  modify the <b>CMakeLists.txt</b> 
+by changing the file name <b>example.cpp</b> in <pre><code>set(SOURCE_FILES example.cpp)</pre></code></li> by the name 
+of your main C++ file (in this case, <b>mytest.cpp</b>)
+<li> Inside the <b>build</b> folder and in the command line type:
+<pre><code>cmake .. </code></pre> to create the makefiles. And to compile the program type:
 <pre><code>make </code></pre></li>
-<li> To run your example, go to the <b>build/test/</b> folder and:
+<li> To run your example, go to the <b>build/test/</b> folder and in the command line type:
 <pre><code>./Test</pre></code> 
 </ol>
 
