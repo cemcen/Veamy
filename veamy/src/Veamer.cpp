@@ -12,6 +12,9 @@ PolygonalMesh Veamer::initProblemFromFile(std::string fileName, Material materia
     PolygonalMesh mesh;
     std::string completeName = utilities::getPath() + fileName;
     std::ifstream infile(completeName);
+    if(!infile){
+        throw std::invalid_argument("Error: file not found. Check the path to the file.");
+    }
 
     mesh.createFromStream(infile);
 

@@ -6,7 +6,7 @@ int main(){
 
     //By default, the file is read from home/, to read from somewhere else, for example, /home/user/Documents/Veamy,
     //create the fileName variable as "/Documents/Veamy/polymesher2veamy.txt". All files follow the same idea.
-    PolygonalMesh mesh = v.initProblemFromFile("/Veamy/test/test_files/polymesher2veamy.txt", m);
+    PolygonalMesh mesh = v.initProblemFromFile("polymesher2veamy2.txt", m);
     mesh.printInFile("mesh.txt");
 
     Eigen::VectorXd x = v.simulate(mesh);
