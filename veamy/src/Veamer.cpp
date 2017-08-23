@@ -171,7 +171,7 @@ ProblemConditions Veamer::getConditions() const {
 
 void Veamer::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
     std::string path = utilities::getPath();
-    path = path  + "\\" + fileName;
+    path = path  + fileName;
 
     std::ofstream file;
     file.open(path, std::ios::out);

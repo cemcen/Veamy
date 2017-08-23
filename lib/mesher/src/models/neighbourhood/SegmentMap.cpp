@@ -80,8 +80,8 @@ void SegmentMap::delete_element(IndexSegment key) {
 }
 
 void SegmentMap::printInFile(std::string fileName) {
-    std::string path("C:\\Users\\Catalina");
-    path += "\\" + fileName;
+    std::string path = utilities::getPath();
+    path +=  fileName;
 
     std::ofstream file;
     file.open(path, std::ios::out);
