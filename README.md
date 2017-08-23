@@ -21,6 +21,7 @@ problems.</li>
 Veamy is currently only for Unix systems. 
 <ol>
 <li> Download the source code and unpack it. </li>
+<li> In the root directory of Veamy, create a <b>build/</b> folder.</li>
 <li> To add any desired program using Veamy, the script must be in the <b>test/</b> folder. Go to the <b>test/</b> folder 
 and modify the <b>CMakeLists.txt</b>, changing the
 file name <b>example.cpp</b> in <pre><code>set(SOURCE_FILES example.cpp)</pre></code></li> by the name of your script. 
