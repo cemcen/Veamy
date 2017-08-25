@@ -146,6 +146,7 @@ void Region::getSegments(std::vector<IndexSegment> &s) {
 
     for(Hole h : this->holes){
         h.getSegments(s, offset);
+        offset += h.getPoints().size();
     }
 }
 
@@ -172,9 +173,11 @@ void Region::printInFile(std::string fileName) {
     std::ofstream file;
     file.open(path, std::ios::out);
 
+    std::vector<Point> points = this->getRegionPoints();
+
     file << (points.size() + seedPoints.size()) << std::endl;
     for(int i=0;i<points.size();i++){
-        file << p[i].getString() << std::endl;
+        file << points[i].getString() << std::endl;
     }
 
     for(int i=0;i<seedPoints.size();i++){
