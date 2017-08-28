@@ -5,6 +5,7 @@
 #include <veamy/models/constraints/ConstraintsContainer.h>
 #include <veamy/physics/Material.h>
 #include <veamy/Veamer.h>
+#include <veamy/physics/MaterialPlainStress.h>
 
 int main(){
     PolygonalMesh mesh;
@@ -28,7 +29,7 @@ int main(){
     container.addConstraints(essential, mesh);
     container.addConstraints(natural, mesh);
 
-    Material m(3e7, 0.3);
+    Material* m = new MaterialPlaneStress(3e7, 0.3);
     ProblemConditions conditions(container, m);
 
     Veamer v;

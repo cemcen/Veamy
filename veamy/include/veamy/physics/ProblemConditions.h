@@ -8,15 +8,15 @@
 struct ProblemConditions{
     ConstraintsContainer constraints;
     BodyForce* f;
-    Material material;
+    Material* material;
 
-    ProblemConditions(ConstraintsContainer container, BodyForce* bodyForce, Material mat){
+    ProblemConditions(ConstraintsContainer container, BodyForce* bodyForce, Material* mat){
         constraints = container;
         f = bodyForce;
         material = mat;
     }
 
-    ProblemConditions(ConstraintsContainer container, Material mat){
+    ProblemConditions(ConstraintsContainer container, Material* mat){
         constraints = container;
         f = new None();
         material = mat;

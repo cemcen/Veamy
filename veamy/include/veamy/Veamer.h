@@ -31,13 +31,13 @@ public:
     std::vector<Element> elements;
     Veamer();
 
-    PolygonalMesh initProblemFromFile(std::string fileName, Material material);
-    PolygonalMesh initProblemFromFile(std::string fileName, Material material, BodyForce *force);
+    PolygonalMesh initProblemFromFile(std::string fileName, Material* material);
+    PolygonalMesh initProblemFromFile(std::string fileName, Material* material, BodyForce *force);
     void initProblem(PolygonalMesh m, ProblemConditions conditions);
     Eigen::VectorXd simulate(PolygonalMesh &mesh);
 
     Pair<int> pointToDOFS(int point_index);
-    Material getMaterial();
+    Material* getMaterial();
     UniqueList<Point> getPoints() const;
     UniqueList<Point> getPoints();
     ProblemConditions getConditions() const;

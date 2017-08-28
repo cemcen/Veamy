@@ -100,11 +100,11 @@ void Element::computeK(DOFS d, UniqueList<Point> points, ProblemConditions &cond
 
     Pp = Pc + Pr;
 
-    Eigen::MatrixXd D = conditions.material.getMaterialMatrix();
+    Eigen::MatrixXd D = conditions.material->getMaterialMatrix();
 
     VeamyConfig* config = VeamyConfig::instance();
     double c = (Hc.transpose()*Hc).trace();
-    double alphaS = area*conditions.material.trace()/c;
+    double alphaS = area*conditions.material->trace()/c;
 
     Eigen::MatrixXd Se;
     Se = config->getGamma()*alphaS*I;

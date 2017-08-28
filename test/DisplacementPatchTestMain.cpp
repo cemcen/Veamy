@@ -3,6 +3,7 @@
 #include <veamy/Veamer.h>
 #include <veamy/models/constraints/values/Function.h>
 #include <mesher/models/generator/functions.h>
+#include <veamy/physics/MaterialPlaneStrain.h>
 
 double uXPatch(double x, double y){
     return x;
@@ -55,7 +56,7 @@ int main(){
     ConstraintsContainer container;
     container.addConstraints(essential, mesh);
 
-    Material m(1e7, 0.3);
+    Material* m = new MaterialPlaneStrain (1e7, 0.3);
     ProblemConditions conditions(container, m);
 
     v.initProblem(mesh, conditions);

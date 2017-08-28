@@ -38,7 +38,7 @@ int main(){
     container.addConstraints(essential, mesh);
     container.addConstraints(natural, mesh);
 
-    Material material(1e7, 0.3);
+    Material* material = new MaterialPlaneStrain (1e7, 0.3);
     ProblemConditions conditions(container, material);
 
     v.initProblem(mesh, conditions);

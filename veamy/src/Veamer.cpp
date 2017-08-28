@@ -4,11 +4,11 @@
 
 Veamer::Veamer() {}
 
-PolygonalMesh Veamer::initProblemFromFile(std::string fileName, Material material) {
+PolygonalMesh Veamer::initProblemFromFile(std::string fileName, Material* material) {
     return initProblemFromFile(fileName, material, new None());
 }
 
-PolygonalMesh Veamer::initProblemFromFile(std::string fileName, Material material, BodyForce *force) {
+PolygonalMesh Veamer::initProblemFromFile(std::string fileName, Material* material, BodyForce *force) {
     PolygonalMesh mesh;
     std::string completeName = utilities::getPath() + fileName;
     std::ifstream infile(completeName);
@@ -156,7 +156,7 @@ Pair<int> Veamer::pointToDOFS(int point_index) {
     return this->DOFs.pointToDOFS(point_index);
 }
 
-Material Veamer::getMaterial() {
+Material* Veamer::getMaterial() {
     return conditions.material;
 }
 

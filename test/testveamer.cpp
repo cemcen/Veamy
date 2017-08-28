@@ -82,7 +82,7 @@ TEST(VeamerTest, ParabolicBeamExampleTest){
     container.addConstraints(essential, mesh);
     container.addConstraints(natural, mesh);
 
-    Material m(1e7, 0.3);
+    Material* m = new MaterialPlaneStrain(1e7, 0.3);
     ProblemConditions conditions(container, m);
 
     v.initProblem(mesh, conditions);
@@ -136,7 +136,7 @@ TEST(VeamerTest, ParabolicBeamPatchTest){
     ConstraintsContainer container;
     container.addConstraints(essential, mesh);
 
-    Material m(1e7, 0.3);
+    Material* m = new MaterialPlaneStrain(1e7, 0.3);
     ProblemConditions conditions(container, m);
 
     v.initProblem(mesh, conditions);
@@ -189,7 +189,7 @@ TEST(VeamerTest, UnitaryQuadrilateralTest){
     ConstraintsContainer container;
     container.addConstraints(essential, mesh);
 
-    Material m(1, 0.3);
+    Material* m = new MaterialPlaneStrain m(1, 0.3);
     ProblemConditions conditions(container, m);
 
     std::vector<Point> quadPoints = {Point(0.2,0), Point(0.7,0.3), Point(1.0,1.8), Point(-0.5,1.0)};
@@ -222,7 +222,7 @@ TEST(VeamerTest, TwoQuadrilateralsTest){
     ConstraintsContainer container;
     container.addConstraints(essential, mesh);
 
-    Material m(1, 0.3);
+    Material* m = new MaterialPlaneStrain(1, 0.3);
     ProblemConditions conditions(container, m);
 
     v.initProblem(mesh, conditions);
@@ -251,7 +251,7 @@ TEST(VeamerTest, EquilibriumPatchTest){
     container.addConstraints(essential, mesh);
     container.addConstraints(natural, mesh);
 
-    Material m(3e7, 0.3);
+    Material* m = new MaterialPlaneStress(3e7, 0.3);
     ProblemConditions conditions(container, m);
 
     Veamer v;
@@ -263,7 +263,7 @@ TEST(VeamerTest, EquilibriumPatchTest){
 
 TEST(VeamerTest, PolyMesherTest){
     Veamer v;
-    Material m(1e7, 0.3);
+    Material* m = new MaterialPlaneStrain(1e7, 0.3);
 
     PolygonalMesh mesh = v.initProblemFromFile("polymesher2veamy.txt", m);
     mesh.printInFile("mesh.txt");

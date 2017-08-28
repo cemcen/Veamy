@@ -5,7 +5,7 @@
 #include <veamy/physics/materials/Materials.h>
 
 class Material{
-private:
+protected:
     double material_E;
     double material_v;
 public:
@@ -13,10 +13,8 @@ public:
     Material(double young, double poisson);
     Material();
 
-    Eigen::MatrixXd getMaterialMatrix();
-    Eigen::MatrixXd getPlaneStressMatrix();
-    double trace();
-    double tracePlaneStress();
+    virtual Eigen::MatrixXd getMaterialMatrix()=0;
+    virtual double trace()=0;
 
     double k();
     double v();
