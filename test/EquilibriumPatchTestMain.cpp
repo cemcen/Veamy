@@ -5,7 +5,7 @@
 #include <veamy/models/constraints/ConstraintsContainer.h>
 #include <veamy/physics/Material.h>
 #include <veamy/Veamer.h>
-#include <veamy/physics/MaterialPlainStress.h>
+#include <veamy/physics/MaterialPlaneStress.h>
 
 int main(){
     PolygonalMesh mesh;
