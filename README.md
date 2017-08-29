@@ -82,11 +82,9 @@ PolygonalMesh mesh = v.initProblemFromFile("polymesher2veamy.txt", Material(1e7,
 </ol>
 
 <h2>Acknowledgements</h2>
-Veamy depends on three external open source libraries, whose code is included in the repository. 
+Veamy depends on two external open source libraries, whose code is included in the repository, inside the <b>lib</b> folder. 
 <ul>
-<li> <a href="https://www.cs.cmu.edu/~quake/triangle.html"> Triangle - A Two-Dimensional Quality Mesh Generator and 
-Delaunay Triangulator. </a></li>
-<li><a href="http://www.angusj.com/delphi/clipper.php"> Clipper - an open source freeware library for clipping and offsetting lines and polygons. </a></li>
+<li><a href="https://github.com/capalvarez/Delynoi"> Delynoi: an object-oriented C++ library for the generation of polygonal meshes </a></li>
 </ul>
 Linear algebra aspects are handled using:
 <ul>
