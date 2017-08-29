@@ -1,4 +1,4 @@
-#include <veamy/physics/MaterialPlainStress.h>
+#include <veamy/physics/MaterialPlaneStress.h>
 
 MaterialPlaneStress::MaterialPlaneStress(Materials::material m) : Material(m) {}
 
