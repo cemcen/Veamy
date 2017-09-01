@@ -18,7 +18,7 @@ problems.</li>
 <a href="https://github.com/capalvarez">Catalina Alvarez</a> -  Master's Student at Universidad de Chile.
 
 <h2>Running a Veamy program</h2>
-Veamy is currently for Unix systems only. 
+Veamy is currently for Unix-like systems only. 
 <ol>
 <li> Download the source code and unpack it. </li>
 <li> In the root directory of Veamy, create a <b>build/</b> folder.</li>
