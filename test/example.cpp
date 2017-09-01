@@ -6,6 +6,7 @@
 #include <mesher/voronoi/TriangleMeshGenerator.h>
 #include <veamy/models/constraints/values/Function.h>
 #include <chrono>
+#include <veamy/physics/MaterialPlaneStrain.h>
 
 double tangencial(double x, double y){
     double P = -1000;
@@ -70,8 +71,8 @@ int main(){
     container.addConstraints(essential, mesh);
     container.addConstraints(natural, mesh);
 
-    Material* m = new MaterialPlaneStrain(1e7, 0.3);
-    ProblemConditions conditions(container, m);
+    Material* material = new MaterialPlaneStrain(1e7, 0.3);
+    ProblemConditions conditions(container, material);
 
     v.initProblem(mesh, conditions);
 
