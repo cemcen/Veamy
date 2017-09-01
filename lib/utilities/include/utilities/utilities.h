@@ -9,9 +9,28 @@
 #include <iomanip>
 
 namespace utilities{
-    template <typename T>
-    std::string toString(T a){
+    template <>
+    std::string toString(int a){
         std::stringstream sstream;
+        sstream << a;
+        std::string s = sstream.str();
+
+        return s;
+    }
+
+    template <>
+    std::string toString(double a){
+        std::stringstream sstream;
+        sstream << a;
+        std::string s = sstream.str();
+
+        return s;
+    }
+
+    template <>
+    std::string toString(double a, int precision){
+        std::stringstream sstream;
+        sstream << std::fixed << std::setprecision(precision);
         sstream << a;
         std::string s = sstream.str();
 

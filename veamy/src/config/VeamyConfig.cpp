@@ -11,6 +11,14 @@ void VeamyConfig::setTolerance(double t) {
     this->double_comparison_tolerance = t;
 }
 
+void VeamyConfig::setPrecision(VeamyConfig::Precision p) {
+    this->precision = p;
+}
+
+void VeamyConfig::setPrecision(int p) {
+    this->precision = p;
+}
+
 void VeamyConfig::setGamma(double g) {
     this->gamma = g;
 }
@@ -21,6 +29,10 @@ double VeamyConfig::getTolerance() {
 
 double VeamyConfig::getGamma() {
     return this->gamma;
+}
+
+int VeamyConfig::getPrecision() {
+    return this->precision;
 }
 
 VeamyConfig *VeamyConfig::instance() {
