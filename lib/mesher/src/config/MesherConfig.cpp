@@ -20,6 +20,14 @@ void MesherConfig::setScale(int s) {
     this->scale_for_clipper = s;
 }
 
+void MesherConfig::setPrecision(Precision::precision p) {
+    this->precision = p;
+}
+
+void MesherConfig::setPrecision(int p) {
+    this->precision = p;
+}
+
 int MesherConfig::getDiscretizationGrade() {
     return this->circle_discretization_grade;
 }
@@ -30,6 +38,10 @@ double MesherConfig::getTolerance() {
 
 int MesherConfig::getScale() {
     return this->scale_for_clipper;
+}
+
+int MesherConfig::getPrecision() {
+    return this->precision;
 }
 
 MesherConfig *MesherConfig::instance() {

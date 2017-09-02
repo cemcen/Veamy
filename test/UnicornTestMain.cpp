@@ -4,6 +4,7 @@
 #include <mesher/voronoi/TriangleMeshGenerator.h>
 #include <veamy/Veamer.h>
 #include <veamy/models/constraints/values/Constant.h>
+#include <veamy/physics/MaterialPlaneStrain.h>
 
 int main(){
     std::vector<Point> unicorn_points = {Point(2,0), Point(3,0.5), Point(3.5,2), Point(4,4), Point(6,4), Point(8.5,4),

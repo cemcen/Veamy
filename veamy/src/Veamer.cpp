@@ -178,18 +178,17 @@ void Veamer::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
 
     std::ofstream file;
     file.open(path, std::ios::out);
-    file << std::fixed;
-    file << std::setprecision(20);
 
     std::vector<std::string> results(this->points.size());
+    VeamyConfig* config = VeamyConfig::instance();
 
     for (int k = 0; k < u.rows(); k = k + 2) {
         int point_index = DOFs.get(k).pointIndex();
         double def_x = u[k];
         double def_y = u[k+1];
 
-        results[point_index] = utilities::toString(point_index) + " " + utilities::toString(def_x) + " "
-                               + utilities::toString(def_y);
+        results[point_index] = utilities::toString<int>(point_index) + " " + utilities::toString<double>(def_x) + " "
+                               + utilities::toString<double>(def_y);
     }
 
     for (std::string s: results){
@@ -197,4 +196,6 @@ void Veamer::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
     }
 
     file.close();
+
+    delete config;
 }

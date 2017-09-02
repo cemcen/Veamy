@@ -1,4 +1,5 @@
 #include <veamy/config/VeamyConfig.h>
+#include <mesher/config/MesherConfig.h>
 
 VeamyConfig* VeamyConfig::s_instance = nullptr;
 
@@ -11,8 +12,9 @@ void VeamyConfig::setTolerance(double t) {
     this->double_comparison_tolerance = t;
 }
 
-void VeamyConfig::setPrecision(VeamyConfig::Precision p) {
+void VeamyConfig::setPrecision(Precision::precision p) {
     this->precision = p;
+    MesherConfig::instance()->setPrecision(this->precision);
 }
 
 void VeamyConfig::setPrecision(int p) {

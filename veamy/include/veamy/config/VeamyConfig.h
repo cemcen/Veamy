@@ -1,6 +1,8 @@
 #ifndef VEAMY_VEAMYCONFIG_H
 #define VEAMY_VEAMYCONFIG_H
 
+#include <utilities/Precision.h>
+
 class VeamyConfig{
 private:
     double double_comparison_tolerance;
@@ -10,10 +12,8 @@ private:
     static VeamyConfig* s_instance;
     VeamyConfig();
 public:
-    enum Precision{Small=4, Mid=8, Large=14};
-
     void setTolerance(double t);
-    void setPrecision(VeamyConfig::Precision p);
+    void setPrecision(Precision::precision p);
     void setPrecision(int p);
     void setGamma(double g);
 
