@@ -30,6 +30,7 @@ namespace utilities{
         return (x > 0) - (x < 0);
     }
 
+    extern std::string toStringWithPrecision(double d, int precision);
     extern int hash32(int key);
     extern int random_integer(int min, int max);
     extern std::string getPath();

@@ -187,8 +187,9 @@ void Veamer::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
         double def_x = u[k];
         double def_y = u[k+1];
 
-        results[point_index] = utilities::toString<int>(point_index) + " " + utilities::toString<double>(def_x) + " "
-                               + utilities::toString<double>(def_y);
+        results[point_index] = utilities::toString<int>(point_index) + " " +
+                utilities::toStringWithPrecision(def_x, VeamyConfig::instance()->getPrecision()) + " " +
+                utilities::toStringWithPrecision(def_y, VeamyConfig::instance()->getPrecision());
     }
 
     for (std::string s: results){

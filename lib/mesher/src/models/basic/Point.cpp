@@ -20,7 +20,8 @@ double Point::getY() const{
 }
 
 std::string Point::getString() const{
-    return utilities::toString<double>(this->getX()) + " " + utilities::toString<double>(this->getY());
+    return utilities::toStringWithPrecision(this->getX(), MesherConfig::instance()->getPrecision())
+           + " " + utilities::toStringWithPrecision(this->getY(), MesherConfig::instance()->getPrecision());
 }
 
 double Point::squareNorm() {

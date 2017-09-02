@@ -6,6 +6,7 @@ MesherConfig::MesherConfig() {
     this->circle_discretization_grade = 12;
     this->double_comparison_tolerance = 0.0000001;
     this->scale_for_clipper = 100000;
+    this->precision = 6;
 }
 
 void MesherConfig::setDiscretizationGrade(int d) {

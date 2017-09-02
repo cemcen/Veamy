@@ -7,6 +7,7 @@ void Mesh::printInFile(std::string fileName) {
 
     std::ofstream file;
     file.open(path, std::ios::out);
+    file << std::fixed << std::setprecision(MesherConfig::instance()->getPrecision());
 
     printInStream(file);
     file.close();

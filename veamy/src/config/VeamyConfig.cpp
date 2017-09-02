@@ -6,6 +6,7 @@ VeamyConfig* VeamyConfig::s_instance = nullptr;
 VeamyConfig::VeamyConfig() {
     this->double_comparison_tolerance = 0.001;
     this->gamma = 1;
+    this->precision = 6;
 }
 
 void VeamyConfig::setTolerance(double t) {

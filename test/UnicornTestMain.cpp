@@ -7,6 +7,8 @@
 #include <veamy/physics/MaterialPlaneStrain.h>
 
 int main(){
+    VeamyConfig::instance()->setPrecision(Precision::precision::large);
+
     std::vector<Point> unicorn_points = {Point(2,0), Point(3,0.5), Point(3.5,2), Point(4,4), Point(6,4), Point(8.5,4),
                                          Point(9,2), Point(9.5,0.5), Point(10,0), Point(10.5,0.5), Point(11.2,2.5),
                                          Point(11.5,4.5), Point(11.8,8.75), Point(11.8,11.5), Point(13.5,11), Point(14.5,11.2),
