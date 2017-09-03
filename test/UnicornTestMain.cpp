@@ -9,7 +9,7 @@
 #include <veamy/physics/MaterialPlaneStrain.h>
 
 int main(){
-    VeamyConfig::instance()->setPrecision(Precision::precision::small);
+    //VeamyConfig::instance()->setPrecision(Precision::precision::small);
     
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Unicorn <--" << std::endl;
