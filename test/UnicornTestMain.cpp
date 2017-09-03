@@ -7,7 +7,6 @@
 #include <veamy/physics/MaterialPlaneStrain.h>
 #include <utilities/utilities.h>
 #include <veamy/physics/MaterialPlaneStrain.h>
-#include <veamy/config/VeamyConfig.h>
 
 int main(){
     VeamyConfig::instance()->setPrecision(Precision::precision::small);
