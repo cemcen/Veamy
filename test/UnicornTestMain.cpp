@@ -9,11 +9,14 @@
 #include <veamy/physics/MaterialPlaneStrain.h>
 
 int main(){
-    //VeamyConfig::instance()->setPrecision(Precision::precision::small);
-    
-    std::cout << "*** Starting Veamy ***" << std::endl;
-    std::cout << "--> Test: Unicorn <--" << std::endl;
-    std::cout << "..." << std::endl;
+    // Set precision for plotting to output files:    
+    // OPTION 1: in "VeamyConfig::instance()->setPrecision(Precision::precision::mid)"    
+    // use "small" for 6 digits; "mid" for 10 digits; "large" for 16 digits.    
+    // OPTION 2: set the desired precision, for instance, as:    
+    // VeamyConfig::instance()->setPrecision(12) for 12 digits. Change "12" by the desired precision.    
+    // OPTION 3: Omit any instruction "VeamyConfig::instance()->setPrecision(.....)"    
+    // from this file. In this case, the default precision, which is 6 digits, will be used.   
+    VeamyConfig::instance()->setPrecision(Precision::precision::mid);  
 
     // DEFINING PATH FOR THE OUTPUT FILES:
     // If the path for the output files is not given, they are written to /home directory by default.
@@ -26,10 +29,12 @@ int main(){
     std::string meshFileName = "Software/Veamy-master/build/test/unicorn_mesh.txt";
     std::string dispFileName = "Software/Veamy-master/build/test/unicorn_displacements.txt";
     std::string geoFileName = "Software/Veamy-master/build/test/unicorn_geometry.txt";
+	
+    std::cout << "*** Starting Veamy ***" << std::endl;
+    std::cout << "--> Test: Unicorn <--" << std::endl;
+    std::cout << "..." << std::endl;	
 
     std::cout << "+ Defining the domain ... ";
-    VeamyConfig::instance()->setPrecision(Precision::precision::large);
-
     std::vector<Point> unicorn_points = {Point(2,0), Point(3,0.5), Point(3.5,2), Point(4,4), Point(6,4), Point(8.5,4),
                                          Point(9,2), Point(9.5,0.5), Point(10,0), Point(10.5,0.5), Point(11.2,2.5),
                                          Point(11.5,4.5), Point(11.8,8.75), Point(11.8,11.5), Point(13.5,11), Point(14.5,11.2),
