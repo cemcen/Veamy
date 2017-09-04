@@ -19,10 +19,6 @@ int main(){
     // from this file. In this case, the default precision, which is 6 digits, will be used.   
     VeamyConfig::instance()->setPrecision(Precision::precision::mid);    
     
-    std::cout << "*** Starting Veamy ***" << std::endl;
-    std::cout << "--> Test: Cook's membrane <--" << std::endl;
-    std::cout << "..." << std::endl;
-
     // DEFINING PATH FOR THE OUTPUT FILES:
     // If the path for the output files is not given, they are written to /home directory by default.
     // Otherwise, include the path. For instance, for /home/user/Documents/Veamy/output.txt , the path
@@ -34,7 +30,11 @@ int main(){
     std::string meshFileName = "Software/Veamy-master/build/test/cook_membrane_mesh.txt";
     std::string dispFileName = "Software/Veamy-master/build/test/cook_membrane_displacements.txt";
     std::string geoFileName = "Software/Veamy-master/build/test/cook_membrane_geometry.txt";
-
+    
+    std::cout << "*** Starting Veamy ***" << std::endl;    
+    std::cout << "--> Test: Cook's membrane <--" << std::endl;    
+    std::cout << "..." << std::endl;
+    
     std::cout << "+ Defining the domain ... ";
     std::vector<Point> TBeam_points = {Point(0,0), Point(48,44), Point(48,64), Point(0,44)};
     Region TBeam(TBeam_points);
