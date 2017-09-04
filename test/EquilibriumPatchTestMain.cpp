@@ -9,10 +9,15 @@
 #include <veamy/physics/MaterialPlaneStress.h>
 
 int main(){
-    std::cout << "*** Starting Veamy ***" << std::endl;
-    std::cout << "--> Test: Equilibrium patch test / Reading a mesh from a file <--" << std::endl;
-    std::cout << "..." << std::endl;
-
+    // Set precision for plotting to output files:        
+    // OPTION 1: in "VeamyConfig::instance()->setPrecision(Precision::precision::mid)"        
+    // use "small" for 6 digits; "mid" for 10 digits; "large" for 16 digits.        
+    // OPTION 2: set the desired precision, for instance, as:        
+    // VeamyConfig::instance()->setPrecision(12) for 12 digits. Change "12" by the desired precision.        
+    // OPTION 3: Omit any instruction "VeamyConfig::instance()->setPrecision(.....)"        
+    // from this file. In this case, the default precision, which is 6 digits, will be used.       
+    VeamyConfig::instance()->setPrecision(Precision::precision::large); 
+    
     // DEFINING PATH FOR THE OUTPUT FILES:
     // If the path for the output files is not given, they are written to /home directory by default.
     // Otherwise, include the path. For instance, for /home/user/Documents/Veamy/output.txt , the path
@@ -23,6 +28,10 @@ int main(){
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
     std::string meshFileName = "Software/Veamy-master/build/test/equi_patch_test_mesh.txt";
     std::string dispFileName = "Software/Veamy-master/build/test/equi_patch_test_displacements.txt";
+    
+    std::cout << "*** Starting Veamy ***" << std::endl;    
+    std::cout << "--> Test: Equilibrium patch test / Reading a mesh from a file <--" << std::endl;    
+    std::cout << "..." << std::endl;
 
     // File that contains an external mesh
     std::string externalMeshFileName = "Software/Veamy-master/test/test_files/equilibriumTest_mesh.txt";
