@@ -38,14 +38,14 @@ double uY(double x, double y){
 }
 
 int main(){
-    // Set precision for plotting to output files:    
-    // OPTION 1: in "VeamyConfig::instance()->setPrecision(Precision::precision::mid)"    
-    // use "small" for 6 digits; "mid" for 10 digits; "large" for 16 digits.    
-    // OPTION 2: set the desired precision, for instance, as:    
-    // VeamyConfig::instance()->setPrecision(12) for 12 digits. Change "12" by the desired precision.    
-    // OPTION 3: Omit any instruction "VeamyConfig::instance()->setPrecision(.....)"    
-    // from this file. In this case, the default precision, which is 6 digits, will be used.   
-    VeamyConfig::instance()->setPrecision(Precision::precision::mid);  
+    // Set precision for plotting to output files:
+    // OPTION 1: in "VeamyConfig::instance()->setPrecision(Precision::precision::mid)"
+    // use "small" for 6 digits; "mid" for 10 digits; "large" for 16 digits.
+    // OPTION 2: set the desired precision, for instance, as:
+    // VeamyConfig::instance()->setPrecision(12) for 12 digits. Change "12" by the desired precision.
+    // OPTION 3: Omit any instruction "VeamyConfig::instance()->setPrecision(.....)"
+    // from this file. In this case, the default precision, which is 6 digits, will be used.
+    VeamyConfig::instance()->setPrecision(Precision::precision::mid);
 
     // DEFINING PATH FOR THE OUTPUT FILES:
     // If the path for the output files is not given, they are written to /home directory by default.
@@ -60,7 +60,7 @@ int main(){
 	
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Cantilever beam subjected to a parabolic end load <--" << std::endl;
-    std::cout << "..." << std::endl;	
+    std::cout << "..." << std::endl;
 
     std::cout << "+ Defining the domain ... ";
     std::vector<Point> rectangle4x8_points = {Point(0, -2), Point(8, -2), Point(8, 2), Point(0, 2)};

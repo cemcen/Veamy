@@ -10,15 +10,15 @@
 #include <veamy/physics/MaterialPlaneStrain.h>
 
 int main(){
-    // Set precision for plotting to output files:    
-    // OPTION 1: in "VeamyConfig::instance()->setPrecision(Precision::precision::mid)"    
-    // use "small" for 6 digits; "mid" for 10 digits; "large" for 16 digits.    
-    // OPTION 2: set the desired precision, for instance, as:    
-    // VeamyConfig::instance()->setPrecision(12) for 12 digits. Change "12" by the desired precision.    
-    // OPTION 3: Omit any instruction "VeamyConfig::instance()->setPrecision(.....)"    
-    // from this file. In this case, the default precision, which is 6 digits, will be used.   
-    VeamyConfig::instance()->setPrecision(Precision::precision::mid);    
-    
+    // Set precision for plotting to output files:    
+    // OPTION 1: in "VeamyConfig::instance()->setPrecision(Precision::precision::mid)"
+    // use "small" for 6 digits; "mid" for 10 digits; "large" for 16 digits.
+    // OPTION 2: set the desired precision, for instance, as:
+    // VeamyConfig::instance()->setPrecision(12) for 12 digits. Change "12" by the desired precision.
+    // OPTION 3: Omit any instruction "VeamyConfig::instance()->setPrecision(.....)"
+    // from this file. In this case, the default precision, which is 6 digits, will be used.
+    VeamyConfig::instance()->setPrecision(Precision::precision::mid);
+
     // DEFINING PATH FOR THE OUTPUT FILES:
     // If the path for the output files is not given, they are written to /home directory by default.
     // Otherwise, include the path. For instance, for /home/user/Documents/Veamy/output.txt , the path
@@ -31,8 +31,8 @@ int main(){
     std::string dispFileName = "Software/Veamy-master/build/test/cook_membrane_displacements.txt";
     std::string geoFileName = "Software/Veamy-master/build/test/cook_membrane_geometry.txt";
     
-    std::cout << "*** Starting Veamy ***" << std::endl;    
-    std::cout << "--> Test: Cook's membrane <--" << std::endl;    
+    std::cout << "*** Starting Veamy ***" << std::endl;
+    std::cout << "--> Test: Cook's membrane <--" << std::endl;
     std::cout << "..." << std::endl;
     
     std::cout << "+ Defining the domain ... ";
