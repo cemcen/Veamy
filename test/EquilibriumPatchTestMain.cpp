@@ -16,7 +16,7 @@ int main(){
     // VeamyConfig::instance()->setPrecision(12) for 12 digits. Change "12" by the desired precision.        
     // OPTION 3: Omit any instruction "VeamyConfig::instance()->setPrecision(.....)"        
     // from this file. In this case, the default precision, which is 6 digits, will be used.       
-    VeamyConfig::instance()->setPrecision(Precision::precision::large); 
+    VeamyConfig::instance()->setPrecision(Precision::precision::large);
     
     // DEFINING PATH FOR THE OUTPUT FILES:
     // If the path for the output files is not given, they are written to /home directory by default.
@@ -29,8 +29,8 @@ int main(){
     std::string meshFileName = "Software/Veamy-master/build/test/equi_patch_test_mesh.txt";
     std::string dispFileName = "Software/Veamy-master/build/test/equi_patch_test_displacements.txt";
     
-    std::cout << "*** Starting Veamy ***" << std::endl;    
-    std::cout << "--> Test: Equilibrium patch test / Reading a mesh from a file <--" << std::endl;    
+    std::cout << "*** Starting Veamy ***" << std::endl;
+    std::cout << "--> Test: Equilibrium patch test / Reading a mesh from a file <--" << std::endl;
     std::cout << "..." << std::endl;
 
     // File that contains an external mesh
