@@ -6,7 +6,7 @@
 #include <mesher/voronoi/TriangleMeshGenerator.h>
 #include <veamy/models/constraints/values/Function.h>
 #include <chrono>
-#include <veamy/physics/MaterialPlaneStrain.h>
+#include <veamy/physics/materials/MaterialPlaneStrain.h>
 
 double tangencial(double x, double y){
     double P = -1000;

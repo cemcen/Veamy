@@ -4,6 +4,10 @@ NaturalConstraints::NaturalConstraints() {}
 
 Eigen::VectorXd
 NaturalConstraints::boundaryVector(std::vector<Point> points, Polygon p, IndexSegment segment) {
+
+
+
+
     Eigen::VectorXd result(4);
     isConstrainedInfo constrainedInfo = isConstrainedBySegment(points, segment);
 

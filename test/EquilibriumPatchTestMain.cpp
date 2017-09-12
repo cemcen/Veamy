@@ -3,10 +3,10 @@
 #include <veamy/models/constraints/values/Constant.h>
 #include <veamy/models/constraints/NaturalConstraints.h>
 #include <veamy/models/constraints/ConstraintsContainer.h>
-#include <veamy/physics/Material.h>
+#include <veamy/physics/materials/Material.h>
 #include <veamy/Veamer.h>
 #include <utilities/utilities.h>
-#include <veamy/physics/MaterialPlaneStress.h>
+#include <veamy/physics/materials/MaterialPlaneStress.h>
 
 int main(){
     // Set precision for plotting to output files:        

@@ -1,7 +1,7 @@
 #ifndef VEAMY_FUNCTION_H
 #define VEAMY_FUNCTION_H
 
-#include <mesher/models/basic/Point.h>
+#include <delynoi/models/basic/Point.h>
 #include "ConstraintValue.h"
 
 typedef double(*func_t)(double, double);

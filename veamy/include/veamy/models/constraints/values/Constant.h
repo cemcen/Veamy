@@ -1,7 +1,7 @@
 #ifndef VEAMY_CONSTANT_H
 #define VEAMY_CONSTANT_H
 
-#include <mesher/models/basic/Point.h>
+#include <delynoi/models/basic/Point.h>
 #include "ConstraintValue.h"
 
 class Constant : public ConstraintValue{

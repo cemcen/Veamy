@@ -3,7 +3,7 @@
 
 #include "SparseCore"
 #include "OrderingMethods"
-#include "src/Core/util/DisableStupidWarnings.h"
+#include "veamy/lib/Eigen/src/Core/util/DisableStupidWarnings.h"
 
 /** \defgroup SparseQR_Module SparseQR module
   * \brief Provides QR decomposition for sparse matrices
@@ -21,13 +21,13 @@
   * 
   */
 
-#include "src/misc/Solve.h"
-#include "src/misc/SparseSolve.h"
+#include "veamy/lib/Eigen/src/misc/Solve.h"
+#include "veamy/lib/Eigen/src/misc/SparseSolve.h"
 
 #include "OrderingMethods"
-#include "src/SparseCore/SparseColEtree.h"
-#include "src/SparseQR/SparseQR.h"
+#include "veamy/lib/Eigen/src/SparseCore/SparseColEtree.h"
+#include "veamy/lib/Eigen/src/SparseQR/SparseQR.h"
 
-#include "src/Core/util/ReenableStupidWarnings.h"
+#include "veamy/lib/Eigen/src/Core/util/ReenableStupidWarnings.h"
 
 #endif

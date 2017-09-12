@@ -4,12 +4,12 @@
 
 Veamer::Veamer() {}
 
-PolygonalMesh Veamer::initProblemFromFile(std::string fileName, Material* material) {
+Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName, Material* material) {
     return initProblemFromFile(fileName, material, new None());
 }
 
-PolygonalMesh Veamer::initProblemFromFile(std::string fileName, Material* material, BodyForce *force) {
-    PolygonalMesh mesh;
+Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName, Material* material, VeamyBodyForce *force) {
+    Mesh<Polygon> mesh;
     std::string completeName = utilities::getPath() + fileName;
     std::ifstream infile(completeName);
     if(!infile){
@@ -73,14 +73,14 @@ PolygonalMesh Veamer::initProblemFromFile(std::string fileName, Material* materi
     container.addConstraints(natural, mesh);
     container.addConstraints(essential, mesh);
 
-    ProblemConditions conditions(container, force, material);
+    VeamyConditions conditions(container, force, material);
     initProblem(mesh, conditions);
 
     return mesh;
 }
 
 
-void Veamer::initProblem(PolygonalMesh m, ProblemConditions conditions) {
+void Veamer::initProblem(Mesh<Polygon> m, VeamyConditions conditions) {
     std::vector<Point> meshPoints = m.getPoints().getList();
     this->points.push_list(meshPoints);
     this->conditions = conditions;
@@ -93,110 +93,16 @@ void Veamer::initProblem(PolygonalMesh m, ProblemConditions conditions) {
 }
 
 void Veamer::createElement(Polygon p) {
-    elements.push_back(Element(this->conditions, p, this->points, DOFs));
+    elements.push_back(VemElement(this->conditions, p, this->points, DOFs));
 }
 
-void Veamer::insertElement(Polygon p, int index) {
-    elements.insert(elements.begin() + index, Element(this->conditions, p, this->points, DOFs));
-}
-
-Eigen::VectorXd Veamer::simulate(PolygonalMesh &mesh) {
-    Eigen::MatrixXd K;
-    Eigen::VectorXd f;
-    int n = this->DOFs.size();
-
-    K = Eigen::MatrixXd::Zero(n,n);
-    f = Eigen::VectorXd::Zero(n);
-
+void Veamer::createAndAssemble(Eigen::MatrixXd &KGlobal, Eigen::VectorXd &fGlobal) {
     for(int i=0;i<elements.size();i++){
         elements[i].computeK(DOFs, this->points, conditions);
         elements[i].computeF(DOFs, this->points, conditions);
-        elements[i].assemble(DOFs, K, f);
+        elements[i].assemble(DOFs, KGlobal, fGlobal);
     }
-
-    //Apply constrained_points
-    EssentialConstraints essential = this->conditions.constraints.getEssentialConstraints();
-    std::vector<int> c = essential.getConstrainedDOF();
-
-    Eigen::VectorXd boundary_values = essential.getBoundaryValues(this->points.getList(), this->DOFs.getDOFS());
-
-    for (int j = 0; j < c.size(); ++j) {
-        for (int i = 0; i < K.rows(); ++i) {
-            f(i) = f(i) - (K(i,c[j])*boundary_values(j));
-
-            K(c[j],i) = 0;
-            K(i,c[j]) = 0;
-        }
-
-        K(c[j], c[j]) = 1;
-        f(c[j]) = boundary_values(j);
-    }
-
-    /*Solve the system: There are various solvers available. The commented one is the slowest but most accurate. We
-    leave ldlt as it has the better trade off between speed and accuracy.*/
-    //Eigen::VectorXd x = K.fullPivHouseholderQr().solve(f);
-    Eigen::VectorXd x = K.ldlt().solve(f);
-
-    // Deform mesh
-    for (int k = 0; k < x.rows(); k = k + 2) {
-        int point_index = DOFs.get(k).pointIndex();
-        double def_x = x[k];
-        double def_y = x[k+1];
-
-        mesh.deformPoint(point_index, def_x, def_y);
-    }
-
-    mesh.update();
-
-    return x;
 }
 
 
-Pair<int> Veamer::pointToDOFS(int point_index) {
-    return this->DOFs.pointToDOFS(point_index);
-}
 
-Material* Veamer::getMaterial() {
-    return conditions.material;
-}
-
-UniqueList<Point> Veamer::getPoints() const {
-    return this->points;
-}
-
-UniqueList<Point> Veamer::getPoints() {
-    return this->points;
-}
-
-ProblemConditions Veamer::getConditions() const {
-    return this->conditions;
-}
-
-void Veamer::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
-    std::string path = utilities::getPath();
-    path = path  + fileName;
-
-    std::ofstream file;
-    file.open(path, std::ios::out);
-
-    std::vector<std::string> results(this->points.size());
-    VeamyConfig* config = VeamyConfig::instance();
-
-    for (int k = 0; k < u.rows(); k = k + 2) {
-        int point_index = DOFs.get(k).pointIndex();
-        double def_x = u[k];
-        double def_y = u[k+1];
-
-        results[point_index] = utilities::toString<int>(point_index) + " " +
-                utilities::toStringWithPrecision(def_x, VeamyConfig::instance()->getPrecision()) + " " +
-                utilities::toStringWithPrecision(def_y, VeamyConfig::instance()->getPrecision());
-    }
-
-    for (std::string s: results){
-        file << s << std::endl;
-    }
-
-    file.close();
-
-    delete config;
-}

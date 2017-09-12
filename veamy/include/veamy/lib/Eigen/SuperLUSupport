@@ -3,7 +3,7 @@
 
 #include "SparseCore"
 
-#include "src/Core/util/DisableStupidWarnings.h"
+#include "veamy/lib/Eigen/src/Core/util/DisableStupidWarnings.h"
 
 #ifdef EMPTY
 #define EIGEN_EMPTY_WAS_ALREADY_DEFINED
@@ -48,12 +48,12 @@ namespace Eigen { struct SluMatrix; }
   *
   */
 
-#include "src/misc/Solve.h"
-#include "src/misc/SparseSolve.h"
+#include "veamy/lib/Eigen/src/misc/Solve.h"
+#include "veamy/lib/Eigen/src/misc/SparseSolve.h"
 
-#include "src/SuperLUSupport/SuperLUSupport.h"
+#include "veamy/lib/Eigen/src/SuperLUSupport/SuperLUSupport.h"
 
 
-#include "src/Core/util/ReenableStupidWarnings.h"
+#include "veamy/lib/Eigen/src/Core/util/ReenableStupidWarnings.h"
 
 #endif // EIGEN_SUPERLUSUPPORT_MODULE_H

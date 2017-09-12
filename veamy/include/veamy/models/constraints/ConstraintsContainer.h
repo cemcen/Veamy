@@ -1,7 +1,7 @@
 #ifndef VEAMY_CONSTRAINTSCONTAINER_H
 #define VEAMY_CONSTRAINTSCONTAINER_H
 
-#include <mesher/models/PolygonalMesh.h>
+#include <delynoi/models/Mesh.h>
 #include "EssentialConstraints.h"
 #include "NaturalConstraints.h"
 

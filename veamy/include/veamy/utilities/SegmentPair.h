@@ -1,7 +1,7 @@
 #ifndef VEAMY_SEGMENTPAIR_H
 #define VEAMY_SEGMENTPAIR_H
 
-#include <mesher/models/basic/IndexSegment.h>
+#include <delynoi/models/basic/IndexSegment.h>
 
 struct SegmentPair{
     IndexSegment s1;

@@ -7,7 +7,7 @@
 #include <veamy/models/constraints/values/Function.h>
 #include <chrono>
 #include <utilities/utilities.h>
-#include <veamy/physics/MaterialPlaneStrain.h>
+#include <veamy/physics/materials/MaterialPlaneStrain.h>
 
 double tangencial(double x, double y){
     double P = -1000;
@@ -105,7 +105,7 @@ int main(){
 
     std::cout << "+ Defining linear elastic material ... ";
     Material* material = new MaterialPlaneStrain (1e7, 0.3);
-    ProblemConditions conditions(container, material);
+    VeamyConditions conditions(container, material);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Preparing the simulation ... ";

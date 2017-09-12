@@ -4,9 +4,9 @@
 #include <mesher/voronoi/TriangleMeshGenerator.h>
 #include <veamy/Veamer.h>
 #include <veamy/models/constraints/values/Constant.h>
-#include <veamy/physics/MaterialPlaneStrain.h>
+#include <veamy/physics/materials/MaterialPlaneStrain.h>
 #include <utilities/utilities.h>
-#include <veamy/physics/MaterialPlaneStrain.h>
+#include <veamy/physics/materials/MaterialPlaneStrain.h>
 
 int main(){
     // Set precision for plotting to output files:    

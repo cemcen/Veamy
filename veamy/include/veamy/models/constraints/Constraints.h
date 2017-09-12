@@ -1,14 +1,14 @@
 #ifndef VEAMY_CONSTRAINTS_H
 #define VEAMY_CONSTRAINTS_H
 
-#include <mesher/models/basic/Segment.h>
+#include <delynoi/models/basic/Segment.h>
 #include <veamy/models/dof/DOF.h>
 #include <veamy/utilities/SegmentPair.h>
 #include <utilities/UniqueList.h>
 #include <veamy/models/constraints/Constraint.h>
 #include <veamy/models/constraints/structures/constrained_seg_mapdata.h>
 #include <veamy/models/constraints/structures/isConstrainedInfo.h>
-#include <mesher/voronoi/structures/mapdata.h>
+#include <delynoi/voronoi/structures/mapdata.h>
 #include <veamy/models/constraints/structures/Angle.h>
 #include <map>
 #include "SegmentConstraint.h"

@@ -1,11 +1,11 @@
 #ifndef VEAMY_CONSTRAINT_H
 #define VEAMY_CONSTRAINT_H
 
-#include <mesher/models/basic/Point.h>
+#include <delynoi/models/basic/Point.h>
 #include <vector>
 #include <unordered_map>
 #include <veamy/models/constraints/values/ConstraintValue.h>
-#include <mesher/models/basic/IndexSegment.h>
+#include <delynoi/models/basic/IndexSegment.h>
 #include <utilities/UniqueList.h>
 #include <utilities/Pair.h>
 #include <veamy/models/dof/DOF.h>

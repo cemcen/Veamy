@@ -3,7 +3,7 @@
 #include <veamy/models/constraints/values/Function.h>
 #include <mesher/models/generator/functions.h>
 #include <utilities/utilities.h>
-#include <veamy/physics/MaterialPlaneStrain.h>
+#include <veamy/physics/materials/MaterialPlaneStrain.h>
 
 double uXPatch(double x, double y){
     return x;

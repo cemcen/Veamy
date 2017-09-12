@@ -1,7 +1,7 @@
 #ifndef VEAMY_CONSTRAINMAPDATA_H
 #define VEAMY_CONSTRAINMAPDATA_H
 
-#include <mesher/models/basic/Segment.h>
+#include <delynoi/models/basic/Segment.h>
 
 struct intHasher {
     std::size_t operator()(const int &k) const {

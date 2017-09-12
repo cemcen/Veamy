@@ -16,7 +16,7 @@ target_include_directories(libveamy PUBLIC
         $<INSTALL_INTERFACE:include>)
 
 # Depend on a library that we defined in the top-level file
-target_link_libraries(libveamy libmesher libutilities)
+target_link_libraries(libveamy libdelynoi libutilities)
 
 #add_custom_target(libveamy_target ALL
 #        COMMAND ${CMAKE_AR} rc libveamy_target.a $<TARGET_FILE:libutilities> $<TARGET_FILE:libpoly> $<TARGET_FILE:libvem>)
