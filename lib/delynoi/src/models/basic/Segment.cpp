@@ -2,10 +2,6 @@
 
 template <class T>
 Segment<T>::Segment(T p1, T p2) {
-    if(p1==p2){
-        throw std::runtime_error("A segment can not have zero length");
-    }
-
     this->p1 = p1;
     this->p2 = p2;
 }
