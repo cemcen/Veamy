@@ -10,11 +10,11 @@ private:
     EssentialConstraints essential;
     NaturalConstraints natural;
 
-    bool areConsistent(NaturalConstraints n, EssentialConstraints e, PolygonalMesh mesh);
+    bool areConsistent(NaturalConstraints n, EssentialConstraints e, UniqueList<Point> points);
 public:
     ConstraintsContainer();
-    void addConstraints(NaturalConstraints c, PolygonalMesh mesh);
-    void addConstraints(EssentialConstraints c, PolygonalMesh mesh);
+    void addConstraints(NaturalConstraints c, UniqueList<Point> points);
+    void addConstraints(EssentialConstraints c, UniqueList<Point> points);
 
     void addConstrainedDOF(std::vector<Point> points, int DOF_index, DOF::Axis axis, SegmentPair pair,
                                int point_index);

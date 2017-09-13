@@ -1,9 +1,9 @@
 #ifndef VEAMY_NONE_H
 #define VEAMY_NONE_H
 
-#include <veamy/physics/body forces/ConstantBodyForce.h>
+#include <veamy/physics/bodyforces/BodyForce.h>
 
-class None : public ConstantBodyForce{
+class None : public BodyForce{
 public:
     double applyX(double x, double y){
         return 0;

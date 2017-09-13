@@ -5,7 +5,7 @@
 #include <delynoi/models/basic/Point.h>
 
 namespace gauss_quadrature{
-    void quadrature_1d(int order, std::vector<double>& points, std::vector<double>& weights){
+    void gauss_1d(int order, std::vector<double>& points, std::vector<double>& weights){
         if(order == 1){
             points.push_back(0.0);
 

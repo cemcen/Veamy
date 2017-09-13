@@ -13,6 +13,7 @@
 #include <delynoi/models/hole/clipper/lib/clipper.hpp>
 #include <delynoi/models/hole/clipper/ClipperWrapper.h>
 #include <delynoi/config/DelynoiConfig.h>
+#include <utilities/utilities.h>
 
 class Region: public Polygon {
 private:

@@ -8,7 +8,7 @@ Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName, Material* materi
     return initProblemFromFile(fileName, material, new None());
 }
 
-Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName, Material* material, VeamyBodyForce *force) {
+Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName, Material* material, BodyForce* force) {
     Mesh<Polygon> mesh;
     std::string completeName = utilities::getPath() + fileName;
     std::ifstream infile(completeName);
@@ -28,7 +28,7 @@ Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName, Material* materi
     int numberEssential = std::atoi(line.c_str());
     for (int i = 0; i < numberEssential; ++i) {
         std::getline(infile, line);
-        std::vector<std::string> splittedLine = utilities::split(line, ' ');
+        std::vector<std::string> splittedLine = utilities::splitBySpaces(line);
 
         if(splittedLine[1] == "1" && splittedLine[2] == "1"){
             Point p = mesh.getPoint(std::atoi(splittedLine[0].c_str()) - 1);
@@ -58,7 +58,7 @@ Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName, Material* materi
     int numberNatural = std::atoi(line.c_str());
     for (int i = 0; i < numberNatural; ++i) {
         std::getline(infile, line);
-        std::vector<std::string> splittedLine = utilities::split(line, ' ');
+        std::vector<std::string> splittedLine = utilities::splitBySpaces(line);
 
         Point p = mesh.getPoint(std::atoi(splittedLine[0].c_str()) - 1);
         PointConstraint xConstraint(p, Constraint::Direction::Horizontal, new Constant(std::atof(splittedLine[1].c_str())));
@@ -70,17 +70,17 @@ Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName, Material* materi
 
     infile.close();
     ConstraintsContainer container;
-    container.addConstraints(natural, mesh);
-    container.addConstraints(essential, mesh);
+    container.addConstraints(natural, mesh.getPoints());
+    container.addConstraints(essential, mesh.getPoints());
 
-    VeamyConditions conditions(container, force, material);
+    Conditions conditions(container, force, material);
     initProblem(mesh, conditions);
 
     return mesh;
 }
 
 
-void Veamer::initProblem(Mesh<Polygon> m, VeamyConditions conditions) {
+void Veamer::initProblem(Mesh<Polygon> m, Conditions conditions) {
     std::vector<Point> meshPoints = m.getPoints().getList();
     this->points.push_list(meshPoints);
     this->conditions = conditions;
@@ -88,12 +88,8 @@ void Veamer::initProblem(Mesh<Polygon> m, VeamyConditions conditions) {
     std::vector<Polygon> polygons = m.getPolygons();
 
     for(int i=0;i<polygons.size();i++){
-        createElement(polygons[i]);
+        this->elements.push_back(VemElement(this->conditions, polygons[i], this->points, DOFs));
     }
-}
-
-void Veamer::createElement(Polygon p) {
-    elements.push_back(VemElement(this->conditions, p, this->points, DOFs));
 }
 
 void Veamer::createAndAssemble(Eigen::MatrixXd &KGlobal, Eigen::VectorXd &fGlobal) {

@@ -8,7 +8,8 @@
 class NaturalConstraints : public Constraints{
 public:
     NaturalConstraints();
-    Eigen::VectorXd boundaryVector(std::vector<Point> points, Polygon p, IndexSegment segment);
+    std::vector<SegmentConstraint> getConstraintInformation(IndexSegment segment);
+    std::vector<PointConstraint> getConstraintInformation(Point point);
 };
 
 

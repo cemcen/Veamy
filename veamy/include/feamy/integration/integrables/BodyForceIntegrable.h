@@ -3,8 +3,10 @@
 
 #include <feamy/models/shapefunctions/ShapeFunctions.h>
 #include <veamy/physics/bodyforces/BodyForce.h>
+#include <veamy/lib/Eigen/Dense>
+#include "IntegrableFunction.h"
 
-class BodyForceIntegrable {
+class BodyForceIntegrable : public IntegrableFunction{
 private:
     ShapeFunctions* N;
     BodyForce* f;
@@ -14,12 +16,13 @@ public:
         this->f = f;
     }
 
-    Eigen::VectorXd function(double x, double y){
+    Eigen::VectorXd apply(Point p){
+        int n = this->N->numberOfShapeFunctions();
         Eigen::MatrixXd Ne;
-        Ne = Eigen::MatrixXd::Zero(2,6);
+        Ne = Eigen::MatrixXd::Zero(2,2*n);
 
-        std::vector<double> Ni = N->evaluateShapeFunction(Point(x,y));
-        for (int i = 0; i < 3; ++i) {
+        std::vector<double> Ni = N->evaluateShapeFunction(p);
+        for (int i = 0; i < n; ++i) {
             Ne(0,2*i) = Ni[2*i];
             Ne(1,2*i+1) = Ni[2*i+1];
         }
@@ -27,8 +30,8 @@ public:
         Eigen::VectorXd b;
         b = Eigen::VectorXd::Zero(2);
 
-        b(0) = f->applyX(x, y);
-        b(1) = f->applyY(x, y);
+        b(0) = f->applyX(p.getX(), p.getY());
+        b(1) = f->applyY(p.getX(), p.getY());
 
         return Ne.transpose()*b;
     }

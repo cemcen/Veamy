@@ -9,8 +9,10 @@ public:
     PointSegment(Point p1, Point p2);
     PointSegment();
 
+    double length();
     bool contains(Point point);
     std::string getString() const override;
+    double cartesianAngle();
     bool operator==(const PointSegment other) const;
     bool intersectionInfinite(Point p1, Point p2, Point& inter);
 };

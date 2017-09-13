@@ -1,12 +1,14 @@
 #ifndef VEAMY_CALCULATOR2D_H
 #define VEAMY_CALCULATOR2D_H
 
-template <typename ...> class Calculator2D;
+#include <utilities/UniqueList.h>
+#include <veamy/physics/Conditions.h>
+#include <veamy/models/dof/DOFS.h>
 
-template <typename T, typename S>
+template <typename T>
 class Calculator2D {
 protected:
-    Conditions<S> conditions;
+    Conditions conditions;
     UniqueList<Point> points;
 public:
     DOFS DOFs;

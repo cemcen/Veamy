@@ -1,28 +1,11 @@
-#include <veamy/physics/body forces/BodyForceVector.h>
+#include <veamy/physics/bodyforces/VeamyBodyForceVector.h>
 
-
-Eigen::VectorXd BodyForceVector::computeConstantForceVector(VeamyBodyForce *f, Polygon polygon, std::vector<Point> points){
-    std::vector<int> polygonPoints = polygon.getPoints();
-    int n = (int) polygonPoints.size();
-
-    Eigen::MatrixXd Nbar;
-    Eigen::VectorXd b;
-
-    Nbar = Eigen::MatrixXd::Zero(2,2*n);
-    b =  Eigen::VectorXd::Zero(2);
-
-    for (int vertex_id = 0; vertex_id < n; ++vertex_id) {
-        Nbar(0,2*vertex_id) = 1.0/n;
-        Nbar(1,2*vertex_id + 1) = 1.0/n;
-    }
-
-    b(0) = f->applyX(0,0);
-    b(1) = f->applyY(0,0);
-
-    return polygon.getArea()*Nbar.transpose()*b;
+VeamyBodyForceVector::VeamyBodyForceVector(Polygon p, UniqueList<Point> points) {
+    this->polygon = p;
+    this->points = points.getList();
 }
 
-Eigen::VectorXd BodyForceVector::computeVariableForceVector(VeamyBodyForce *f, Polygon polygon, std::vector<Point> points) {
+Eigen::VectorXd VeamyBodyForceVector::computeForceVector(BodyForce *f) {
     double integralX = 0;
     double integralY = 0;
 

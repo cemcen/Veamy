@@ -6,9 +6,10 @@
 #include <veamy/models/constraints/EssentialConstraints.h>
 #include <veamy/models/VemElement.h>
 #include <veamy/lib/Eigen/Dense>
-#include <veamy/physics/VeamyConditions.h>
+#include <veamy/physics/Conditions.h>
 #include <iostream>
 #include "Calculator2D.h"
+#include <utilities/utilities.h>
 
 
 struct PolygonHasher {
@@ -20,16 +21,14 @@ struct PolygonHasher {
     }
 };
 
-class Veamer : public Calculator2D {
-protected:
-    virtual void createElement(Polygon p);
+class Veamer : public Calculator2D<Polygon> {
 public:
     std::vector<VemElement> elements;
     Veamer();
 
     Mesh<Polygon> initProblemFromFile(std::string fileName, Material* material);
-    Mesh<Polygon> initProblemFromFile(std::string fileName, Material* material, VeamyBodyForce *force);
-    void initProblem(Mesh<Polygon> m, VeamyConditions conditions);
+    Mesh<Polygon> initProblemFromFile(std::string fileName, Material* material, BodyForce *force);
+    void initProblem(Mesh<Polygon> m, Conditions conditions);
     void createAndAssemble(Eigen::MatrixXd& KGlobal, Eigen::VectorXd& fGlobal);
 };
 

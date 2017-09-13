@@ -1,5 +1,4 @@
 #include <delynoi/models/Mesh.h>
-#include <utilities/utilities.h>
 
 template <typename T>
 Mesh<T>::Mesh() {}

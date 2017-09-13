@@ -4,7 +4,10 @@
 #include "ShapeFunctions.h"
 
 class Tri3ShapeFunctions : public ShapeFunctions {
-
+public:
+    Tri3ShapeFunctions(Triangle t, std::vector<Point> points);
+    std::vector<double> evaluateShapeFunction(Point point);
+    std::vector<Pair<double>> evaluateDerivatives(Point point);
 };
 
 #endif

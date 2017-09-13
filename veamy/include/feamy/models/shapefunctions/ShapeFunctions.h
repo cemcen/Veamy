@@ -5,14 +5,15 @@
 #include <delynoi/models/polygon/Triangle.h>
 
 class ShapeFunctions {
-private:
+protected:
     std::vector<Point> p;
     double area;
 public:
     ShapeFunctions();
     ShapeFunctions(Triangle elem, std::vector<Point> meshPoints);
-    std::vector<double> evaluateShapeFunction(Point point);
-    std::vector<Pair<double>> evaluateDerivatives(Point point);
+    virtual std::vector<double> evaluateShapeFunction(Point point) = 0;
+    virtual std::vector<Pair<double>> evaluateDerivatives(Point point) = 0;
+    int numberOfShapeFunctions();
 };
 
 #endif

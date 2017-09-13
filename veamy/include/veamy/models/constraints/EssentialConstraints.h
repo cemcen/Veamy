@@ -1,7 +1,7 @@
 #ifndef VEAMY_ESSENTIALCONSTRAINTS_H
 #define VEAMY_ESSENTIALCONSTRAINTS_H
 
-#include <mesher/models/basic/Point.h>
+#include <delynoi/models/basic/Point.h>
 #include <unordered_map>
 #include <vector>
 #include <veamy/lib/Eigen/Dense>

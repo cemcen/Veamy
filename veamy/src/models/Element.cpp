@@ -1,8 +1,8 @@
 #include <veamy/models/Element.h>
-#include <veamy/physics/VeamyConditions.h>
+#include <veamy/physics/bodyforces/BodyForceVector.h>
 
 template <typename T>
-void Element<T>::initializeElement(VeamyConditions &conditions, T &p, UniqueList<Point> &points, DOFS &out) {
+void Element<T>::initializeElement(Conditions &conditions, T &p, UniqueList<Point> &points, DOFS &out) {
     std::vector<int> vertex = p.getPoints();
     int n = vertex.size();
 
@@ -37,3 +37,29 @@ void Element<T>::assemble(DOFS out, Eigen::MatrixXd &Kglobal, Eigen::VectorXd &F
         Fglobal(globalI) = Fglobal(globalI) + this->f(i);
     }
 }
+
+template <typename T>
+void Element<T>::computeF(DOFS d, UniqueList<Point> points, Conditions &conditions, BodyForceVector *bodyForceVector,
+                       TractionVector *tractionVector) {
+    int n = this->p.numberOfSides();
+    int m = this->dofs.size();
+    std::vector<IndexSegment> segments;
+    this->p.getSegments(segments);
+
+    this->f = Eigen::VectorXd::Zero(m);
+    Eigen::VectorXd bodyForce = bodyForceVector->computeForceVector(conditions.f);
+
+    NaturalConstraints natural = conditions.constraints.getNaturalConstraints();
+
+    for (int i = 0; i < n; ++i) {
+        Eigen::VectorXd naturalConditions = tractionVector->computeTractionVector(segments[i]);
+
+        this->f(2*i) = this->f(2*i) + bodyForce(2*i) + naturalConditions(0);
+        this->f((2*i + 1)%m) = this->f((2*i + 1)%m) + bodyForce(2*i+1) + naturalConditions(1);
+        this->f((2*(i+1))%m) =  this->f((2*(i+1))%m) + naturalConditions(2);
+        this->f((2*(i+1) + 1)%m) =  this->f((2*(i+1) + 1)%m) + naturalConditions(3);
+    }
+}
+
+template class Element<Triangle>;
+template class Element<Polygon>;

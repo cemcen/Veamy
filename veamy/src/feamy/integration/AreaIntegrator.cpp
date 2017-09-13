@@ -5,14 +5,14 @@
 #include <veamy/geometry/VeamyPolygon.h>
 
 template <typename T>
-Eigen::VectorXd AreaIntegrator::integrate(int nGauss, T element, std::vector<Point> points,
+Eigen::VectorXd AreaIntegrator<T>::integrate(int nGauss, T element, std::vector<Point> points,
                                           IntegrableFunction *integrable) {
     std::vector<VeamyTriangle> triangles = element.triangulate(points);
     Eigen::VectorXd integral;
     integral = Eigen::VectorXd::Zero(2*element.numberOfSides());
 
     for(VeamyTriangle t: triangles){
-        std::vector<Point> p = t.getPoints();
+        std::vector<Point> p = t.getPoints(points);
         Eigen::MatrixXd J = t.getJacobian(points);
 
         std::vector<Point> gaussPoints;

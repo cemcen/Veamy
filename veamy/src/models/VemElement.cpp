@@ -1,12 +1,11 @@
 #include <veamy/models/VemElement.h>
-#include <iomanip>
-#include <veamy/physics/bodyforces/VeamyBodyForce.h>
+#include <veamy/physics/traction/VeamyTractionVector.h>
 
-VemElement::VemElement(Conditions<VeamyBodyForce> &conditions, Polygon &p, UniqueList<Point> &points, DOFS &out) {
+VemElement::VemElement(Conditions &conditions, Polygon &p, UniqueList<Point> &points, DOFS &out) {
     initializeElement(conditions, p, points, out);
 }
 
-void VemElement::computeK(DOFS d, UniqueList<Point> points, Conditions<VeamyBodyForce> &conditions) {
+void VemElement::computeK(DOFS d, UniqueList<Point> points, Conditions &conditions) {
     std::vector<int> polygonPoints = p.getPoints();
     int n = (int) polygonPoints.size();
     Point average = p.getAverage(points.getList());
@@ -93,25 +92,14 @@ void VemElement::computeK(DOFS d, UniqueList<Point> points, Conditions<VeamyBody
     this->K = area*Wc*D*Wc.transpose() + (I - Pp).transpose()*Se*(I - Pp);
 }
 
-void VemElement::computeF(DOFS d, UniqueList<Point> points, Conditions<VeamyBodyForce> &conditions) {
-    int n = this->p.numberOfSides();
-    int m = this->dofs.size();
-    std::vector<IndexSegment> segments;
-    this->p.getSegments(segments);
+void VemElement::computeF(DOFS d, UniqueList<Point> points, Conditions &conditions) {
+    BodyForceVector* bodyForceVector = new VeamyBodyForceVector(this->p, points);
+    TractionVector* tractionVector = new VeamyTractionVector(this->p, points, conditions.constraints.getNaturalConstraints());
 
-    this->f = Eigen::VectorXd::Zero(m);
-    Eigen::VectorXd bodyForce = conditions.f->computeVector(p, points.getList());
+    Element::computeF(d, points, conditions, bodyForceVector, tractionVector);
 
-    NaturalConstraints natural = conditions.constraints.getNaturalConstraints();
-
-    for (int i = 0; i < n; ++i) {
-        Eigen::VectorXd naturalConditions = natural.boundaryVector(points.getList(), this->p, segments[i]);
-
-        this->f(2*i) = this->f(2*i) + bodyForce(2*i) + naturalConditions(0);
-        this->f((2*i + 1)%m) = this->f((2*i + 1)%m) + bodyForce(2*i+1) + naturalConditions(1);
-        this->f((2*(i+1))%m) =  this->f((2*(i+1))%m) + naturalConditions(2);
-        this->f((2*(i+1) + 1)%m) =  this->f((2*(i+1) + 1)%m) + naturalConditions(3);
-    }
+    delete bodyForceVector;
+    delete tractionVector;
 }
 
 

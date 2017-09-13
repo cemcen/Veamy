@@ -7,6 +7,7 @@
 #include <utilities/UniqueList.h>
 #include <veamy/models/constraints/Constraint.h>
 #include <veamy/models/constraints/structures/constrained_seg_mapdata.h>
+#include <delynoi/models/neighbourhood/PointMap.h>
 #include <veamy/models/constraints/structures/isConstrainedInfo.h>
 #include <delynoi/voronoi/structures/mapdata.h>
 #include <veamy/models/constraints/structures/Angle.h>

@@ -3,12 +3,12 @@
 
 #include <delynoi/models/polygon/Polygon.h>
 #include <vector>
-#include <veamy/physics/body forces/VeamyBodyForce.h>
+#include <veamy/physics/bodyforces/BodyForce.h>
+#include <veamy/lib/Eigen/Dense>
 
 class BodyForceVector {
 public:
-    Eigen::VectorXd computeConstantForceVector(VeamyBodyForce *f, Polygon p, std::vector<Point> points);
-    Eigen::VectorXd computeVariableForceVector(VeamyBodyForce *f, Polygon p, std::vector<Point> points);
+    virtual Eigen::VectorXd computeForceVector(BodyForce *f) = 0;
 };
 
 

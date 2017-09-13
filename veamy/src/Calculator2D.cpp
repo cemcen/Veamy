@@ -2,30 +2,29 @@
 #include <utilities/Pair.h>
 #include <veamy/physics/materials/Material.h>
 #include <utilities/UniqueList.h>
-#include <feamy/physics/FeamyConditions.h>
 
 template <typename T>
-Pair<int> Calculator2D::pointToDOFS(int point_index) {
+Pair<int> Calculator2D<T>::pointToDOFS(int point_index) {
     return this->DOFs.pointToDOFS(point_index);
 }
 
 template <typename T>
-Material *Calculator2D::getMaterial() {
+Material *Calculator2D<T>::getMaterial() {
     return conditions.material;
 }
 
 template <typename T>
-UniqueList <Point> Calculator2D::getPoints() const {
+UniqueList <Point> Calculator2D<T>::getPoints() const {
     return this->points;
 }
 
 template <typename T>
-UniqueList <Point> Calculator2D::getPoints() {
+UniqueList <Point> Calculator2D<T>::getPoints() {
     return this->points;
 }
 
 template <typename T>
-void Calculator2D::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
+void Calculator2D<T>::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
     std::string path = utilities::getPath();
     path = path  + fileName;
 
@@ -52,8 +51,8 @@ void Calculator2D::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
     file.close();
 }
 
-template <typename T, typename S>
-Eigen::VectorXd Calculator2D<T,S>::simulate(Mesh<T> &mesh) {
+template <typename T>
+Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
     Eigen::MatrixXd K;
     Eigen::VectorXd f;
     int n = this->DOFs.size();
@@ -92,10 +91,13 @@ Eigen::VectorXd Calculator2D<T,S>::simulate(Mesh<T> &mesh) {
         double def_x = x[k];
         double def_y = x[k+1];
 
-        mesh.deformPoint(point_index, def_x, def_y);
+        //mesh.deformPoint(point_index, def_x, def_y);
     }
 
-    mesh.update();
+    //mesh.update();
 
     return x;
 }
+
+template class Calculator2D<Polygon>;
+template class Calculator2D<Triangle>;

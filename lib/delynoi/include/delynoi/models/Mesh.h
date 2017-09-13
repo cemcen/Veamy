@@ -7,6 +7,7 @@
 #include <delynoi/models/polygon/Polygon.h>
 #include <delynoi/models/neighbourhood/PointMap.h>
 #include <delynoi/models/polygon/Triangle.h>
+#include <utilities/utilities.h>
 
 template <typename T>
 class Mesh{
