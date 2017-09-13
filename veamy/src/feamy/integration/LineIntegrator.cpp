@@ -13,7 +13,7 @@ Eigen::VectorXd LineIntegrator::integrate(int nGauss, PointSegment segment, Inte
         double y = segment.getFirst().getY() +
                    (segment.getSecond().getY() - segment.getFirst().getY())/2*(1+gaussPoints[i]);
 
-        integral += weights[i]*segment.length()*integrable->apply(Point(x,y));
+        integral += weights[i]*segment.length()/2*integrable->apply(Point(x,y));
     }
 
     return integral;

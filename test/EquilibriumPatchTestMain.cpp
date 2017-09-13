@@ -1,5 +1,5 @@
 #include <veamy/models/constraints/EssentialConstraints.h>
-#include <mesher/models/PolygonalMesh.h>
+#include <delynoi/models/Mesh.h>
 #include <veamy/models/constraints/values/Constant.h>
 #include <veamy/models/constraints/NaturalConstraints.h>
 #include <veamy/models/constraints/ConstraintsContainer.h>
@@ -37,7 +37,7 @@ int main(){
     std::string externalMeshFileName = "Software/Veamy-master/test/test_files/equilibriumTest_mesh.txt";
 
     std::cout << "+ Reading mesh from a file ... ";
-    PolygonalMesh mesh;
+    Mesh<Polygon> mesh;
     mesh.createFromFile(externalMeshFileName);
     std::cout << "done" << std::endl;
 
@@ -60,13 +60,13 @@ int main(){
     natural.addConstraint(top, mesh.getPoints());
 
     ConstraintsContainer container;
-    container.addConstraints(essential, mesh);
-    container.addConstraints(natural, mesh);
+    container.addConstraints(essential, mesh.getPoints());
+    container.addConstraints(natural, mesh.getPoints());
     std::cout << "done" << std::endl;
 
     std::cout << "+ Defining linear elastic material ... ";
     Material* material = new MaterialPlaneStress(3e7, 0.3);
-    ProblemConditions conditions(container, material);
+    Conditions conditions(container, material);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Preparing the simulation ... ";

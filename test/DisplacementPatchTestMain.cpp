@@ -1,7 +1,7 @@
-#include <mesher/voronoi/TriangleMeshGenerator.h>
+#include <delynoi/voronoi/TriangleVoronoiGenerator.h>
 #include <veamy/Veamer.h>
 #include <veamy/models/constraints/values/Function.h>
-#include <mesher/models/generator/functions.h>
+#include <delynoi/models/generator/functions/functions.h>
 #include <utilities/utilities.h>
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
 
@@ -31,8 +31,8 @@ int main(){
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
-    std::string meshFileName = "Software/Veamy-master/build/test/disp_patch_test_mesh.txt";
-    std::string dispFileName = "Software/Veamy-master/build/test/disp_patch_test_displacements.txt";
+    std::string meshFileName = "disp_patch_test_mesh.txt";
+    std::string dispFileName = "disp_patch_test_displacements.txt";
     
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Displacement patch test <--" << std::endl;
@@ -44,10 +44,10 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Generating polygonal mesh ... ";
-    rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 24, 12);
+    rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::displace_points(4.0/12)), 24, 12);
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
-    TriangleMeshGenerator meshGenerator = TriangleMeshGenerator (seeds, rectangle4x8);
-    PolygonalMesh mesh = meshGenerator.getMesh();
+    TriangleVoronoiGenerator meshGenerator = TriangleVoronoiGenerator (seeds, rectangle4x8);
+    Mesh<Polygon> mesh = meshGenerator.getMesh();
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing mesh to a file ... ";
@@ -84,12 +84,12 @@ int main(){
     essential.addConstraint(topY, mesh.getPoints());
 
     ConstraintsContainer container;
-    container.addConstraints(essential, mesh);
+    container.addConstraints(essential, mesh.getPoints());
     std::cout << "done" << std::endl;
 
     std::cout << "+ Defining linear elastic material ... ";
     Material* material = new MaterialPlaneStrain (1e7, 0.3);
-    ProblemConditions conditions(container, material);
+    Conditions conditions(container, material);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Preparing the simulation ... ";

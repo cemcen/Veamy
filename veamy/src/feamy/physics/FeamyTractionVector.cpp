@@ -9,5 +9,19 @@ FeamyTractionVector::FeamyTractionVector(Triangle t, UniqueList<Point> points, S
 }
 
 Eigen::VectorXd FeamyTractionVector::computeTractionVector(IndexSegment segment) {
-    return Eigen::VectorXd();
+    Eigen::VectorXd result(4);
+    isConstrainedInfo constrainedInfo = natural.isConstrainedBySegment(points, segment);
+
+    if (constrainedInfo.isConstrained) {
+        std::vector<int> trianglePoints = t.getPoints();
+        int n = (int) trianglePoints.size();
+
+        std::vector<SegmentConstraint> constraints = natural.getConstraintInformation(constrainedInfo.container);
+
+    } else {
+        result = Eigen::VectorXd::Zero(4);
+    }
+
+
+
 }

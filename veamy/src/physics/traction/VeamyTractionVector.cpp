@@ -1,4 +1,5 @@
 #include <veamy/physics/traction/VeamyTractionVector.h>
+#include <veamy/physics/traction/point_forces.h>
 
 VeamyTractionVector::VeamyTractionVector(Polygon p, UniqueList<Point> points, NaturalConstraints natural) {
     this->p = p;
@@ -41,26 +42,7 @@ Eigen::VectorXd VeamyTractionVector::computeTractionVector(IndexSegment segment)
         result = Eigen::VectorXd::Zero(4);
     }
 
-    isConstrainedInfo isConstrainedInfoP1 = natural.isConstrainedByPoint(points[segment.getFirst()]);
-    isConstrainedInfo isConstrainedInfoP2 = natural.isConstrainedByPoint(points[segment.getSecond()]);
-
-    if(isConstrainedInfoP1.isConstrained){
-        std::vector<PointConstraint> constraints = natural.getConstraintInformation(points[segment.getFirst()]);
-
-        for (Constraint c: constraints){
-            result(0) += c.getValue(points[segment.getFirst()])*c.isAffected(DOF::Axis::x);
-            result(1) += c.getValue(points[segment.getFirst()])*c.isAffected(DOF::Axis::y);
-        }
-    }
-
-    if(isConstrainedInfoP2.isConstrained){
-        std::vector<PointConstraint> constraints = natural.getConstraintInformation(points[segment.getSecond()]);
-
-        for (Constraint c: constraints){
-            result(2) += c.getValue(points[segment.getSecond()])*c.isAffected(DOF::Axis::x);
-            result(3) += c.getValue(points[segment.getSecond()])*c.isAffected(DOF::Axis::y);
-        }
-    }
+    point_forces::addPointForces(result, natural, points[segment.getFirst()], points[segment.getSecond()]);
 
     return result;
 }
