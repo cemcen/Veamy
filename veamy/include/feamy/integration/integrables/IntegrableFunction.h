@@ -3,9 +3,10 @@
 
 #include <delynoi/models/basic/Point.h>
 
-class IntegrableFunction{
+template <typename S>
+class IntegrableFunction<S>{
 public:
-    virtual Eigen::VectorXd apply(Point p)=0;
+    virtual S apply(Point p)=0;
 };
 
 #endif

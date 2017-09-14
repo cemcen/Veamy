@@ -22,7 +22,3 @@ Tri6Element::Tri6Element(Conditions conditions, Triangle t, UniqueList<Point> &p
     Triangle newTriangle(newTrianglePoints, points.getList());
     FemElement::initializeElement(conditions, newTriangle, points, out, N);
 }
-
-void Tri6Element::computeK(DOFS d, UniqueList<Point> points, Conditions &conditions) {
-
-}

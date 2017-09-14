@@ -21,3 +21,12 @@ std::vector<Pair<double>> Tri3ShapeFunctions::evaluateDerivatives(Point point) {
 
     return results;
 }
+
+Point Tri3ShapeFunctions::evaluateRealPoint(Point point) {
+    double x = p[2].getX() + (p[0].getX() - p[2].getX())*point.getX() + (p[1].getX() - p[2].getX())*point.getY();
+    double y = p[2].getY() + (p[0].getY() - p[2].getY())*point.getX() + (p[1].getY() - p[2].getY())*point.getY();
+
+    return Point(x,y);
+
+
+}

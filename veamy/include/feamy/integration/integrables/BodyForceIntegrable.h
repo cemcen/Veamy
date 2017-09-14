@@ -6,7 +6,7 @@
 #include <veamy/lib/Eigen/Dense>
 #include "IntegrableFunction.h"
 
-class BodyForceIntegrable : public IntegrableFunction{
+class BodyForceIntegrable : public IntegrableFunction<Eigen::VectorXd>{
 private:
     ShapeFunctions* N;
     BodyForce* f;
@@ -30,8 +30,10 @@ public:
         Eigen::VectorXd b;
         b = Eigen::VectorXd::Zero(2);
 
-        b(0) = f->applyX(p.getX(), p.getY());
-        b(1) = f->applyY(p.getX(), p.getY());
+        Point real = this->N->evaluateRealPoint(p);
+
+        b(0) = f->applyX(real.getX(), real.getY());
+        b(1) = f->applyY(real.getX(), real.getY());
 
         return Ne.transpose()*b;
     }

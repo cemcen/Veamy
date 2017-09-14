@@ -12,7 +12,7 @@ public:
     std::vector<VeamyTriangle> triangulate(std::vector<Point> points);
     Eigen::MatrixXd getJacobian(std::vector<Point> points);
     bool isNull();
-
+    int indexOf(int i);
 };
 
 #endif

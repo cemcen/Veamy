@@ -5,10 +5,10 @@
 #include <feamy/integration/integrables/IntegrableFunction.h>
 #include <delynoi/models/basic/Point.h>
 
-template <typename T>
+template <typename T, typename S>
 class AreaIntegrator {
 public:
-    static Eigen::VectorXd integrate(int nGauss, T element, std::vector<Point> points, IntegrableFunction* integrable);
+    static void integrate(S& result, int nGauss, T element, std::vector<Point> points, IntegrableFunction<S>* integrable);
 };
 
 #endif

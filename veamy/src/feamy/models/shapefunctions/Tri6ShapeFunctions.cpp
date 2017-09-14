@@ -28,3 +28,12 @@ std::vector<Pair<double>> Tri6ShapeFunctions::evaluateDerivatives(Point p) {
     std::vector<Pair<double>> dN = {dN1, dN4, dN2, dN5, dN3, dN6};
     return dN;
 }
+
+Point Tri6ShapeFunctions::evaluateRealPoint(Point point) {
+    std::vector<double> N = evaluateShapeFunction(point);
+
+    double x = N[0]*p[0].getX() + N[1]*p[1].getX() + N[2]*p[2].getX() + N[3]*p[3].getX() + N[4]*p[4].getX() + N[5]*p[5].getX();
+    double y = N[0]*p[0].getY() + N[1]*p[1].getY() + N[2]*p[2].getY() + N[3]*p[3].getY() + N[4]*p[4].getY() + N[5]*p[5].getY();
+
+    return Point(x,y);
+}

@@ -4,12 +4,10 @@
 #include <veamy/geometry/VeamyTriangle.h>
 #include <veamy/geometry/VeamyPolygon.h>
 
-template <typename T>
-Eigen::VectorXd AreaIntegrator<T>::integrate(int nGauss, T element, std::vector<Point> points,
-                                          IntegrableFunction *integrable) {
+template <typename T, typename S>
+void AreaIntegrator<T,S>::integrate(S& result, int nGauss, T element, std::vector<Point> points,
+                                          IntegrableFunction<S> *integrable) {
     std::vector<VeamyTriangle> triangles = element.triangulate(points);
-    Eigen::VectorXd integral;
-    integral = Eigen::VectorXd::Zero(2*element.numberOfSides());
 
     for(VeamyTriangle t: triangles){
         std::vector<Point> p = t.getPoints(points);
@@ -25,12 +23,12 @@ Eigen::VectorXd AreaIntegrator<T>::integrate(int nGauss, T element, std::vector<
             double g2 = p[0].getY() + (p[1].getY() - p[0].getY())*gaussPoints[i].getX()  +
                         (p[2].getY() - p[0].getY())*gaussPoints[i].getY();
 
-            integral += weights[i]*integrable->apply(Point(g1,g2))*J.determinant();
+            result += weights[i]*integrable->apply(Point(g1,g2))*J.determinant();
         }
     }
-
-    return integral;
 }
 
-template class AreaIntegrator<VeamyTriangle>;
-template class AreaIntegrator<VeamyPolygon>;
+template class AreaIntegrator<VeamyTriangle,Eigen::VectorXd>;
+template class AreaIntegrator<VeamyTriangle,Eigen::MatrixXd>;
+template class AreaIntegrator<VeamyPolygon,Eigen::VectorXd>;
+template class AreaIntegrator<VeamyPolygon,Eigen::MatrixXd>;

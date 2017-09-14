@@ -11,8 +11,9 @@ private:
     std::vector<Point> points;
     NaturalConstraints natural;
     ShapeFunctions* N;
+    int nGauss;
 public:
-    FeamyTractionVector(Triangle t, UniqueList<Point> points, ShapeFunctions* N, NaturalConstraints natural);
+    FeamyTractionVector(Triangle t, UniqueList<Point> points, ShapeFunctions* N, NaturalConstraints natural, int nGauss);
     Eigen::VectorXd computeTractionVector(IndexSegment segment);
 };
 

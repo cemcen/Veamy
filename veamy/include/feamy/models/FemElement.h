@@ -3,9 +3,16 @@
 
 #include <delynoi/models/polygon/Triangle.h>
 #include <veamy/physics/Conditions.h>
-#include "veamy/models/Element.h"
-#include "feamy/models/shapefunctions/ShapeFunctions.h"
+#include <veamy/models/Element.h>
+#include <feamy/models/shapefunctions/ShapeFunctions.h>
 #include <vector>
+#include <feamy/integration/AreaIntegrator.h>
+#include <feamy/integration/integrables/BodyForceIntegrable.h>
+#include <veamy/physics/bodyforces/BodyForceVector.h>
+#include <feamy/physics/FeamyBodyForceVector.h>
+#include <feamy/physics/FeamyTractionVector.h>
+#include <veamy/geometry/VeamyTriangle.h>
+#include <feamy/integration/integrables/StiffnessMatrixIntegrable.h>
 
 class FemElement: public Element<Triangle> {
 protected:
@@ -13,7 +20,7 @@ protected:
 public:
     FemElement();
     void initializeElement(Conditions &conditions, Triangle &p, UniqueList<Point> &points, DOFS &out, ShapeFunctions* N);
-    virtual void computeK(DOFS d, UniqueList<Point> points, Conditions &conditions) = 0;
+    void computeK(DOFS d, UniqueList<Point> points, Conditions &conditions);
     void computeF(DOFS d, UniqueList<Point> points, Conditions& conditions);
 };
 

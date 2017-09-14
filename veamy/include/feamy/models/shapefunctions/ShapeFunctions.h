@@ -13,6 +13,7 @@ public:
     ShapeFunctions(Triangle elem, std::vector<Point> meshPoints);
     virtual std::vector<double> evaluateShapeFunction(Point point) = 0;
     virtual std::vector<Pair<double>> evaluateDerivatives(Point point) = 0;
+    virtual Point evaluateRealPoint(Point p)=0;
     int numberOfShapeFunctions();
 };
 

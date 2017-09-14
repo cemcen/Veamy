@@ -32,3 +32,7 @@ Eigen::MatrixXd VeamyTriangle::getJacobian(std::vector<Point> p) {
 bool VeamyTriangle::isNull() {
     return this->points[0]<0;
 }
+
+int VeamyTriangle::indexOf(int i) {
+    return utilities::indexOf(this->points, i);
+}

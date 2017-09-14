@@ -8,6 +8,7 @@ public:
     Tri6ShapeFunctions(Triangle t, std::vector<Point> points);
     std::vector<double> evaluateShapeFunction(Point point);
     std::vector<Pair<double>> evaluateDerivatives(Point point);
+    Point evaluateRealPoint(Point point);
 };
 
 #endif
