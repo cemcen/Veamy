@@ -5,7 +5,7 @@
 
 class FemElementConstructor{
 public:
-    virtual FemElement* createElement(Conditions conditions, Triangle t, UniqueList<Point>& points, DOFS& out) = 0;
+    virtual FemElement* createElement(Conditions& conditions, Triangle t, UniqueList<Point>& points, DOFS& out) = 0;
 };
 
 #endif

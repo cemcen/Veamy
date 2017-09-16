@@ -14,6 +14,7 @@
 #include <map>
 #include "SegmentConstraint.h"
 #include "PointConstraint.h"
+#include <delynoi/models/basic/IndexSegment.h>
 
 class Constraints {
 protected:
@@ -24,6 +25,7 @@ protected:
     std::unordered_map<Point, std::vector<PointConstraint>, PointHasher> point_map;
     std::unordered_map<int, PointConstraint, intHasher> point_constraints_map;
     UniqueList<int> constrained_dofs;
+    bool constrainDOFBySegment(IndexSegment segment, int DOF_index, DOF::Axis axis);
 public:
     void addConstraint(SegmentConstraint c, std::vector<Point> p);
     void addConstraint(SegmentConstraint c, UniqueList<Point> p);
@@ -38,6 +40,7 @@ public:
                            int dof_point);
     bool addConstrainedDOFBySegment(std::vector<Point> points, int DOF_index, DOF::Axis axis, IndexSegment s);
     bool addConstrainedDOFByPoint(int DOF_index, DOF::Axis axis, Point p);
+    bool checkIfContainedInConstraint(Point p, std::vector<Point> points, int DOF_index, DOF::Axis axis);
     std::unordered_map<IndexSegment, std::vector<SegmentConstraint>, SegmentHasher> getConstrainedSegments();
     Constraint getAssociatedConstraint(int dof_index);
 };

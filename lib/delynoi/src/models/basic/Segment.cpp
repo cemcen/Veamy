@@ -10,9 +10,6 @@ template <class T>
 Segment<T>::Segment() {}
 
 template <class T>
-Segment<T>::~Segment() {}
-
-template <class T>
 T Segment<T>::getFirst() const{
     return this->p1;
 }

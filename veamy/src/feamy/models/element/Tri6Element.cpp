@@ -1,7 +1,7 @@
 #include <feamy/models/element/Tri6Element.h>
 
 
-Tri6Element::Tri6Element(Conditions conditions, Triangle t, UniqueList<Point> &points, DOFS &out) {
+Tri6Element::Tri6Element(Conditions& conditions, Triangle t, UniqueList<Point> &points, DOFS &out) {
     ShapeFunctions* N = new Tri6ShapeFunctions(t, points.getList());
 
     std::vector<IndexSegment> segments;

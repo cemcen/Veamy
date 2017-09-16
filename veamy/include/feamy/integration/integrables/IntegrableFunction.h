@@ -4,7 +4,7 @@
 #include <delynoi/models/basic/Point.h>
 
 template <typename S>
-class IntegrableFunction<S>{
+class IntegrableFunction{
 public:
     virtual S apply(Point p)=0;
 };

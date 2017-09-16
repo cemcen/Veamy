@@ -13,7 +13,7 @@ void FemElement::computeK(DOFS d, UniqueList<Point> points, Conditions &conditio
     K = Eigen::MatrixXd::Zero(2*n, 2*n);
 
     VeamyTriangle t(this->p);
-    IntegrableFunction* integrable = new StiffnessMatrixIntegrable(t, points.getList(),
+    IntegrableFunction<Eigen::MatrixXd>* integrable = new StiffnessMatrixIntegrable(t, points.getList(),
                                                                    conditions.material->getMaterialMatrix(), this->N);
 
     AreaIntegrator<VeamyTriangle,Eigen::MatrixXd>::integrate(K, nGauss, t, points.getList(), integrable);

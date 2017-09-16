@@ -5,7 +5,7 @@
 
 class Tri3Constructor : public FemElementConstructor{
 public:
-    FemElement* createElement(Conditions conditions, Triangle t, UniqueList<Point>& points, DOFS& out);
+    FemElement* createElement(Conditions& conditions, Triangle t, UniqueList<Point>& points, DOFS& out);
 };
 
 #endif

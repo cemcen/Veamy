@@ -10,7 +10,7 @@
 
 class Tri3Element : public FemElement{
 public:
-    Tri3Element(Conditions conditions, Triangle t, UniqueList<Point>& points, DOFS& out);
+    Tri3Element(Conditions& conditions, Triangle t, UniqueList<Point>& points, DOFS& out);
 };
 
 #endif

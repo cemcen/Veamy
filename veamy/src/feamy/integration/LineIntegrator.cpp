@@ -1,7 +1,6 @@
 #include <feamy/integration/LineIntegrator.h>
 
-
-Eigen::VectorXd LineIntegrator::integrate(int nGauss, PointSegment segment, IntegrableFunction *integrable) {
+Eigen::VectorXd LineIntegrator::integrate(int nGauss, PointSegment segment, IntegrableFunction<Eigen::VectorXd> *integrable) {
     Eigen::VectorXd integral;
 
     std::vector<double> gaussPoints, weights;

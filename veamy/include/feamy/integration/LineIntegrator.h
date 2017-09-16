@@ -8,7 +8,7 @@
 
 class LineIntegrator {
 public:
-    static Eigen::VectorXd integrate(int nGauss, PointSegment segment, IntegrableFunction* integrable);
+    static Eigen::VectorXd integrate(int nGauss, PointSegment segment, IntegrableFunction<Eigen::VectorXd>* integrable);
 };
 
 #endif

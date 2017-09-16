@@ -21,10 +21,10 @@ Eigen::MatrixXd VeamyTriangle::getJacobian(std::vector<Point> p) {
     Eigen::MatrixXd J;
     J = Eigen::MatrixXd::Zero(2,2);
 
-    J(0,0) = p[points[1]].getX() - p[points[0]].getX();
-    J(0,1) = p[points[2]].getX() - p[points[0]].getX();;
-    J(1,0) = p[points[1]].getY() - p[points[0]].getY();;
-    J(1,1) = p[points[2]].getY() - p[points[0]].getY();;
+    J(0,0) = p[points[0]].getX() - p[points[2]].getX();
+    J(0,1) = p[points[0]].getY() - p[points[2]].getY();
+    J(1,0) = p[points[1]].getX() - p[points[2]].getX();
+    J(1,1) = p[points[1]].getY() - p[points[2]].getY();
 
     return J;
 }

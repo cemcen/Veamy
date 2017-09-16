@@ -13,6 +13,7 @@ Eigen::MatrixXd StiffnessMatrixIntegrable::apply(Point point) {
 
     std::vector<Pair<double>> dN = N->evaluateDerivatives(point);
     Eigen::MatrixXd invJ = J.inverse();
+
     for (int v = 0; v < this->N->numberOfShapeFunctions(); ++v) {
         Be(0,2*v) = dN[v].first*invJ(0,0) + dN[v].second*invJ(0,1);
         Be(1,2*v+1) = dN[v].first*invJ(1,0) + dN[v].second*invJ(1,1);

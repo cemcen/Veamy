@@ -49,8 +49,6 @@ void Element<T>::computeF(DOFS d, UniqueList<Point> points, Conditions &conditio
     this->f = Eigen::VectorXd::Zero(m);
     Eigen::VectorXd bodyForce = bodyForceVector->computeForceVector(conditions.f);
 
-    NaturalConstraints natural = conditions.constraints.getNaturalConstraints();
-
     for (int i = 0; i < n; ++i) {
         Eigen::VectorXd naturalConditions = tractionVector->computeTractionVector(segments[i]);
 

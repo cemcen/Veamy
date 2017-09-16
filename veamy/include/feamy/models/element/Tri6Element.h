@@ -6,7 +6,7 @@
 
 class Tri6Element : public FemElement{
 public:
-    Tri6Element(Conditions conditions, Triangle t, UniqueList<Point>& points, DOFS& out);
+    Tri6Element(Conditions& conditions, Triangle t, UniqueList<Point>& points, DOFS& out);
 };
 
 #endif
