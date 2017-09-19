@@ -1,4 +1,5 @@
 #include <veamy/physics/materials/MaterialPlaneStress.h>
+#include <iostream>
 
 MaterialPlaneStress::MaterialPlaneStress(Materials::material m) : Material(m) {}
 
@@ -16,7 +17,7 @@ Eigen::MatrixXd MaterialPlaneStress::getMaterialMatrix() {
     D(1,0) = c*this->material_v;
     D(1,1) = c;
 
-    D(2,2) = 2*c*(1 - this->material_v);
+    D(2,2) =  2*c*(1 - this->material_v);
 
     return D;
 }

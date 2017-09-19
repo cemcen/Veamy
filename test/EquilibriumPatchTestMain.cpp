@@ -26,15 +26,15 @@ int main(){
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
-    std::string meshFileName = "Software/Veamy-master/build/test/equi_patch_test_mesh.txt";
-    std::string dispFileName = "Software/Veamy-master/build/test/equi_patch_test_displacements.txt";
+    std::string meshFileName = "equi_patch_test_mesh.txt";
+    std::string dispFileName = "equi_patch_test_displacements.txt";
     
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Equilibrium patch test / Reading a mesh from a file <--" << std::endl;
     std::cout << "..." << std::endl;
 
     // File that contains an external mesh
-    std::string externalMeshFileName = "Software/Veamy-master/test/test_files/equilibriumTest_mesh.txt";
+    std::string externalMeshFileName = "equilibriumTest_mesh.txt";
 
     std::cout << "+ Reading mesh from a file ... ";
     Mesh<Polygon> mesh;

@@ -6,7 +6,7 @@
 
 FeamyTractionVector::FeamyTractionVector(Triangle t, UniqueList<Point> points, ShapeFunctions *N,
                                          NaturalConstraints natural, int nGauss) {
-    this->t;
+    this->t = t;
     this->points = points.getList();
     this->N = N;
     this->natural = natural;
@@ -15,6 +15,7 @@ FeamyTractionVector::FeamyTractionVector(Triangle t, UniqueList<Point> points, S
 
 Eigen::VectorXd FeamyTractionVector::computeTractionVector(IndexSegment segment) {
     Eigen::VectorXd result(4);
+    result = Eigen::VectorXd::Zero(4);
     isConstrainedInfo constrainedInfo = natural.isConstrainedBySegment(points, segment);
 
     if (constrainedInfo.isConstrained) {
@@ -29,11 +30,9 @@ Eigen::VectorXd FeamyTractionVector::computeTractionVector(IndexSegment segment)
 
         for (Constraint c: constraints) {
             BoundaryVectorIntegrable* integrable = new BoundaryVectorIntegrable(c, this->N, indexes);
-            result += LineIntegrator::integrate(nGauss, s, integrable);
+            LineIntegrator::integrate(result, nGauss, s, integrable);
             delete integrable;
         }
-    } else {
-        result = Eigen::VectorXd::Zero(4);
     }
 
     point_forces::addPointForces(result, natural, points[segment.getFirst()], points[segment.getSecond()]);

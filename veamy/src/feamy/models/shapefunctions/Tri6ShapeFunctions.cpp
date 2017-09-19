@@ -37,3 +37,7 @@ Point Tri6ShapeFunctions::evaluateRealPoint(Point point) {
 
     return Point(x,y);
 }
+
+std::vector<double> Tri6ShapeFunctions::evaluateShapeFunctionCartesian(Point point) {
+    return std::vector<double>();
+}

@@ -9,6 +9,7 @@ public:
     std::vector<double> evaluateShapeFunction(Point point);
     std::vector<Pair<double>> evaluateDerivatives(Point point);
     Point evaluateRealPoint(Point point);
+    std::vector<double> evaluateShapeFunctionCartesian(Point point);
 };
 
 #endif

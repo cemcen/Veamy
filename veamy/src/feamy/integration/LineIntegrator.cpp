@@ -1,19 +1,15 @@
 #include <feamy/integration/LineIntegrator.h>
 
-Eigen::VectorXd LineIntegrator::integrate(int nGauss, PointSegment segment, IntegrableFunction<Eigen::VectorXd> *integrable) {
-    Eigen::VectorXd integral;
-
+void LineIntegrator::integrate(Eigen::VectorXd& result, int nGauss, PointSegment segment, IntegrableFunction<Eigen::VectorXd> *integrable) {
     std::vector<double> gaussPoints, weights;
     gauss_quadrature::gauss_1d(nGauss, gaussPoints, weights);
 
     for (int i = 0; i < gaussPoints.size(); ++i) {
-        double x = segment.getFirst().getX() +
-                (segment.getSecond().getX() - segment.getFirst().getX())/2*(1+gaussPoints[i]);
-        double y = segment.getFirst().getY() +
-                   (segment.getSecond().getY() - segment.getFirst().getY())/2*(1+gaussPoints[i]);
+        double x = (segment.getFirst().getX() + segment.getSecond().getX())/2 +
+                (segment.getSecond().getX() - segment.getFirst().getX())/2*gaussPoints[i];
+        double y = (segment.getFirst().getY() + segment.getSecond().getY())/2 +
+                   (segment.getSecond().getY() - segment.getFirst().getY())/2*gaussPoints[i];
 
-        integral += weights[i]*segment.length()/2*integrable->apply(Point(x,y));
+        result += weights[i]*segment.length()/2*integrable->apply(Point(x,y));
     }
-
-    return integral;
 }

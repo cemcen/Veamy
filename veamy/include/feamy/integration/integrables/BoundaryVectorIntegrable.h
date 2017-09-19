@@ -20,8 +20,9 @@ public:
     }
 
     Eigen::VectorXd apply(Point p){
-        std::vector<double> Ni = this->N->evaluateShapeFunction(p);
-        Eigen::MatrixXd N(2,2);
+        std::vector<double> Ni = this->N->evaluateShapeFunctionCartesian(p);
+        Eigen::MatrixXd N;
+        N = Eigen::MatrixXd::Zero(2,2*this->indexes.size());
 
         for (int i = 0; i < 2; ++i) {
             N(0,2*i) = Ni[indexes[i]];
@@ -31,10 +32,8 @@ public:
         Eigen::VectorXd t;
         t = Eigen::VectorXd::Zero(2);
 
-        Point real = this->N->evaluateRealPoint(p);
-
-        t(0) = c.getValue(real)*c.isAffected(DOF::Axis::x);
-        t(1) += c.getValue(real)*c.isAffected(DOF::Axis::y);
+        t(0) = c.getValue(p)*c.isAffected(DOF::Axis::x);
+        t(1) += c.getValue(p)*c.isAffected(DOF::Axis::y);
 
         return N.transpose()*t;
     }

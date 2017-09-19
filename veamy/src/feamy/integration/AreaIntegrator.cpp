@@ -23,7 +23,7 @@ void AreaIntegrator<T,S>::integrate(S& result, int nGauss, T element, std::vecto
             double g2 = p[2].getY() + (p[0].getY() - p[2].getY())*gaussPoints[i].getX()  +
                         (p[1].getY() - p[2].getY())*gaussPoints[i].getY();
 
-            result += weights[i]*integrable->apply(Point(g1,g2))*J.determinant();
+            result += weights[i]*integrable->apply(Point(g1,g2))*J.determinant()/2;
         }
     }
 }
