@@ -90,3 +90,7 @@ bool IndexSegment::isContained(PointSegment s, std::vector<Point> p) {
 IndexSegment IndexSegment::add(int o) {
     return IndexSegment(this->p1 + o, this->p2 + o);
 }
+
+bool IndexSegment::intersectionInfinite(Point p1, Point p2, Point o1, Point o2, Point &inter) {
+    return Segment::intersectionInfinite(p1, p2, o1, o2, inter);
+}

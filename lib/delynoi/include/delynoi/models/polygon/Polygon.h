@@ -16,7 +16,6 @@
 class Polygon {
 protected:
     std::vector<int> points;
-private:
     double diameter;
     double area;
     Point centroid;

@@ -12,9 +12,9 @@ public:
     NeighboursByPoint(std::vector<int> n);
 
     void add(int n);
-
-
-
+    void insert(std::vector<int> n);
+    std::vector<int> getNeighbours() const;
+    std::vector<int>& getNeighbours();
 };
 
 #endif

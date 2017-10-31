@@ -99,5 +99,6 @@ Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
     return x;
 }
 
+
 template class Calculator2D<Polygon>;
 template class Calculator2D<Triangle>;

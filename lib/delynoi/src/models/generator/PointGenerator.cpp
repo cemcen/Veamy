@@ -1,5 +1,7 @@
 #include <delynoi/models/generator/PointGenerator.h>
 
+PointGenerator::PointGenerator() {}
+
 PointGenerator::PointGenerator(Functor* lX, Functor* lY) {
     this->lX = lX;
     this->lY = lY;
@@ -18,7 +20,7 @@ PointGenerator::PointGenerator(Functor *l, functions::independent_variable varia
             this->lX = l;
             break;
         case functions::independent_variable::both:
-            throw std::invalid_argument("Both free variables and only one generator function given");
+            throw std::invalid_argument("Both free variables and only one creator function given");
     }
 }
 

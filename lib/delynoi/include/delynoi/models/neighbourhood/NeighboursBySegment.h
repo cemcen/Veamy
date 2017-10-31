@@ -16,6 +16,8 @@ public:
     void setNeighbour(int i);
     int getFirst() const;
     int getSecond() const;
+    void setFirst(int value);
+    void setSecond(int value);
     std::string getString() const;
     bool operator==(const NeighboursBySegment& other) const;
 };

@@ -379,7 +379,7 @@ Int128 Int128Mul (long64 lhs, long64 rhs)
 #endif
 
 //------------------------------------------------------------------------------
-// Miscellaneous global functions
+// Miscellaneous global creator
 //------------------------------------------------------------------------------
 
 bool Orientation(const Path &poly)
@@ -3756,7 +3756,7 @@ void Clipper::JoinCommonEdges()
 }
 
 //------------------------------------------------------------------------------
-// ClipperOffset support functions ...
+// ClipperOffset support creator ...
 //------------------------------------------------------------------------------
 
 DoublePoint GetUnitNormal(const IntPoint &pt1, const IntPoint &pt2)
@@ -4208,7 +4208,7 @@ void ClipperOffset::DoRound(int j, int k)
 }
 
 //------------------------------------------------------------------------------
-// Miscellaneous public functions
+// Miscellaneous public creator
 //------------------------------------------------------------------------------
 
 void Clipper::DoSimplePolygons()

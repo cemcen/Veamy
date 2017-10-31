@@ -20,12 +20,14 @@ protected:
 public:
     Segment();
     Segment(T p1, T p2);
+    ~Segment();
 
     T getFirst() const;
     T getSecond() const;
 
     virtual std::string getString() const = 0;
     bool isVertex(T p);
+
 };
 
 #endif

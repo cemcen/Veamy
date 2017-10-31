@@ -4,9 +4,9 @@
 
 TriangleVoronoiGenerator::TriangleVoronoiGenerator(std::vector<Point> &point_list, Region region) {
     TriangleDelaunayGenerator delaunayGenerator(region, point_list);
-    DelaunayInfo delaunay = delaunayGenerator.getDelaunay();
+    DelaunayInfo delaunay = delaunayGenerator.getConformingDelaunay();
 
-    this->delaunay = delaunayGenerator.getDelaunayTriangulation();
+    this->delaunay = delaunayGenerator.getConformingDelaunayTriangulation();
     this->voronoi = DelaunayToVoronoi(delaunay).getMesh();
 }
 
@@ -14,6 +14,6 @@ Mesh<Polygon> TriangleVoronoiGenerator::getMesh() {
     return this->voronoi;
 }
 
-Mesh<Triangle> TriangleVoronoiGenerator::getDelaunayTriangulation() {
+Mesh<Triangle> TriangleVoronoiGenerator::getConstrainedDelaunayTriangulation() {
     return this->delaunay;
 }

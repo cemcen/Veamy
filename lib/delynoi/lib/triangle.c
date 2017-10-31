@@ -2855,7 +2855,7 @@ void info()
 "  geometrically identical to linear elements, even though they can be used\n"
 );
   printf(
-"  with quadratic interpolating functions.  The three extra nodes of an\n");
+"  with quadratic interpolating creator.  The three extra nodes of an\n");
   printf(
 "  element fall at the midpoints of the three edges, with the fourth, fifth,\n"
 );
@@ -3228,7 +3228,7 @@ void info()
   printf(
 "  Of course, I can take credit for only a fraction of the ideas that made\n");
   printf(
-"  this mesh generator possible.  Triangle owes its existence to the efforts\n"
+"  this mesh creator possible.  Triangle owes its existence to the efforts\n"
 );
   printf(
 "  of many fine computational geometers and other researchers, including\n");
@@ -6655,8 +6655,8 @@ struct mesh *m;
 /*                                                                           */
 /*  randomnation()   Generate a random number between 0 and `choices' - 1.   */
 /*                                                                           */
-/*  This is a simple linear congruential random number generator.  Hence, it */
-/*  is a bad random number generator, but good enough for most randomized    */
+/*  This is a simple linear congruential random number creator.  Hence, it */
+/*  is a bad random number creator, but good enough for most randomized    */
 /*  geometric algorithms.                                                    */
 /*                                                                           */
 /*****************************************************************************/
@@ -12968,7 +12968,7 @@ REAL area;
 /*                 area constraints.                                         */
 /*                                                                           */
 /*  This routine mainly calls other routines to carry out all these          */
-/*  functions.                                                               */
+/*  creator.                                                               */
 /*                                                                           */
 /*****************************************************************************/
 

@@ -1,0 +1,1 @@
+#include <veamy/postprocess/H1NormCalculator.h>

@@ -49,3 +49,6 @@ int Triangle::thirdPoint(EdgeData edge) {
     }
 }
 
+bool Triangle::isNull() {
+    return this->points[0]<0;
+}

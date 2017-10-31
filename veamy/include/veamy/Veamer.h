@@ -21,6 +21,7 @@ struct PolygonHasher {
     }
 };
 
+
 class Veamer : public Calculator2D<Polygon> {
 public:
     std::vector<VemElement> elements;
@@ -30,6 +31,8 @@ public:
     Mesh<Polygon> initProblemFromFile(std::string fileName, Material* material, BodyForce *force);
     void initProblem(Mesh<Polygon> m, Conditions conditions);
     void createAndAssemble(Eigen::MatrixXd& KGlobal, Eigen::VectorXd& fGlobal);
+
+    double computeErrorNorm(NormCalculator* calculator, Mesh<Polygon> mesh);
 };
 
 

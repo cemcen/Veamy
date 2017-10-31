@@ -46,7 +46,7 @@ int main(){
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
     TriangleDelaunayGenerator generator(rectangle4x8, seeds);
 
-    Mesh<Triangle> mesh = generator.getDelaunayTriangulation();
+    Mesh<Triangle> mesh = generator.getConformingDelaunayTriangulation();
     mesh.printInFile("parabolic_fem_mesh.txt");
 
     EssentialConstraints essential;

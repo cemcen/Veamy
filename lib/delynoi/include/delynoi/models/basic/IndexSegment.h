@@ -26,6 +26,7 @@ public:
     bool isInCorner(Point p, std::vector<Point> points, int& i);
     double length(std::vector<Point>& points);
     IndexSegment add(int o);
+    bool intersectionInfinite(Point p1, Point p2, Point o1, Point o2, Point &inter);
 };
 
 

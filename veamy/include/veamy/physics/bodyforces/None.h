@@ -3,14 +3,15 @@
 
 #include <veamy/physics/bodyforces/BodyForce.h>
 
+double f(double x, double y){
+    return 0;
+}
+
 class None : public BodyForce{
 public:
-    double applyX(double x, double y){
-        return 0;
-    }
-
-    double applyY(double x, double y){
-        return 0;
+    None(){
+        this->fX = &f;
+        this->fY = &f;
     }
 };
 

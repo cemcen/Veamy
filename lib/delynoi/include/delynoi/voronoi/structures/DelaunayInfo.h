@@ -7,14 +7,14 @@
 struct DelaunayInfo{
     std::vector<Triangle> triangles;
     std::vector<Point> meshPoints;
-    SegmentMap delaunayEdges;
+    SegmentMap* delaunayEdges;
 
     std::vector<PointData> points;
     UniqueList<int> realPoints;
     std::vector<EdgeData> edges;
     std::unordered_map<Key, int, KeyHasher> edgeMap;
 
-    DelaunayInfo( std::vector<Triangle> t, std::vector<Point> p, SegmentMap e, std::vector<PointData> pD,
+    DelaunayInfo( std::vector<Triangle> t, std::vector<Point> p, SegmentMap* e, std::vector<PointData> pD,
                   UniqueList<int> rP, std::vector<EdgeData> eD, std::unordered_map<Key, int, KeyHasher> eM){
         triangles = t;
         meshPoints = p;

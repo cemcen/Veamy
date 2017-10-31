@@ -1,29 +1,23 @@
 #ifndef DELYNOI_POINTMAP_H
 #define DELYNOI_POINTMAP_H
 
-#include <unordered_map>
+#include <map>
 #include <vector>
 #include <delynoi/models/basic/Point.h>
 #include <delynoi/models/neighbourhood/NeighboursByPoint.h>
-
-struct PointHasher {
-    std::size_t operator()(const Point &k) const {
-        using std::size_t;
-        using std::hash;
-
-        return utilities::hash32(k.getX()) | (utilities::hash32(k.getY()) << 15);
-    }
-};
+#include <fstream>
 
 class PointMap {
-private:
-    std::unordered_map<Point, NeighboursByPoint, PointHasher> map;
+protected:
+    std::map<Point, NeighboursByPoint> map;
 public:
     PointMap();
     void insert(Point p, int neighbour);
+    void insert(Point p, std::vector<int> neighbours);
     NeighboursByPoint& get(Point p);
-    std::unordered_map<Point, NeighboursByPoint, PointHasher>& getMap();
+    std::map<Point, NeighboursByPoint>& getMap();
     int size();
+    void printInFile(std::string fileName);
 };
 
 #endif

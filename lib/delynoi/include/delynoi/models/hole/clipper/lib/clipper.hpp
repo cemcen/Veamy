@@ -46,7 +46,7 @@
 //use_lines: Enables line clipping. Adds a very minor cost to performance.
 #define use_lines
   
-//use_deprecated: Enables temporary support for the obsolete functions
+//use_deprecated: Enables temporary support for the obsolete creator
 //#define use_deprecated  
 
 #include <vector>

@@ -12,7 +12,7 @@ private:
 public:
     TriangleVoronoiGenerator(std::vector<Point>& point_list, Region region);
     Mesh<Polygon> getMesh();
-    Mesh<Triangle> getDelaunayTriangulation();
+    Mesh<Triangle> getConstrainedDelaunayTriangulation();
 };
 
 #endif

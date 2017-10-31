@@ -16,6 +16,7 @@ public:
     Point getCircumcenter();
     int nextEdge(int center, EdgeData edge, std::unordered_map<Key, int, KeyHasher> edgeMap);
     int thirdPoint(EdgeData edge);
+    bool isNull();
 };
 
 #endif

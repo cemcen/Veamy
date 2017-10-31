@@ -37,3 +37,11 @@ bool NeighboursBySegment::operator==(const NeighboursBySegment &other) const{
            this->getFirst()==other.getSecond() && this->getSecond()==other.getFirst();
 }
 
+void NeighboursBySegment::setFirst(int value) {
+    this->n1 = value;
+}
+
+void NeighboursBySegment::setSecond(int value) {
+    this->n2 = value;
+}
+

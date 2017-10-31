@@ -1,0 +1,1 @@
+#include <veamy/postprocess/analytic/StressValue.h>

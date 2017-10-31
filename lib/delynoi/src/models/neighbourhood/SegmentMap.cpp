@@ -26,6 +26,10 @@ std::unordered_map<IndexSegment,NeighboursBySegment, SegmentHasher>& SegmentMap:
     return this->map;
 }
 
+std::unordered_map<IndexSegment, NeighboursBySegment, SegmentHasher> SegmentMap::getMap() const {
+    return this->map;
+}
+
 int SegmentMap::size() {
     return this->map.size();
 }

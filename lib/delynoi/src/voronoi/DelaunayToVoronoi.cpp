@@ -2,8 +2,8 @@
 
 DelaunayToVoronoi::DelaunayToVoronoi(DelaunayInfo del) {
     UniqueList<Point> voronoiPoints;
-    SegmentMap voronoiEdges;
-    PointMap pointMap;
+    SegmentMap* voronoiEdges = new SegmentMap;
+    PointMap* pointMap = new PointMap;
     UniqueList<Polygon> voronoiCells;
 
     for(int i=0;i<del.realPoints.size(); i++) {
@@ -90,11 +90,11 @@ DelaunayToVoronoi::DelaunayToVoronoi(DelaunayInfo del) {
         int cellIndex = voronoiCells.push_back(p);
 
         for (int j = 0; j < thisEdges.size(); ++j) {
-            voronoiEdges.insert(thisEdges[j], cellIndex);
+            voronoiEdges->insert(thisEdges[j], cellIndex);
         }
 
         for (int k = 0; k < cellPoints.size(); ++k) {
-            pointMap.insert(voronoiPoints[cellPoints[k]], cellIndex);
+            pointMap->insert(voronoiPoints[cellPoints[k]], cellIndex);
         }
     }
 

@@ -19,3 +19,7 @@ void Feamer::createAndAssemble(Eigen::MatrixXd &KGlobal, Eigen::VectorXd &fGloba
         elements[i]->assemble(DOFs, KGlobal, fGlobal);
     }
 }
+
+double Feamer::computeErrorNorm(NormCalculator *calculator, Mesh<Triangle> mesh) {
+    return 0;
+}

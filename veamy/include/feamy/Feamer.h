@@ -14,6 +14,7 @@ private:
 public:
     void initProblem(Mesh<Triangle> m, Conditions conditions, FemElementConstructor* constructor);
     void createAndAssemble(Eigen::MatrixXd& KGlobal, Eigen::VectorXd& fGlobal);
+    double computeErrorNorm(NormCalculator* calculator, Mesh<Triangle> mesh);
 };
 
 #endif

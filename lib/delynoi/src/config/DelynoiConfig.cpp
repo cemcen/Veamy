@@ -4,7 +4,7 @@ DelynoiConfig* DelynoiConfig::s_instance = nullptr;
 
 DelynoiConfig::DelynoiConfig() {
     this->circle_discretization_grade = 12;
-    this->double_comparison_tolerance = 0.000000000001;
+    this->double_comparison_tolerance = 0.00001;
     this->scale_for_clipper = 100000;
     this->precision = 6;
 }
