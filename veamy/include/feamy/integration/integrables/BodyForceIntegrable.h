@@ -16,7 +16,7 @@ public:
         this->f = f;
     }
 
-    Eigen::VectorXd apply(Point p){
+    Eigen::VectorXd apply(Point p, int index){
         int n = this->N->numberOfShapeFunctions();
         Eigen::MatrixXd Ne;
         Ne = Eigen::MatrixXd::Zero(2,2*n);
@@ -32,8 +32,9 @@ public:
 
         Point real = this->N->evaluateRealPoint(p);
 
-        b(0) = f->applyX(real.getX(), real.getY());
-        b(1) = f->applyY(real.getX(), real.getY());
+
+        b(0) = f->getX()->apply(real.getX(), real.getY(), 0, Polygon());
+        b(1) = f->getY()->apply(real.getX(), real.getY(), 0, Polygon());
 
         return Ne.transpose()*b;
     }

@@ -2,7 +2,7 @@
 #include <delynoi/models/polygon/Polygon.h>
 
 namespace veamy_functions{
-    double volume_nodal_quadrature(Polygon poly, std::vector<Point> points, Computable* f) {
+    double nodal_quadrature(Polygon poly, std::vector<Point> points, Computable *f) {
         double result = 0;
         std::vector<int> polygonPoints = poly.getPoints();
         int n = (int) polygonPoints.size();

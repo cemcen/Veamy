@@ -1,5 +1,4 @@
 #include <veamy/postprocess/NormCalculator.h>
-#include <veamy/lib/Eigen/src/Core/Matrix.h>
 
 template <typename T>
 NormCalculator::NormCalculator(Eigen::VectorXd disp, DOFS dofs) {

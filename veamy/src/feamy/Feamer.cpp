@@ -1,6 +1,7 @@
 #include <feamy/Feamer.h>
+#include <feamy/postprocess/integrator/FeamyIntegrator.h>
 
-void Feamer::initProblem(Mesh<Triangle> m, Conditions conditions, FemElementConstructor *constructor) {
+void Feamer::initProblem(Mesh<Triangle> m, Conditions conditions, FeamyElementConstructor *constructor) {
     std::vector<Point> meshPoints = m.getPoints().getList();
     this->points.push_list(meshPoints);
     this->conditions = conditions;
@@ -21,5 +22,7 @@ void Feamer::createAndAssemble(Eigen::MatrixXd &KGlobal, Eigen::VectorXd &fGloba
 }
 
 double Feamer::computeErrorNorm(NormCalculator *calculator, Mesh<Triangle> mesh) {
-    return 0;
+    calculator->setCalculator(new FeamyIntegrator);
+
+    return calculator->getNorm(mesh);
 }

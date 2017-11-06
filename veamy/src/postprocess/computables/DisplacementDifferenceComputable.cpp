@@ -6,7 +6,7 @@ DisplacementDifferenceComputable::DisplacementDifferenceComputable(DisplacementV
     this->dofs = d;
 }
 
-double DisplacementDifferenceComputable::apply(double x, double y, int index) {
+double DisplacementDifferenceComputable::apply(double x, double y, int index, Polygon container) {
     Pair<double> u = value->getValue(Point(x,y));
 
     Pair<int> point_dofs = dofs.pointToDOFS(index);

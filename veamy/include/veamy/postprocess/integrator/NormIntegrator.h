@@ -9,6 +9,7 @@ class NormIntegrator{
 public:
     virtual double getIntegral(T poly, std::vector<Point> points) = 0;
     virtual void setComputable(Computable* c) = 0;
+    virtual NormIntegrator* clone() = 0;
 };
 
 #endif

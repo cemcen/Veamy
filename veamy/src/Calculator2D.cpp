@@ -2,6 +2,7 @@
 #include <utilities/Pair.h>
 #include <veamy/physics/materials/Material.h>
 #include <utilities/UniqueList.h>
+#include <veamy/config/VeamyConfig.h>
 
 template <typename T>
 Pair<int> Calculator2D<T>::pointToDOFS(int point_index) {

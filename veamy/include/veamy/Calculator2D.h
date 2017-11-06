@@ -4,7 +4,6 @@
 #include <utilities/UniqueList.h>
 #include <veamy/physics/Conditions.h>
 #include <veamy/models/dof/DOFS.h>
-#include <veamy/postprocess/NormCalculator.h>
 
 
 template <typename T>
@@ -23,7 +22,6 @@ public:
     virtual void createAndAssemble(Eigen::MatrixXd& Kglobal, Eigen::VectorXd& fGlobal) = 0;
     Eigen::VectorXd simulate(Mesh<T> &mesh);
     void writeDisplacements(std::string fileName, Eigen::VectorXd u);
-    virtual double computeErrorNorm(NormCalculator* calculator, Mesh<T> mesh) = 0;
 };
 
 #endif

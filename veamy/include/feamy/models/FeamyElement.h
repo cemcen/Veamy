@@ -14,11 +14,11 @@
 #include <veamy/geometry/VeamyTriangle.h>
 #include <feamy/integration/integrables/StiffnessMatrixIntegrable.h>
 
-class FemElement: public Element<Triangle> {
+class FeamyElement: public Element<Triangle> {
 protected:
     ShapeFunctions* N;
 public:
-    FemElement();
+    FeamyElement();
     void initializeElement(Conditions &conditions, Triangle &p, UniqueList<Point> &points, DOFS &out, ShapeFunctions* N);
     void computeK(DOFS d, UniqueList<Point> points, Conditions &conditions);
     void computeF(DOFS d, UniqueList<Point> points, Conditions& conditions);

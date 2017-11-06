@@ -10,6 +10,7 @@
 #include <iostream>
 #include "Calculator2D.h"
 #include <utilities/utilities.h>
+#include <veamy/postprocess/NormCalculator.h>
 
 
 struct PolygonHasher {

@@ -1,5 +1,6 @@
 #include <veamy/models/VemElement.h>
 #include <veamy/physics/traction/VeamyTractionVector.h>
+#include <veamy/config/VeamyConfig.h>
 
 VemElement::VemElement(Conditions &conditions, Polygon &p, UniqueList<Point> &points, DOFS &out) {
     initializeElement(conditions, p, points, out);

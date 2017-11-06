@@ -1,7 +1,7 @@
 #include <veamy/Veamer.h>
 #include <iomanip>
 #include <veamy/models/constraints/values/Constant.h>
-#include <veamy/postprocess/integrator/VeamerIntegrator.h>
+#include <veamy/postprocess/integrator/VeamyIntegrator.h>
 
 Veamer::Veamer() {}
 
@@ -102,7 +102,7 @@ void Veamer::createAndAssemble(Eigen::MatrixXd &KGlobal, Eigen::VectorXd &fGloba
 }
 
 double Veamer::computeErrorNorm(NormCalculator *calculator, Mesh<Polygon> mesh) {
-    calculator->setCalculators(new VeamerIntegrator, new VeamerIntegrator);
+    calculator->setCalculators(new VeamyIntegrator, new VeamyIntegrator);
     return calculator->getNorm(mesh);
 }
 

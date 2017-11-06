@@ -1,4 +1,5 @@
 #include <veamy/models/constraints/Constraints.h>
+#include <delynoi/models/basic/Angle.h>
 
 void Constraints::addConstraint(SegmentConstraint c, std::vector<Point> p) {
     UniqueList<IndexSegment> segments = c.getSegments();
@@ -73,7 +74,7 @@ void Constraints::addConstrainedDOF(std::vector <Point> points, int DOF_index, D
         checkIfContainedInConstraint(points[dof_point], points, DOF_index, axis);
     }
 
-    bool added3 = addConstrainedDOFByPoint(DOF_index, axis, points[dof_point]);
+    addConstrainedDOFByPoint(DOF_index, axis, points[dof_point]);
 }
 
 bool Constraints::addConstrainedDOFBySegment(std::vector<Point> points, int DOF_index, DOF::Axis axis, IndexSegment s) {

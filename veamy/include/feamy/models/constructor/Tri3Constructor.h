@@ -1,11 +1,11 @@
 #ifndef VEAMY_TRI3CONSTRUCTOR_H
 #define VEAMY_TRI3CONSTRUCTOR_H
 
-#include "FemElementConstructor.h"
+#include "FeamyElementConstructor.h"
 
-class Tri3Constructor : public FemElementConstructor{
+class Tri3Constructor : public FeamyElementConstructor{
 public:
-    FemElement* createElement(Conditions& conditions, Triangle t, UniqueList<Point>& points, DOFS& out);
+    FeamyElement* createElement(Conditions& conditions, Triangle t, UniqueList<Point>& points, DOFS& out);
 };
 
 #endif

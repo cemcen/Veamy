@@ -1,8 +1,8 @@
-#ifndef VEAMY_ANGLE_H
-#define VEAMY_ANGLE_H
+#ifndef DELYNOI_ANGLE_H
+#define DELYNOI_ANGLE_H
 
 #include <cmath>
-#include <veamy/config/VeamyConfig.h>
+#include <delynoi/config/DelynoiConfig.h>
 
 struct Angle{
     double angle;
@@ -17,7 +17,7 @@ struct Angle{
     }
 
     bool operator<(const Angle& other) const{
-        VeamyConfig* config = VeamyConfig::instance();
+        DelynoiConfig* config = DelynoiConfig::instance();
 
         if(std::abs(angle-other.angle)<config->getTolerance()){
             return false;

@@ -6,7 +6,7 @@
 template <typename S>
 class IntegrableFunction{
 public:
-    virtual S apply(Point p)=0;
+    virtual S apply(Point p) = 0;
 };
 
 #endif
