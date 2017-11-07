@@ -15,7 +15,7 @@ private:
 public:
     void initProblem(Mesh<Triangle> m, Conditions conditions, FeamyElementConstructor* constructor);
     void createAndAssemble(Eigen::MatrixXd& KGlobal, Eigen::VectorXd& fGlobal);
-    double computeErrorNorm(NormCalculator* calculator, Mesh<Triangle> mesh);
+    double computeErrorNorm(NormCalculator<Triangle>* calculator, Mesh<Triangle> mesh);
 };
 
 #endif

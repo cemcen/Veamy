@@ -22,6 +22,7 @@ public:
     void initializeElement(Conditions &conditions, Triangle &p, UniqueList<Point> &points, DOFS &out, ShapeFunctions* N);
     void computeK(DOFS d, UniqueList<Point> points, Conditions &conditions);
     void computeF(DOFS d, UniqueList<Point> points, Conditions& conditions);
+    ShapeFunctions* getShapeFunctions();
 };
 
 #endif

@@ -33,3 +33,4 @@ template class AreaIntegrator<VeamyTriangle,Eigen::MatrixXd>;
 template class AreaIntegrator<VeamyPolygon,Eigen::VectorXd>;
 template class AreaIntegrator<VeamyPolygon,Eigen::MatrixXd>;
 template class AreaIntegrator<VeamyPolygon, double>;
+template class AreaIntegrator<VeamyTriangle, double>;

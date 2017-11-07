@@ -8,6 +8,7 @@ class VeamyTriangle: public Triangle {
 public:
     VeamyTriangle();
     VeamyTriangle(Triangle t);
+    VeamyTriangle(Polygon p);
     VeamyTriangle(int p1, int p2, int p3);
     std::vector<VeamyTriangle> triangulate(std::vector<Point> points);
     Eigen::MatrixXd getJacobian(std::vector<Point> points);

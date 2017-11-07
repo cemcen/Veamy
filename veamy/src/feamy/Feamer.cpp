@@ -21,8 +21,10 @@ void Feamer::createAndAssemble(Eigen::MatrixXd &KGlobal, Eigen::VectorXd &fGloba
     }
 }
 
-double Feamer::computeErrorNorm(NormCalculator *calculator, Mesh<Triangle> mesh) {
-    calculator->setCalculator(new FeamyIntegrator);
+double Feamer::computeErrorNorm(NormCalculator<Triangle>* calculator, Mesh<Triangle> mesh) {
+    FeamyAdditionalInfo info(this->elements[0]->getShapeFunctions(), this->points.getList(),
+                             this->conditions.material->getMaterialMatrix());
 
+    calculator->setCalculator(new FeamyIntegrator<Triangle>, info);
     return calculator->getNorm(mesh);
 }

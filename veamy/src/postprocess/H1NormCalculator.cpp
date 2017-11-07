@@ -1,40 +1,32 @@
 #include <veamy/postprocess/H1NormCalculator.h>
+#include <veamy/postprocess/integrator/VeamyH1Integrator.h>
+#include <veamy/postprocess/integrator/IdentityIntegrator.h>
 
-H1NormCalculator::H1NormCalculator(StrainValue *strain, StressValue *stress, Eigen::VectorXd u, DOFS d,
-                                   std::vector<Point> points) : NormCalculator(u, d){
+template <typename T>
+H1NormCalculator<T>::H1NormCalculator(StrainValue *strain, StressValue *stress, DisplacementValue* value, Eigen::VectorXd u, DOFS d,
+                                   std::vector<Point> points) : NormCalculator<T>(u, d){
     this->strainValue = strain;
     this->stressValue = stress;
+    this->value = value;
 }
 
-void H1NormCalculator::setCalculator(NormIntegrator *integrator) {
-    VeamyIntegrator* obj = dynamic_cast<VeamyIntegrator*>(integrator);
+template <typename T>
+void H1NormCalculator<T>::setCalculator(FeamyIntegrator<T>* integrator, FeamyAdditionalInfo info) {
+    NormIntegrator<T>* den = integrator->clone();
 
-    if(obj!= nullptr){
-        this->setCalculator(obj);
-        return;
-    }
+    this->num = integrator;
+    this->den = den;
 
-    FeamyIntegrator* obj2 = dynamic_cast<FeamyIntegrator*>(integrator);
-
-    if(obj2!= nullptr){
-        this->setCalculator(obj2);
-        return;
-    }
+    this->num->setComputable(new StrainStressDifferenceComputable<T>(this->strainValue, this->stressValue, this->nodalDisplacements,
+                                                            this->dofs, info.N, info.points, info.C));
+    this->den->setComputable(new StrainStressComputable<T>(this->strainValue, this->stressValue));
 }
 
-void H1NormCalculator::setCalculator(FeamyIntegrator *integrator, ) {
-    NormIntegrator* den = integrator->clone();
-
-
-
-
-    num->setComputable(new StrainStressDifferenceComputable(this->strainValue, this->stressValue, this->nodalDisplacements,
-                                                            this->dofs, ));
-    den->setComputable(new StrainStressComputable(this->strainValue, this->stressValue));
-
-    NormCalculator::setCalculators(num, den);
+template <typename T>
+void H1NormCalculator<T>::setCalculator(VeamyIntegrator<T>* integrator) {
+    this->num = new VeamyH1Integrator<T>(this->value, this->dofs, this->nodalDisplacements);
+    this->den = new IdentityIntegrator<T>;
 }
 
-void H1NormCalculator::setCalculator(VeamyIntegrator *integrator) {
-
-}
+template class H1NormCalculator<Triangle>;
+template class H1NormCalculator<Polygon>;

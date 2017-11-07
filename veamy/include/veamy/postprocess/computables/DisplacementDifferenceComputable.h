@@ -6,14 +6,15 @@
 #include <veamy/lib/Eigen/Dense>
 #include <veamy/models/dof/DOFS.h>
 
-class DisplacementDifferenceComputable : public Computable<Polygon>{
+template <typename T>
+class DisplacementDifferenceComputable : public Computable<T>{
 private:
     DisplacementValue* value;
     Eigen::VectorXd nodalValues;
     DOFS dofs;
 public:
     DisplacementDifferenceComputable(DisplacementValue* v, Eigen::VectorXd u, DOFS d);
-    double apply(double x, double y, int index, Polygon container);
+    double apply(double x, double y, int index, T container);
 };
 
 #endif

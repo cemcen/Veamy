@@ -5,15 +5,14 @@
 #include <delynoi/models/polygon/Polygon.h>
 #include "NormIntegrator.h"
 
-class VeamyIntegrator : public NormIntegrator<Polygon> {
-private:
-    Computable* computable;
+template <typename T>
+class VeamyIntegrator : public NormIntegrator<T> {
 public:
     VeamyIntegrator();
-    VeamyIntegrator(Computable* computable);
-    virtual double getIntegral(Polygon poly, std::vector<Point> points);
-    void setComputable(Computable* c);
-    NormIntegrator* clone();
+    VeamyIntegrator(Computable<T>* computable);
+    virtual double getIntegral(T poly, std::vector<Point> points);
+    void setComputable(Computable<T>* c);
+    NormIntegrator<T>* clone();
 };
 
 #endif

@@ -10,11 +10,11 @@
 #include <delynoi/models/neighbourhood/PointMap.h>
 #include <veamy/models/constraints/structures/isConstrainedInfo.h>
 #include <delynoi/voronoi/structures/mapdata.h>
-#include <veamy/models/constraints/structures/Angle.h>
 #include <map>
 #include "SegmentConstraint.h"
 #include "PointConstraint.h"
 #include <delynoi/models/basic/IndexSegment.h>
+#include <delynoi/models/basic/Angle.h>
 
 class Constraints {
 protected:
@@ -22,7 +22,7 @@ protected:
 
     std::unordered_map<IndexSegment, std::vector<SegmentConstraint>, SegmentHasher> segment_map;
     std::unordered_map<int, SegmentConstraint, intHasher> segment_constraints_map;
-    std::unordered_map<Point, std::vector<PointConstraint>, PointHasher> point_map;
+    std::map<Point, std::vector<PointConstraint>> point_map;
     std::unordered_map<int, PointConstraint, intHasher> point_constraints_map;
     UniqueList<int> constrained_dofs;
     bool constrainDOFBySegment(IndexSegment segment, int DOF_index, DOF::Axis axis);

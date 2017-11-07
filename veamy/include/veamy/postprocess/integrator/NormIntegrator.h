@@ -3,12 +3,15 @@
 
 #include <vector>
 #include <delynoi/models/basic/Point.h>
+#include <veamy/postprocess/computables/Computable.h>
 
 template <class T>
-class NormIntegrator{
+class NormIntegrator {
+protected:
+    Computable<T> *computable;
 public:
     virtual double getIntegral(T poly, std::vector<Point> points) = 0;
-    virtual void setComputable(Computable* c) = 0;
+    virtual void setComputable(Computable<T>* c) = 0;
     virtual NormIntegrator* clone() = 0;
 };
 

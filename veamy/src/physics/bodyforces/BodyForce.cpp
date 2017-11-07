@@ -7,10 +7,10 @@ BodyForce::BodyForce(func fX, func fY) {
 
 BodyForce::BodyForce() {}
 
-Computable* BodyForce::getX() {
+FunctionComputable* BodyForce::getX() {
     return this->fX;
 }
 
-Computable* BodyForce::getY() {
+FunctionComputable* BodyForce::getY() {
     return this->fY;
 }

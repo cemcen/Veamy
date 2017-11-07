@@ -3,17 +3,18 @@
 
 #include <veamy/postprocess/NormCalculator.h>
 #include <veamy/postprocess/analytic/DisplacementValue.h>
-#include <veamy/Veamer.h>
-#include <feamy/Feamer.h>
 #include <feamy/postprocess/integrator/FeamyIntegrator.h>
 #include <veamy/postprocess/integrator/VeamyIntegrator.h>
+#include <feamy/postprocess/structures/FeamyAdditionalInfo.h>
 
-class L2NormCalculator: public NormCalculator {
+template <typename T>
+class L2NormCalculator: public NormCalculator<T> {
 private:
     DisplacementValue* value;
 public:
     L2NormCalculator(DisplacementValue* value, Eigen::VectorXd u, DOFS d);
-    void setCalculators(NormIntegrator* integrator);
+    void setCalculator(FeamyIntegrator<T>* integrator, FeamyAdditionalInfo info);
+    void setCalculator(VeamyIntegrator<T>* integrator);
 };
 
 #endif

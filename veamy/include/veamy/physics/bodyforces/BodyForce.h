@@ -8,14 +8,14 @@
 
 class BodyForce{
 protected:
-    Computable* fX;
-    Computable* fY;
+    FunctionComputable* fX;
+    FunctionComputable* fY;
 public:
     BodyForce(func fX, func fY);
     BodyForce();
 
-    Computable* getX();
-    Computable* getY();
+    FunctionComputable* getX();
+    FunctionComputable* getY();
 };
 
 #endif

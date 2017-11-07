@@ -12,17 +12,16 @@
 template <typename T>
 class NormCalculator {
 protected:
-    NormIntegrator* num;
-    NormIntegrator* den;
+    NormIntegrator<T>* num;
+    NormIntegrator<T>* den;
 
     Eigen::VectorXd nodalDisplacements;
     DOFS dofs;
 public:
     NormCalculator(Eigen::VectorXd disp, DOFS dofs);
     double getNorm(Mesh<T> mesh);
-    virtual void setCalculators(NormIntegrator* num, NormIntegrator* den);
-    virtual void setCalculator(VeamyIntegrator* integrator) = 0;
-    virtual void setCalculator(FeamyIntegrator* integrator, FeamyAdditionalInfo info) = 0;
+    virtual void setCalculator(VeamyIntegrator<T>* integrator) = 0;
+    virtual void setCalculator(FeamyIntegrator<T>* integrator, FeamyAdditionalInfo info) = 0;
 };
 
 #endif

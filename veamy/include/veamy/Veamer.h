@@ -33,7 +33,7 @@ public:
     void initProblem(Mesh<Polygon> m, Conditions conditions);
     void createAndAssemble(Eigen::MatrixXd& KGlobal, Eigen::VectorXd& fGlobal);
 
-    double computeErrorNorm(NormCalculator* calculator, Mesh<Polygon> mesh);
+    double computeErrorNorm(NormCalculator<Polygon>* calculator, Mesh<Polygon> mesh);
 };
 
 

@@ -1,21 +1,29 @@
 #include <veamy/postprocess/integrator/VeamyIntegrator.h>
 #include <veamy/utilities/veamy_functions.h>
+#include <delynoi/models/polygon/Triangle.h>
 
+template <typename T>
+VeamyIntegrator<T>::VeamyIntegrator() {}
 
-VeamyIntegrator::VeamyIntegrator() {}
-
-VeamyIntegrator::VeamyIntegrator(Computable *computable) {
+template <typename T>
+VeamyIntegrator<T>::VeamyIntegrator(Computable<T>* computable) {
     this->computable = computable;
 }
 
-double VeamyIntegrator::getIntegral(Polygon poly, std::vector<Point> points) {
-    return veamy_functions::nodal_quadrature(poly, points, this->computable);
+template <typename T>
+double VeamyIntegrator<T>::getIntegral(T poly, std::vector<Point> points) {
+    return veamy_functions::nodal_quadrature<T>(poly, points, this->computable);
 }
 
-void VeamyIntegrator::setComputable(Computable *c) {
+template <typename T>
+NormIntegrator<T>* VeamyIntegrator<T>::clone() {
+    return new VeamyIntegrator<T>;
+}
+
+template <typename T>
+void VeamyIntegrator<T>::setComputable(Computable<T> *c) {
     this->computable = c;
 }
 
-NormIntegrator *VeamyIntegrator::clone() {
-    return new VeamyIntegrator;
-}
+template class VeamyIntegrator<Polygon>;
+template class VeamyIntegrator<Triangle>;

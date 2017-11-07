@@ -1,5 +1,7 @@
 #include <feamy/config/FeamyConfig.h>
 
+FeamyConfig* FeamyConfig::s_instance = nullptr;
+
 FeamyConfig::FeamyConfig() {
     this->gaussPoints = 3;
 }

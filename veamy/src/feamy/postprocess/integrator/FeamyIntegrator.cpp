@@ -1,36 +1,37 @@
 #include <feamy/postprocess/integrator/FeamyIntegrator.h>
 #include <feamy/integration/integrables/IntegrableFunction.h>
 #include <feamy/integration/AreaIntegrator.h>
+#include <veamy/geometry/VeamyPolygon.h>
+#include <veamy/postprocess/computables/IntegrableFunctionComputable.h>
 
-FeamyIntegrator::FeamyIntegrator() {}
+template <typename T>
+FeamyIntegrator<T>::FeamyIntegrator() {}
 
-FeamyIntegrator::FeamyIntegrator(Computable *computable) {
+template <typename T>
+FeamyIntegrator<T>::FeamyIntegrator(Computable<T>* computable) {
     this->computable = computable;
 }
 
-double FeamyIntegrator::getIntegral(Triangle poly, std::vector<Point> points) {
-
-    class IntegrableFunctionComputable: public IntegrableFunction<double>{
-    private:
-        Computable* computable;
-    public:
-        IntegrableFunctionComputable(Computable* c){
-            this->computable = c;
-        }
-
-        inline double apply(Point p, int index){
-            return this->computable->apply(p.getX(), p.getY(), index, Polygon());
-        }
-    };
-
-    IntegrableFunctionComputable* computable = new IntegrableFunctionComputable(this->computable);
+template <typename T>
+double FeamyIntegrator<T>::getIntegral(T poly, std::vector<Point> points) {
+    IntegrableFunctionComputable<T>* computable = new IntegrableFunctionComputable<T>(this->computable);
     double result;
 
     FeamyConfig* config = FeamyConfig::instance();
-    AreaIntegrator::integrate(result, config->getNumberOfGaussPoints(), VeamyTriangle(poly), points, computable);
+    AreaIntegrator<VeamyPolygon,double>::integrate(result, config->getNumberOfGaussPoints(), VeamyPolygon(poly), points, computable);
 
+    return result;
 }
 
-void FeamyIntegrator::setComputable(Computable *c) {
+template <typename T>
+NormIntegrator<T> *FeamyIntegrator<T>::clone() {
+    return new FeamyIntegrator<T>;
+}
+
+template <typename T>
+void FeamyIntegrator<T>::setComputable(Computable<T> *c) {
     this->computable = c;
 }
+
+template class FeamyIntegrator<Triangle>;
+template class FeamyIntegrator<Polygon>;

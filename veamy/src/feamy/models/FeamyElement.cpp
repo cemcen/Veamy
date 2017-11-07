@@ -32,3 +32,7 @@ void FeamyElement::computeF(DOFS d, UniqueList<Point> points, Conditions &condit
     delete bodyForceVector;
     delete tractionVector;
 }
+
+ShapeFunctions *FeamyElement::getShapeFunctions() {
+    return this->N;
+}

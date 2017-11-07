@@ -10,8 +10,8 @@
 #include <feamy/integration/integrables/StiffnessMatrixIntegrable.h>
 #include <veamy/utilities/veamy_functions.h>
 
-
-class StrainStressDifferenceComputable : public Computable<Triangle>{
+template <typename T>
+class StrainStressDifferenceComputable : public Computable<T>{
 private:
     StrainValue* strainValue;
     StressValue* stressValue;
@@ -25,7 +25,7 @@ public:
     StrainStressDifferenceComputable(StrainValue *strain, StressValue *stress,
                                      Eigen::VectorXd u, DOFS d, ShapeFunctions *N,
                                      std::vector<Point> p, Eigen::MatrixXd C);
-    double apply(double x, double y, int index, Triangle container);
+    double apply(double x, double y, int index, T container);
 };
 
 #endif

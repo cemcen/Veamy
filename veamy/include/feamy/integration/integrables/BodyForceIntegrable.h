@@ -16,7 +16,7 @@ public:
         this->f = f;
     }
 
-    Eigen::VectorXd apply(Point p, int index){
+    Eigen::VectorXd apply(Point p){
         int n = this->N->numberOfShapeFunctions();
         Eigen::MatrixXd Ne;
         Ne = Eigen::MatrixXd::Zero(2,2*n);

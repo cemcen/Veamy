@@ -2,6 +2,7 @@
 #define VEAMY_FUNCTIONS_TYPES_H
 
 #include <utilities/Trio.h>
+#include <utilities/Pair.h>
 
 typedef double(*func)(double, double);
 typedef Trio<double>(*func_trio)(double, double);

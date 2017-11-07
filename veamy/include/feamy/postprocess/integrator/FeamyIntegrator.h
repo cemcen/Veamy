@@ -6,17 +6,15 @@
 #include <veamy/postprocess/integrator/NormIntegrator.h>
 #include <feamy/config/FeamyConfig.h>
 #include <veamy/geometry/VeamyTriangle.h>
-#include <veamy/postprocess/L2NormCalculator.h>
 
 template <typename T>
-class FeamyIntegrator : public  NormIntegrator<Triangle>{
-private:
-    Computable* computable;
+class FeamyIntegrator : public NormIntegrator<T>{
 public:
     FeamyIntegrator();
-    FeamyIntegrator(Computable* computable);
-    virtual double getIntegral(Triangle poly, std::vector<Point> points);
-    void setComputable(Computable* c);
+    FeamyIntegrator(Computable<T>* computable);
+    virtual double getIntegral(T poly, std::vector<Point> points);
+    void setComputable(Computable<T>* c);
+    NormIntegrator<T>* clone();
 };
 
 #endif

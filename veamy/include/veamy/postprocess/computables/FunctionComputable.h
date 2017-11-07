@@ -2,7 +2,8 @@
 #define VEAMY_FUNCTIONCOMPUTABLE_H
 
 #include "Computable.h"
-#include "veamy/utilities/functions_types.h"
+#include <veamy/utilities/functions_types.h>
+#include <delynoi/models/polygon/Polygon.h>
 
 class FunctionComputable : public Computable<Polygon>{
 private:

@@ -19,7 +19,7 @@ public:
         this->indexes = indexes;
     }
 
-    Eigen::VectorXd apply(Point p, int index){
+    Eigen::VectorXd apply(Point p){
         std::vector<double> Ni = this->N->evaluateShapeFunctionCartesian(p);
         Eigen::MatrixXd N;
         N = Eigen::MatrixXd::Zero(2,2*this->indexes.size());

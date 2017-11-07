@@ -14,7 +14,7 @@ private:
 public:
     StiffnessMatrixIntegrable(VeamyTriangle t, std::vector<Point> points, Eigen::MatrixXd D, ShapeFunctions* N);
     Eigen::MatrixXd apply(Point p);
-    static Eigen::MatrixXd BeMatrix(Point p, Eigen::Matrix J, ShapeFunctions* N);
+    static Eigen::MatrixXd BeMatrix(Point p, Eigen::MatrixXd J, ShapeFunctions* N);
 };
 
 #endif
