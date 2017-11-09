@@ -12,7 +12,7 @@ class FeamyIntegrator : public NormIntegrator<T>{
 public:
     FeamyIntegrator();
     FeamyIntegrator(Computable<T>* computable);
-    virtual double getIntegral(T poly, std::vector<Point> points);
+    virtual double getIntegral(T poly, int polyIndex, std::vector<Point> points);
     void setComputable(Computable<T>* c);
     NormIntegrator<T>* clone();
 };

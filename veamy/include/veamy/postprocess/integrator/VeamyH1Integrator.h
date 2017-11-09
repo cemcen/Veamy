@@ -16,7 +16,7 @@ private:
 public:
     VeamyH1Integrator();
     VeamyH1Integrator(DisplacementValue* value, DOFS dofs, Eigen::VectorXd u);
-    double getIntegral(T poly, std::vector<Point> points);
+    double getIntegral(T poly, int polyIndex, std::vector<Point> points);
     void setComputable(Computable<T>* c);
     NormIntegrator<T>* clone();
 };

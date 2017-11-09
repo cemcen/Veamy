@@ -18,12 +18,12 @@ void AreaIntegrator<T,S>::integrate(S& result, int nGauss, T element, std::vecto
         gauss_quadrature::gauss_triangle(nGauss, gaussPoints, weights);
 
         for (int i = 0; i < gaussPoints.size(); ++i) {
-            double g1 = p[2].getX() + (p[0].getX() - p[2].getX())*gaussPoints[i].getX()  +
-                    (p[1].getX() - p[2].getX())*gaussPoints[i].getY();
-            double g2 = p[2].getY() + (p[0].getY() - p[2].getY())*gaussPoints[i].getX()  +
-                        (p[1].getY() - p[2].getY())*gaussPoints[i].getY();
+            double g1 = p[0].getX() + (p[1].getX() - p[0].getX())*gaussPoints[i].getX()  +
+                    (p[2].getX() - p[0].getX())*gaussPoints[i].getY();
+            double g2 = p[0].getY() + (p[1].getY() - p[0].getY())*gaussPoints[i].getX()  +
+                        (p[2].getY() - p[0].getY())*gaussPoints[i].getY();
 
-            result += weights[i] * integrable->apply(Point(g1, g2)) * J.determinant() / 2;
+            result += weights[i] * integrable->apply(Point(g1, g2), t);
         }
     }
 }

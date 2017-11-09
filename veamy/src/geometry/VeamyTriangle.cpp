@@ -12,8 +12,8 @@ VeamyTriangle::VeamyTriangle(Polygon p) {
 
 VeamyTriangle::VeamyTriangle(int p1, int p2, int p3) {
     this->points.push_back(p1);
-    this->points.push_back(p1);
-    this->points.push_back(p1);
+    this->points.push_back(p2);
+    this->points.push_back(p3);
 }
 
 std::vector<VeamyTriangle> VeamyTriangle::triangulate(std::vector<Point> points) {

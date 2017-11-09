@@ -1,6 +1,5 @@
 #include <veamy/postprocess/L2NormCalculator.h>
-#include <veamy/postprocess/computables/DisplacementDifferenceComputable.h>
-#include <veamy/postprocess/computables/DisplacementComputable.h>
+#include <feamy/postprocess/calculators/FeamyDisplacementCalculator.h>
 
 template <typename T>
 L2NormCalculator<T>::L2NormCalculator(DisplacementValue *value, Eigen::VectorXd u, DOFS d) : NormCalculator<T>(u, d) {
@@ -14,7 +13,9 @@ void L2NormCalculator<T>::setCalculator(FeamyIntegrator<T>* num, FeamyAdditional
     this->num = num;
     this->den = den;
 
-    this->num->setComputable(new DisplacementDifferenceComputable<T>(this->value, this->nodalDisplacements, this->dofs));
+    DisplacementCalculator<T>* calculator = new FeamyDisplacementCalculator<T>(this->dofs, this->nodalDisplacements, info.elements);
+
+    this->num->setComputable(new DisplacementDifferenceComputable<T>(this->value, calculator));
     this->den->setComputable(new DisplacementComputable<T>(this->value));
 }
 
@@ -25,7 +26,9 @@ void L2NormCalculator<T>::setCalculator(VeamyIntegrator<T>* integrator) {
     this->num = integrator;
     this->den = den;
 
-    this->num->setComputable(new DisplacementDifferenceComputable<T>(this->value, this->nodalDisplacements, this->dofs));
+    DisplacementCalculator<T>* calculator = new VeamyDisplacementCalculator<T>(this->dofs, this->nodalDisplacements);
+
+    this->num->setComputable(new DisplacementDifferenceComputable<T>(this->value, calculator));
     this->den->setComputable(new DisplacementComputable<T>(this->value));
 }
 

@@ -11,7 +11,7 @@ VeamyH1Integrator<T>::VeamyH1Integrator(DisplacementValue *value, DOFS dofs, Eig
 }
 
 template <typename T>
-double VeamyH1Integrator<T>::getIntegral(T poly, std::vector<Point> points) {
+double VeamyH1Integrator<T>::getIntegral(T poly, int polyIndex, std::vector<Point> points) {
     std::vector<IndexSegment> segments;
     poly.getSegments(segments);
 

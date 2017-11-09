@@ -1,12 +1,11 @@
-#include <vector>
 #include <delynoi/models/basic/Point.h>
 #include <delynoi/models/Region.h>
 #include <delynoi/voronoi/TriangleDelaunayGenerator.h>
 #include <feamy/Feamer.h>
 #include <veamy/models/constraints/values/Function.h>
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
-#include <feamy/models/element/Tri3Element.h>
 #include <feamy/models/constructor/Tri3Constructor.h>
+#include <veamy/postprocess/L2NormCalculator.h>
 
 double uXPatch(double x, double y){
     return x;
@@ -16,10 +15,14 @@ double uYPatch(double x, double y){
     return x + y;
 }
 
+Pair<double> analyticSolution(double x, double y){
+    return Pair<double>(x, x+y);
+}
+
 int main() {
     std::vector<Point> region_points = {Point(0, 0), Point(1, 0), Point(1, 1), Point(0, 1)};
     Region square(region_points);
-    square.generateSeedPoints(PointGenerator(functions::constant(), functions::displace_points(0.1)), 10, 10);
+    square.generateSeedPoints(PointGenerator(functions::constant(), functions::displace_points(0.3)), 3, 3);
 
     std::vector<Point> seeds = square.getSeedPoints();
     TriangleDelaunayGenerator delaunayGenerator(square, seeds);
@@ -59,12 +62,17 @@ int main() {
     ConstraintsContainer container;
     container.addConstraints(essential, delaunay.getPoints());
 
-    Material* material = new MaterialPlaneStrain (1, 0.2);
+    Material* material = new MaterialPlaneStrain(1, 0.2);
     Conditions conditions(container, material);
 
-    FemElementConstructor* constructor = new Tri3Constructor();
+    FeamyElementConstructor* constructor = new Tri3Constructor();
     feamer.initProblem(delaunay, conditions, constructor);
 
     Eigen::VectorXd x = feamer.simulate(delaunay);
     feamer.writeDisplacements("femresults.txt", x);
+
+    DisplacementValue* realSolution = new DisplacementValue(analyticSolution);
+    L2NormCalculator<Triangle>* l2 = new L2NormCalculator<Triangle>(realSolution, x, feamer.DOFs);
+    double norm = feamer.computeErrorNorm(l2, delaunay);
+    std::cout << norm;
 }

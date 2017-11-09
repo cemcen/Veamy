@@ -2,7 +2,7 @@
 #include <delynoi/models/polygon/Triangle.h>
 
 template <typename T>
-double IdentityIntegrator<T>::getIntegral(T poly, std::vector<Point> points) {
+double IdentityIntegrator<T>::getIntegral(T poly, int polyIndex, std::vector<Point> points) {
     return 1;
 }
 

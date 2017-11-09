@@ -11,7 +11,7 @@ VeamyIntegrator<T>::VeamyIntegrator(Computable<T>* computable) {
 }
 
 template <typename T>
-double VeamyIntegrator<T>::getIntegral(T poly, std::vector<Point> points) {
+double VeamyIntegrator<T>::getIntegral(T poly, int polyIndex, std::vector<Point> points) {
     return veamy_functions::nodal_quadrature<T>(poly, points, this->computable);
 }
 

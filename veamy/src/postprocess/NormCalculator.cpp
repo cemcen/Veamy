@@ -12,9 +12,11 @@ double NormCalculator<T>::getNorm(Mesh<T> mesh) {
     std::vector<T> meshElements = mesh.getPolygons();
     UniqueList<Point> points = mesh.getPoints();
 
+    int i = 0;
     for(T elem: meshElements){
-        numerator += num->getIntegral(elem, points.getList());
-        denominator += den->getIntegral(elem, points.getList());
+        numerator += num->getIntegral(elem, i, points.getList());
+        denominator += den->getIntegral(elem, i, points.getList());
+        i++;
     }
 
     return std::sqrt(numerator/denominator);

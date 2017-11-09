@@ -6,6 +6,9 @@
 #include <feamy/postprocess/integrator/FeamyIntegrator.h>
 #include <veamy/postprocess/integrator/VeamyIntegrator.h>
 #include <feamy/postprocess/structures/FeamyAdditionalInfo.h>
+#include <veamy/postprocess/computables/DisplacementDifferenceComputable.h>
+#include <veamy/postprocess/computables/DisplacementComputable.h>
+#include <veamy/postprocess/calculators/VeamyDisplacementCalculator.h>
 
 template <typename T>
 class L2NormCalculator: public NormCalculator<T> {

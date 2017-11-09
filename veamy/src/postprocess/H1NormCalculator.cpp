@@ -18,7 +18,7 @@ void H1NormCalculator<T>::setCalculator(FeamyIntegrator<T>* integrator, FeamyAdd
     this->den = den;
 
     this->num->setComputable(new StrainStressDifferenceComputable<T>(this->strainValue, this->stressValue, this->nodalDisplacements,
-                                                            this->dofs, info.N, info.points, info.C));
+                                                            this->dofs, info.elements, info.points, info.C));
     this->den->setComputable(new StrainStressComputable<T>(this->strainValue, this->stressValue));
 }
 

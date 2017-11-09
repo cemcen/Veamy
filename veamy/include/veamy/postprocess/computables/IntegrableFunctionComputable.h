@@ -13,8 +13,12 @@ public:
         this->computable = c;
     }
 
-    inline double apply(Point p){
-        return this->computable->apply(p.getX(), p.getY(), 0, T());
+    double apply(Point p){
+        return 0;
+    }
+
+    double apply(Point p,  VeamyTriangle t){
+        return this->computable->apply(p.getX(), p.getY(), 0, t);
     }
 };
 

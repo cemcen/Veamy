@@ -2,13 +2,13 @@
 
 template <typename T>
 StrainStressDifferenceComputable<T>::StrainStressDifferenceComputable(StrainValue *strain, StressValue *stress,
-                                                                   Eigen::VectorXd u, DOFS d, ShapeFunctions *N,
+                                                                   Eigen::VectorXd u, DOFS d, std::vector<FeamyElement*> elements,
                                                                    std::vector<Point> p, Eigen::MatrixXd C) {
     this->strainValue = strain;
     this->stressValue = stress;
     this->nodalValues = u;
     this->dofs = d;
-    this->N = N;
+    this->elements = elements;
     this->points = p;
     this->C = C;
 }
@@ -19,7 +19,7 @@ double StrainStressDifferenceComputable<T>::apply(double x, double y, int index,
     Pair<double> uH = Pair<double>(nodalValues[point_dofs.first], nodalValues[point_dofs.second]);
 
     Eigen::MatrixXd Be = StiffnessMatrixIntegrable::BeMatrix(Point(x,y), VeamyTriangle(container).getJacobian(this->points),
-                                                           this->N);
+                                                           this->elements[this->polygonIndex]->getShapeFunctions());
 
     Eigen::VectorXd strain = Be*veamy_functions::to_vector<double>(uH);
     Eigen::VectorXd stress = this->C*strain;
@@ -30,6 +30,11 @@ double StrainStressDifferenceComputable<T>::apply(double x, double y, int index,
     Trio<double> s = this->stressValue->getValue(Point(x,y));
 
     return (e - eH).dot(s - sH);
+}
+
+template <typename T>
+void StrainStressDifferenceComputable<T>::setPolygonIndex(int polyIndex) {
+    this->polygonIndex = polyIndex;
 }
 
 template class StrainStressDifferenceComputable<Polygon>;
