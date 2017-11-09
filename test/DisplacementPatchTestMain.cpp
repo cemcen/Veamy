@@ -4,6 +4,9 @@
 #include <delynoi/models/generator/functions/functions.h>
 #include <utilities/utilities.h>
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
+#include <veamy/config/VeamyConfig.h>
+#include <veamy/postprocess/analytic/DisplacementValue.h>
+#include <veamy/postprocess/L2NormCalculator.h>
 
 double uXPatch(double x, double y){
     return x;
@@ -11,6 +14,10 @@ double uXPatch(double x, double y){
 
 double uYPatch(double x, double y){
     return x + y;
+}
+
+Pair<double> analyticSolution(double x, double y){
+    return Pair<double>(x, x+y);
 }
 
 int main(){
@@ -114,4 +121,9 @@ int main(){
     std::cout << path1 << std::endl;
     std::cout << path2 << std::endl;
     std::cout << "*** Veamy has ended ***" << std::endl;
+
+    DisplacementValue* realSolution = new DisplacementValue(analyticSolution);
+    L2NormCalculator<Polygon>* l2 = new L2NormCalculator<Polygon>(realSolution, x, v.DOFs);
+    double norm = v.computeErrorNorm(l2, mesh);
+    std::cout << norm;
 }
