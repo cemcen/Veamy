@@ -9,7 +9,7 @@ StiffnessMatrixIntegrable::StiffnessMatrixIntegrable(VeamyTriangle t, std::vecto
 
 Eigen::MatrixXd StiffnessMatrixIntegrable::apply(Point point) {
     Eigen::MatrixXd Be = StiffnessMatrixIntegrable::BeMatrix(point, this->J, this->N);
-    return Be.transpose()*D*Be*this->J.determinant();
+    return Be.transpose()*D*Be*(this->J.determinant()/2);
 }
 
 Eigen::MatrixXd StiffnessMatrixIntegrable::BeMatrix(Point p, Eigen::MatrixXd J, ShapeFunctions *N) {

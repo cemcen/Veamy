@@ -10,6 +10,10 @@
 #include <veamy/config/VeamyConfig.h>
 #include <veamy/postprocess/analytic/DisplacementValue.h>
 #include <veamy/postprocess/L2NormCalculator.h>
+#include <delynoi/models/Region.h>
+#include <delynoi/voronoi/TriangleDelaunayGenerator.h>
+#include <feamy/Feamer.h>
+#include <feamy/models/constructor/Tri3Constructor.h>
 
 Pair<double> analytic(double x, double y){
     double E = 3e7, v = 0.3;
@@ -36,7 +40,7 @@ int main(){
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
     std::string meshFileName = "equi_patch_test_mesh.txt";
-    std::string dispFileName = "equi_patch_test_displacements.txt";
+    std::string dispFileName = "equi_patch_test_displacements_fem.txt";
     
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Equilibrium patch test / Reading a mesh from a file <--" << std::endl;
@@ -46,8 +50,14 @@ int main(){
     std::string externalMeshFileName = "equilibriumTest_mesh.txt";
 
     std::cout << "+ Reading mesh from a file ... ";
-    Mesh<Polygon> mesh;
-    mesh.createFromFile(externalMeshFileName);
+    std::vector<Point> region_points = {Point(0, 0), Point(1, 0), Point(1, 1), Point(0, 1)};
+    Region square(region_points);
+    square.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 6, 6);
+
+    std::vector<Point> seeds = square.getSeedPoints();
+    TriangleDelaunayGenerator delaunayGenerator(square, seeds);
+    Mesh<Triangle> mesh = delaunayGenerator.getConformingDelaunayTriangulation();
+
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing mesh to a file ... ";
@@ -79,16 +89,18 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Preparing the simulation ... ";
-    Veamer v;
-    v.initProblem(mesh, conditions);
+    Feamer feamer;
+    FeamyElementConstructor* constructor = new Tri3Constructor();
+    feamer.initProblem(mesh, conditions, constructor);
+
     std::cout << "done" << std::endl;
 
     std::cout << "+ Simulating ... ";
-    Eigen::VectorXd x = v.simulate(mesh);
+    Eigen::VectorXd x = feamer.simulate(mesh);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing nodal displacement solution to a file ... ";
-    v.writeDisplacements(dispFileName, x);
+    feamer.writeDisplacements(dispFileName, x);
     std::cout << "done" << std::endl;
     std::cout << "+ Problem finished successfully" << std::endl;
     std::cout << "..." << std::endl;
@@ -102,7 +114,7 @@ int main(){
     std::cout << "*** Veamy has ended ***" << std::endl;
 
     DisplacementValue* realSolution = new DisplacementValue(analytic);
-    L2NormCalculator<Polygon>* l2 = new L2NormCalculator<Polygon>(realSolution, x, v.DOFs);
-    double norm = v.computeErrorNorm(l2, mesh);
+    L2NormCalculator<Triangle>* l2 = new L2NormCalculator<Triangle>(realSolution, x, feamer.DOFs);
+    double norm = feamer.computeErrorNorm(l2, mesh);
     std::cout << norm;
 }

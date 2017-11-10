@@ -70,8 +70,8 @@ int main(){
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
-    std::string meshFileName = "Software/Veamy-master/build/test/parabolic_beam_mesh.txt";
-    std::string dispFileName = "Software/Veamy-master/build/test/parabolic_beam_displacements.txt";
+    std::string meshFileName = "parabolic_beam_mesh.txt";
+    std::string dispFileName = "parabolic_beam_displacements.txt";
 	
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Cantilever beam subjected to a parabolic end load <--" << std::endl;
@@ -83,7 +83,7 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Generating polygonal mesh ... ";
-    rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::displace_points(4.0/12)), 12, 6);
+    rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::displace_points(4.0/12)), 24, 12);
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
     TriangleVoronoiGenerator meshGenerator = TriangleVoronoiGenerator (seeds, rectangle4x8);
     Mesh<Polygon> mesh = meshGenerator.getMesh();

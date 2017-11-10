@@ -11,6 +11,8 @@
 #include <veamy/postprocess/analytic/DisplacementValue.h>
 #include <veamy/postprocess/L2NormCalculator.h>
 #include <veamy/config/VeamyConfig.h>
+#include <feamy/Feamer.h>
+#include <feamy/models/constructor/Tri3Constructor.h>
 
 double tangencial(double x, double y){
     double P = -1000;
@@ -86,7 +88,7 @@ int main(){
     rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::displace_points(4.0/12)), 12, 6);
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
     TriangleVoronoiGenerator meshGenerator = TriangleVoronoiGenerator (seeds, rectangle4x8);
-    Mesh<Polygon> mesh = meshGenerator.getMesh();
+    Mesh<Triangle> mesh = meshGenerator.getConstrainedDelaunayTriangulation();
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing mesh to a file ... ";
@@ -124,16 +126,18 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Preparing the simulation ... ";
-    Veamer v;
-    v.initProblem(mesh, conditions);
+    Feamer f;
+    FeamyElementConstructor* constructor = new Tri3Constructor();
+    f.initProblem(mesh, conditions, constructor);
+
     std::cout << "done" << std::endl;
 
     std::cout << "+ Simulating ... ";
-    Eigen::VectorXd x = v.simulate(mesh);
+    Eigen::VectorXd x = f.simulate(mesh);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing nodal displacement solution to a file ... ";
-    v.writeDisplacements(dispFileName, x);
+    f.writeDisplacements(dispFileName, x);
     std::cout << "done" << std::endl;
     std::cout << "+ Problem finished successfully" << std::endl;
     std::cout << "..." << std::endl;
@@ -147,7 +151,7 @@ int main(){
     std::cout << "*** Veamy has ended ***" << std::endl;
 
     DisplacementValue* realSolution = new DisplacementValue(analytic);
-    L2NormCalculator<Polygon>* l2 = new L2NormCalculator<Polygon>(realSolution, x, v.DOFs);
-    double norm = v.computeErrorNorm(l2, mesh);
+    L2NormCalculator<Triangle>* l2 = new L2NormCalculator<Triangle>(realSolution, x, f.DOFs);
+    double norm = f.computeErrorNorm(l2, mesh);
     std::cout << norm;
 }

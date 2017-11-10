@@ -42,7 +42,10 @@ public:
 
 
 template <typename T>
-Mesh<T>::Mesh() {}
+Mesh<T>::Mesh() {
+    this->edges = new SegmentMap;
+    this->pointMap = new PointMap;
+}
 
 template <typename T>
 Mesh<T>::Mesh(std::vector<Point> &p, std::vector<T> &e, SegmentMap* s, PointMap* pM) {
