@@ -47,7 +47,7 @@ int main(){
 
     std::cout << "+ Reading mesh from a file ... ";
     Mesh<Polygon> mesh;
-    mesh.createFromFile(externalMeshFileName);
+    mesh.createFromFile(externalMeshFileName, 1);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing mesh to a file ... ";

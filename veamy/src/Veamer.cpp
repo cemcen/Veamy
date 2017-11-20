@@ -17,7 +17,7 @@ Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName, Material* materi
         throw std::invalid_argument("Error: file not found. Check the path to the file.");
     }
 
-    mesh.createFromStream(infile);
+    mesh.createFromStream(infile, 0);
 
     EssentialConstraints essential;
     std::vector<Point> constrainedPointsX;
@@ -81,7 +81,7 @@ Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName, Material* materi
 }
 
 
-void Veamer::initProblem(Mesh<Polygon> m, Conditions conditions) {
+void Veamer::initProblem(const Mesh<Polygon>& m, Conditions conditions) {
     std::vector<Point> meshPoints = m.getPoints().getList();
     this->points.push_list(meshPoints);
     this->conditions = conditions;
@@ -89,7 +89,7 @@ void Veamer::initProblem(Mesh<Polygon> m, Conditions conditions) {
     std::vector<Polygon> polygons = m.getPolygons();
 
     for(int i=0;i<polygons.size();i++){
-        this->elements.push_back(VemElement(this->conditions, polygons[i], this->points, DOFs));
+        this->elements.push_back(VeamyElement(this->conditions, polygons[i], this->points, DOFs));
     }
 }
 

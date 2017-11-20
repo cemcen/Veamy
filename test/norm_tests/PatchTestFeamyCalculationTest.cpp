@@ -6,6 +6,9 @@
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
 #include <feamy/models/constructor/Tri3Constructor.h>
 #include <veamy/postprocess/L2NormCalculator.h>
+#include <veamy/postprocess/analytic/StrainValue.h>
+#include <veamy/postprocess/analytic/StressValue.h>
+#include <veamy/postprocess/H1NormCalculator.h>
 
 double uXPatch(double x, double y){
     return x;
@@ -19,16 +22,30 @@ Pair<double> analyticSolution(double x, double y){
     return Pair<double>(x, x+y);
 }
 
+Trio<double> strain(double x, double y){
+    return Trio<double>(1,1,1);
+}
+
+Trio<double> stress(double x, double y){
+    double E = 1;
+    double v = 0.2;
+
+    double constant = E/((1+v)*(1-2*v));
+
+    return Trio<double>(constant, constant, constant*(1-2*v)/2);
+}
+
 int main() {
     std::vector<Point> region_points = {Point(0, 0), Point(1, 0), Point(1, 1), Point(0, 1)};
     Region square(region_points);
-    square.generateSeedPoints(PointGenerator(functions::constant(), functions::displace_points(0.3)), 3, 3);
+    int n = 15;
+    square.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), n, n);
 
     std::vector<Point> seeds = square.getSeedPoints();
     TriangleDelaunayGenerator delaunayGenerator(square, seeds);
     Mesh<Triangle> delaunay = delaunayGenerator.getConformingDelaunayTriangulation();
 
-    delaunay.printInFile("fem_example.txt");
+    delaunay.printInFile("mesh_fem.txt");
 
     Feamer feamer;
     EssentialConstraints essential;
@@ -74,5 +91,12 @@ int main() {
     DisplacementValue* realSolution = new DisplacementValue(analyticSolution);
     L2NormCalculator<Triangle>* l2 = new L2NormCalculator<Triangle>(realSolution, x, feamer.DOFs);
     double norm = feamer.computeErrorNorm(l2, delaunay);
-    std::cout << norm;
+    std::cout << "L2 norm: " << norm << std::endl;
+
+    StrainValue* strainValue = new StrainValue(strain);
+    StressValue* stressValue = new StressValue(stress);
+
+    H1NormCalculator<Triangle>* h1 = new H1NormCalculator<Triangle>(strainValue, stressValue, realSolution, x, feamer.DOFs, delaunay.getPoints().getList());
+    double h1norm = feamer.computeErrorNorm(h1, delaunay);
+    std::cout << "H1 norm: " << h1norm << std::endl;
 }

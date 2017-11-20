@@ -11,6 +11,9 @@
 #include <veamy/postprocess/analytic/DisplacementValue.h>
 #include <veamy/postprocess/L2NormCalculator.h>
 #include <veamy/config/VeamyConfig.h>
+#include <veamy/postprocess/analytic/StrainValue.h>
+#include <veamy/postprocess/analytic/StressValue.h>
+#include <veamy/postprocess/H1NormCalculator.h>
 
 double tangencial(double x, double y){
     double P = -1000;
@@ -52,6 +55,42 @@ Pair<double> analytic(double x, double y){
                         P/(6*Ebar*I)*(3*vBar*std::pow(y,2)*(L-x) + (3*L-x)*std::pow(x,2)));
 }
 
+Trio<double> strain(double x, double y){
+    double E = 1e7;
+    double v = 0.3;
+    double P = -1000;
+    double Ebar = E/(1 - std::pow(v,2));
+    double vBar = v/(1 - v);
+    double D = 4;
+    double L = 8;
+    double I = std::pow(D,3)/12;
+
+    double eX = -P*y/(6*Ebar*I)*(6*L - 6*x);
+    double eY = P/(6*Ebar*I)*6*vBar*y*(L-x);
+    double eXY = P/(6*Ebar*I)*(-6*(1+vBar) + 3*std::pow(D,2)/2*(1+vBar));
+
+    return Trio<double>(eX,eY,eXY);
+}
+
+Trio<double> stress(double x, double y){
+    double E = 1e7;
+    double v = 0.3;
+    double P = -1000;
+    double Ebar = E/(1 - std::pow(v,2));
+    double vBar = v/(1 - v);
+    double D = 4;
+    double L = 8;
+    double I = std::pow(D,3)/12;
+
+    double eX = -P*y/(6*Ebar*I)*(6*L - 6*x);
+    double eY = P/(6*Ebar*I)*6*vBar*y*(L-x);
+    double eXY = P/(6*Ebar*I)*(-6*(1+vBar) + 3*std::pow(D,2)/2*(1+vBar));
+
+    double constant = E/((1+v)*(1-2*v));
+
+    return Trio<double>(constant*((1-v)*eX + v*eY), constant*(v*eX + (1-v)*eY), constant*(1-2*v)/2*eXY);
+}
+
 int main(){
     // Set precision for plotting to output files:    
     // OPTION 1: in "VeamyConfig::instance()->setPrecision(Precision::precision::mid)"    
@@ -82,8 +121,10 @@ int main(){
     Region rectangle4x8(rectangle4x8_points);
     std::cout << "done" << std::endl;
 
+    int n = 6;
+
     std::cout << "+ Generating polygonal mesh ... ";
-    rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::displace_points(4.0/12)), 24, 12);
+    rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 2*n, n);
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
     TriangleVoronoiGenerator meshGenerator = TriangleVoronoiGenerator (seeds, rectangle4x8);
     Mesh<Polygon> mesh = meshGenerator.getMesh();
@@ -149,5 +190,11 @@ int main(){
     DisplacementValue* realSolution = new DisplacementValue(analytic);
     L2NormCalculator<Polygon>* l2 = new L2NormCalculator<Polygon>(realSolution, x, v.DOFs);
     double norm = v.computeErrorNorm(l2, mesh);
-    std::cout << norm;
+    std::cout << "L2 norm: " << norm << std::endl;
+
+    StrainValue* strainValue = new StrainValue(strain);
+    StressValue* stressValue = new StressValue(stress);
+    H1NormCalculator<Polygon>* h1 = new H1NormCalculator<Polygon>(strainValue, stressValue, realSolution, x, v.DOFs, mesh.getPoints().getList());
+    double h1norm = v.computeErrorNorm(h1, mesh);
+    std::cout << "H1 norm: " << h1norm << std::endl;
 }

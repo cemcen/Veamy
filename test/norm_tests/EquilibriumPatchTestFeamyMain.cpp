@@ -14,11 +14,24 @@
 #include <delynoi/voronoi/TriangleDelaunayGenerator.h>
 #include <feamy/Feamer.h>
 #include <feamy/models/constructor/Tri3Constructor.h>
+#include <veamy/postprocess/analytic/StrainValue.h>
+#include <veamy/postprocess/analytic/StressValue.h>
+#include <veamy/postprocess/H1NormCalculator.h>
 
 Pair<double> analytic(double x, double y){
-    double E = 3e7, v = 0.3;
+    double E = 1, v = 0.3;
 
     return Pair<double> ((v/E)*(1-x), y/E);
+}
+
+Trio<double> strain(double x, double y){
+    double E = 1, v = 0.3;
+
+    return Trio<double>(-v/E,1/E,0);
+}
+
+Trio<double> stress(double x, double y){
+    return Trio<double>(0, 1, 0);
 }
 
 int main(){
@@ -39,20 +52,17 @@ int main(){
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
-    std::string meshFileName = "equi_patch_test_mesh.txt";
+    std::string meshFileName = "equi_patch_test_mesh_fem.txt";
     std::string dispFileName = "equi_patch_test_displacements_fem.txt";
     
-    std::cout << "*** Starting Veamy ***" << std::endl;
-    std::cout << "--> Test: Equilibrium patch test / Reading a mesh from a file <--" << std::endl;
-    std::cout << "..." << std::endl;
-
-    // File that contains an external mesh
+     // File that contains an external mesh
     std::string externalMeshFileName = "equilibriumTest_mesh.txt";
 
     std::cout << "+ Reading mesh from a file ... ";
     std::vector<Point> region_points = {Point(0, 0), Point(1, 0), Point(1, 1), Point(0, 1)};
     Region square(region_points);
-    square.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 6, 6);
+    int n = 5;
+    square.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), n, n);
 
     std::vector<Point> seeds = square.getSeedPoints();
     TriangleDelaunayGenerator delaunayGenerator(square, seeds);
@@ -60,11 +70,8 @@ int main(){
 
     std::cout << "done" << std::endl;
 
-    std::cout << "+ Printing mesh to a file ... ";
     mesh.printInFile(meshFileName);
-    std::cout << "done" << std::endl;
 
-    std::cout << "+ Defining Dirichlet and Neumann boundary conditions ... ";
     EssentialConstraints essential;
     PointSegment downSide(Point(0,0), Point(1,0));
     SegmentConstraint down (downSide, mesh.getPoints(), Constraint::Direction::Vertical, new Constant(0));
@@ -83,12 +90,9 @@ int main(){
     container.addConstraints(natural, mesh.getPoints());
     std::cout << "done" << std::endl;
 
-    std::cout << "+ Defining linear elastic material ... ";
-    Material* material = new MaterialPlaneStress(3e7, 0.3);
+    Material* material = new MaterialPlaneStress(1, 0.3);
     Conditions conditions(container, material);
-    std::cout << "done" << std::endl;
 
-    std::cout << "+ Preparing the simulation ... ";
     Feamer feamer;
     FeamyElementConstructor* constructor = new Tri3Constructor();
     feamer.initProblem(mesh, conditions, constructor);
@@ -116,5 +120,12 @@ int main(){
     DisplacementValue* realSolution = new DisplacementValue(analytic);
     L2NormCalculator<Triangle>* l2 = new L2NormCalculator<Triangle>(realSolution, x, feamer.DOFs);
     double norm = feamer.computeErrorNorm(l2, mesh);
-    std::cout << norm;
+    std::cout << "L2 norm: " << norm << std::endl;
+
+    StrainValue* strainValue = new StrainValue(strain);
+    StressValue* stressValue = new StressValue(stress);
+
+    H1NormCalculator<Triangle>* h1 = new H1NormCalculator<Triangle>(strainValue, stressValue, realSolution, x, feamer.DOFs, mesh.getPoints().getList());
+    double h1norm = feamer.computeErrorNorm(h1, mesh);
+    std::cout << "H1 norm: " << h1norm << std::endl;
 }

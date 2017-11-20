@@ -1,4 +1,5 @@
 #include <feamy/models/FeamyElement.h>
+#include <feamy/config/FeamyConfig.h>
 
 FeamyElement::FeamyElement() {}
 
@@ -8,7 +9,7 @@ void FeamyElement::initializeElement(Conditions &conditions, Triangle &p, Unique
 }
 
 void FeamyElement::computeK(DOFS d, UniqueList<Point> points, Conditions &conditions) {
-    int nGauss = 3;
+    FeamyConfig* config = FeamyConfig::instance();
     int n = this->N->numberOfShapeFunctions();
     K = Eigen::MatrixXd::Zero(2*n, 2*n);
 
@@ -16,13 +17,15 @@ void FeamyElement::computeK(DOFS d, UniqueList<Point> points, Conditions &condit
     IntegrableFunction<Eigen::MatrixXd>* integrable = new StiffnessMatrixIntegrable(t, points.getList(),
                                                                    conditions.material->getMaterialMatrix(), this->N);
 
-    AreaIntegrator<VeamyTriangle,Eigen::MatrixXd>::integrate(K, nGauss, t, points.getList(), integrable);
+    AreaIntegrator<VeamyTriangle,Eigen::MatrixXd>::integrate(K, config->getNumberOfGaussPoints(), t,
+                                                             points.getList(), integrable);
 
     delete integrable;
 }
 
 void FeamyElement::computeF(DOFS d, UniqueList<Point> points, Conditions &conditions) {
-    int nGauss = 3;
+    FeamyConfig* config = FeamyConfig::instance();
+    int nGauss = config->getNumberOfGaussPoints();
     BodyForceVector * bodyForceVector = new FeamyBodyForceVector(this->p, points, this->N, nGauss);
     TractionVector* tractionVector = new FeamyTractionVector(this->p, points, this->N,
                                                              conditions.constraints.getNaturalConstraints(), nGauss);

@@ -8,11 +8,9 @@
 class TriangleVoronoiGenerator {
 private:
     Mesh<Polygon> voronoi;
-    Mesh<Triangle> delaunay;
 public:
     TriangleVoronoiGenerator(std::vector<Point>& point_list, Region region);
     Mesh<Polygon> getMesh();
-    Mesh<Triangle> getConstrainedDelaunayTriangulation();
 };
 
 #endif

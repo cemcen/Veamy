@@ -9,7 +9,7 @@ private:
 public:
     void setNumberOfGaussPoints(int gauss);
 
-    double getNumberOfGaussPoints();
+    int getNumberOfGaussPoints();
 
     static  FeamyConfig* instance();
 };

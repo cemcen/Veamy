@@ -12,6 +12,10 @@ namespace functions {
         return new DisplaceDelta(delta);
     }
 
+    Functor *constantAlternating() {
+        return new ConstantAlternating();
+    }
+
     Functor *uniform(double delta) {
         return new Uniform(delta);
     }

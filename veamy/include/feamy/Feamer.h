@@ -13,6 +13,8 @@ class Feamer : public Calculator2D<Triangle>{
 private:
     std::vector<FeamyElement*> elements;
 public:
+    Feamer();
+
     void initProblem(Mesh<Triangle> m, Conditions conditions, FeamyElementConstructor* constructor);
     void createAndAssemble(Eigen::MatrixXd& KGlobal, Eigen::VectorXd& fGlobal);
     double computeErrorNorm(NormCalculator<Triangle>* calculator, Mesh<Triangle> mesh);

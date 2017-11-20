@@ -16,7 +16,7 @@ Eigen::MatrixXd MaterialPlaneStrain::getMaterialMatrix() {
     D(1,0) = c*this->material_v;
     D(1,1) = c*(1 - this->material_v);
 
-    D(2,2) = (c*(1 - 2*this->material_v))/2;
+    D(2,2) = c*(1 - 2*this->material_v)/2;
 
     return D;
 }

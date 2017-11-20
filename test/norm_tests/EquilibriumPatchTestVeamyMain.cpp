@@ -10,11 +10,26 @@
 #include <veamy/config/VeamyConfig.h>
 #include <veamy/postprocess/analytic/DisplacementValue.h>
 #include <veamy/postprocess/L2NormCalculator.h>
+#include <delynoi/models/Region.h>
+#include <delynoi/voronoi/TriangleVoronoiGenerator.h>
+#include <veamy/postprocess/analytic/StrainValue.h>
+#include <veamy/postprocess/analytic/StressValue.h>
+#include <veamy/postprocess/H1NormCalculator.h>
 
 Pair<double> analytic(double x, double y){
     double E = 3e7, v = 0.3;
 
     return Pair<double> ((v/E)*(1-x), y/E);
+}
+
+Trio<double> strain(double x, double y){
+    double E = 3e7, v = 0.3;
+
+    return Trio<double>(-v/E,1/E,0);
+}
+
+Trio<double> stress(double x, double y){
+    return Trio<double>(0, 1, 0);
 }
 
 int main(){
@@ -38,23 +53,18 @@ int main(){
     std::string meshFileName = "equi_patch_test_mesh.txt";
     std::string dispFileName = "equi_patch_test_displacements.txt";
     
-    std::cout << "*** Starting Veamy ***" << std::endl;
-    std::cout << "--> Test: Equilibrium patch test / Reading a mesh from a file <--" << std::endl;
-    std::cout << "..." << std::endl;
-
     // File that contains an external mesh
-    std::string externalMeshFileName = "equilibriumTest_mesh.txt";
+    std::vector<Point> region_points = {Point(0, 0), Point(1, 0), Point(1, 1), Point(0, 1)};
+    Region square(region_points);
+    int n = 5;
+    square.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), n , n);
 
-    std::cout << "+ Reading mesh from a file ... ";
-    Mesh<Polygon> mesh;
-    mesh.createFromFile(externalMeshFileName);
-    std::cout << "done" << std::endl;
+    std::vector<Point> seeds = square.getSeedPoints();
+    TriangleVoronoiGenerator generator (seeds, square);
+    Mesh<Polygon> mesh = generator.getMesh();
 
-    std::cout << "+ Printing mesh to a file ... ";
-    mesh.printInFile(meshFileName);
-    std::cout << "done" << std::endl;
+    mesh.printInFile("mesh_vem.txt");
 
-    std::cout << "+ Defining Dirichlet and Neumann boundary conditions ... ";
     EssentialConstraints essential;
     PointSegment downSide(Point(0,0), Point(1,0));
     SegmentConstraint down (downSide, mesh.getPoints(), Constraint::Direction::Vertical, new Constant(0));
@@ -104,5 +114,11 @@ int main(){
     DisplacementValue* realSolution = new DisplacementValue(analytic);
     L2NormCalculator<Polygon>* l2 = new L2NormCalculator<Polygon>(realSolution, x, v.DOFs);
     double norm = v.computeErrorNorm(l2, mesh);
-    std::cout << norm;
+    std::cout << "L2 norm: " << norm << std::endl;
+
+    StrainValue* strainValue = new StrainValue(strain);
+    StressValue* stressValue = new StressValue(stress);
+    H1NormCalculator<Polygon>* h1 = new H1NormCalculator<Polygon>(strainValue, stressValue, realSolution, x, v.DOFs, mesh.getPoints().getList());
+    double h1norm = v.computeErrorNorm(h1, mesh);
+    std::cout << "H1 norm: " << h1norm << std::endl;
 }

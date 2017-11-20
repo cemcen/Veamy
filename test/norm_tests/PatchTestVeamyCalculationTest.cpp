@@ -6,6 +6,9 @@
 #include <veamy/postprocess/L2NormCalculator.h>
 #include <veamy/Veamer.h>
 #include <delynoi/voronoi/TriangleVoronoiGenerator.h>
+#include <veamy/postprocess/analytic/StrainValue.h>
+#include <veamy/postprocess/analytic/StressValue.h>
+#include <veamy/postprocess/H1NormCalculator.h>
 
 double uXPatch(double x, double y){
     return x;
@@ -19,16 +22,31 @@ Pair<double> analyticSolution(double x, double y){
     return Pair<double>(x, x+y);
 }
 
+Trio<double> strain(double x, double y){
+    return Trio<double>(1,1,1);
+}
+
+Trio<double> stress(double x, double y){
+    double E = 1;
+    double v = 0.2;
+
+    double constant = E/((1+v)*(1-2*v));
+
+    return Trio<double>(constant, constant, constant*(1-2*v)/2);
+}
+
+
 int main() {
     std::vector<Point> region_points = {Point(0, 0), Point(1, 0), Point(1, 1), Point(0, 1)};
     Region square(region_points);
-    square.generateSeedPoints(PointGenerator(functions::constant(), functions::displace_points(0.3)), 3, 3);
+    int n = 15;
+    square.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), n , n);
 
     std::vector<Point> seeds = square.getSeedPoints();
     TriangleVoronoiGenerator generator (seeds, square);
     Mesh<Polygon> mesh = generator.getMesh();
 
-    mesh.printInFile("vem_example.txt");
+    mesh.printInFile("mesh_vem.txt");
 
     Veamer veamer;
     EssentialConstraints essential;
@@ -68,10 +86,17 @@ int main() {
     veamer.initProblem(mesh, conditions);
 
     Eigen::VectorXd x = veamer.simulate(mesh);
-    veamer.writeDisplacements("femresults.txt", x);
+    veamer.writeDisplacements("vemresults.txt", x);
 
     DisplacementValue* realSolution = new DisplacementValue(analyticSolution);
     L2NormCalculator<Polygon>* l2 = new L2NormCalculator<Polygon>(realSolution, x, veamer.DOFs);
     double norm = veamer.computeErrorNorm(l2, mesh);
-    std::cout << norm;
+    std::cout << "L2 norm: " << norm << std::endl;
+
+    StrainValue* strainValue = new StrainValue(strain);
+    StressValue* stressValue = new StressValue(stress);
+
+    H1NormCalculator<Polygon>* h1 = new H1NormCalculator<Polygon>(strainValue, stressValue, realSolution, x, veamer.DOFs, mesh.getPoints().getList());
+    double h1norm = veamer.computeErrorNorm(h1, mesh);
+    std::cout << "H1 norm: " << h1norm << std::endl;
 }

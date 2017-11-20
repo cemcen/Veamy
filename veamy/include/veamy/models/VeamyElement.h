@@ -18,9 +18,9 @@
 #include <veamy/physics/bodyforces/VeamyBodyForceVector.h>
 #include <veamy/physics/traction/TractionVector.h>
 
-class VemElement: public Element<Polygon> {
+class VeamyElement: public Element<Polygon> {
 public:
-    VemElement(Conditions &conditions, Polygon &p, UniqueList<Point> &points, DOFS &out);
+    VeamyElement(Conditions &conditions, Polygon &p, UniqueList<Point> &points, DOFS &out);
 
     void computeK(DOFS d, UniqueList<Point> points, Conditions &conditions);
     void computeF(DOFS d, UniqueList<Point> points, Conditions &conditions);

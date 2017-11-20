@@ -1,12 +1,12 @@
-#include <veamy/models/VemElement.h>
+#include <veamy/models/VeamyElement.h>
 #include <veamy/physics/traction/VeamyTractionVector.h>
 #include <veamy/config/VeamyConfig.h>
 
-VemElement::VemElement(Conditions &conditions, Polygon &p, UniqueList<Point> &points, DOFS &out) {
+VeamyElement::VeamyElement(Conditions &conditions, Polygon &p, UniqueList<Point> &points, DOFS &out) {
     initializeElement(conditions, p, points, out);
 }
 
-void VemElement::computeK(DOFS d, UniqueList<Point> points, Conditions &conditions) {
+void VeamyElement::computeK(DOFS d, UniqueList<Point> points, Conditions &conditions) {
     std::vector<int> polygonPoints = p.getPoints();
     int n = (int) polygonPoints.size();
     Point average = p.getAverage(points.getList());
@@ -93,7 +93,7 @@ void VemElement::computeK(DOFS d, UniqueList<Point> points, Conditions &conditio
     this->K = area*Wc*D*Wc.transpose() + (I - Pp).transpose()*Se*(I - Pp);
 }
 
-void VemElement::computeF(DOFS d, UniqueList<Point> points, Conditions &conditions) {
+void VeamyElement::computeF(DOFS d, UniqueList<Point> points, Conditions &conditions) {
     BodyForceVector* bodyForceVector = new VeamyBodyForceVector(this->p, points);
     TractionVector* tractionVector = new VeamyTractionVector(this->p, points, conditions.constraints.getNaturalConstraints());
 

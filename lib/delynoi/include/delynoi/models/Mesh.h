@@ -23,8 +23,8 @@ public:
 
     void printInStream(std::ofstream& file);
     void printInFile(std::string fileName);
-    void createFromFile(std::string fileName);
-    void createFromStream(std::ifstream& ofstream);
+    void createFromFile(std::string fileName, int startIndex);
+    void createFromStream(std::ifstream &ofstream, int startIndex);
 
     std::vector<T>& getPolygons();
     std::vector<T> getPolygons() const;
@@ -72,16 +72,16 @@ Mesh<T>::Mesh(const Mesh &m) {
 }
 
 template <typename T>
-void Mesh<T>::createFromFile(std::string fileName) {
+void Mesh<T>::createFromFile(std::string fileName, int startIndex) {
     std::ifstream infile = utilities::openFile(fileName);
 
-    createFromStream(infile);
+    createFromStream(infile, startIndex);
 
     infile.close();
 }
 
 template <typename T>
-void Mesh<T>::createFromStream(std::ifstream &infile) {
+void Mesh<T>::createFromStream(std::ifstream &infile, int startIndex) {
     std::string line;
     std::getline(infile, line);
     int numberMeshPoints = std::atoi(line.c_str());
@@ -102,7 +102,7 @@ void Mesh<T>::createFromStream(std::ifstream &infile) {
 
         std::vector<int> polygonPoints;
         for (int j = 1; j < splittedLine.size(); ++j) {
-            polygonPoints.push_back(std::atoi(splittedLine[j].c_str()) - 1);
+            polygonPoints.push_back(std::atoi(splittedLine[j].c_str()) - startIndex);
         }
 
         T newPolygon(polygonPoints, this->points.getList());

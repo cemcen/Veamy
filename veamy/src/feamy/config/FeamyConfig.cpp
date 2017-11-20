@@ -10,7 +10,7 @@ void FeamyConfig::setNumberOfGaussPoints(int gauss) {
     this->gaussPoints = gauss;
 }
 
-double FeamyConfig::getNumberOfGaussPoints() {
+int FeamyConfig::getNumberOfGaussPoints() {
     return this->gaussPoints;
 }
 

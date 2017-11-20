@@ -72,3 +72,31 @@ public:
     }
 };
 
+class ConstantAlternating: public Functor{
+private:
+    UniqueList<double> visitedPlaces;
+    double delta;
+    bool alternating = false;
+public:
+    ConstantAlternating(){}
+    inline double apply(double x){
+        if(visitedPlaces.size()==1){
+            delta = std::abs(visitedPlaces[0] - x);
+        }
+
+        int index = visitedPlaces.push_back(x);
+
+        if(index<visitedPlaces.size()-1){
+            alternating = !alternating;
+            visitedPlaces.clear();
+        }
+
+        if(alternating){
+            return x + delta/2;
+        }else{
+            return x;
+        }
+    }
+
+};
+

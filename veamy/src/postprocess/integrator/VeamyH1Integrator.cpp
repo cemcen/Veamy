@@ -22,7 +22,7 @@ double VeamyH1Integrator<T>::getIntegral(T poly, int polyIndex, std::vector<Poin
         Pair<double> u2 = value->getValue(points[s.getSecond()]);
 
         Pair<int> point1_dofs = dofs.pointToDOFS(s.getFirst());
-        Pair<int> point2_dofs = dofs.pointToDOFS(s.getFirst());
+        Pair<int> point2_dofs = dofs.pointToDOFS(s.getSecond());
         Pair<double> uH1 = Pair<double>(nodalValues[point1_dofs.first], nodalValues[point1_dofs.second]);
         Pair<double> uH2 = Pair<double>(nodalValues[point2_dofs.first], nodalValues[point2_dofs.second]);
 
