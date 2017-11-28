@@ -38,11 +38,11 @@ Trio<double> stress(double x, double y){
 int main() {
     std::vector<Point> region_points = {Point(0, 0), Point(1, 0), Point(1, 1), Point(0, 1)};
     Region square(region_points);
-    int n = 15;
+    int n = 5;
     square.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), n, n);
 
     std::vector<Point> seeds = square.getSeedPoints();
-    TriangleDelaunayGenerator delaunayGenerator(square, seeds);
+    TriangleDelaunayGenerator delaunayGenerator(seeds,square);
     Mesh<Triangle> delaunay = delaunayGenerator.getConformingDelaunayTriangulation();
 
     delaunay.printInFile("mesh_fem.txt");

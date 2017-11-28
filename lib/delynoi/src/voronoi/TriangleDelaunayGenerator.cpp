@@ -1,6 +1,6 @@
 #include "delynoi/voronoi/TriangleDelaunayGenerator.h"
 
-TriangleDelaunayGenerator::TriangleDelaunayGenerator(Region region, const std::vector<Point>& points) {
+TriangleDelaunayGenerator::TriangleDelaunayGenerator(const std::vector<Point>& points, Region region) {
     this->region = region;
     this->seedPoints = points;
     this->delaunayEdges = new SegmentMap;

@@ -111,8 +111,8 @@ int main(){
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
-    std::string meshFileName = "Software/Veamy-master/build/test/parabolic_beam_mesh.txt";
-    std::string dispFileName = "Software/Veamy-master/build/test/parabolic_beam_displacements.txt";
+    std::string meshFileName = "parabolic_beam_fem.txt";
+    std::string dispFileName = "parabolic_beam_displacements_fem.txt";
 	
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Cantilever beam subjected to a parabolic end load <--" << std::endl;
@@ -123,11 +123,12 @@ int main(){
     Region rectangle4x8(rectangle4x8_points);
     std::cout << "done" << std::endl;
 
+    int n = 6;
     std::cout << "+ Generating polygonal mesh ... ";
-    rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 6, 3);
+    rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 2*n, n);
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
-    TriangleVoronoiGenerator meshGenerator = TriangleVoronoiGenerator (seeds, rectangle4x8);
-    Mesh<Triangle> mesh = meshGenerator.getConstrainedDelaunayTriangulation();
+    TriangleDelaunayGenerator meshGenerator = TriangleDelaunayGenerator (seeds, rectangle4x8);
+    Mesh<Triangle> mesh = meshGenerator.getConformingDelaunayTriangulation();
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing mesh to a file ... ";

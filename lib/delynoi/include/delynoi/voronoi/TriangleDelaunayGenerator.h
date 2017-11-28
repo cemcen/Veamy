@@ -29,7 +29,7 @@ private:
     void callTriangle(std::vector<Point> &point_list, char switches[], std::vector<PointSegment> restrictedSegments);
     Mesh<Triangle> initializeMesh();
 public:
-    TriangleDelaunayGenerator(Region region, const std::vector<Point>& points);
+    TriangleDelaunayGenerator(const std::vector<Point>& points, Region region);
     Mesh<Triangle> getConformingDelaunayTriangulation();
     Mesh<Triangle> getConstrainedDelaunayTriangulation();
     Mesh<Triangle> getConstrainedDelaunayTriangulation(std::vector<PointSegment> restrictedSegments);

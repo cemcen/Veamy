@@ -4,17 +4,17 @@
 ConstraintsContainer::ConstraintsContainer() {}
 
 void ConstraintsContainer::addConstraints(NaturalConstraints c, UniqueList<Point> points) {
-    if(!areConsistent(c, this->essential, points)) {
-        throw std::invalid_argument("Natural and essential boundary conditions can not intersect");
-    }
+    //if(!areConsistent(c, this->essential, points)) {
+    //    throw std::invalid_argument("Natural and essential boundary conditions can not intersect");
+    //}
 
     this->natural = c;
 }
 
 void ConstraintsContainer::addConstraints(EssentialConstraints c, UniqueList<Point> points) {
-    if(!areConsistent(this->natural, c, points)) {
-        throw std::invalid_argument("Natural and essential boundary conditions can not intersect");
-    }
+    //if(!areConsistent(this->natural, c, points)) {
+      //  throw std::invalid_argument("Natural and essential boundary conditions can not intersect");
+    //}
 
     this->essential = c;
 }
