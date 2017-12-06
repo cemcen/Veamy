@@ -36,7 +36,7 @@ namespace utilities {
         #if defined(_WIN64) || defined(_WIN32)
                 std::string path = std::getenv("USERPROFILE");
                 return  path + "\\";
-        #elif defined(__linux__)
+        #elif defined(__linux__)  || defined(__APPLE__)
                 std::string path = std::getenv("HOME");
                 return path + "/";
         #endif
