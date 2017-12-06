@@ -91,7 +91,7 @@ namespace utilities {
         std::ifstream infile(completeName);
 
         if(!infile.good()){
-            throw std::runtime_error("Could not open file. Please check path.");
+            throw std::runtime_error("File not found");
         }
 
         return infile;

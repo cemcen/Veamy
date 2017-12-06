@@ -48,7 +48,7 @@ IndexSegment SegmentConstraint::fromPointToInt(PointSegment s, std::vector<Point
     int p2 = utilities::indexOf(points, s.getSecond());
 
     if(p1<0 || p2<0){
-        throw std::invalid_argument("Please don't go around making up nonexistent points");
+        throw std::invalid_argument("Can not constraint a point not existent on the mesh");
     }
 
     return IndexSegment(p1, p2);

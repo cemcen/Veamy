@@ -11,11 +11,7 @@ Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName, Material* materi
 
 Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName, Material* material, BodyForce* force) {
     Mesh<Polygon> mesh;
-    std::string completeName = utilities::getPath() + fileName;
-    std::ifstream infile(completeName);
-    if(!infile){
-        throw std::invalid_argument("Error: file not found. Check the path to the file.");
-    }
+    std::ifstream infile = utilities::openFile(fileName);
 
     mesh.createFromStream(infile, 0);
 

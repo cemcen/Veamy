@@ -20,7 +20,7 @@ PointGenerator::PointGenerator(Functor *l, functions::independent_variable varia
             this->lX = l;
             break;
         case functions::independent_variable::both:
-            throw std::invalid_argument("Both free variables and only one creator function given");
+            throw std::invalid_argument("Both x and y are free variables and only one creator function given");
     }
 }
 
