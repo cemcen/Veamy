@@ -2,7 +2,7 @@
 #define VEAMY_SEGMENTCONSTRAINT_H
 
 #include "Constraint.h"
-#include <mesher/models/basic/IndexSegment.h>
+#include <delynoi/models/basic/IndexSegment.h>
 
 class SegmentConstraint: public Constraint{
 private:

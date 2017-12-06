@@ -1,13 +1,16 @@
 #ifndef VEAMY_VEAMER_H
 #define VEAMY_VEAMER_H
 
-#include <mesher/models/PolygonalMesh.h>
+#include <delynoi/models/Mesh.h>
 #include <veamy/models/dof/DOFS.h>
 #include <veamy/models/constraints/EssentialConstraints.h>
-#include <veamy/models/Element.h>
+#include <veamy/models/VeamyElement.h>
 #include <veamy/lib/Eigen/Dense>
-#include <veamy/physics/ProblemConditions.h>
+#include <veamy/physics/Conditions.h>
 #include <iostream>
+#include "Calculator2D.h"
+#include <utilities/utilities.h>
+#include <veamy/postprocess/NormCalculator.h>
 
 
 struct PolygonHasher {
@@ -19,30 +22,18 @@ struct PolygonHasher {
     }
 };
 
-class Veamer {
-protected:
-    ProblemConditions conditions;
-    UniqueList<Point> points;
 
-    virtual void createElement(Polygon p);
-    void insertElement(Polygon p, int index);
+class Veamer : public Calculator2D<Polygon> {
 public:
-    DOFS DOFs;
-    std::vector<Element> elements;
+    std::vector<VeamyElement> elements;
     Veamer();
 
-    PolygonalMesh initProblemFromFile(std::string fileName, Material* material);
-    PolygonalMesh initProblemFromFile(std::string fileName, Material* material, BodyForce *force);
-    void initProblem(PolygonalMesh m, ProblemConditions conditions);
-    Eigen::VectorXd simulate(PolygonalMesh &mesh);
+    Mesh<Polygon> initProblemFromFile(std::string fileName, Material* material);
+    Mesh<Polygon> initProblemFromFile(std::string fileName, Material* material, BodyForce *force);
+    void initProblem(const Mesh<Polygon>& m, Conditions conditions);
+    void createAndAssemble(Eigen::MatrixXd& KGlobal, Eigen::VectorXd& fGlobal);
 
-    Pair<int> pointToDOFS(int point_index);
-    Material* getMaterial();
-    UniqueList<Point> getPoints() const;
-    UniqueList<Point> getPoints();
-    ProblemConditions getConditions() const;
-
-    void writeDisplacements(std::string fileName, Eigen::VectorXd u);
+    double computeErrorNorm(NormCalculator<Polygon>* calculator, Mesh<Polygon> mesh);
 };
 
 

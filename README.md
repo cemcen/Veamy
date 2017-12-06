@@ -40,8 +40,8 @@ The complete procedure to compute the displacements using the virtual element me
 <pre><code>std::vector<Point> points = {Point(0,0), Point(1,0), Point(1,1), Point(0,1)};
 Region region(points); 
 region.generateSeedPoints(PointGenerator(functions::random_double(), functions::random_double()), 10, 10);
-TriangleMeshGenerator generator (region.getSeedPoints(), region);
-PolygonalMesh mesh = generator.getMesh();</code></pre></li>
+TriangleVoronoiGenerator generator (region.getSeedPoints(), region);
+Mesh&ltPolygon&gt mesh = generator.getMesh();</code></pre></li>
 <li>If using an externally generated mesh, for example, from PolyMesher, refer to the next section of this tutorial; for a generic mesh format see "EquilibriumPatchTestMain.cpp" in the test folder. </li>
 <li>Create a boundary conditions container and fill it as desired: <br>
 <pre><code>EssentialConstraints e; NaturalConstraints n;
@@ -54,10 +54,10 @@ n.addConstraint(rightConstraint, mesh.getPoints());
 ConstraintsContainer container;
 container.addConstraints(e, mesh);
 container.addConstraints(n, mesh);</code></pre></li>
-<li>Create the problem conditions container, assigning the domain material properties, the body forces if needed, and 
+<li>Create the problem conditions container (a Conditions instance), assigning the domain material properties, the body forces if needed, and 
 the boundary conditions: 
 <pre><code>Material* material = new MaterialPlaneStrain(1e7, 0.3);
-ProblemConditions conditions(container, material);</code></pre></li>
+Conditions conditions(container, material);</code></pre></li>
 <li>Create a Veamer instance and initialize the numerical problem: 
 <pre><code>Veamer veamer;
 veamer.initProblem(mesh, conditions);</code></pre></li>
@@ -71,6 +71,23 @@ veamer.initProblem(mesh, conditions);</code></pre></li>
 
 This and various additional examples are provided in the <b>test/</b> folder located in the root directory of Veamy. 
 
+<h2>Using the Finite Element Method </h2>
+Veamy, being an extensible library, includes the possibility of solving the same linear elasticity problem but using the Finite Element Method in a
+module named Feamy. Appropriately, solving the linear elasticity problem using FEM is similar to VEM, with just one or two differences:
+<li> For now, the Finite Element Method only accepts triangular meshes (triangular elements). We can generate triangulations 
+using the same mesher used for the polygonal mesh generation<br>
+<pre><code>std::vector<Point> points = {Point(0,0), Point(1,0), Point(1,1), Point(0,1)};
+Region region(points); 
+region.generateSeedPoints(PointGenerator(functions::random_double(), functions::random_double()), 10, 10);
+TriangleDelaunayGenerator generator (region.getSeedPoints(), region);
+Mesh&ltTriangle&gt mesh = generator.getConformingDelaunayTriangulation();</code></pre></li>
+<li> Both the constraints and problem conditions (body forces and material properties) are set exactly as in Veamy. </li>
+<li>Create a Feamer instance, an ElementConstructor (which represents the type of elements that will be used for the problem. In our example,
+we use the most simple linear trinagular elements), and initialize the numerical problem: 
+<pre><code>Feamer feamer;
+feamer.initProblem(mesh, conditions, new Tri3Constructor());</code></pre></li>
+<li> Obtaining the displacements and the post processing is exactly equal to Veamy's </li>
+
 <h2>Using PolyMesher</h2>
 <ol>
 <li>Use the Matlab function <b>PolyMesher2Veamy.m</b> included  in the <b>polymesher/</b> folder and use it to generate a Veamy-format file, whose
@@ -79,7 +96,7 @@ default name is "polymesher2veamy.txt", from PolyMesher. </li>
 requires the definition of the material properties, and, in the case the problem includes them, a body force pointer:
 <pre><code>Veamer v;
 Material* material = new MaterialPlaneStress(1e7, 0.3);
-PolygonalMesh mesh = v.initProblemFromFile("polymesher2veamy.txt", material); </code></pre></li>
+Mesh&ltPolygon&gt mesh = v.initProblemFromFile("polymesher2veamy.txt", material); </code></pre></li>
 <li>Proceed exactly as shown from step 6 forward, as boundary conditions are already defined.</li>
 </ol>
 

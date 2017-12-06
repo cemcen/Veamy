@@ -1,23 +1,25 @@
 #include <vector>
-#include <mesher/models/basic/Point.h>
-#include <mesher/models/Region.h>
-#include <mesher/models/hole/CircularHole.h>
-#include <mesher/models/generator/functions.h>
-#include <mesher/voronoi/TriangleMeshGenerator.h>
+#include <delynoi/models/basic/Point.h>
+#include <delynoi/models/Region.h>
+#include <delynoi/models/hole/CircularHole.h>
+#include <delynoi/models/generator/functions/functions.h>
+#include <delynoi/voronoi/TriangleVoronoiGenerator.h>
 #include <veamy/Veamer.h>
 #include <veamy/models/constraints/values/Constant.h>
 #include <utilities/utilities.h>
-#include <veamy/physics/MaterialPlaneStrain.h>
+#include <veamy/physics/materials/MaterialPlaneStrain.h>
+#include <veamy/config/VeamyConfig.h>
 
 int main(){
-    // Set precision for plotting to output files:    
-    // OPTION 1: in "VeamyConfig::instance()->setPrecision(Precision::precision::mid)"
-    // use "small" for 6 digits; "mid" for 10 digits; "large" for 16 digits.
-    // OPTION 2: set the desired precision, for instance, as:
-    // VeamyConfig::instance()->setPrecision(12) for 12 digits. Change "12" by the desired precision.
-    // OPTION 3: Omit any instruction "VeamyConfig::instance()->setPrecision(.....)"
-    // from this file. In this case, the default precision, which is 6 digits, will be used.
-    VeamyConfig::instance()->setPrecision(Precision::precision::mid);
+    // Set precision for plotting to output files:   
+    // OPTION 1: in "VeamyConfig::instance()->setPrecision(Precision::precision::mid)"    
+    // use "small" for 6 digits; "mid" for 10 digits; "large" for 16 digits.    
+    // OPTION 2: set the desired precision, for instance, as:    
+    // VeamyConfig::instance()->setPrecision(12) for 12 digits. Change "12" by the desired precision.    
+    // OPTION 3: Omit any instruction "VeamyConfig::instance()->setPrecision(.....)"    
+    // from this file. In this case, the default precision, which is 6 digits, will be used.   
+    VeamyConfig::instance()->setPrecision(Precision::precision::mid);    
+    
 
     // DEFINING PATH FOR THE OUTPUT FILES:
     // If the path for the output files is not given, they are written to /home directory by default.
@@ -27,9 +29,9 @@ int main(){
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
-    std::string meshFileName = "Software/Veamy-master/build/test/cook_membrane_mesh.txt";
-    std::string dispFileName = "Software/Veamy-master/build/test/cook_membrane_displacements.txt";
-    std::string geoFileName = "Software/Veamy-master/build/test/cook_membrane_geometry.txt";
+    std::string meshFileName = "cook_membrane_mesh.txt";
+    std::string dispFileName = "cook_membrane_displacements.txt";
+    std::string geoFileName = "cook_membrane_geometry.txt";
     
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Cook's membrane <--" << std::endl;
@@ -52,10 +54,10 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Generating polygonal mesh ... ";
-    TBeam.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 16, 16);
+    TBeam.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 25, 25);
     std::vector<Point> seeds = TBeam.getSeedPoints();
-    TriangleMeshGenerator g(seeds, TBeam);
-    PolygonalMesh mesh = g.getMesh();
+    TriangleVoronoiGenerator g(seeds, TBeam);
+    Mesh<Polygon> mesh = g.getMesh();
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing mesh to a file ... ";
@@ -74,13 +76,13 @@ int main(){
     natural.addConstraint(right, mesh.getPoints());
 
     ConstraintsContainer container;
-    container.addConstraints(essential, mesh);
-    container.addConstraints(natural, mesh);
+    container.addConstraints(essential, mesh.getPoints());
+    container.addConstraints(natural, mesh.getPoints());
     std::cout << "done" << std::endl;
 
     std::cout << "+ Defining linear elastic material ... ";
     Material* material = new MaterialPlaneStrain(240, 0.3);
-    ProblemConditions conditions(container, material);
+    Conditions conditions(container, material);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Preparing the simulation ... ";

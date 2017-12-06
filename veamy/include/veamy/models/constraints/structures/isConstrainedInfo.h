@@ -1,7 +1,7 @@
 #ifndef VEAMY_ISCONSTRAINEDINFO_H
 #define VEAMY_ISCONSTRAINEDINFO_H
 
-#include <mesher/models/basic/IndexSegment.h>
+#include <delynoi/models/basic/IndexSegment.h>
 
 struct isConstrainedInfo{
     bool isConstrained;

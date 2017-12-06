@@ -1,7 +1,7 @@
 #ifndef VEAMY_EDGE_H
 #define VEAMY_EDGE_H
 
-#include <mesher/models/basic/Point.h>
+#include <delynoi/models/basic/Point.h>
 #include <utilities/Pair.h>
 #include <vector>
 #include <veamy/models/dof/DOF.h>

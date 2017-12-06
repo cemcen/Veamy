@@ -7,6 +7,8 @@
 #include <algorithm>
 #include "Pair.h"
 #include <iomanip>
+#include <regex>
+#include <string>
 
 namespace utilities{
     template <typename T>
@@ -37,7 +39,9 @@ namespace utilities{
     extern Pair<double> normalize(Pair<double> vector);
     extern double radian(double angle);
     extern double degrees(double angle);
-    extern std::vector<std::string> split(std::string s, char d);
+    extern std::vector<std::string> split(std::string s, const std::regex regex);
+    extern std::vector<std::string> splitBySpaces(std::string s);
+    extern std::ifstream openFile(std::string fileName);
 }
 
 #endif 

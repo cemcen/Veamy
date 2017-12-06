@@ -145,11 +145,11 @@ template<typename Derived> class SparseMatrixBase
 #endif // not EIGEN_PARSED_BY_DOXYGEN
 
 #define EIGEN_CURRENT_STORAGE_BASE_CLASS Eigen::SparseMatrixBase
-#   include "../plugins/CommonCwiseUnaryOps.h"
-#   include "../plugins/CommonCwiseBinaryOps.h"
-#   include "../plugins/MatrixCwiseUnaryOps.h"
-#   include "../plugins/MatrixCwiseBinaryOps.h"
-#   include "../plugins/BlockMethods.h"
+#   include "veamy/lib/Eigen/src/plugins/CommonCwiseUnaryOps.h"
+#   include "veamy/lib/Eigen/src/plugins/CommonCwiseBinaryOps.h"
+#   include "veamy/lib/Eigen/src/plugins/MatrixCwiseUnaryOps.h"
+#   include "veamy/lib/Eigen/src/plugins/MatrixCwiseBinaryOps.h"
+#   include "veamy/lib/Eigen/src/plugins/BlockMethods.h"
 #   ifdef EIGEN_SPARSEMATRIXBASE_PLUGIN
 #     include EIGEN_SPARSEMATRIXBASE_PLUGIN
 #   endif

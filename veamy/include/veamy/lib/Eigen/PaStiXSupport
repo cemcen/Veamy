@@ -3,7 +3,7 @@
 
 #include "SparseCore"
 
-#include "src/Core/util/DisableStupidWarnings.h"
+#include "veamy/lib/Eigen/src/Core/util/DisableStupidWarnings.h"
 
 #include <complex.h>
 extern "C" {
@@ -35,12 +35,12 @@ extern "C" {
   *
   */
 
-#include "src/misc/Solve.h"
-#include "src/misc/SparseSolve.h"
+#include "veamy/lib/Eigen/src/misc/Solve.h"
+#include "veamy/lib/Eigen/src/misc/SparseSolve.h"
 
-#include "src/PaStiXSupport/PaStiXSupport.h"
+#include "veamy/lib/Eigen/src/PaStiXSupport/PaStiXSupport.h"
 
 
-#include "src/Core/util/ReenableStupidWarnings.h"
+#include "veamy/lib/Eigen/src/Core/util/ReenableStupidWarnings.h"
 
 #endif // EIGEN_PASTIXSUPPORT_MODULE_H

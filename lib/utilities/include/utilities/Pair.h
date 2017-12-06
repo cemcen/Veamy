@@ -1,7 +1,6 @@
 #ifndef UTILITIES_PAIR_H
 #define UTILITIES_PAIR_H
 
-
 template <typename T>
 class Pair {
 public:
@@ -14,8 +13,9 @@ public:
     bool operator==(const Pair& other) const;
     bool operator<(const Pair& other) const;
     T dot(Pair other);
-    Pair<T> operator*(const double other);
+    Pair<T> operator*(double other);
     Pair<T> operator+(const Pair& other) const;
+    Pair<T> operator-(const Pair& other) const;
 };
 
 template <typename T>
@@ -60,6 +60,11 @@ bool Pair<T>::operator<(const Pair &other) const {
     }
 
     return this->first<other.first;
+}
+
+template <typename T>
+Pair<T> Pair<T>::operator-(const Pair &other) const {
+    return Pair<T>(this->first - other.first, this->second - other.second);
 }
 
 #endif

@@ -19,7 +19,7 @@
 
 #else
 
-#include "src/StlSupport/StdList.h"
+#include "veamy/lib/Eigen/src/StlSupport/StdList.h"
 
 #endif
 

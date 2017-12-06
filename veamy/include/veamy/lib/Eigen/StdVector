@@ -20,7 +20,7 @@
 
 #else
 
-#include "src/StlSupport/StdVector.h"
+#include "veamy/lib/Eigen/src/StlSupport/StdVector.h"
 
 #endif
 

@@ -3,18 +3,18 @@
 
 ConstraintsContainer::ConstraintsContainer() {}
 
-void ConstraintsContainer::addConstraints(NaturalConstraints c, PolygonalMesh mesh) {
-    if(!areConsistent(c, this->essential, mesh)) {
-        throw std::invalid_argument("Natural and essential boundary conditions can not intersect");
-    }
+void ConstraintsContainer::addConstraints(NaturalConstraints c, UniqueList<Point> points) {
+    //if(!areConsistent(c, this->essential, points)) {
+    //    throw std::invalid_argument("Natural and essential boundary conditions can not intersect");
+    //}
 
     this->natural = c;
 }
 
-void ConstraintsContainer::addConstraints(EssentialConstraints c, PolygonalMesh mesh) {
-    if(!areConsistent(this->natural, c, mesh)) {
-        throw std::invalid_argument("Natural and essential boundary conditions can not intersect");
-    }
+void ConstraintsContainer::addConstraints(EssentialConstraints c, UniqueList<Point> points) {
+    //if(!areConsistent(this->natural, c, points)) {
+      //  throw std::invalid_argument("Natural and essential boundary conditions can not intersect");
+    //}
 
     this->essential = c;
 }
@@ -33,7 +33,7 @@ NaturalConstraints ConstraintsContainer::getNaturalConstraints() {
     return natural;
 }
 
-bool ConstraintsContainer::areConsistent(NaturalConstraints n, EssentialConstraints e, PolygonalMesh mesh) {
+bool ConstraintsContainer::areConsistent(NaturalConstraints n, EssentialConstraints e, UniqueList<Point> points) {
     Point inter;
     std::vector<IndexSegment> naturalSegments;
     std::transform(n.getConstrainedSegments().begin(), n.getConstrainedSegments().end(), std::back_inserter(naturalSegments), map_utils::GetKeys());
@@ -43,7 +43,7 @@ bool ConstraintsContainer::areConsistent(NaturalConstraints n, EssentialConstrai
 
     for (int i = 0; i < naturalSegments.size(); ++i) {
         for (int j = 0; j < essentialSegments.size(); ++j) {
-            if(naturalSegments[i].intersection(mesh.getPoints().getList(),essentialSegments[j],inter)){
+            if(naturalSegments[i].intersection(points.getList(),essentialSegments[j],inter)){
                 return false;
             }
         }

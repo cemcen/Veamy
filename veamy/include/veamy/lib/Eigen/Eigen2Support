@@ -24,7 +24,7 @@
 
 #endif // EIGEN_NO_EIGEN2_DEPRECATED_WARNING
 
-#include "src/Core/util/DisableStupidWarnings.h"
+#include "veamy/lib/Eigen/src/Core/util/DisableStupidWarnings.h"
 
 /** \ingroup Support_modules
   * \defgroup Eigen2Support_Module Eigen2 support module
@@ -40,20 +40,20 @@
   *
   */
 
-#include "src/Eigen2Support/Macros.h"
-#include "src/Eigen2Support/Memory.h"
-#include "src/Eigen2Support/Meta.h"
-#include "src/Eigen2Support/Lazy.h"
-#include "src/Eigen2Support/Cwise.h"
-#include "src/Eigen2Support/CwiseOperators.h"
-#include "src/Eigen2Support/TriangularSolver.h"
-#include "src/Eigen2Support/Block.h"
-#include "src/Eigen2Support/VectorBlock.h"
-#include "src/Eigen2Support/Minor.h"
-#include "src/Eigen2Support/MathFunctions.h"
+#include "veamy/lib/Eigen/src/Eigen2Support/Macros.h"
+#include "veamy/lib/Eigen/src/Eigen2Support/Memory.h"
+#include "veamy/lib/Eigen/src/Eigen2Support/Meta.h"
+#include "veamy/lib/Eigen/src/Eigen2Support/Lazy.h"
+#include "veamy/lib/Eigen/src/Eigen2Support/Cwise.h"
+#include "veamy/lib/Eigen/src/Eigen2Support/CwiseOperators.h"
+#include "veamy/lib/Eigen/src/Eigen2Support/TriangularSolver.h"
+#include "veamy/lib/Eigen/src/Eigen2Support/Block.h"
+#include "veamy/lib/Eigen/src/Eigen2Support/VectorBlock.h"
+#include "veamy/lib/Eigen/src/Eigen2Support/Minor.h"
+#include "veamy/lib/Eigen/src/Eigen2Support/MathFunctions.h"
 
 
-#include "src/Core/util/ReenableStupidWarnings.h"
+#include "veamy/lib/Eigen/src/Core/util/ReenableStupidWarnings.h"
 
 // Eigen2 used to include iostream
 #include<iostream>

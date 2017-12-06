@@ -40,7 +40,7 @@ LDL License:
     and a notice that the code was modified is included.
  */
 
-#include "../Core/util/NonMPL2.h"
+#include "veamy/lib/Eigen/src/Core/util/NonMPL2.h"
 
 #ifndef EIGEN_SIMPLICIAL_CHOLESKY_IMPL_H
 #define EIGEN_SIMPLICIAL_CHOLESKY_IMPL_H

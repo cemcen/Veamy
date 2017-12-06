@@ -20,7 +20,7 @@
 
 #else
 
-#include "src/StlSupport/StdDeque.h"
+#include "veamy/lib/Eigen/src/StlSupport/StdDeque.h"
 
 #endif
 

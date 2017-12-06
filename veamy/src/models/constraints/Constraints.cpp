@@ -1,4 +1,5 @@
 #include <veamy/models/constraints/Constraints.h>
+#include <delynoi/models/basic/Angle.h>
 
 void Constraints::addConstraint(SegmentConstraint c, std::vector<Point> p) {
     UniqueList<IndexSegment> segments = c.getSegments();
@@ -68,38 +69,19 @@ void Constraints::addConstrainedDOF(std::vector <Point> points, int DOF_index, D
                                     int dof_point) {
     bool added1 = addConstrainedDOFBySegment(points, DOF_index, axis, pair.s1);
     bool added2 = addConstrainedDOFBySegment(points, DOF_index, axis, pair.s2);
-    bool added3 = addConstrainedDOFByPoint(DOF_index, axis, points[dof_point]);
+
+    if(!added1 && !added2){
+        checkIfContainedInConstraint(points[dof_point], points, DOF_index, axis);
+    }
+
+    addConstrainedDOFByPoint(DOF_index, axis, points[dof_point]);
 }
 
 bool Constraints::addConstrainedDOFBySegment(std::vector<Point> points, int DOF_index, DOF::Axis axis, IndexSegment s) {
     isConstrainedInfo info = isConstrainedBySegment(points, s);
 
     if(info.isConstrained){
-        std::vector<SegmentConstraint> constraints = segment_map[info.container];
-
-        for (SegmentConstraint constraint: constraints) {
-            Constraint::Direction direction = constraint.getDirection();
-
-            bool insert;
-
-            switch(direction){
-                case(Constraint::Direction::Vertical):
-                    insert = axis==DOF::Axis::y;
-                    break;
-                case (Constraint::Direction::Horizontal):
-                    insert = axis==DOF::Axis::x;
-                    break;
-                default:
-                    insert = true;
-            }
-
-            if(insert){
-                constrained_dofs.push_back(DOF_index);
-                segment_constraints_map[DOF_index] = constraint;
-                return true;
-            }
-        }
-        return false;
+        constrainDOFBySegment(info.container, DOF_index, axis);
     }
     return false;
 }
@@ -137,6 +119,18 @@ bool Constraints::addConstrainedDOFByPoint(int DOF_index, DOF::Axis axis, Point 
     return false;
 }
 
+bool Constraints::checkIfContainedInConstraint(Point p, std::vector<Point> points, int DOF_index, DOF::Axis axis) {
+    for(auto seg: constrained_segments){
+        std::vector<IndexSegment> segs = seg.second;
+
+        for (IndexSegment s: segs){
+            if(s.contains(points, p)){
+                constrainDOFBySegment(s, DOF_index, axis);
+            }
+        }
+    }
+}
+
 std::unordered_map<IndexSegment, std::vector<SegmentConstraint>, SegmentHasher> Constraints::getConstrainedSegments() {
     return this->segment_map;
 }
@@ -156,3 +150,30 @@ Constraint Constraints::getAssociatedConstraint(int dof_index) {
     return Constraint();
 }
 
+bool Constraints::constrainDOFBySegment(IndexSegment segment, int DOF_index, DOF::Axis axis) {
+    std::vector<SegmentConstraint> constraints = segment_map[segment];
+
+    for (SegmentConstraint constraint: constraints) {
+        Constraint::Direction direction = constraint.getDirection();
+
+        bool insert;
+
+        switch(direction){
+            case(Constraint::Direction::Vertical):
+                insert = axis==DOF::Axis::y;
+                break;
+            case (Constraint::Direction::Horizontal):
+                insert = axis==DOF::Axis::x;
+                break;
+            default:
+                insert = true;
+        }
+
+        if(insert){
+            constrained_dofs.push_back(DOF_index);
+            segment_constraints_map[DOF_index] = constraint;
+            return true;
+        }
+    }
+    return false;
+}

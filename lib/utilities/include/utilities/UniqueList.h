@@ -4,6 +4,7 @@
 #include <vector>
 #include <algorithm>
 #include <map>
+#include <utilities/utilities.h>
 
 template <class T>
 class UniqueList {

@@ -1,5 +1,6 @@
 #include <veamy/config/VeamyConfig.h>
-#include <mesher/config/MesherConfig.h>
+#include <delynoi/config/DelynoiConfig.h>
+
 
 VeamyConfig* VeamyConfig::s_instance = nullptr;
 
@@ -15,7 +16,7 @@ void VeamyConfig::setTolerance(double t) {
 
 void VeamyConfig::setPrecision(Precision::precision p) {
     this->precision = p;
-    MesherConfig::instance()->setPrecision(this->precision);
+    DelynoiConfig::instance()->setPrecision(this->precision);
 }
 
 void VeamyConfig::setPrecision(int p) {

@@ -3,7 +3,7 @@
 
 #include "SparseCore"
 
-#include "src/Core/util/DisableStupidWarnings.h"
+#include "veamy/lib/Eigen/src/Core/util/DisableStupidWarnings.h"
 
 extern "C" {
   #include <cholmod.h>
@@ -33,13 +33,13 @@ extern "C" {
   *
   */
 
-#include "src/misc/Solve.h"
-#include "src/misc/SparseSolve.h"
+#include "veamy/lib/Eigen/src/misc/Solve.h"
+#include "veamy/lib/Eigen/src/misc/SparseSolve.h"
 
-#include "src/CholmodSupport/CholmodSupport.h"
+#include "veamy/lib/Eigen/src/CholmodSupport/CholmodSupport.h"
 
 
-#include "src/Core/util/ReenableStupidWarnings.h"
+#include "veamy/lib/Eigen/src/Core/util/ReenableStupidWarnings.h"
 
 #endif // EIGEN_CHOLMODSUPPORT_MODULE_H
 

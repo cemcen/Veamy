@@ -2,7 +2,7 @@
 #define VEAMY_DOF_H
 
 #include <utilities/Pair.h>
-#include <mesher/models/polygon/Polygon.h>
+#include <delynoi/models/polygon/Polygon.h>
 
 class DOF {
 public:

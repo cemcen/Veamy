@@ -4,7 +4,7 @@
 #include "SparseCore"
 #include "OrderingMethods"
 
-#include "src/Core/util/DisableStupidWarnings.h"
+#include "veamy/lib/Eigen/src/Core/util/DisableStupidWarnings.h"
 
 /** 
   * \defgroup IterativeLinearSolvers_Module IterativeLinearSolvers module
@@ -26,15 +26,15 @@
   * \endcode
   */
 
-#include "src/misc/Solve.h"
-#include "src/misc/SparseSolve.h"
+#include "veamy/lib/Eigen/src/misc/Solve.h"
+#include "veamy/lib/Eigen/src/misc/SparseSolve.h"
 
-#include "src/IterativeLinearSolvers/IterativeSolverBase.h"
-#include "src/IterativeLinearSolvers/BasicPreconditioners.h"
-#include "src/IterativeLinearSolvers/ConjugateGradient.h"
-#include "src/IterativeLinearSolvers/BiCGSTAB.h"
-#include "src/IterativeLinearSolvers/IncompleteLUT.h"
+#include "veamy/lib/Eigen/src/IterativeLinearSolvers/IterativeSolverBase.h"
+#include "veamy/lib/Eigen/src/IterativeLinearSolvers/BasicPreconditioners.h"
+#include "veamy/lib/Eigen/src/IterativeLinearSolvers/ConjugateGradient.h"
+#include "veamy/lib/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h"
+#include "veamy/lib/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h"
 
-#include "src/Core/util/ReenableStupidWarnings.h"
+#include "veamy/lib/Eigen/src/Core/util/ReenableStupidWarnings.h"
 
 #endif // EIGEN_ITERATIVELINEARSOLVERS_MODULE_H
