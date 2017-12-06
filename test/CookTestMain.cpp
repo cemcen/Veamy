@@ -20,6 +20,7 @@ int main(){
     // from this file. In this case, the default precision, which is 6 digits, will be used.   
     VeamyConfig::instance()->setPrecision(Precision::precision::mid);    
     
+
     // DEFINING PATH FOR THE OUTPUT FILES:
     // If the path for the output files is not given, they are written to /home directory by default.
     // Otherwise, include the path. For instance, for /home/user/Documents/Veamy/output.txt , the path
