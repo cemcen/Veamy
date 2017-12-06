@@ -1,9 +1,11 @@
-#include <mesher/voronoi/TriangleMeshGenerator.h>
+#include <delynoi/voronoi/TriangleVoronoiGenerator.h>
 #include <veamy/Veamer.h>
 #include <veamy/models/constraints/values/Function.h>
-#include <mesher/models/generator/functions.h>
+#include <delynoi/models/generator/functions/functions.h>
 #include <utilities/utilities.h>
-#include <veamy/physics/MaterialPlaneStrain.h>
+#include <veamy/config/VeamyConfig.h>
+#include <veamy/physics/materials/MaterialPlaneStrain.h>
+
 
 double uXPatch(double x, double y){
     return x;
@@ -46,8 +48,8 @@ int main(){
     std::cout << "+ Generating polygonal mesh ... ";
     rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 24, 12);
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
-    TriangleMeshGenerator meshGenerator = TriangleMeshGenerator (seeds, rectangle4x8);
-    PolygonalMesh mesh = meshGenerator.getMesh();
+    TriangleVoronoiGenerator meshGenerator (seeds, rectangle4x8);
+    Mesh<Polygon> mesh = meshGenerator.getMesh();
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing mesh to a file ... ";
@@ -84,12 +86,12 @@ int main(){
     essential.addConstraint(topY, mesh.getPoints());
 
     ConstraintsContainer container;
-    container.addConstraints(essential, mesh);
+    container.addConstraints(essential, mesh.getPoints());
     std::cout << "done" << std::endl;
 
     std::cout << "+ Defining linear elastic material ... ";
     Material* material = new MaterialPlaneStrain (1e7, 0.3);
-    ProblemConditions conditions(container, material);
+    Conditions conditions(container, material);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Preparing the simulation ... ";

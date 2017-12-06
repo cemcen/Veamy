@@ -1,9 +1,9 @@
 #include <veamy/models/constraints/Constraint.h>
 #include <veamy/models/constraints/values/Constant.h>
 #include <veamy/Veamer.h>
-#include <mesher/models/Region.h>
-#include <mesher/models/generator/functions.h>
-#include <mesher/voronoi/TriangleMeshGenerator.h>
+#include <delynoi/models/Region.h>
+#include <delynoi/models/generator/functions/functions.h>
+#include <delynoi/voronoi/TriangleVoronoiGenerator.h>
 #include <veamy/models/constraints/values/Function.h>
 #include <chrono>
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
@@ -42,8 +42,8 @@ int main(){
     rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 24, 12);
 
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
-    TriangleMeshGenerator meshGenerator = TriangleMeshGenerator (seeds, rectangle4x8);
-    PolygonalMesh mesh = meshGenerator.getMesh();
+    TriangleVoronoiGenerator meshGenerator (seeds, rectangle4x8);
+    Mesh<Polygon> mesh = meshGenerator.getMesh();
     mesh.printInFile("mesh24x12.txt");
 
     Veamer v;
@@ -68,11 +68,11 @@ int main(){
     natural.addConstraint(const3, mesh.getPoints());
 
     ConstraintsContainer container;
-    container.addConstraints(essential, mesh);
-    container.addConstraints(natural, mesh);
+    container.addConstraints(essential, mesh.getPoints());
+    container.addConstraints(natural, mesh.getPoints());
 
     Material* material = new MaterialPlaneStrain(1e7, 0.3);
-    ProblemConditions conditions(container, material);
+    Conditions conditions(container, material);
 
     v.initProblem(mesh, conditions);
 

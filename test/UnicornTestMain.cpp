@@ -1,12 +1,13 @@
-#include <mesher/models/basic/Point.h>
-#include <mesher/models/Region.h>
-#include <mesher/models/generator/functions.h>
-#include <mesher/voronoi/TriangleMeshGenerator.h>
+#include <delynoi/models/basic/Point.h>
+#include <delynoi/models/Region.h>
+#include <delynoi/models/generator/functions/functions.h>
+#include <delynoi/voronoi/TriangleVoronoiGenerator.h>
 #include <veamy/Veamer.h>
 #include <veamy/models/constraints/values/Constant.h>
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
 #include <utilities/utilities.h>
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
+#include <veamy/config/VeamyConfig.h>
 
 int main(){
     // Set precision for plotting to output files:    
@@ -52,8 +53,8 @@ int main(){
     std::cout << "+ Generating polygonal mesh ... ";
     unicorn.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constantAlternating()), 20, 25);
     std::vector<Point> seeds = unicorn.getSeedPoints();
-    TriangleMeshGenerator g(seeds, unicorn);
-    PolygonalMesh mesh = g.getMesh();
+    TriangleVoronoiGenerator g(seeds, unicorn);
+    Mesh<Polygon> mesh = g.getMesh();
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing mesh to a file ... ";
@@ -75,13 +76,13 @@ int main(){
     natural.addConstraint(back, mesh.getPoints());
 
     ConstraintsContainer container;
-    container.addConstraints(essential, mesh);
-    container.addConstraints(natural, mesh);
+    container.addConstraints(essential, mesh.getPoints());
+    container.addConstraints(natural, mesh.getPoints());
     std::cout << "done" << std::endl;
 
     std::cout << "+ Defining linear elastic material ... ";
     Material* material = new MaterialPlaneStrain (1e4, 0.25);
-    ProblemConditions conditions(container, material);
+    Conditions conditions(container, material);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Preparing the simulation ... ";

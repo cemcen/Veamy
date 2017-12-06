@@ -1,6 +1,6 @@
 #include <veamy/Veamer.h>
-#include <utilities/utilities.h>
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
+#include <veamy/config/VeamyConfig.h>
 
 int main(){
     // Set precision for plotting to output files:    
@@ -37,7 +37,7 @@ int main(){
 
     std::cout << "+ Preparing the simulation from a PolyMesher mesh and boundary conditions ... ";
     Veamer v;
-    PolygonalMesh mesh = v.initProblemFromFile(polyMesherMeshFileName, material);
+    Mesh<Polygon> mesh = v.initProblemFromFile(polyMesherMeshFileName, material);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing mesh to a file ... ";
