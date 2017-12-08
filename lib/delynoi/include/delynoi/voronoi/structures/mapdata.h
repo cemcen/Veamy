@@ -4,7 +4,9 @@
 #include <functional>
 #include <delynoi/models/basic/IndexSegment.h>
 
-
+/*
+ * Structure used as a key for the EdgeData map (used for the Voronoi diagram generation algorithm)
+ */
 struct Key {
     int first;
     int second;

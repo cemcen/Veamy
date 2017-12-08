@@ -9,31 +9,31 @@ IndexSegment::IndexSegment(const IndexSegment &other) {
 
 IndexSegment::IndexSegment() : Segment<int>(){}
 
-bool IndexSegment::contains(std::vector<Point> &p, Point point) {
+bool IndexSegment::contains(const std::vector<Point> &p, Point point) {
     return Segment::contains(point,p[this->p1],p[this->p2]);
 }
 
-bool IndexSegment::contains(std::vector<Point> p, IndexSegment s) {
+bool IndexSegment::contains(const std::vector<Point>& p, IndexSegment s) {
     return this->contains(p, p[s.getFirst()]) && this->contains(p, p[s.getSecond()]);
 }
 
-Point IndexSegment::middlePoint(std::vector<Point> p) {
+Point IndexSegment::middlePoint(const std::vector<Point>& p) {
     return Point((p[this->p1].getX() + p[this->p2].getX())/2, (p[this->p1].getY() + p[this->p2].getY())/2);
 }
 
-double IndexSegment::cartesianAngle(std::vector<Point> p) {
+double IndexSegment::cartesianAngle(const std::vector<Point>& p) {
     return Segment::cartesianAngle(p[this->p1], p[this->p2]);
 }
 
-bool IndexSegment::intersection(std::vector<Point> points, PointSegment other, Point &inter) {
+bool IndexSegment::intersection(const std::vector<Point>& points, PointSegment other, Point &inter) {
     return Segment::intersects(points[this->p1],points[this->p2],other.getFirst(),other.getSecond(), inter);
 }
 
-bool IndexSegment::intersection(std::vector<Point> points, IndexSegment other, Point &inter) {
+bool IndexSegment::intersection(const std::vector<Point>& points, IndexSegment other, Point &inter) {
     return Segment::intersects(points[this->p1],points[this->p2], points[other.getFirst()], points[other.getSecond()], inter);
 }
 
-void IndexSegment::orderCCW(std::vector<Point> points, Point center) {
+void IndexSegment::orderCCW(const std::vector<Point>& points, Point center) {
     if(!this->isCCW(points, center)){
         int tmp = this->p1;
         this->p1 = this->p2;
@@ -41,7 +41,7 @@ void IndexSegment::orderCCW(std::vector<Point> points, Point center) {
     }
 }
 
-bool IndexSegment::isCCW(std::vector<Point> points, Point center) {
+bool IndexSegment::isCCW(const std::vector<Point>& points, Point center) {
     Point p1 = points[this->p1];
     Point p2 = points[this->p2];
 
@@ -65,25 +65,11 @@ bool IndexSegment::operator<(const IndexSegment &other) const {
     return this->p1<other.p1;
 }
 
-double IndexSegment::length(std::vector<Point>& points) {
+double IndexSegment::length(const std::vector<Point>& points) {
     return Segment::length(points[this->p1], points[this->p2]);
 }
 
-bool IndexSegment::isInCorner(Point p, std::vector<Point> points, int& i) {
-    if(points[this->p1]==p){
-        i = this->p1;
-        return true;
-    }
-
-    if(points[this->p2]==p){
-        i = this->p2;
-        return true;
-    }
-
-    return false;
-}
-
-bool IndexSegment::isContained(PointSegment s, std::vector<Point> p) {
+bool IndexSegment::isContained(PointSegment s, const std::vector<Point>& p) {
     return s.contains(p[this->p1]) && s.contains(p[this->p2]);
 }
 
@@ -91,6 +77,3 @@ IndexSegment IndexSegment::add(int o) {
     return IndexSegment(this->p1 + o, this->p2 + o);
 }
 
-bool IndexSegment::intersectionInfinite(Point p1, Point p2, Point o1, Point o2, Point &inter) {
-    return Segment::intersectionInfinite(p1, p2, o1, o2, inter);
-}

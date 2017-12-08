@@ -20,12 +20,9 @@ double PointSegment::cartesianAngle() {
     return Segment::cartesianAngle(this->p1, this->p2);
 }
 
-bool PointSegment::operator==(const PointSegment other) const {
+bool PointSegment::operator==(const PointSegment& other) const {
     return getFirst()==other.getFirst() && getSecond()==other.getSecond() ||
            getFirst()==other.getSecond() && getSecond()==other.getFirst();
 }
 
-bool PointSegment::intersectionInfinite(Point p1, Point p2, Point &inter) {
-    return Segment::intersectionInfinite(p1,p2,this->p1, this->p2, inter);
-}
 

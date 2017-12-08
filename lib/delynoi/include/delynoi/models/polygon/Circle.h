@@ -8,12 +8,28 @@
 #include <delynoi/utilities/geometryFunctions.h>
 #include <delynoi/utilities/xpolyutilities.h>
 
+/*
+ * Class that models a circle using its center and its radius.
+ */
 class Circle {
 protected:
+    /*
+     * Circle radius
+     */
     double radius;
+    /*
+     * Circle center
+     */
     Point center;
 public:
+    /*
+     * Constructor
+     */
     Circle(double r, Point c);
+
+    /* Generates points that represent the boundary of the circle
+     * @return list of points that model the circle boundary
+     */
     std::vector<Point> discretizeCircle();
 };
 
