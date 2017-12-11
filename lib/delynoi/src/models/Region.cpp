@@ -10,8 +10,6 @@ void Region::mutate(std::vector<Point> &points) {
     Polygon::mutate(points);
 }
 
-Region::~Region() {}
-
 Region::Region() : Polygon(){}
 
 Region::Region(const Polygon &other, std::vector<Point>& points) : Polygon() {

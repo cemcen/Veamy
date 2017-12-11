@@ -19,6 +19,9 @@ struct Key {
     }
 };
 
+/*
+ * Structure that is used to compute the hash value of the Key structure
+ */
 struct KeyHasher {
     std::size_t operator()(const Key &k) const {
         using std::size_t;
@@ -28,6 +31,10 @@ struct KeyHasher {
     }
 };
 
+/*
+ * Structure that is used to compute the hash value of an IndexSegment, so that it can be used as key for
+ * the SegmentMap
+ */
 struct SegmentHasher {
     std::size_t operator()(const IndexSegment &k) const {
         using std::size_t;

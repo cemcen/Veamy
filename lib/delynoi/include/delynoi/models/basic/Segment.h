@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <delynoi/models/basic/Point.h>
-#include <delynoi/utilities/xpolyutilities.h>
+#include <delynoi/utilities/delynoi_utilities.h>
 #include <delynoi/config/DelynoiConfig.h>
 
 /*

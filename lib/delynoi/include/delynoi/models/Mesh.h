@@ -8,35 +8,119 @@
 #include <delynoi/models/neighbourhood/PointMap.h>
 #include <delynoi/models/polygon/Triangle.h>
 
+/*
+ * Template class that represents a mesh, containing any class as element.
+ */
+
 template <typename T>
 class Mesh{
 protected:
+    /*
+     * SegmentMap and PointMap instances representing neighbourhood information
+     */
     SegmentMap* edges;
     PointMap* pointMap;
+
+    /*
+     * List of points fo the mesh (forced to be unique)
+     */
     UniqueList<Point> points;
+
+    /*
+     * List of elements of the mesh
+     */
     std::vector<T> polygons;
 public:
+    /*
+     * Default constructor
+     */
     Mesh();
+
+    /*
+     * Constructor. Creates a mesh from its points (not necessarily unique), elements and neighbourhood maps
+     */
     Mesh(std::vector<Point> &p, std::vector<T> &e, SegmentMap* s, PointMap* pM);
+
+    /*
+     * Constructor. Creates a mesh from its points, elements and neighbourhood maps
+     */
     Mesh(UniqueList<Point> p, std::vector<T>& e, SegmentMap* s, PointMap* pM);
+
+    /*
+     * Copy constructor
+     */
     Mesh(const Mesh& m);
 
+    /* Prints the mesh contents in a file stream
+     * @param file file stream to print the mesh
+     */
     void printInStream(std::ofstream& file);
+
+    /* Print the mesh contents in a file
+     * @param fileName name of the file to print
+     */
     void printInFile(std::string fileName);
+
+    /* Creates the mesh (fill its contents) from a file
+     * @param fileName name of the file to read
+     * @param startIndex Index to start reading the informtion (so to be compatible with both zero and one-indexed
+     * standards)
+     */
     void createFromFile(std::string fileName, int startIndex);
+
+    /* Creates the mesh (fill its contents) from a file
+     * @param ofstream stream from which the mesh will be read
+     * @param startIndex Index to start reading the informtion (so to be compatible with both zero and one-indexed
+     * standards)
+     */
     void createFromStream(std::ifstream &ofstream, int startIndex);
 
+    /*
+     * @return reference list of elements of the mesh
+     */
     std::vector<T>& getPolygons();
+
+    /*
+     * @return list of elements of the mesh
+     */
     std::vector<T> getPolygons() const;
+
+    /* Gets the element at a given index
+     * @param index index to lookup
+     * @return element of the given index
+     */
     T& getPolygon(int index);
 
+    /*
+     * @return segment map of the mesh (neighbourhood by segment information)
+     */
     SegmentMap* getSegments() const;
+
+    /*
+     * @return point map of the mesh (neighbourhood by point information)
+     */
     PointMap* getPointMap() const;
 
+    /*
+     * @return reference to the list of points of the mesh
+     */
     UniqueList<Point>& getPoints();
+
+    /*
+     * @return list of points of the mesh
+     */
     UniqueList<Point> getPoints() const;
 
+    /*
+     * @param i index to lookup
+     * @return point in index i
+     */
     Point getPoint(int i);
+
+    /* Gets all neighbours by segment (incident polygons) of a given segment
+     * @param s segment to lookup
+     * @return all incident polygons to s
+     */
     NeighboursBySegment getNeighbours(IndexSegment s);
 };
 

@@ -1,4 +1,4 @@
-#include <delynoi/utilities/xpolyutilities.h>
+#include <delynoi/utilities/delynoi_utilities.h>
 #include <delynoi/models/polygon/Circle.h>
 #include <delynoi/config/DelynoiConfig.h>
 

@@ -6,30 +6,105 @@
 #include <map>
 #include <utilities/utilities.h>
 
+/*
+ * Class that represents a list of unique elements (hence, elements inside a UniqueList list need to be comparable)
+ */
 template <class T>
 class UniqueList {
 private:
+    /*
+     * List of elements and map to ensure uniqueness
+     */
     std::vector<T> list;
     std::map<T,int> map;
 public:
+    /*
+     * Default constructor
+     */
     UniqueList();
+
+    /* Adds a new element to the tail of the list (if not in the list)
+     * @param item element to add
+     * @return index where the element was inserted (or found if already in the list)
+     */
     int push_back(T& item);
+
+    /* Adds a new element to the tail of the list (without checking uniqueness). Use at your own risk
+     * @param item element to add
+     * @return index where the element was inserted
+     */
     int force_push_back(T& item);
+
+    /*
+     * @return number of elements on the list
+     */
     int size();
+
+    /* Adds a list of elements to the tail of the unique list (checking each one)
+     * @param list elements to add
+     * @return list of the indexes where each element was inserted
+     */
     std::vector<int> push_list(std::vector<T> list);
+
+    /* Adds a unique list of elements to the tail of the unique list (checking each one)
+     * @param list elements to add
+     * @return list of the indexes where each element was inserted
+     */
     std::vector<int> push_list(UniqueList<T> list);
+
+    /*
+     * Deletes the first element of the unique list
+     */
     void pop_front();
 
+    /*
+     * @return vector inside the unique list
+     */
     std::vector<T> getList() const;
+
+    /*
+     * @return reference to the vector inside the unique list
+     */
     std::vector<T>& getList();
 
+    /* Returns the index of an element in the unique list (-1 if not found)
+     * @param elem element to lookup
+     * @return index of elem
+     */
     int indexOf(T elem);
+
+    /* Gets the element at the given index
+     * @param i index to get the element from
+     * @return element at position i
+     */
     T& operator[](int i);
+
+    /* Equality operator (compares memory direction, not content)
+     * @param other
+     * @return if the two lists are equal or not
+     */
     bool operator==(const UniqueList<T>& other);
+
+    /* Checks if an element is in the list
+     * @param elem element to check
+     * @return if the element is in the list or not
+     */
     bool contains(T elem);
+
+    /* Checks if two lists have common elements
+     * @param other list to compare with
+     * @return if there is at least one common element in the two lists
+     */
     bool hasCommonElement(UniqueList<T> other);
 
+    /*
+     * Empties the unique list
+     */
     void clear();
+
+    /* Deletes an element from the list
+     * @param item element to delete
+     */
     void delete_element(T item);
 };
 

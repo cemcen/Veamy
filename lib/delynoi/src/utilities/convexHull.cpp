@@ -1,7 +1,7 @@
 #include <vector>
 #include <delynoi/models/basic/Point.h>
 #include <algorithm>
-#include <delynoi/utilities/xpolyutilities.h>
+#include <delynoi/utilities/delynoi_utilities.h>
 
 namespace convex {
     struct PointComparator{

@@ -1,6 +1,6 @@
 #include <delynoi/models/basic/Point.h>
 #include <delynoi/config/DelynoiConfig.h>
-#include <delynoi/utilities/xpolyutilities.h>
+#include <delynoi/utilities/delynoi_utilities.h>
 #include <delynoi/models/basic/PointSegment.h>
 
 namespace geometry_functions{
