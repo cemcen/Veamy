@@ -11,10 +11,20 @@
 #include "Constraints.h"
 #include <veamy/utilities/SegmentPair.h>
 
-
+/*
+ * Contains the essential (Dirichlet) boundary conditions
+ */
 class EssentialConstraints : public Constraints{
 public:
+    /*
+     * Default constructor
+     */
     EssentialConstraints();
+
+    /* Returns the value of the essential constraints evaluated in each constrained DOF
+     * @param points mesh points
+     * @param dofs list of essentially constrained DOF
+     */
     Eigen::VectorXd getBoundaryValues(std::vector<Point> points, UniqueList<DOF> dofs);
 };
 

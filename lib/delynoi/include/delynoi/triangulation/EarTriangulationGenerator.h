@@ -13,7 +13,7 @@ private:
      * @param pointList list of points of the polygon
      * @return a triangle (an ear of the polygon)
      */
-    Triangle getEar(const std::vector<Point>& points, std::vector<int>& pointList);
+    Triangle getEar(const std::vector<Point>& points,  std::vector<int>& pointList);
 public:
     /* Triangulates a polygon.
     * @param p polygon to triangulate

@@ -6,9 +6,7 @@ VeamyTriangle::VeamyTriangle() {
 
 VeamyTriangle::VeamyTriangle(Triangle t) : Triangle(t){}
 
-VeamyTriangle::VeamyTriangle(Polygon p) {
-
-}
+VeamyTriangle::VeamyTriangle(Polygon p) {}
 
 VeamyTriangle::VeamyTriangle(int p1, int p2, int p3) {
     this->points.push_back(p1);
