@@ -3,6 +3,9 @@
 
 #include <delynoi/models/basic/IndexSegment.h>
 
+/*
+ * Structure that contains a pair of segments, used as a commodity instead of having to pass both around
+ */
 struct SegmentPair{
     IndexSegment s1;
     IndexSegment s2;

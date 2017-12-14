@@ -31,7 +31,7 @@ public:
     Mesh<Polygon> initProblemFromFile(std::string fileName, Material* material);
     Mesh<Polygon> initProblemFromFile(std::string fileName, Material* material, BodyForce *force);
     void initProblem(const Mesh<Polygon>& m, Conditions conditions);
-    void createAndAssemble(Eigen::MatrixXd& KGlobal, Eigen::VectorXd& fGlobal);
+    void assemble(Eigen::MatrixXd& KGlobal, Eigen::VectorXd& fGlobal);
 
     double computeErrorNorm(NormCalculator<Polygon>* calculator, Mesh<Polygon> mesh);
 };

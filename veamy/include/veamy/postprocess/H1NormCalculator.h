@@ -9,16 +9,34 @@
 #include <veamy/postprocess/computables/StrainStressComputable.h>
 #include <veamy/postprocess/analytic/DisplacementValue.h>
 
+/*
+ * Computes the H1 norm
+ */
 template <typename T>
 class H1NormCalculator : public NormCalculator<T> {
 private:
+    /*
+     * Analytical stress, strain and displacement values
+     */
     StressValue* stressValue;
     StrainValue* strainValue;
     DisplacementValue* value;
 public:
+    /*
+     * Constructor
+     */
     H1NormCalculator(StrainValue *strain, StressValue *stress, DisplacementValue* value, Eigen::VectorXd u, DOFS d,
                          std::vector<Point> points);
+
+    /* Sets the calculators for this norm
+     * @param integrator Calculator to use
+     * @param info additional required information
+     */
     void setCalculator(FeamyIntegrator<T>* integrator, FeamyAdditionalInfo info);
+
+    /* Sets the calculators for this norm
+     * @param integrator Calculator to use
+     */
     void setCalculator(VeamyIntegrator<T>* integrator);
 };
 

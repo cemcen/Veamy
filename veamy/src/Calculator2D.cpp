@@ -61,7 +61,7 @@ Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
     K = Eigen::MatrixXd::Zero(n,n);
     f = Eigen::VectorXd::Zero(n);
 
-    createAndAssemble(K, f);
+    assemble(K, f);
 
     //Apply constrained_points
     EssentialConstraints essential = this->conditions.constraints.getEssentialConstraints();
@@ -85,17 +85,6 @@ Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
     leave ldlt as it has the better trade off between speed and accuracy.*/
     //Eigen::VectorXd x = K.fullPivHouseholderQr().solve(f);
     Eigen::VectorXd x = K.ldlt().solve(f);
-
-    // Deform mesh
-    for (int k = 0; k < x.rows(); k = k + 2) {
-        int point_index = DOFs.get(k).pointIndex();
-        double def_x = x[k];
-        double def_y = x[k+1];
-
-        //mesh.deformPoint(point_index, def_x, def_y);
-    }
-
-    //mesh.update();
 
     return x;
 }

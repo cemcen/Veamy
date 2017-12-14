@@ -4,6 +4,9 @@
 #include <utilities/Trio.h>
 #include <utilities/Pair.h>
 
+/*
+ * Definition of the different function pointers used
+ */
 typedef double(*func)(double, double);
 typedef Trio<double>(*func_trio)(double, double);
 typedef Pair<double>(*func_pair)(double, double);

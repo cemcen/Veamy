@@ -89,7 +89,7 @@ void Veamer::initProblem(const Mesh<Polygon>& m, Conditions conditions) {
     }
 }
 
-void Veamer::createAndAssemble(Eigen::MatrixXd &KGlobal, Eigen::VectorXd &fGlobal) {
+void Veamer::assemble(Eigen::MatrixXd &KGlobal, Eigen::VectorXd &fGlobal) {
     for(int i=0;i<elements.size();i++){
         elements[i].computeK(DOFs, this->points, conditions);
         elements[i].computeF(DOFs, this->points, conditions);

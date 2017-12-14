@@ -6,10 +6,24 @@
 #include <veamy/models/dof/DOFS.h>
 #include "DisplacementCalculator.h"
 
+/*
+ * Class that models the computation of the approximated displacement for norm computation for VEM. It is important to note
+ * that, as VEM does not use shape functions, the norms use the nodal values directly, so this class is simple
+ */
 template <typename T>
 class VeamyDisplacementCalculator : public DisplacementCalculator<T>{
 public:
+    /*
+     * Constructor
+     */
     VeamyDisplacementCalculator(DOFS d, Eigen::VectorXd u);
+
+    /* Computes the approximate displacement for a given point
+     * @param x y coordinates of the point
+     * @param index index of the point (if part of the mesh)
+     * @param container element that contains the point
+     * @return approximated displacement
+     */
     Pair<double> getDisplacement(double x, double y, int index, T container);
 };
 
