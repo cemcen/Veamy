@@ -7,18 +7,40 @@
 #include <veamy/geometry/VeamyTriangle.h>
 #include "IntegrableFunction.h"
 
+/*
+ * Represents the value inside the elemental load vector (that needs to be integrated) for a given element
+ */
 class BoundaryVectorIntegrable : public IntegrableFunction<Eigen::VectorXd>{
 private:
+    /*
+     * Shape functions of the element
+     */
     ShapeFunctions* N;
+
+    /*
+     * Constraint of the element (load that is imposed)
+     */
     Constraint c;
+
+    /*
+     * Indexes of the vertices of the element
+     */
     std::vector<int> indexes;
 public:
+    /*
+     * Constructor
+     */
     BoundaryVectorIntegrable(Constraint c, ShapeFunctions* N, std::vector<int> indexes){
         this->N = N;
         this->c = c;
         this->indexes = indexes;
     }
 
+    /*
+     * Computes the function inside the elemental load vector (that will be integrated)
+     * @param p point where the function will be evaluated
+     * @return value of the load vector function
+     */
     Eigen::VectorXd apply(Point p){
         std::vector<double> Ni = this->N->evaluateShapeFunctionCartesian(p);
         Eigen::MatrixXd N;

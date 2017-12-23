@@ -8,8 +8,14 @@
 #include <veamy/geometry/VeamyTriangle.h>
 #include <feamy/integration/integrables/StiffnessMatrixIntegrable.h>
 
+/*
+ * Represents a linear triangular element
+ */
 class Tri3Element : public FeamyElement{
 public:
+    /*
+     * Constructor
+     */
     Tri3Element(Conditions& conditions, Triangle t, UniqueList<Point>& points, DOFS& out);
 };
 

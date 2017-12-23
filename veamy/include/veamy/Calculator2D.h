@@ -61,8 +61,9 @@ public:
      */
     Eigen::VectorXd simulate(Mesh<T> &mesh);
 
-    /*
-     *
+    /* Writes the computed nodal displacements to a text file
+     * @param fileName name of the file to write the displacements to
+     * @param u computed displacements
      */
     void writeDisplacements(std::string fileName, Eigen::VectorXd u);
 };
