@@ -5,7 +5,7 @@
 #include <veamy/models/constraints/values/Function.h>
 #include <veamy/models/constraints/NaturalConstraints.h>
 #include <veamy/models/constraints/ConstraintsContainer.h>
-#include <veamy/physics/Conditions.h>
+#include <veamy/physics/conditions/Conditions.h>
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
 #include <feamy/Feamer.h>
 #include <feamy/models/constructor/Tri3Constructor.h>

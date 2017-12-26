@@ -3,7 +3,10 @@
 #include <veamy/models/constraints/values/Constant.h>
 
 
-Veamer::Veamer() {}
+Veamer::Veamer(ProblemDiscretization *problem) {
+    this->problem = problem;
+    this->DOFs = problem->createDOFS();
+}
 
 Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName, Material* material) {
     return initProblemFromFile(fileName, material, new None());
@@ -91,9 +94,9 @@ void Veamer::initProblem(const Mesh<Polygon>& m, Conditions conditions) {
 
 void Veamer::assemble(Eigen::MatrixXd &KGlobal, Eigen::VectorXd &fGlobal) {
     for(int i=0;i<elements.size();i++){
-        elements[i].computeK(DOFs, this->points, conditions);
-        elements[i].computeF(DOFs, this->points, conditions);
-        elements[i].assemble(DOFs, KGlobal, fGlobal);
+        elements[i]->computeK(DOFs, this->points, conditions);
+        elements[i]->computeF(DOFs, this->points, conditions);
+        elements[i]->assemble(DOFs, KGlobal, fGlobal);
     }
 }
 

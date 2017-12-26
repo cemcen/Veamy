@@ -2,8 +2,9 @@
 #define VEAMY_CALCULATOR2D_H
 
 #include <utilities/UniqueList.h>
-#include <veamy/physics/Conditions.h>
+#include <veamy/physics/conditions/Conditions.h>
 #include <veamy/models/dof/DOFS.h>
+#include <veamy/problems/ProblemDiscretization.h>
 
 /*
  * Abstract class that encapsulates all common behaviour for linear elasticity calculations, no matter the method
@@ -12,6 +13,16 @@
 template <typename T>
 class Calculator2D {
 protected:
+    /*
+     * Elements of the system
+     */
+    std::vector<Element*> elements;
+
+    /*
+     * Problem to solve
+     */
+    ProblemDiscretization* problem;
+
     /*
      * Conditions of the linear elasticity problem
      */
@@ -25,7 +36,7 @@ public:
     /*
      * Degrees of freedom of the system
      */
-    DOFS DOFs;
+    DOFS* DOFs;
 
     /* Gets the degrees of freedom indexes related to a point
      * @param point_index point to lookup

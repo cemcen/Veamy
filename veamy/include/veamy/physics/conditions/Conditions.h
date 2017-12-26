@@ -7,10 +7,11 @@
 #include <veamy/physics/bodyforces/None.h>
 
 /*
- * Structure that contains the conditions of a linear elasticity problem, including the boundary conditions,
+ * Class that contains the conditions of a linear elasticity problem, including the boundary conditions,
  * the bodyforce and the material of the domain
  */
-struct Conditions{
+class Conditions{
+public:
     /*
      * Conditions of the linear elasticity problem
      */

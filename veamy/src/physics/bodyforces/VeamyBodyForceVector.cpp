@@ -8,15 +8,22 @@ VeamyBodyForceVector::VeamyBodyForceVector(Polygon p, UniqueList<Point> points) 
 
 Eigen::VectorXd VeamyBodyForceVector::computeForceVector(BodyForce *f) {
     int n = this->polygon.numberOfSides();
-    double integralX = veamy_functions::nodal_quadrature(this->polygon, this->points, f->getX());
-    double integralY = veamy_functions::nodal_quadrature(this->polygon, this->points, f->getY());;
+
+    int dofs = f->numberOfComponents();
+    std::vector<double> integrals;
+    std::vector<FunctionComputable*> components = f->getComponents();
+
+    for (int i = 0; i < dofs; ++i) {
+        integrals.push_back(veamy_functions::nodal_quadrature(this->polygon, this->points, components[i]));
+    }
 
     Eigen::VectorXd result;
-    result = Eigen::VectorXd::Zero(2*n);
+    result = Eigen::VectorXd::Zero(n*dofs);
 
     for (int j = 0; j < n; ++j) {
-        result(2*j) = integralX;
-        result(2*j+1) = integralY;
+        for (int i = 0; i < dofs; ++i) {
+            result(j*dofs + i) = integrals[i];
+        }
     }
 
     return result;

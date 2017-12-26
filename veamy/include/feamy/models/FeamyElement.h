@@ -2,7 +2,7 @@
 #define VEAMY_FEMELEMENT_H
 
 #include <delynoi/models/polygon/Triangle.h>
-#include <veamy/physics/Conditions.h>
+#include <veamy/physics/conditions/Conditions.h>
 #include <veamy/models/Element.h>
 #include <feamy/models/shapefunctions/ShapeFunctions.h>
 #include <vector>

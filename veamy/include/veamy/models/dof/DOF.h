@@ -6,9 +6,10 @@
 
 class DOF {
 public:
-    enum Axis {x, y};
+    enum Axis {x, y, scalar};
 
     DOF(int index, int point_index, DOF::Axis a);
+    DOF(int index, int point_index);
     int globalIndex() const;
     int pointIndex();
     bool operator==(const DOF& other) const;

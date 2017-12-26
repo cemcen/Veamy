@@ -86,7 +86,7 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Preparing the simulation ... ";
-    Veamer v;
+    Veamer v(nullptr);
     v.initProblem(mesh, conditions);
     std::cout << "done" << std::endl;
 

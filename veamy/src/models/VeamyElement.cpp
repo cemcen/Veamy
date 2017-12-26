@@ -1,4 +1,4 @@
-#include <veamy/models/VeamyElement.h>
+#include <veamy/models/elements/VeamyElement.h>
 #include <veamy/physics/traction/VeamyTractionVector.h>
 #include <veamy/config/VeamyConfig.h>
 

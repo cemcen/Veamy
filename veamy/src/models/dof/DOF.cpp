@@ -6,6 +6,12 @@ DOF::DOF(int index, int point_index, DOF::Axis a) {
     this->d = a;
 }
 
+DOF::DOF(int index, int point_index) {
+    this->index = index;
+    this->point_index = point_index;
+    this->d = scalar;
+}
+
 int DOF::globalIndex() const{
     return this->index;
 }

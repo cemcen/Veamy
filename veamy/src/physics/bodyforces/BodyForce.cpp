@@ -1,16 +1,23 @@
 #include <veamy/physics/bodyforces/BodyForce.h>
 
 BodyForce::BodyForce(func fX, func fY) {
-    this->fX = new FunctionComputable(fX);
-    this->fY = new FunctionComputable(fY);
+    this->f.push_back(new FunctionComputable(fX));
+    this->f.push_back(new FunctionComputable(fY));
+
+    this->components = 2;
+}
+
+BodyForce::BodyForce(func f) {
+    this->f.push_back(new FunctionComputable(f));
+    this->components = 1;
 }
 
 BodyForce::BodyForce() {}
 
-FunctionComputable* BodyForce::getX() {
-    return this->fX;
+std::vector<FunctionComputable *> BodyForce::getComponents() {
+    return this->f;
 }
 
-FunctionComputable* BodyForce::getY() {
-    return this->fY;
+int BodyForce::numberOfComponents() {
+    return this->components;
 }

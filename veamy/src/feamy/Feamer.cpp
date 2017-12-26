@@ -1,7 +1,9 @@
 #include <feamy/Feamer.h>
 #include <feamy/postprocess/integrator/FeamyIntegrator.h>
 
-Feamer::Feamer() {}
+Feamer::Feamer(ProblemDiscretization *problem) {
+    this->problem = problem;
+}
 
 void Feamer::initProblem(Mesh<Triangle> m, Conditions conditions, FeamyElementConstructor *constructor) {
     std::vector<Point> meshPoints = m.getPoints().getList();

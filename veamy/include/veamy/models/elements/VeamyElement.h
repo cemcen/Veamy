@@ -10,11 +10,11 @@
 #include <iostream>
 #include <veamy/models/constraints/NaturalConstraints.h>
 #include <veamy/models/constraints/ConstraintsContainer.h>
-#include <veamy/physics/Conditions.h>
+#include <veamy/physics/conditions/Conditions.h>
 #include <veamy/models/Edge.h>
 #include <veamy/physics/materials/Material.h>
 #include <veamy/physics/bodyforces/BodyForceVector.h>
-#include "Element.h"
+#include "veamy/models/Element.h"
 #include <veamy/physics/bodyforces/VeamyBodyForceVector.h>
 #include <veamy/physics/traction/TractionVector.h>
 

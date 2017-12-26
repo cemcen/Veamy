@@ -20,9 +20,9 @@ private:
     std::vector<FeamyElement*> elements;
 public:
     /*
-     * Default constructor
+     * Constructor
      */
-    Feamer();
+    Feamer(ProblemDiscretization *problem);
 
     /* Initializes the Feamer instance
      * @param m geometric conditions of the problem

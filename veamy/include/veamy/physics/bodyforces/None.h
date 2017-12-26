@@ -12,10 +12,7 @@ public:
     /*
      * Constructor. Assigns none functions (just return 0) to each axis function
      */
-    None(){
-        this->fX = new FunctionComputable(&veamy_functions::none_function);
-        this->fY = new FunctionComputable(&veamy_functions::none_function);
-    }
+    None() : BodyForce(&veamy_functions::none_function, &veamy_functions::none_function){}
 };
 
 #endif

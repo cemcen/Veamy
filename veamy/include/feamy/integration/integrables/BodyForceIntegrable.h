@@ -36,23 +36,27 @@ public:
      */
     Eigen::VectorXd apply(Point p){
         int n = this->N->numberOfShapeFunctions();
+        int dofs = f->numberOfComponents();
+
         Eigen::MatrixXd Ne;
-        Ne = Eigen::MatrixXd::Zero(2,2*n);
+        Ne = Eigen::MatrixXd::Zero(dofs,dofs*n);
 
         std::vector<double> Ni = N->evaluateShapeFunction(p);
         for (int i = 0; i < n; ++i) {
-            Ne(0,2*i) = Ni[2*i];
-            Ne(1,2*i+1) = Ni[2*i+1];
+            for (int j = 0; j < dofs; ++j) {
+                Ne(j, dofs*i+j) = Ni[i];
+            }
         }
 
         Eigen::VectorXd b;
-        b = Eigen::VectorXd::Zero(2);
+        b = Eigen::VectorXd::Zero(dofs);
 
         Point real = this->N->evaluateRealPoint(p);
+        std::vector<FunctionComputable*> components = f->getComponents();
 
-
-        b(0) = f->getX()->apply(real.getX(), real.getY(), 0, Polygon());
-        b(1) = f->getY()->apply(real.getX(), real.getY(), 0, Polygon());
+        for (int k = 0; k < dofs; ++k) {
+            b(dofs) = components[k]->apply(real.getX(), real.getY(), 0, Polygon());
+        }
 
         return Ne.transpose()*b;
     }

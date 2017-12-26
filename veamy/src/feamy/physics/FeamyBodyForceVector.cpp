@@ -14,7 +14,7 @@ Eigen::VectorXd FeamyBodyForceVector::computeForceVector(BodyForce *f) {
     IntegrableFunction<Eigen::VectorXd>* function = new BodyForceIntegrable(this->N, f);
     VeamyTriangle veamyTriangle(t);
     Eigen::VectorXd forceVector;
-    forceVector = Eigen::VectorXd::Zero(2*this->N->numberOfShapeFunctions());
+    forceVector = Eigen::VectorXd::Zero(f->numberOfComponents()* this->N->numberOfShapeFunctions());
 
     AreaIntegrator<VeamyTriangle,Eigen::VectorXd>::integrate(forceVector, nGauss, veamyTriangle, points, function);
 

@@ -4,9 +4,9 @@
 #include <delynoi/models/Mesh.h>
 #include <veamy/models/dof/DOFS.h>
 #include <veamy/models/constraints/EssentialConstraints.h>
-#include <veamy/models/VeamyElement.h>
+#include <veamy/models/elements/VeamyElement.h>
 #include <veamy/lib/Eigen/Dense>
-#include <veamy/physics/Conditions.h>
+#include <veamy/physics/conditions/Conditions.h>
 #include <iostream>
 #include "Calculator2D.h"
 #include <utilities/utilities.h>
@@ -30,14 +30,9 @@ struct PolygonHasher {
 class Veamer : public Calculator2D<Polygon> {
 public:
     /*
-     * Elements of the system
+     * Constructor
      */
-    std::vector<VeamyElement> elements;
-
-    /*
-     * Default constructor
-     */
-    Veamer();
+    Veamer(ProblemDiscretization *problem);
 
     /*
      * Initializes the Veamer instance from the information in a text file

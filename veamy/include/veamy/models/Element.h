@@ -3,7 +3,7 @@
 
 #include <veamy/lib/Eigen/Dense>
 #include <veamy/models/dof/DOFS.h>
-#include <veamy/physics/Conditions.h>
+#include <veamy/physics/conditions/Conditions.h>
 #include <veamy/physics/traction/TractionVector.h>
 #include <veamy/physics/bodyforces/BodyForceVector.h>
 
@@ -59,6 +59,8 @@ public:
      */
     void computeF(DOFS d, UniqueList<Point> points, Conditions &conditions, BodyForceVector* bodyForceVector,
                   TractionVector* tractionVector);
+
+    virtual void computeK(DOFS d, UniqueList<Point> points, Conditions &conditions) = 0;
 };
 
 #endif
