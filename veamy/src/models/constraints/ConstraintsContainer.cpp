@@ -11,16 +11,10 @@ void ConstraintsContainer::addConstraints(EssentialConstraints c, UniqueList<Poi
     this->essential = c;
 }
 
-void ConstraintsContainer::addConstrainedDOF(std::vector<Point> points, int DOF_index, DOF::Axis axis, SegmentPair pair,
+void ConstraintsContainer::addConstrainedDOF(std::vector<Point> points, int DOF_index, int axis, SegmentPair pair,
                                              int point_index) {
     natural.addConstrainedDOF(points, DOF_index, axis, pair, point_index);
     essential.addConstrainedDOF(points, DOF_index, axis, pair, point_index);
-}
-
-void
-ConstraintsContainer::addConstrainedDOF(std::vector<Point> points, int DOF_index, SegmentPair pair, int point_index) {
-    natural.addConstrainedDOF(points, DOF_index, pair, point_index);
-    essential.addConstrainedDOF(points, DOF_index, pair, point_index);
 }
 
 EssentialConstraints ConstraintsContainer::getEssentialConstraints() {

@@ -5,13 +5,8 @@
 #include <veamy/config/VeamyConfig.h>
 
 template <typename T>
-Pair<int> Calculator2D<T>::pointToDOFS(int point_index) {
+std::vector<int> Calculator2D<T>::pointToDOFS(int point_index) {
     return this->DOFs.pointToDOFS(point_index);
-}
-
-template <typename T>
-Material *Calculator2D<T>::getMaterial() {
-    return conditions.material;
 }
 
 template <typename T>
@@ -37,7 +32,7 @@ void Calculator2D<T>::writeDisplacements(std::string fileName, Eigen::VectorXd u
     std::vector<std::string> results(this->points.size());
 
     for (int k = 0; k < u.rows(); k = k + dofs) {
-        int point_index = DOFs->get(k).pointIndex();
+        int point_index = DOFs.get(k).pointIndex();
 
         results[point_index] = utilities::toString<int>(point_index);
 
@@ -60,7 +55,7 @@ template <typename T>
 Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
     Eigen::MatrixXd K;
     Eigen::VectorXd f;
-    int n = this->DOFs->size();
+    int n = this->DOFs.size();
 
     K = Eigen::MatrixXd::Zero(n,n);
     f = Eigen::VectorXd::Zero(n);
@@ -71,7 +66,7 @@ Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
     EssentialConstraints essential = this->problem->getConditions()->constraints.getEssentialConstraints();
     std::vector<int> c = essential.getConstrainedDOF();
 
-    Eigen::VectorXd boundary_values = essential.getBoundaryValues(this->points.getList(), this->DOFs->getDOFS());
+    Eigen::VectorXd boundary_values = essential.getBoundaryValues(this->points.getList(), this->DOFs.getDOFS());
 
     for (int j = 0; j < c.size(); ++j) {
         for (int i = 0; i < K.rows(); ++i) {

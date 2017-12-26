@@ -31,13 +31,13 @@ public:
     /*
      * Degrees of freedom of the system
      */
-    DOFS* DOFs;
+    DOFS DOFs;
 
     /* Gets the degrees of freedom indexes related to a point
      * @param point_index point to lookup
-     * @return pair of dofs (x and y) related to the given point
+     * @return dofs related to the given point
      */
-    Pair<int> pointToDOFS(int point_index);
+    std::vector<int> pointToDOFS(int point_index);
 
     /*
      * @return mesh points

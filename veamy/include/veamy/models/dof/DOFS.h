@@ -6,19 +6,21 @@
 #include <veamy/utilities/SegmentPair.h>
 #include <veamy/models/constraints/ConstraintsContainer.h>
 
-template <class T>
 class DOFS {
 protected:
     UniqueList<DOF> list;
     std::unordered_map<int, int> occupied_point_indexes;
+    int n_dofs;
 public:
-    virtual T addDOF(ConstraintsContainer &constraints, std::vector<Point> points, int point_index,
-                     SegmentPair pair) = 0;
+    DOFS(int n_dofs);
+
+    std::vector<int> addDOF(ConstraintsContainer &constraints, std::vector<Point> points, int point_index,
+                     SegmentPair pair);
     UniqueList<DOF> getDOFS();
     int size();
     DOF get(int i);
 
-    virtual T pointToDOFS(int point) = 0;
+    std::vector<int> pointToDOFS(int point);
 };
 
 

@@ -14,20 +14,15 @@
  * Models a single constraint of the system
  */
 class Constraint{
-public:
-    /*
-     * Possible directions of the constraints
-     */
-    enum Direction {Vertical, Horizontal, Total, None};
-private:
+protected:
     /*
      * Value of the constraint
      */
     ConstraintValue* v;
     /*
-     * Direction of this particular constraint
+     * Indexes of the DOFs affected by this constraint
      */
-    Direction direction;
+    std::vector<int> direction;
 public:
     /*
      * Default constructor
@@ -37,11 +32,6 @@ public:
     /*
      * Constructor
      */
-    Constraint(Direction d, ConstraintValue* value);
-
-    /*
-    * Constructor
-    */
     Constraint(ConstraintValue* value);
 
     /* Returns the value of the constraint evaluated at a given point
@@ -53,13 +43,18 @@ public:
     /*
      * @return direction of the constraint
      */
-    Direction getDirection();
+    std::vector<int> getDirection();
 
     /* Checks if a given axis is affected by this constraint
      * @param axis axis to check
      * @return if the axis is affected (1) or not (0)
      */
-    int isAffected(DOF::Axis axis);
+    int isAffected(int axis);
+
+    /*
+     * @param
+     */
+    void
 };
 
 

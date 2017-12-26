@@ -6,19 +6,17 @@
 
 class DOF {
 public:
-    enum Axis {x, y};
-
-    DOF(int index, int point_index, DOF::Axis a);
+    DOF(int index, int point_index, int axis);
     DOF(int index, int point_index);
     int globalIndex() const;
     int pointIndex();
     bool operator==(const DOF& other) const;
     bool operator<(const DOF& other) const;
-    DOF::Axis getAxis();
+    int getAxis();
 protected:
     int index;
     int point_index;
-    DOF::Axis d;
+    int d;
 };
 
 

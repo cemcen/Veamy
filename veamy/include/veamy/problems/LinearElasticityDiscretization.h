@@ -7,9 +7,9 @@
 
 class LinearElasticityDiscretization : public ProblemDiscretization, VectorialProblem{
 public:
-
-
     LinearElasticityConditions* conditions;
+
+    LinearElasticityDiscretization();
 };
 
 #endif

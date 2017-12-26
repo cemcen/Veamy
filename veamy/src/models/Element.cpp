@@ -1,5 +1,4 @@
 #include <veamy/models/Element.h>
-#include <veamy/physics/bodyforces/BodyForceVector.h>
 
 template <typename T>
 void Element<T>::initializeElement(Conditions &conditions, T &p, UniqueList<Point> &points, DOFS &out) {
@@ -9,10 +8,11 @@ void Element<T>::initializeElement(Conditions &conditions, T &p, UniqueList<Poin
     for(int i=0;i<n;i++) {
         SegmentPair pair(IndexSegment(vertex[(i - 1 + n) % n], vertex[i]),
                          IndexSegment(vertex[i], vertex[(i + 1) % n]));
-        Pair<int> indexes = out.addDOF(conditions.constraints, points.getList(), vertex[i], pair);
+        std::vector<int> indexes = out.addDOF(conditions.constraints, points.getList(), vertex[i], pair);
 
-        dofs.push_back(indexes.first);
-        dofs.push_back(indexes.second);
+        for (int j = 0; j < indexes.size(); ++j) {
+            dofs.push_back(indexes[i]);
+        }
     }
 
     this->p = p;

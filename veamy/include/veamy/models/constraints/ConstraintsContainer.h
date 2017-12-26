@@ -48,16 +48,8 @@ public:
      * @param pair Pair of segments containing the DOF
      * @param point_index index of the point related to the DOF
      */
-    void addConstrainedDOF(std::vector<Point> points, int DOF_index, DOF::Axis axis, SegmentPair pair,
+    void addConstrainedDOF(std::vector<Point> points, int DOF_index, int axis, SegmentPair pair,
                                int point_index);
-
-    /* Adds a new DOF to the system, checking if it is constrained
-     * @param points mesh points
-     * @param DOF_index index of the DOF to add
-     * @param pair Pair of segments containing the DOF
-     * @param point_index index of the point related to the DOF
-     */
-    void addConstrainedDOF(std::vector<Point> points, int DOF_index, SegmentPair pair, int point_index);
 
     /*
      * @return essential constraints of the system

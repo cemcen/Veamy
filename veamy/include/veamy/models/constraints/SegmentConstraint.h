@@ -19,7 +19,7 @@ private:
      * @param points mesh points
      * @return IndexSegment version of s
      */
-    IndexSegment fromPointToInt(PointSegment s, std::vector<Point> points);
+    IndexSegment fromPointToInt(const PointSegment& s, const std::vector<Point>& points);
 public:
     /*
      * Default constructor
@@ -29,34 +29,32 @@ public:
     /*
      * Constructor. Constraints one IndexSegment
      */
-    SegmentConstraint(IndexSegment s, Constraint::Direction d, ConstraintValue *value);
+    SegmentConstraint(IndexSegment s, ConstraintValue *value);
 
     /*
      * Constructor. Constraints a set of IndexSegments
      */
-    SegmentConstraint(std::vector<IndexSegment> s, Constraint::Direction d, ConstraintValue *value);
+    SegmentConstraint(std::vector<IndexSegment> s, ConstraintValue *value);
 
     /*
      * Constructor. Constraints a PointSegment (more intuitive to the user)
      */
-    SegmentConstraint(PointSegment s, std::vector<Point> points, Constraint::Direction d, ConstraintValue *value);
+    SegmentConstraint(PointSegment s, std::vector<Point> points, ConstraintValue *value);
 
     /*
      * Constructor. Constraints a PointSegment
      */
-    SegmentConstraint(PointSegment s, UniqueList<Point> points, Constraint::Direction d, ConstraintValue *value);
+    SegmentConstraint(PointSegment s, UniqueList<Point> points, ConstraintValue *value);
 
     /*
      * Constructor. Constraints a set of PointSegments
      */
-    SegmentConstraint(std::vector<PointSegment> s, std::vector<Point> points, Constraint::Direction d,
-                      ConstraintValue *value);
+    SegmentConstraint(std::vector<PointSegment> s, std::vector<Point> points, ConstraintValue *value);
 
     /*
      * Constructor. Constraints a set of PointSegments
      */
-    SegmentConstraint(std::vector<PointSegment> s, UniqueList<Point> points, Constraint::Direction d,
-                      ConstraintValue *value);
+    SegmentConstraint(std::vector<PointSegment> s, UniqueList<Point> points, ConstraintValue *value);
 
     /*
      * @return list of segments constrained
