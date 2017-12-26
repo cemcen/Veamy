@@ -24,11 +24,6 @@ protected:
     ProblemDiscretization* problem;
 
     /*
-     * Conditions of the linear elasticity problem
-     */
-    Conditions conditions;
-
-    /*
      * Mesh points
      */
     UniqueList<Point> points;
@@ -43,11 +38,6 @@ public:
      * @return pair of dofs (x and y) related to the given point
      */
     Pair<int> pointToDOFS(int point_index);
-
-    /*
-     * @return Material instance assigned to the domain
-     */
-    Material* getMaterial();
 
     /*
      * @return mesh points

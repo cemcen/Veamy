@@ -7,6 +7,11 @@ Constraint::Constraint(Constraint::Direction d, ConstraintValue *value) {
     this->direction = d;
 }
 
+Constraint::Constraint(ConstraintValue *value) {
+    this->v = value;
+    this->direction = None;
+}
+
 double Constraint::getValue(Point p) {
     return v->getValue(p);
 }

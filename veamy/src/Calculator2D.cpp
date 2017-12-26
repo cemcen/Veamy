@@ -26,6 +26,8 @@ UniqueList <Point> Calculator2D<T>::getPoints() {
 
 template <typename T>
 void Calculator2D<T>::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
+    int dofs = this->problem->numberOfDOFs();
+    
     std::string path = utilities::getPath();
     path = path  + fileName;
 
@@ -33,16 +35,18 @@ void Calculator2D<T>::writeDisplacements(std::string fileName, Eigen::VectorXd u
     file.open(path, std::ios::out);
 
     std::vector<std::string> results(this->points.size());
-    VeamyConfig* config = VeamyConfig::instance();
 
-    for (int k = 0; k < u.rows(); k = k + 2) {
-        int point_index = DOFs.get(k).pointIndex();
-        double def_x = u[k];
-        double def_y = u[k+1];
+    for (int k = 0; k < u.rows(); k = k + dofs) {
+        int point_index = DOFs->get(k).pointIndex();
 
-        results[point_index] = utilities::toString<int>(point_index) + " " +
-                               utilities::toStringWithPrecision(def_x, VeamyConfig::instance()->getPrecision()) + " " +
-                               utilities::toStringWithPrecision(def_y, VeamyConfig::instance()->getPrecision());
+        results[point_index] = utilities::toString<int>(point_index);
+
+        for (int i = 0; i < dofs; ++i) {
+            double def = u[k + dofs];
+
+            results[point_index] += " " +
+                    utilities::toStringWithPrecision(def, VeamyConfig::instance()->getPrecision());
+        }
     }
 
     for (std::string s: results){
@@ -56,7 +60,7 @@ template <typename T>
 Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
     Eigen::MatrixXd K;
     Eigen::VectorXd f;
-    int n = this->DOFs.size();
+    int n = this->DOFs->size();
 
     K = Eigen::MatrixXd::Zero(n,n);
     f = Eigen::VectorXd::Zero(n);
@@ -64,10 +68,10 @@ Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
     assemble(K, f);
 
     //Apply constrained_points
-    EssentialConstraints essential = this->conditions.constraints.getEssentialConstraints();
+    EssentialConstraints essential = this->problem->getConditions()->constraints.getEssentialConstraints();
     std::vector<int> c = essential.getConstrainedDOF();
 
-    Eigen::VectorXd boundary_values = essential.getBoundaryValues(this->points.getList(), this->DOFs.getDOFS());
+    Eigen::VectorXd boundary_values = essential.getBoundaryValues(this->points.getList(), this->DOFs->getDOFS());
 
     for (int j = 0; j < c.size(); ++j) {
         for (int i = 0; i < K.rows(); ++i) {

@@ -6,7 +6,7 @@
 
 class DOF {
 public:
-    enum Axis {x, y, scalar};
+    enum Axis {x, y};
 
     DOF(int index, int point_index, DOF::Axis a);
     DOF(int index, int point_index);

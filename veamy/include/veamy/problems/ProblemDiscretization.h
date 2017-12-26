@@ -15,5 +15,8 @@ public:
     virtual DOFS* createDOFS() = 0;
     virtual Element* createElement(Polygon* poly, const std::vector<Point>& points) = 0;
 
+    Conditions* getConditions(){
+        return conditions;
+    }
 };
 #endif

@@ -18,7 +18,7 @@ public:
     /*
      * Possible directions of the constraints
      */
-    enum Direction {Vertical, Horizontal, Total};
+    enum Direction {Vertical, Horizontal, Total, None};
 private:
     /*
      * Value of the constraint
@@ -38,6 +38,11 @@ public:
      * Constructor
      */
     Constraint(Direction d, ConstraintValue* value);
+
+    /*
+    * Constructor
+    */
+    Constraint(ConstraintValue* value);
 
     /* Returns the value of the constraint evaluated at a given point
      * @param p point to evaluate the constraint
