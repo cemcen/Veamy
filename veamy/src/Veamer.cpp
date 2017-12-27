@@ -92,14 +92,6 @@ void Veamer::initProblem(const Mesh<Polygon>& m, Conditions conditions) {
     }
 }
 
-void Veamer::assemble(Eigen::MatrixXd &KGlobal, Eigen::VectorXd &fGlobal) {
-    for(int i=0;i<elements.size();i++){
-        elements[i]->computeK(DOFs, this->points, conditions);
-        elements[i]->computeF(DOFs, this->points, conditions);
-        elements[i]->assemble(DOFs, KGlobal, fGlobal);
-    }
-}
-
 double Veamer::computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon> mesh) {
     calculator->setCalculator(new VeamyIntegrator<Polygon>);
     return calculator->getNorm(mesh);

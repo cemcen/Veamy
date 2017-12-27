@@ -53,7 +53,7 @@ public:
      * @param Kglobal global stiffness matrix
      * @param fGlobal global load vector
      */
-    virtual void assemble(Eigen::MatrixXd &Kglobal, Eigen::VectorXd &fGlobal) = 0;
+    void assemble(Eigen::MatrixXd &Kglobal, Eigen::VectorXd &fGlobal);
 
     /* Creates the global stiffness matrix and load vector, imposes the essential boundary conditions on the system and
      * solves the problem

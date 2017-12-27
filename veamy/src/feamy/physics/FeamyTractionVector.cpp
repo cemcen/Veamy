@@ -35,7 +35,7 @@ Eigen::VectorXd FeamyTractionVector::computeTractionVector(IndexSegment segment)
         }
     }
 
-    point_forces::addPointForces(result, natural, points[segment.getFirst()], points[segment.getSecond()]);
+    point_forces::addPointForces(result, natural, points[segment.getFirst()], points[segment.getSecond()], 0);
 
     return result;
 }

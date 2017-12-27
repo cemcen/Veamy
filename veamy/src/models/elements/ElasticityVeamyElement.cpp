@@ -1,12 +1,11 @@
-#include <veamy/models/elements/VeamyElement.h>
-#include <veamy/physics/traction/VeamyTractionVector.h>
-#include <veamy/config/VeamyConfig.h>
+#include <veamy/models/elements/ElasticityVeamyElement.h>
 
-VeamyElement::VeamyElement(Conditions &conditions, Polygon &p, UniqueList<Point> &points, DOFS &out) {
-    initializeElement(conditions, p, points, out);
+ElasticityVeamyElement::ElasticityVeamyElement(LinearElasticityConditions *conditions, Polygon &p,
+                                               UniqueList<Point> &points, DOFS &out) : VeamyElement(conditions, p, points, out){
+    this->conditions = conditions;
 }
 
-void VeamyElement::computeK(DOFS d, UniqueList<Point> points, Conditions &conditions) {
+void ElasticityVeamyElement::computeK(DOFS d, UniqueList<Point> points) {
     std::vector<int> polygonPoints = p.getPoints();
     int n = (int) polygonPoints.size();
     Point average = p.getAverage(points.getList());
@@ -81,37 +80,14 @@ void VeamyElement::computeK(DOFS d, UniqueList<Point> points, Conditions &condit
 
     Pp = Pc + Pr;
 
-    Eigen::MatrixXd D = conditions.material->getMaterialMatrix();
+    Eigen::MatrixXd D = conditions->material->getMaterialMatrix();
 
     VeamyConfig* config = VeamyConfig::instance();
     double c = (Hc.transpose()*Hc).trace();
-    double alphaS = area*conditions.material->trace()/c;
+    double alphaS = area*conditions->material->trace()/c;
 
     Eigen::MatrixXd Se;
     Se = config->getGamma()*alphaS*I;
 
     this->K = area*Wc*D*Wc.transpose() + (I - Pp).transpose()*Se*(I - Pp);
 }
-
-void VeamyElement::computeF(DOFS d, UniqueList<Point> points, Conditions &conditions) {
-    BodyForceVector* bodyForceVector = new VeamyBodyForceVector(this->p, points);
-    TractionVector* tractionVector = new VeamyTractionVector(this->p, points, conditions.constraints.getNaturalConstraints());
-
-    Element::computeF(d, points, conditions, bodyForceVector, tractionVector);
-
-    delete bodyForceVector;
-    delete tractionVector;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-

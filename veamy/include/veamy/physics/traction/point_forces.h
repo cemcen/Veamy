@@ -12,7 +12,8 @@ namespace point_forces{
      * @param natural natural (Neumann) boundary conditions
      * @param p1 p2 points to check
      */
-    extern void addPointForces(Eigen::VectorXd& tractionVector, NaturalConstraints natural, Point p1, Point p2);
+    extern void
+    addPointForces(Eigen::VectorXd &tractionVector, NaturalConstraints natural, Point p1, Point p2, int n_dofs);
 }
 
 #endif

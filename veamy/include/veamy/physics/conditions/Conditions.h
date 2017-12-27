@@ -6,35 +6,21 @@
 #include <veamy/physics/materials/Material.h>
 #include <veamy/physics/bodyforces/None.h>
 
-/*
- * Class that contains the conditions of a linear elasticity problem, including the boundary conditions,
- * the bodyforce and the material of the domain
- */
+
 class Conditions{
 public:
     /*
-     * Conditions of the linear elasticity problem
+     * Conditions of the problem
      */
     ConstraintsContainer constraints;
     BodyForce* f;
-    Material* material;
 
     /*
      * Constructor
      */
-    Conditions(ConstraintsContainer container, BodyForce* bodyForce, Material* mat){
+    Conditions(ConstraintsContainer container, BodyForce* bodyForce){
         constraints = container;
         f = bodyForce;
-        material = mat;
-    }
-
-    /*
-     * Constructor. Does not include a body force, so the default option (None) is set
-     */
-    Conditions(ConstraintsContainer container, Material* mat){
-        constraints = container;
-        f = new None();
-        material = mat;
     }
 
     /*

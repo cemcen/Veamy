@@ -12,7 +12,8 @@ public:
     /*
      * Constructor. Assigns none functions (just return 0) to each axis function
      */
-    None() : BodyForce(&veamy_functions::none_function, &veamy_functions::none_function){}
+    None(int i, int j) : BodyForce(&veamy_functions::none_function, &veamy_functions::none_function){}
+    None(int i) : BodyForce(&veamy_functions::none_function){}
 };
 
 #endif

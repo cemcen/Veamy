@@ -1,8 +1,22 @@
 #ifndef VEAMY_POISSONCONDITIONS_H
 #define VEAMY_POISSONCONDITIONS_H
 
-class PoissonConditions{
+#include "Conditions.h"
 
+/*
+ * Class that contains the conditions of the Poisson problem
+ */
+class PoissonConditions : public Conditions{
+public:
+    /*
+     * Constructor
+     */
+    PoissonConditions(ConstraintsContainer container, BodyForce* f) : Conditions(container, f){}
+
+    /*
+     * Constructor. As a body force is not given, the default value is used
+     */
+    PoissonConditions(ConstraintsContainer container) : Conditions(container, new None(0)){}
 };
 
 #endif

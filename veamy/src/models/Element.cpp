@@ -1,14 +1,14 @@
 #include <veamy/models/Element.h>
 
 template <typename T>
-void Element<T>::initializeElement(Conditions &conditions, T &p, UniqueList<Point> &points, DOFS &out) {
+void Element<T>::initializeElement(Conditions* conditions, T &p, UniqueList<Point> &points, DOFS &out) {
     std::vector<int> vertex = p.getPoints();
     int n = vertex.size();
 
     for(int i=0;i<n;i++) {
         SegmentPair pair(IndexSegment(vertex[(i - 1 + n) % n], vertex[i]),
                          IndexSegment(vertex[i], vertex[(i + 1) % n]));
-        std::vector<int> indexes = out.addDOF(conditions.constraints, points.getList(), vertex[i], pair);
+        std::vector<int> indexes = out.addDOF(conditions->constraints, points.getList(), vertex[i], pair);
 
         for (int j = 0; j < indexes.size(); ++j) {
             dofs.push_back(indexes[i]);
@@ -39,7 +39,7 @@ void Element<T>::assemble(DOFS out, Eigen::MatrixXd &Kglobal, Eigen::VectorXd &F
 }
 
 template <typename T>
-void Element<T>::computeF(DOFS d, UniqueList<Point> points, Conditions &conditions, BodyForceVector *bodyForceVector,
+void Element<T>::computeF(DOFS d, UniqueList<Point> points, Conditions* conditions, BodyForceVector *bodyForceVector,
                        TractionVector *tractionVector) {
     int n = this->p.numberOfSides();
     int m = this->dofs.size();
@@ -47,7 +47,7 @@ void Element<T>::computeF(DOFS d, UniqueList<Point> points, Conditions &conditio
     this->p.getSegments(segments);
 
     this->f = Eigen::VectorXd::Zero(m);
-    Eigen::VectorXd bodyForce = bodyForceVector->computeForceVector(conditions.f);
+    Eigen::VectorXd bodyForce = bodyForceVector->computeForceVector(conditions->f);
 
     for (int i = 0; i < n; ++i) {
         Eigen::VectorXd naturalConditions = tractionVector->computeTractionVector(segments[i]);

@@ -36,7 +36,7 @@ public:
      * @param point mesh points
      * @param out set of degrees of freedom of the system
      */
-    void initializeElement(Conditions &conditions, T &p, UniqueList<Point> &points, DOFS &out);
+    void initializeElement(Conditions* conditions, T &p, UniqueList<Point> &points, DOFS &out);
 
     /*
      * @return the geometric equivalent of the element
@@ -57,10 +57,12 @@ public:
      * @param bodyForceVector implementation of a body force vector calculator
      * @param tractionVector implementation of a traction vector calculator
      */
-    void computeF(DOFS d, UniqueList<Point> points, Conditions &conditions, BodyForceVector* bodyForceVector,
+    void computeF(DOFS d, UniqueList<Point> points, Conditions* conditions, BodyForceVector* bodyForceVector,
                   TractionVector* tractionVector);
 
-    virtual void computeK(DOFS d, UniqueList<Point> points, Conditions &conditions) = 0;
+    virtual void computeF(DOFS d, UniqueList<Point> points, Conditions* conditions) = 0;
+
+    virtual void computeK(DOFS d, UniqueList<Point> points) = 0;
 };
 
 #endif

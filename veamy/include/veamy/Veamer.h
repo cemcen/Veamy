@@ -57,12 +57,6 @@ public:
      */
     void initProblem(const Mesh<Polygon>& m, Conditions conditions);
 
-    /* Assembles the global stiffness matrix and load vector
-     * @param KGlobal global stiffness matrix
-     * @param fGlobal global load vector
-     */
-    void assemble(Eigen::MatrixXd& KGlobal, Eigen::VectorXd& fGlobal);
-
     /* Computes an error norm
      * @param calculator class in charge of computing a norm
      * @param mesh mesh associated to the problem

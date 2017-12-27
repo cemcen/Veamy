@@ -26,21 +26,21 @@ public:
     /*
      * Constructor
      */
-    VeamyElement(Conditions &conditions, Polygon &p, UniqueList<Point> &points, DOFS &out);
+    VeamyElement(Conditions* conditions, Polygon &p, UniqueList<Point> &points, DOFS &out);
 
     /* Computes the elemental stiffness matrix
      * @param d degrees of freedom of the system
      * @param points mesh points
      * @param conditions conditions of the problem
      */
-    void computeK(DOFS d, UniqueList<Point> points, Conditions &conditions);
+    virtual void computeK(DOFS d, UniqueList<Point> points) = 0;
 
     /* Computes the elemental load vector
     * @param d degrees of freedom of the system
     * @param points mesh points
     * @param conditions conditions of the problem
     */
-    void computeF(DOFS d, UniqueList<Point> points, Conditions &conditions);
+    void computeF(DOFS d, UniqueList<Point> points, Conditions* conditions);
 
 };
 

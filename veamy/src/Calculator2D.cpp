@@ -3,6 +3,7 @@
 #include <veamy/physics/materials/Material.h>
 #include <utilities/UniqueList.h>
 #include <veamy/config/VeamyConfig.h>
+#include <veamy/models/Element.h>
 
 template <typename T>
 std::vector<int> Calculator2D<T>::pointToDOFS(int point_index) {
@@ -49,6 +50,15 @@ void Calculator2D<T>::writeDisplacements(std::string fileName, Eigen::VectorXd u
     }
 
     file.close();
+}
+
+template <typename T>
+void Calculator2D<T>::assemble(Eigen::MatrixXd &Kglobal, Eigen::VectorXd &fGlobal) {
+    for(Element* e: elements){
+        e->computeK(DOFs, this->points);
+        e->computeF(DOFs, this->points, problem->getConditions());
+        e->assemble(DOFs, Kglobal, fGlobal);
+    }
 }
 
 template <typename T>

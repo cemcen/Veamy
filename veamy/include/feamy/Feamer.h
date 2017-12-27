@@ -29,13 +29,7 @@ public:
      * @param conditions physical conditions of the problem
      * @param constructor constructor used to create a certain type of FEM elements
      */
-    void initProblem(Mesh<Triangle> m, Conditions conditions, FeamyElementConstructor* constructor);
-
-    /* Assembles the global stiffness matrix and load vector
-     * @param KGlobal global stiffness matrix
-     * @param fGlobal global load vector
-     */
-    void assemble(Eigen::MatrixXd& KGlobal, Eigen::VectorXd& fGlobal);
+    void initProblem(Mesh<Triangle> m, Conditions* conditions, FeamyElementConstructor* constructor);
 
     /* Computes an error norm
      * @param calculator class in charge of computing a norm
