@@ -2,11 +2,11 @@
 
 PointConstraint::PointConstraint() : Constraint(){}
 
-PointConstraint::PointConstraint(Point p, Constraint::Direction d, ConstraintValue *value) : Constraint(d, value) {
+PointConstraint::PointConstraint(Point p, ConstraintValue *value) : Constraint(value) {
     this->constraints.push_back(p);
 }
 
-PointConstraint::PointConstraint(std::vector<Point> p, Constraint::Direction d, ConstraintValue *value) : Constraint(d, value){
+PointConstraint::PointConstraint(std::vector<Point>& p, ConstraintValue *value) : Constraint(value){
     this->constraints.push_list(p);
 }
 

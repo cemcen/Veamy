@@ -24,6 +24,7 @@ struct PolygonHasher {
     }
 };
 
+
 /*
  * Class that calculates the solution of the linear elasticity problem using the Virtual Element Method
  */
@@ -38,24 +39,16 @@ public:
      * Initializes the Veamer instance from the information in a text file
      * @param fileName name of the file to be read
      * @param material material to assign to the domain
-     * @return mesh read from the file (geometric conditions)
-     */
-    Mesh<Polygon> initProblemFromFile(std::string fileName, Material* material);
-
-    /*
-     * Initializes the Veamer instance from the information in a text file
-     * @param fileName name of the file to be read
-     * @param material material to assign to the domain
      * @param force body force imposed on the system
      * @return mesh read from the file (geometric conditions)
      */
-    Mesh<Polygon> initProblemFromFile(std::string fileName, Material* material, BodyForce *force);
+    Mesh<Polygon> initProblemFromFile(std::string fileName);
 
     /* Initializes the Veamer instance
      * @param m geometric conditions of the problem
      * @param conditions physical conditions of the problem
      */
-    void initProblem(const Mesh<Polygon>& m, Conditions conditions);
+    void initProblem(const Mesh<Polygon> &m);
 
     /* Computes an error norm
      * @param calculator class in charge of computing a norm

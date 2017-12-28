@@ -1,14 +1,9 @@
 #include <veamy/models/constraints/ConstraintsContainer.h>
 #include <utilities/maputils.h>
 
-ConstraintsContainer::ConstraintsContainer() {}
-
-void ConstraintsContainer::addConstraints(NaturalConstraints c, UniqueList<Point> points) {
-    this->natural = c;
-}
-
-void ConstraintsContainer::addConstraints(EssentialConstraints c, UniqueList<Point> points) {
-    this->essential = c;
+ConstraintsContainer::ConstraintsContainer() {
+    this->natural = NaturalConstraints();
+    this->essential = EssentialConstraints();
 }
 
 void ConstraintsContainer::addConstrainedDOF(std::vector<Point> points, int DOF_index, int axis, SegmentPair pair,
@@ -17,11 +12,19 @@ void ConstraintsContainer::addConstrainedDOF(std::vector<Point> points, int DOF_
     essential.addConstrainedDOF(points, DOF_index, axis, pair, point_index);
 }
 
-EssentialConstraints ConstraintsContainer::getEssentialConstraints() {
+EssentialConstraints& ConstraintsContainer::getEssentialConstraints() {
     return essential;
 }
 
-NaturalConstraints ConstraintsContainer::getNaturalConstraints() {
+NaturalConstraints& ConstraintsContainer::getNaturalConstraints() {
+    return natural;
+}
+
+EssentialConstraints ConstraintsContainer::getEssentialConstraints() const{
+    return essential;
+}
+
+NaturalConstraints ConstraintsContainer::getNaturalConstraints() const{
     return natural;
 }
 

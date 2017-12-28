@@ -26,7 +26,7 @@ public:
     /*
      * Constructor
      */
-    VeamyElement(Conditions* conditions, Polygon &p, UniqueList<Point> &points, DOFS &out);
+    VeamyElement(Conditions *conditions, Polygon &p, UniqueList<Point> &points, DOFS &out, int n_dofs);
 
     /* Computes the elemental stiffness matrix
      * @param d degrees of freedom of the system

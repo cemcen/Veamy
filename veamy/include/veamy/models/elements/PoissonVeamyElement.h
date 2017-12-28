@@ -8,7 +8,7 @@ class PoissonVeamyElement : public VeamyElement{
 protected:
     PoissonConditions* conditions;
 public:
-    PoissonVeamyElement(PoissonConditions *conditions, Polygon &p, UniqueList<Point> &points, DOFS &out);
+    PoissonVeamyElement(PoissonConditions *conditions, Polygon &p, UniqueList<Point> &points, DOFS &out, int n_dofs);
     void computeK(DOFS d, UniqueList<Point> points);
 };
 

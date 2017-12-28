@@ -51,10 +51,15 @@ public:
      */
     int isAffected(int axis);
 
-    /*
-     * @param
+    /* Sets the indexes of the dofs associated to a point affected by this constraint. Example: in the linear elasticity
+     * problem, each point has two dofs (x or y), and a constraint can affect x(0), y(1) or both(0,1)
+     * @param d directions to set
      */
-    void
+    void setDirection(std::vector<int> d);
+
+    /* Sets the default index (zero) of the dofs associated to a point affected by this constraint
+     */
+    void setDirection();
 };
 
 

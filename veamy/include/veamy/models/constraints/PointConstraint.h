@@ -26,7 +26,7 @@ public:
     /*
      * Constructor. Constraints a set of points
      */
-    PointConstraint(std::vector<Point> p, ConstraintValue* value);
+    PointConstraint(std::vector<Point>& p, ConstraintValue* value);
 
     /*
      * @return list of constrained points

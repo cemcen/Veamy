@@ -15,8 +15,14 @@ std::vector<int> Constraint::getDirection() {
 }
 
 int Constraint::isAffected(int axis) {
-
+    return std::find(direction.begin(), direction.end(), axis) != direction.end();
 }
 
+void Constraint::setDirection(std::vector<int> d) {
+    this->direction.assign(d.begin(), d.end());
+}
 
+void Constraint::setDirection() {
+    this->direction.push_back(0);
+}
 

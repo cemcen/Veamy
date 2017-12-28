@@ -11,12 +11,14 @@ public:
     /*
      * Constructor
      */
-    PoissonConditions(ConstraintsContainer container, BodyForce* f) : Conditions(container, f){}
+    PoissonConditions(ConstraintsContainer container, BodyForce* f);
 
     /*
      * Constructor. As a body force is not given, the default value is used
      */
-    PoissonConditions(ConstraintsContainer container) : Conditions(container, new None(0)){}
+    PoissonConditions(ConstraintsContainer container);
+
+
 };
 
 #endif

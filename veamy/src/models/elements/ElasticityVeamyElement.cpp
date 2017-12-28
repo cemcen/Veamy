@@ -1,7 +1,8 @@
 #include <veamy/models/elements/ElasticityVeamyElement.h>
 
 ElasticityVeamyElement::ElasticityVeamyElement(LinearElasticityConditions *conditions, Polygon &p,
-                                               UniqueList<Point> &points, DOFS &out) : VeamyElement(conditions, p, points, out){
+                                               UniqueList<Point> &points, DOFS &out,
+                                               int n_dofs) : VeamyElement(conditions, p, points, out, n_dofs) {
     this->conditions = conditions;
 }
 

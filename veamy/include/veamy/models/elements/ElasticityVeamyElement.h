@@ -9,7 +9,9 @@ class ElasticityVeamyElement : public VeamyElement{
 private:
     LinearElasticityConditions* conditions;
 public:
-    ElasticityVeamyElement(LinearElasticityConditions* conditions, Polygon &p, UniqueList<Point> &points, DOFS &out);
+    ElasticityVeamyElement(LinearElasticityConditions *conditions, Polygon &p, UniqueList<Point> &points,
+                           DOFS &out,
+                           int n_dofs);
     void computeK(DOFS d, UniqueList<Point> points);
 };
 

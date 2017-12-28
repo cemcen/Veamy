@@ -4,13 +4,16 @@
 #include <veamy/models/constraints/NaturalConstraints.h>
 #include <veamy/physics/conditions/PoissonConditions.h>
 #include "ProblemDiscretization.h"
-#include "ScalarProblem.h"
 
-class PoissonDiscretization : public ProblemDiscretization, ScalarProblem{
+class PoissonDiscretization : public ProblemDiscretization{
 public:
-    PoissonConditions conditions;
+    PoissonConditions* conditions;
 
-    PoissonDiscretization();
+    PoissonDiscretization(PoissonConditions* conditions);
+    Element* createElement(Veamer *v, Polygon &poly, UniqueList<Point> &points);
+    Element* createElement(Feamer *f, Triangle &poly, UniqueList<Point> &points);
+
+
 };
 
 #endif

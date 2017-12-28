@@ -5,7 +5,7 @@ FeamyElement::FeamyElement() {}
 
 void FeamyElement::initializeElement(Conditions &conditions, Triangle &p, UniqueList<Point> &points, DOFS &out, ShapeFunctions* N) {
     this->N = N;
-    Element<Triangle>::initializeElement(conditions, p, points, out);
+    Element<Triangle>::initializeElement(conditions, p, points, out, 0);
 }
 
 void FeamyElement::computeK(DOFS d, UniqueList<Point> points, Conditions &conditions) {

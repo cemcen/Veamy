@@ -8,6 +8,7 @@
 #include <utilities/utilities.h>
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
 #include <veamy/config/VeamyConfig.h>
+#include <veamy/physics/conditions/LinearElasticityConditions.h>
 
 int main(){
     // Set precision for plotting to output files:    
@@ -61,6 +62,13 @@ int main(){
     mesh.printInFile(meshFileName);
     std::cout << "done" << std::endl;
 
+
+    std::cout << "+ Defining linear elastic material ... ";
+    Material* material = new MaterialPlaneStrain (1e4, 0.25);
+    LinearElasticityConditions* conditions = new LinearElasticityConditions(material);
+    std::cout << "done" << std::endl;
+
+
     std::cout << "+ Defining Dirichlet and Neumann boundary conditions ... ";
     EssentialConstraints essential;
     Point leftFoot(2,0);
@@ -75,19 +83,13 @@ int main(){
     SegmentConstraint back (backSegment, mesh.getPoints(), Constraint::Direction::Total, new Constant(-200));
     natural.addConstraint(back, mesh.getPoints());
 
-    ConstraintsContainer container;
-    container.addConstraints(essential, mesh.getPoints());
-    container.addConstraints(natural, mesh.getPoints());
     std::cout << "done" << std::endl;
 
-    std::cout << "+ Defining linear elastic material ... ";
-    Material* material = new MaterialPlaneStrain (1e4, 0.25);
-    Conditions conditions(container, material);
-    std::cout << "done" << std::endl;
+
 
     std::cout << "+ Preparing the simulation ... ";
     Veamer v(nullptr);
-    v.initProblem(mesh, conditions);
+    v.initProblem(mesh);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Simulating ... ";

@@ -29,18 +29,6 @@ public:
      */
     ConstraintsContainer();
 
-    /* Adds natural constraints to the system
-     * @param c natural constraints to add
-     * @param points mesh points
-     */
-    void addConstraints(NaturalConstraints c, UniqueList<Point> points);
-
-    /* Adds essential constraints to the system
-     * @param c essential constraints to add
-     * @param points mesh points
-     */
-    void addConstraints(EssentialConstraints c, UniqueList<Point> points);
-
     /* Adds a new DOF to the system, checking if it is constrained
      * @param points mesh points
      * @param DOF_index index of the DOF to add
@@ -54,12 +42,22 @@ public:
     /*
      * @return essential constraints of the system
      */
-    EssentialConstraints getEssentialConstraints();
+    EssentialConstraints getEssentialConstraints() const;
 
     /*
      * @return natural constraints of the system
      */
-    NaturalConstraints getNaturalConstraints();
+    NaturalConstraints getNaturalConstraints() const;
+
+    /*
+     * @return reference to the essential constraints of the system
+     */
+    EssentialConstraints& getEssentialConstraints();
+
+    /*
+     * @return reference to the natural constraints of the system
+     */
+    NaturalConstraints& getNaturalConstraints();
 };
 
 
