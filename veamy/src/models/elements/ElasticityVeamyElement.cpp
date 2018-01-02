@@ -6,7 +6,7 @@ ElasticityVeamyElement::ElasticityVeamyElement(LinearElasticityConditions *condi
     this->conditions = conditions;
 }
 
-void ElasticityVeamyElement::computeK(DOFS d, UniqueList<Point> points) {
+void ElasticityVeamyElement::computeK(DOFS &d, UniqueList<Point> &points) {
     std::vector<int> polygonPoints = p.getPoints();
     int n = (int) polygonPoints.size();
     Point average = p.getAverage(points.getList());

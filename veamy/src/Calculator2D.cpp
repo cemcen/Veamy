@@ -6,6 +6,12 @@
 #include <veamy/models/Element.h>
 
 template <typename T>
+Calculator2D<T>::Calculator2D(Conditions *problem, int n_dofs) {
+    this->conditions = problem;
+    this->DOFs.setNumberOfDOFS(n_dofs);
+}
+
+template <typename T>
 std::vector<int> Calculator2D<T>::pointToDOFS(int point_index) {
     return this->DOFs.pointToDOFS(point_index);
 }
@@ -22,7 +28,7 @@ UniqueList <Point> Calculator2D<T>::getPoints() {
 
 template <typename T>
 void Calculator2D<T>::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
-    int dofs = this->problem->numberOfDOFs();
+    int dofs = this->DOFs.getNumberOfDOFS();
     
     std::string path = utilities::getPath();
     path = path  + fileName;
@@ -54,9 +60,9 @@ void Calculator2D<T>::writeDisplacements(std::string fileName, Eigen::VectorXd u
 
 template <typename T>
 void Calculator2D<T>::assemble(Eigen::MatrixXd &Kglobal, Eigen::VectorXd &fGlobal) {
-    for(Element* e: elements){
+    for (Element<T>* e: elements){
         e->computeK(DOFs, this->points);
-        e->computeF(DOFs, this->points, problem->getConditions());
+        e->computeF(DOFs, this->points, conditions);
         e->assemble(DOFs, Kglobal, fGlobal);
     }
 }
@@ -73,7 +79,7 @@ Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
     assemble(K, f);
 
     //Apply constrained_points
-    EssentialConstraints essential = this->problem->getConditions()->constraints.getEssentialConstraints();
+    EssentialConstraints essential = this->conditions->constraints.getEssentialConstraints();
     std::vector<int> c = essential.getConstrainedDOF();
 
     Eigen::VectorXd boundary_values = essential.getBoundaryValues(this->points.getList(), this->DOFs.getDOFS());

@@ -1,9 +1,7 @@
 #include <veamy/Veamer.h>
-#include <iomanip>
-#include <veamy/models/constraints/values/Constant.h>
 
-
-Veamer::Veamer(ProblemDiscretization *problem) {
+Veamer::Veamer(ProblemDiscretization<Polygon,Veamer>* problem) :
+        Calculator2D(problem->getConditions(), problem->numberOfDOFs()) {
     this->problem = problem;
 }
 
@@ -13,7 +11,6 @@ Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName) {
 
     return mesh;
 }
-
 
 void Veamer::initProblem(const Mesh<Polygon> &m) {
     std::vector<Point> meshPoints = m.getPoints().getList();

@@ -29,11 +29,16 @@ struct PolygonHasher {
  * Class that calculates the solution of the linear elasticity problem using the Virtual Element Method
  */
 class Veamer : public Calculator2D<Polygon> {
+protected:
+    /*
+     * Problem to solve
+     */
+    ProblemDiscretization<Polygon,Veamer>* problem;
 public:
     /*
      * Constructor
      */
-    Veamer(ProblemDiscretization *problem);
+    Veamer(ProblemDiscretization<Polygon,Veamer>* problem);
 
     /*
      * Initializes the Veamer instance from the information in a text file

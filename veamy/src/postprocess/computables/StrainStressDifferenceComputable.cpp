@@ -20,14 +20,14 @@ double StrainStressDifferenceComputable<T>::apply(double x, double y, int index,
 
     std::vector<int> containerPoints = container.getPoints();
     for (int i = 0; i < container.numberOfSides(); ++i) {
-        Pair<int> point_dofs = dofs.pointToDOFS(containerPoints[i]);
+        std::vector<int> point_dofs = dofs.pointToDOFS(containerPoints[i]);
 
-        uH(2*i) = nodalValues[point_dofs.first];
-        uH(2*i + 1) = nodalValues[point_dofs.second];
+        uH(2*i) = nodalValues[point_dofs[0]];
+        uH(2*i + 1) = nodalValues[point_dofs[1]];
 
     }
 
-    Eigen::MatrixXd Be = StiffnessMatrixIntegrable::BeMatrix(Point(x,y), VeamyTriangle(container).getJacobian(this->points),
+    Eigen::MatrixXd Be = LinearElasticityStiffnessMatrixIntegrable().BeMatrix(Point(x,y), VeamyTriangle(container).getJacobian(this->points),
                                                            this->elements[this->polygonIndex]->getShapeFunctions());
 
     Eigen::VectorXd strain = Be*uH;

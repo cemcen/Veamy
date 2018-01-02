@@ -9,6 +9,7 @@
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
 #include <veamy/config/VeamyConfig.h>
 #include <veamy/physics/conditions/LinearElasticityConditions.h>
+#include <veamy/problems/VeamyLinearElasticityDiscretization.h>
 
 int main(){
     // Set precision for plotting to output files:    
@@ -52,7 +53,7 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Generating polygonal mesh ... ";
-    unicorn.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constantAlternating()), 20, 25);
+    unicorn.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constantAlternating()), 10, 10);
     std::vector<Point> seeds = unicorn.getSeedPoints();
     TriangleVoronoiGenerator g(seeds, unicorn);
     Mesh<Polygon> mesh = g.getMesh();
@@ -70,25 +71,25 @@ int main(){
 
 
     std::cout << "+ Defining Dirichlet and Neumann boundary conditions ... ";
-    EssentialConstraints essential;
     Point leftFoot(2,0);
-    PointConstraint left(leftFoot, Constraint::Direction::Total, new Constant(0));
+    PointConstraint left(leftFoot, new Constant(0));
     Point rightFoot(10,0);
-    PointConstraint right(rightFoot, Constraint::Direction::Total, new Constant(0));
-    essential.addConstraint(left);
-    essential.addConstraint(right);
+    PointConstraint right(rightFoot, new Constant(0));
+
+    conditions->addEssentialConstraint(left, elasticity_constraints::Direction::Total);
+    conditions->addEssentialConstraint(right, elasticity_constraints::Direction::Total);
 
     NaturalConstraints natural;
     PointSegment backSegment(Point(6.7,11.5), Point(3.3,11.3));
-    SegmentConstraint back (backSegment, mesh.getPoints(), Constraint::Direction::Total, new Constant(-200));
-    natural.addConstraint(back, mesh.getPoints());
+    SegmentConstraint back (backSegment, mesh.getPoints(), new Constant(-200));
+    conditions->addNaturalConstraint(back, mesh.getPoints(), elasticity_constraints::Direction::Total);
 
     std::cout << "done" << std::endl;
 
-
-
     std::cout << "+ Preparing the simulation ... ";
-    Veamer v(nullptr);
+    VeamyLinearElasticityDiscretization*  problem = new VeamyLinearElasticityDiscretization(conditions);
+
+    Veamer v(problem);
     v.initProblem(mesh);
     std::cout << "done" << std::endl;
 

@@ -5,7 +5,7 @@ PoissonVeamyElement::PoissonVeamyElement(PoissonConditions *conditions, Polygon 
     this->conditions = conditions;
 }
 
-void PoissonVeamyElement::computeK(DOFS d, UniqueList<Point> points) {
+void PoissonVeamyElement::computeK(DOFS &d, UniqueList<Point> &points) {
     std::vector<int> polygonPoints = p.getPoints();
     int n = (int) polygonPoints.size();
     Point average = p.getAverage(points.getList());

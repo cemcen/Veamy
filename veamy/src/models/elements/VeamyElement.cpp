@@ -5,7 +5,7 @@ VeamyElement::VeamyElement(Conditions *conditions, Polygon &p, UniqueList<Point>
     initializeElement(conditions, p, points, out, n_dofs);
 }
 
-void VeamyElement::computeF(DOFS d, UniqueList<Point> points, Conditions* conditions) {
+void VeamyElement::computeF(DOFS &d, UniqueList<Point> &points, Conditions *conditions) {
     BodyForceVector* bodyForceVector = new VeamyBodyForceVector(this->p, points);
     TractionVector* tractionVector = new VeamyTractionVector(this->p, points,
                                                              conditions->constraints.getNaturalConstraints(), this->n_dofs);

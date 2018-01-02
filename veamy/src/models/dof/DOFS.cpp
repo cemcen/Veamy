@@ -1,8 +1,6 @@
 #include <veamy/models/dof/DOFS.h>
 
-DOFS::DOFS(int n_dofs) {
-    this->n_dofs = n_dofs;
-}
+DOFS::DOFS() {}
 
 std::vector<int>
 DOFS::addDOF(ConstraintsContainer &constraints, std::vector<Point> points, int point_index, SegmentPair pair) {
@@ -60,6 +58,12 @@ std::vector<int> DOFS::pointToDOFS(int point) {
     return indexes;
 }
 
+void DOFS::setNumberOfDOFS(int n_dofs) {
+    this->n_dofs = n_dofs;
+}
 
+int DOFS::getNumberOfDOFS() {
+    return this->n_dofs;
+}
 
 

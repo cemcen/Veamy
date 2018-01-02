@@ -5,6 +5,7 @@
 #include <veamy/physics/conditions/Conditions.h>
 #include <veamy/models/dof/DOFS.h>
 #include <veamy/problems/ProblemDiscretization.h>
+#include <veamy/models/Element.h>
 
 /*
  * Abstract class that encapsulates all common behaviour for linear elasticity calculations, no matter the method
@@ -16,22 +17,26 @@ protected:
     /*
      * Elements of the system
      */
-    std::vector<Element*> elements;
+    std::vector<Element<T>*> elements;
 
     /*
-     * Problem to solve
+     * Conditions of the problem to solve
      */
-    ProblemDiscretization* problem;
+    Conditions* conditions;
 
     /*
      * Mesh points
      */
     UniqueList<Point> points;
+
+
 public:
     /*
      * Degrees of freedom of the system
      */
     DOFS DOFs;
+
+    Calculator2D(Conditions* conditions, int n_dofs);
 
     /* Gets the degrees of freedom indexes related to a point
      * @param point_index point to lookup

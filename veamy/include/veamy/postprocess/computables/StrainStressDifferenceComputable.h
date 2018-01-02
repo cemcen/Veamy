@@ -6,7 +6,7 @@
 #include <veamy/lib/Eigen/Dense>
 #include <veamy/models/dof/DOFS.h>
 #include "Computable.h"
-#include <feamy/integration/integrables/StiffnessMatrixIntegrable.h>
+#include <feamy/problem/linear_elasticity/LinearElasticityStiffnessMatrixIntegrable.h>
 #include <veamy/utilities/veamy_functions.h>
 #include <feamy/models/FeamyElement.h>
 

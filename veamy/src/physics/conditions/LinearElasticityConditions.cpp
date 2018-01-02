@@ -30,6 +30,11 @@ void LinearElasticityConditions::addNaturalConstraint(SegmentConstraint &constra
     Conditions::addNaturalConstraint(constraint, points);
 }
 
+void LinearElasticityConditions::addNaturalConstraint(SegmentConstraint &constraint, UniqueList<Point> &points,
+                                                      elasticity_constraints::Direction direction) {
+    this->addNaturalConstraint(constraint, points.getList(), direction);
+}
+
 void LinearElasticityConditions::addEssentialConstraint(PointConstraint &constraint,
                                                         elasticity_constraints::Direction direction) {
     constraint.setDirection(elasticity_constraints::constraints[direction]);
@@ -40,4 +45,9 @@ void LinearElasticityConditions::addEssentialConstraint(SegmentConstraint &const
                                                         elasticity_constraints::Direction direction) {
     constraint.setDirection(elasticity_constraints::constraints[direction]);
     Conditions::addNaturalConstraint(constraint, points);
+}
+
+void LinearElasticityConditions::addEssentialConstraint(SegmentConstraint &constraint, UniqueList<Point> &points,
+                                                        elasticity_constraints::Direction direction) {
+    this->addEssentialConstraint(constraint, points.getList(), direction);
 }

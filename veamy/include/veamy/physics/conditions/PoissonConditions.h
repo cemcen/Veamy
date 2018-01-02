@@ -18,7 +18,10 @@ public:
      */
     PoissonConditions(ConstraintsContainer container);
 
-
+    /*
+     * Constructor. Uses an empty constraint container, that is latter filled.
+     */
+    PoissonConditions(BodyForce* f);
 };
 
 #endif

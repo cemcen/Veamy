@@ -48,6 +48,14 @@ public:
     void addNaturalConstraint(SegmentConstraint &constraint, std::vector<Point> &points,
                               elasticity_constraints::Direction direction);
 
+    /* Adds a segment constraint to the natural conditions
+     * @param constraint condition to add
+     * @param points mesh points
+     * @param direction direction of the constraint
+     */
+    void addNaturalConstraint(SegmentConstraint &constraint, UniqueList<Point> &points,
+                              elasticity_constraints::Direction direction);
+
     /* Adds a point constraint to the essential conditions
      * @param constraint condition to add
      * @param direction direction of the constraint
@@ -60,6 +68,14 @@ public:
      * @param direction direction of the constraint
      */
     void addEssentialConstraint(SegmentConstraint& constraint, std::vector<Point>& points,
+                                elasticity_constraints::Direction direction);
+
+    /* Adds a segment constraint to the essential conditions
+     * @param constraint condition to add
+     * @param points mesh points
+     * @param direction direction of the constraint
+     */
+    void addEssentialConstraint(SegmentConstraint& constraint, UniqueList<Point>& points,
                                 elasticity_constraints::Direction direction);
 };
 

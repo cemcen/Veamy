@@ -1,16 +1,17 @@
-#ifndef VEAMY_STIFFNESSMATRIXINTEGRABLE_H
-#define VEAMY_STIFFNESSMATRIXINTEGRABLE_H
+#ifndef VEAMY_LINEARELASTICITYSTIFFNESSMATRIXINTEGRABLE_H
+#define VEAMY_LINEARELASTICITYSTIFFNESSMATRIXINTEGRABLE_H
 
 #include <veamy/lib/Eigen/Dense>
 #include <feamy/integration/IntegrableFunction.h>
 #include <veamy/geometry/VeamyTriangle.h>
 #include <feamy/models/shapefunctions/ShapeFunctions.h>
+#include <feamy/integration/integrables/StiffnessMatrixIntegrable.h>
 
 /*
  * Represents the function that needs to be integrated related to the FEM stiffness matrix (derivatives of the
  * shape functions)
  */
-class StiffnessMatrixIntegrable : public IntegrableFunction<Eigen::MatrixXd>{
+class LinearElasticityStiffnessMatrixIntegrable : public StiffnessMatrixIntegrable{
 private:
     /*
      * Shape functions of the element
@@ -21,25 +22,28 @@ private:
      * Jacobian matrix of the element geometry
      */
     Eigen::MatrixXd J;
+
+    /*
+     * Material matrix
+     */
+    Eigen::MatrixXd D;
 public:
     /*
      * Constructor
      */
-    StiffnessMatrixIntegrable(VeamyTriangle &t, std::vector<Point> &points){
-        this->J = t.getJacobian(points);
-    }
+    LinearElasticityStiffnessMatrixIntegrable(VeamyTriangle &t, std::vector<Point> &points, Eigen::MatrixXd D);
 
     /*
      * Default constructor
      */
-    StiffnessMatrixIntegrable(){}
+    LinearElasticityStiffnessMatrixIntegrable();
 
     /*
      * Computes the value of the function at a given point
      * @param p point where the function must be evaluated
      * @return value of the (dNi, dNj) function that represents the stiffness matrix
      */
-    virtual Eigen::MatrixXd apply(Point p) = 0;
+    Eigen::MatrixXd apply(Point p);
 
     /*
      * Computes the Be matrix of the element
@@ -48,14 +52,7 @@ public:
      * @param N shape functions of the element
      * @return the Be FEM matrix
      */
-    virtual Eigen::MatrixXd BeMatrix(Point p, Eigen::MatrixXd J, ShapeFunctions* N) = 0;
-
-    /* Sets the value of the shape functions of the element
-     * @param s shape functions
-     */
-    void setShapeFunctions(ShapeFunctions* N){
-        this->N = N;
-    }
+    Eigen::MatrixXd BeMatrix(Point p, Eigen::MatrixXd J, ShapeFunctions* N);
 };
 
 #endif

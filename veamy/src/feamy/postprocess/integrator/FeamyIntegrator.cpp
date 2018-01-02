@@ -1,5 +1,5 @@
 #include <feamy/postprocess/integrator/FeamyIntegrator.h>
-#include <feamy/integration/integrables/IntegrableFunction.h>
+#include <feamy/integration/IntegrableFunction.h>
 #include <feamy/integration/AreaIntegrator.h>
 #include <veamy/geometry/VeamyPolygon.h>
 #include <veamy/postprocess/computables/IntegrableFunctionComputable.h>

@@ -33,14 +33,14 @@ public:
      * @param points mesh points
      * @param conditions conditions of the problem
      */
-    virtual void computeK(DOFS d, UniqueList<Point> points) = 0;
+    virtual void computeK(DOFS &d, UniqueList<Point> &points) = 0;
 
     /* Computes the elemental load vector
     * @param d degrees of freedom of the system
     * @param points mesh points
     * @param conditions conditions of the problem
     */
-    void computeF(DOFS d, UniqueList<Point> points, Conditions* conditions);
+    void computeF(DOFS &d, UniqueList<Point> &points, Conditions *conditions);
 
 };
 

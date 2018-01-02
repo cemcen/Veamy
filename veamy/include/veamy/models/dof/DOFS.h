@@ -12,7 +12,7 @@ protected:
     std::unordered_map<int, int> occupied_point_indexes;
     int n_dofs;
 public:
-    DOFS(int n_dofs);
+    DOFS();
 
     std::vector<int> addDOF(ConstraintsContainer &constraints, std::vector<Point> points, int point_index,
                      SegmentPair pair);
@@ -21,6 +21,8 @@ public:
     DOF get(int i);
 
     std::vector<int> pointToDOFS(int point);
+    void setNumberOfDOFS(int n_dofs);
+    int getNumberOfDOFS();
 };
 
 

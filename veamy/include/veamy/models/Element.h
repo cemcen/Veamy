@@ -65,9 +65,9 @@ public:
     void computeF(DOFS d, UniqueList<Point> points, Conditions *conditions, BodyForceVector *bodyForceVector,
                   TractionVector *tractionVector);
 
-    virtual void computeF(DOFS d, UniqueList<Point> points, Conditions* conditions) = 0;
+    virtual void computeF(DOFS &d, UniqueList<Point> &points, Conditions *conditions) = 0;
 
-    virtual void computeK(DOFS d, UniqueList<Point> points) = 0;
+    virtual void computeK(DOFS &d, UniqueList<Point> &points) = 0;
 };
 
 #endif

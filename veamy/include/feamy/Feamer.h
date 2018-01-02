@@ -8,6 +8,7 @@
 #include <feamy/models/FeamyElement.h>
 #include <feamy/models/constructor/FeamyElementConstructor.h>
 #include <veamy/postprocess/NormCalculator.h>
+#include <veamy/problems/ProblemDiscretization.h>
 
 /*
  * Class that calculates the solution of the linear elasticity problem using the Finite Element Method
@@ -18,11 +19,16 @@ private:
      * Elements of the system
      */
     std::vector<FeamyElement*> elements;
+
+    /*
+    * Problem to solve
+    */
+    ProblemDiscretization<Triangle,Feamer>* problem;
 public:
     /*
      * Constructor
      */
-    Feamer(ProblemDiscretization *problem);
+    Feamer(ProblemDiscretization<Triangle,Feamer>* problem);
 
     /* Initializes the Feamer instance
      * @param m geometric conditions of the problem

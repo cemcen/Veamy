@@ -1,7 +1,7 @@
 #ifndef VEAMY_INTEGRABLEFUNCTIONCOMPUTABLE_H
 #define VEAMY_INTEGRABLEFUNCTIONCOMPUTABLE_H
 
-#include <feamy/integration/integrables/IntegrableFunction.h>
+#include <feamy/integration/IntegrableFunction.h>
 #include "Computable.h"
 
 /*

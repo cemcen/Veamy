@@ -2,11 +2,9 @@
 #define VEAMY_PROBLEMDISCRETIZATION_H
 
 #include <veamy/physics/conditions/Conditions.h>
-#include <veamy/Veamer.h>
-#include <feamy/Feamer.h>
+#include <veamy/models/Element.h>
 
-class Veamer;
-
+template <typename T, typename N>
 class ProblemDiscretization{
 protected:
     int numberDOF;
@@ -24,10 +22,7 @@ public:
         return conditions;
     }
 
-    virtual Element* createElement(Veamer *veamer, Polygon &poly, UniqueList<Point> &points) = 0;
-    virtual Element* createElement(Feamer *veamer, Triangle &poly, UniqueList<Point> &points) = 0;
-    virtual Mesh<Polygon> initProblemFromFile(Veamer *v, std::string fileName) = 0;
-
-
+    virtual Element<T>* createElement(N *solver, T &poly, UniqueList<Point> &points) = 0;
+    virtual Mesh<T> initProblemFromFile(N *v, std::string fileName) = 0;
 };
 #endif
