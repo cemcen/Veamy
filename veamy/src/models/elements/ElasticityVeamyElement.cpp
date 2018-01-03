@@ -91,4 +91,6 @@ void ElasticityVeamyElement::computeK(DOFS &d, UniqueList<Point> &points) {
     Se = config->getGamma()*alphaS*I;
 
     this->K = area*Wc*D*Wc.transpose() + (I - Pp).transpose()*Se*(I - Pp);
+
+    std::cout << K << std::endl << std::endl;
 }

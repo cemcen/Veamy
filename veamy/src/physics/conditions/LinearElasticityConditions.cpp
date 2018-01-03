@@ -38,13 +38,13 @@ void LinearElasticityConditions::addNaturalConstraint(SegmentConstraint &constra
 void LinearElasticityConditions::addEssentialConstraint(PointConstraint &constraint,
                                                         elasticity_constraints::Direction direction) {
     constraint.setDirection(elasticity_constraints::constraints[direction]);
-    Conditions::addNaturalConstraint(constraint);
+    Conditions::addEssentialConstraint(constraint);
 }
 
 void LinearElasticityConditions::addEssentialConstraint(SegmentConstraint &constraint, std::vector<Point> &points,
                                                         elasticity_constraints::Direction direction) {
     constraint.setDirection(elasticity_constraints::constraints[direction]);
-    Conditions::addNaturalConstraint(constraint, points);
+    Conditions::addEssentialConstraint(constraint, points);
 }
 
 void LinearElasticityConditions::addEssentialConstraint(SegmentConstraint &constraint, UniqueList<Point> &points,
