@@ -44,7 +44,7 @@ void Calculator2D<T>::writeDisplacements(std::string fileName, Eigen::VectorXd u
         results[point_index] = utilities::toString<int>(point_index);
 
         for (int i = 0; i < dofs; ++i) {
-            double def = u[k + dofs];
+            double def = u[k + i];
 
             results[point_index] += " " +
                     utilities::toStringWithPrecision(def, VeamyConfig::instance()->getPrecision());

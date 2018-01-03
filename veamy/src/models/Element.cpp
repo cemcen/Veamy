@@ -11,11 +11,12 @@ void Element<T>::initializeElement(Conditions *conditions, T &p, UniqueList<Poin
         std::vector<int> indexes = out.addDOF(conditions->constraints, points.getList(), vertex[i], pair);
 
         for (int j = 0; j < indexes.size(); ++j) {
-            dofs.push_back(indexes[i]);
+            dofs.push_back(indexes[j]);
         }
     }
 
     this->p = p;
+    this->n_dofs = n_dofs;
 }
 
 template <typename T>
