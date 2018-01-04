@@ -6,3 +6,4 @@ PoissonConditions::PoissonConditions(ConstraintsContainer container) : Condition
 
 PoissonConditions::PoissonConditions(BodyForce *f) : Conditions(f) {}
 
+PoissonConditions::PoissonConditions() : Conditions(new None(0)){}

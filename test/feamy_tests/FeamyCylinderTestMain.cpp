@@ -15,6 +15,8 @@
 #include <feamy/Feamer.h>
 #include <feamy/models/constructor/Tri3Constructor.h>
 #include <veamy/config/VeamyConfig.h>
+#include <veamy/physics/conditions/LinearElasticityConditions.h>
+#include <feamy/problem/FeamyLinearElasticityDiscretization.h>
 
 double innerForceX(double x, double y){
     if(x==0){
@@ -58,35 +60,30 @@ int main(){
 
     mesh.printInFile("cylinderMesh_fem.txt");
 
-    EssentialConstraints essential;
+    Material* material = new MaterialPlaneStrain (1000, 0.3);
+    LinearElasticityConditions* conditions = new LinearElasticityConditions(material);
+
     PointSegment downSide(Point(3,0), Point(9,0));
-    SegmentConstraint const1 (downSide, mesh.getPoints(), Constraint::Direction::Vertical, new Constant(0));
-    essential.addConstraint(const1, mesh.getPoints());
+    SegmentConstraint const1 (downSide, mesh.getPoints(), new Constant(0));
+    conditions->addEssentialConstraint(const1, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
 
     PointSegment leftSide(Point(0,3), Point(0,9));
-    SegmentConstraint const2 (leftSide, mesh.getPoints(), Constraint::Direction::Horizontal, new Constant(0));
-    essential.addConstraint(const2, mesh.getPoints());
-
-    NaturalConstraints natural;
+    SegmentConstraint const2 (leftSide, mesh.getPoints(), new Constant(0));
+    conditions->addEssentialConstraint(const2, mesh.getPoints(), elasticity_constraints::Direction::Horizontal);
 
     Function* innerX = new Function(innerForceX);
     Function* innerY = new Function(innerForceY);
 
-    SegmentConstraint const3 (segments, mesh.getPoints(), Constraint::Direction::Horizontal, innerX);
-    SegmentConstraint const4 (segments, mesh.getPoints(), Constraint::Direction::Vertical, innerY);
-    natural.addConstraint(const3, mesh.getPoints());
-    natural.addConstraint(const4, mesh.getPoints());
+    SegmentConstraint const3 (segments, mesh.getPoints(), innerX);
+    SegmentConstraint const4 (segments, mesh.getPoints(), innerY);
+    conditions->addNaturalConstraint(const3, mesh.getPoints(), elasticity_constraints::Direction::Horizontal);
+    conditions->addNaturalConstraint(const4, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
 
-    ConstraintsContainer container;
-    container.addConstraints(essential, mesh.getPoints());
-    container.addConstraints(natural, mesh.getPoints());
+    FeamyLinearElasticityDiscretization* problem = new FeamyLinearElasticityDiscretization(conditions);
 
-    Material* material = new MaterialPlaneStrain (1000, 0.3);
-    Conditions conditions(container, material);
-
-    Feamer f;
+    Feamer f(problem);
     FeamyElementConstructor* constructor = new Tri3Constructor();
-    f.initProblem(mesh, conditions, constructor);
+    f.initProblem(mesh, constructor);
 
     Eigen::VectorXd x = f.simulate(mesh);
     f.writeDisplacements("cylinder_displacements_fem.txt", x);

@@ -56,10 +56,6 @@ public:
      * @param d directions to set
      */
     void setDirection(std::vector<int> d);
-
-    /* Sets the default index (zero) of the dofs associated to a point affected by this constraint
-     */
-    void setDirection();
 };
 
 

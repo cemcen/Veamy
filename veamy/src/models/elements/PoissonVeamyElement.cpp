@@ -19,7 +19,6 @@ void PoissonVeamyElement::computeK(DOFS &d, UniqueList<Point> &points) {
     for(int vertex_id=0; vertex_id<n; vertex_id++){
         Point vertex = points[polygonPoints[vertex_id]];
 
-
         Edge prev (polygonPoints[(n+vertex_id-1)%n], polygonPoints[vertex_id]);
         Edge next (polygonPoints[vertex_id], polygonPoints[(n+vertex_id+1)%n]);
 
@@ -58,4 +57,5 @@ void PoissonVeamyElement::computeK(DOFS &d, UniqueList<Point> &points) {
     P = H*(W.transpose());
 
     this->K = area*W*Ic*W.transpose() + (I - P).transpose()*I*(I - P);
+    //std::cout << K << std::endl << std::endl;
 }

@@ -9,6 +9,8 @@
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
 #include <feamy/Feamer.h>
 #include <feamy/models/constructor/Tri3Constructor.h>
+#include <veamy/physics/conditions/LinearElasticityConditions.h>
+#include <feamy/problem/FeamyLinearElasticityDiscretization.h>
 
 double tangencial(double x, double y){
     double P = -1000;
@@ -44,39 +46,34 @@ int main(){
     rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 24, 12);
 
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
-    TriangleDelaunayGenerator generator(rectangle4x8, seeds);
+    TriangleDelaunayGenerator generator(seeds, rectangle4x8);
 
     Mesh<Triangle> mesh = generator.getConformingDelaunayTriangulation();
     mesh.printInFile("parabolic_fem_mesh.txt");
 
-    EssentialConstraints essential;
+    Material* material = new MaterialPlaneStrain (1e7, 0.3);
+    LinearElasticityConditions* conditions = new LinearElasticityConditions(material);
+
     Function* uXConstraint = new Function(uX);
     Function* uYConstraint = new Function(uY);
 
     PointSegment leftSide(Point(0,-2), Point(0,2));
-    SegmentConstraint const1 (leftSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
-    essential.addConstraint(const1, mesh.getPoints());
+    SegmentConstraint const1 (leftSide, mesh.getPoints(), uXConstraint);
+    conditions->addEssentialConstraint(const1, mesh.getPoints(), elasticity_constraints::Direction::Horizontal);
 
-    SegmentConstraint const2 (leftSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
-    essential.addConstraint(const2, mesh.getPoints());
-
-    NaturalConstraints natural;
+    SegmentConstraint const2 (leftSide, mesh.getPoints(), uYConstraint);
+    conditions->addEssentialConstraint(const2, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
 
     Function* tangencialLoad = new Function(tangencial);
     PointSegment rightSide(Point(8,-2), Point(8,2));
 
-    SegmentConstraint const3 (rightSide, mesh.getPoints(), Constraint::Direction::Vertical, tangencialLoad);
-    natural.addConstraint(const3, mesh.getPoints());
+    SegmentConstraint const3 (rightSide, mesh.getPoints(), tangencialLoad);
+    conditions->addNaturalConstraint(const3, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
 
-    ConstraintsContainer container;
-    container.addConstraints(essential, mesh.getPoints());
-    container.addConstraints(natural, mesh.getPoints());
+    FeamyLinearElasticityDiscretization* problem = new FeamyLinearElasticityDiscretization(conditions);
 
-    Material* material = new MaterialPlaneStrain (1e7, 0.3);
-    Conditions conditions(container, material);
-
-    Feamer feamer;
-    feamer.initProblem(mesh, conditions, new Tri3Constructor());
+    Feamer feamer(problem);
+    feamer.initProblem(mesh, new Tri3Constructor());
     Eigen::VectorXd x = feamer.simulate(mesh);
     feamer.writeDisplacements("parabolic_fem_results.txt", x);
 }

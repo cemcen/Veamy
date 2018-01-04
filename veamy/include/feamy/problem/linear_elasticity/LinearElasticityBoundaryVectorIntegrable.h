@@ -12,16 +12,6 @@
  * the linear elasticity problem
  */
 class LinearElasticityBoundaryVectorIntegrable : public BoundaryVectorIntegrable{
-private:
-    /*
-     * Constraint of the element (load that is imposed)
-     */
-    Constraint c;
-
-    /*
-     * Indexes of the vertices of the element
-     */
-    std::vector<int> indexes;
 public:
     /*
      * Constructor

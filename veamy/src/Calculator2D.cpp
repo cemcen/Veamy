@@ -78,6 +78,8 @@ Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
 
     assemble(K, f);
 
+    std::cout << K << std::endl << std::endl;
+
     //Apply constrained_points
     EssentialConstraints essential = this->conditions->constraints.getEssentialConstraints();
     std::vector<int> c = essential.getConstrainedDOF();

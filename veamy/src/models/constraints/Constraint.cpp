@@ -1,8 +1,11 @@
 #include <veamy/models/constraints/Constraint.h>
 
-Constraint::Constraint() {}
+Constraint::Constraint() {
+    this->direction = {0};
+}
 
 Constraint::Constraint(ConstraintValue *value) {
+    this->direction = {0};
     this->v = value;
 }
 
@@ -22,7 +25,5 @@ void Constraint::setDirection(std::vector<int> d) {
     this->direction.assign(d.begin(), d.end());
 }
 
-void Constraint::setDirection() {
-    this->direction.push_back(0);
-}
+
 

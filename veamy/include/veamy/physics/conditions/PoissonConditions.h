@@ -22,6 +22,11 @@ public:
      * Constructor. Uses an empty constraint container, that is latter filled.
      */
     PoissonConditions(BodyForce* f);
+
+    /*
+     * Constructor. Uses an empty constrainnt container and the default body force
+     */
+    PoissonConditions();
 };
 
 #endif
