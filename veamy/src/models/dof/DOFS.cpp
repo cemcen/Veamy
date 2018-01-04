@@ -3,7 +3,7 @@
 DOFS::DOFS() {}
 
 std::vector<int>
-DOFS::addDOF(ConstraintsContainer &constraints, std::vector<Point> points, int point_index, SegmentPair pair) {
+DOFS::addDOF(ConstraintsContainer &constraints, std::vector<Point> &points, int point_index, SegmentPair pair) {
     std::unordered_map<int,int>::iterator it = occupied_point_indexes.find(point_index);
 
     if(it!=occupied_point_indexes.end()){
