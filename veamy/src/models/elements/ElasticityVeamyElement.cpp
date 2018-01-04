@@ -66,7 +66,6 @@ void ElasticityVeamyElement::computeK(DOFS &d, UniqueList<Point> &points) {
         Wc(2*vertex_id, 2) = Qi_y;
         Wc(2*vertex_id+1, 1) = 2*Qi_y;
         Wc(2*vertex_id+1, 2) = Qi_x;
-
     }
 
     Eigen::MatrixXd Pr;
@@ -91,6 +90,4 @@ void ElasticityVeamyElement::computeK(DOFS &d, UniqueList<Point> &points) {
     Se = config->getGamma()*alphaS*I;
 
     this->K = area*Wc*D*Wc.transpose() + (I - Pp).transpose()*Se*(I - Pp);
-
-    std::cout << K << std::endl << std::endl;
 }

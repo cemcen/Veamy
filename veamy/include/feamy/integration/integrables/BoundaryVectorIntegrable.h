@@ -11,7 +11,7 @@
  * Represents the value inside the elemental load vector (that needs to be integrated) for a given element
  */
 class BoundaryVectorIntegrable : public IntegrableFunction<Eigen::VectorXd>{
-private:
+protected:
     /*
      * Shape functions of the element
      */

@@ -11,16 +11,6 @@
  * elasticity problem
  */
 class LinearElasticityBodyForceIntegrable : public BodyForceIntegrable{
-private:
-    /*
-     * Shape functions of the element
-     */
-    ShapeFunctions* N;
-
-    /*
-     * Body force applied to the domain
-     */
-    BodyForce* f;
 public:
     /*
      * Constructor
@@ -53,7 +43,7 @@ public:
         std::vector<FunctionComputable*> components = f->getComponents();
 
         for (int k = 0; k < dofs; ++k) {
-            b(dofs) = components[k]->apply(real.getX(), real.getY(), 0, Polygon());
+            b(k) = components[k]->apply(real.getX(), real.getY(), 0, Polygon());
         }
 
         return Ne.transpose()*b;

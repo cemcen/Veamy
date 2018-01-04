@@ -10,7 +10,7 @@
  * Represents the function inside the part of the load vector related to the body force
  */
 class BodyForceIntegrable : public IntegrableFunction<Eigen::VectorXd>{
-private:
+protected:
     /*
      * Shape functions of the element
      */

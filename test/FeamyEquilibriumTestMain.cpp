@@ -19,6 +19,8 @@ int main(){
 
     delaunay.printInFile("fem_eq_mesh.txt");
 
+    LinearElasticityConditions* conditions = new LinearElasticityConditions();
+
     Feamer feamer;
 
     EssentialConstraints essential;

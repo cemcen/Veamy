@@ -10,6 +10,8 @@
 #include <veamy/config/VeamyConfig.h>
 #include <veamy/postprocess/analytic/DisplacementValue.h>
 #include <veamy/postprocess/L2NormCalculator.h>
+#include <veamy/physics/conditions/LinearElasticityConditions.h>
+#include <veamy/problems/VeamyLinearElasticityDiscretization.h>
 
 Pair<double> analytic(double x, double y){
     double E = 3e7, v = 0.3;
@@ -54,33 +56,30 @@ int main(){
     mesh.printInFile(meshFileName);
     std::cout << "done" << std::endl;
 
+    std::cout << "+ Defining linear elastic material ... ";
+    Material* material = new MaterialPlaneStress(3e7, 0.3);
+    LinearElasticityConditions* conditions = new LinearElasticityConditions(material);
+    std::cout << "done" << std::endl;
+
     std::cout << "+ Defining Dirichlet and Neumann boundary conditions ... ";
-    EssentialConstraints essential;
     PointSegment downSide(Point(0,0), Point(1,0));
-    SegmentConstraint down (downSide, mesh.getPoints(), Constraint::Direction::Vertical, new Constant(0));
-    essential.addConstraint(down, mesh.getPoints());
+    SegmentConstraint down (downSide, mesh.getPoints(), new Constant(0));
+    conditions->addEssentialConstraint(down, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
     Point cornerPoint(Point(1,0));
-    PointConstraint corner(cornerPoint, Constraint::Direction::Horizontal, new Constant(0));
-    essential.addConstraint(corner);
+    PointConstraint corner(cornerPoint, new Constant(0));
+    conditions->addEssentialConstraint(corner, elasticity_constraints::Direction::Horizontal);
 
     NaturalConstraints natural;
     PointSegment topSide(Point(0,1), Point(1,1));
-    SegmentConstraint top (topSide, mesh.getPoints(), Constraint::Direction::Vertical, new Constant(1));
-    natural.addConstraint(top, mesh.getPoints());
-
-    ConstraintsContainer container;
-    container.addConstraints(essential, mesh.getPoints());
-    container.addConstraints(natural, mesh.getPoints());
-    std::cout << "done" << std::endl;
-
-    std::cout << "+ Defining linear elastic material ... ";
-    Material* material = new MaterialPlaneStress(3e7, 0.3);
-    Conditions conditions(container, material);
+    SegmentConstraint top (topSide, mesh.getPoints(), new Constant(1));
+    conditions->addNaturalConstraint(top, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Preparing the simulation ... ";
-    Veamer v;
-    v.initProblem(mesh, conditions);
+    VeamyLinearElasticityDiscretization* problem = new VeamyLinearElasticityDiscretization(conditions);
+
+    Veamer v(problem);
+    v.initProblem(mesh);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Simulating ... ";

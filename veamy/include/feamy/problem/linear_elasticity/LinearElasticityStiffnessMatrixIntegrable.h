@@ -14,16 +14,6 @@
 class LinearElasticityStiffnessMatrixIntegrable : public StiffnessMatrixIntegrable{
 private:
     /*
-     * Shape functions of the element
-     */
-    ShapeFunctions* N;
-
-    /*
-     * Jacobian matrix of the element geometry
-     */
-    Eigen::MatrixXd J;
-
-    /*
      * Material matrix
      */
     Eigen::MatrixXd D;

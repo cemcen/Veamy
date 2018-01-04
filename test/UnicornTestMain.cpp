@@ -29,8 +29,8 @@ int main(){
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
-    std::string meshFileName = "Software/Veamy-master/build/test/unicorn_mesh.txt";
-    std::string dispFileName = "Software/Veamy-master/build/test/unicorn_displacements.txt";
+    std::string meshFileName = "unicorn_mesh.txt";
+    std::string dispFileName = "unicorn_displacements.txt";
     std::string geoFileName = "Software/Veamy-master/build/test/unicorn_geometry.txt";
 	
     std::cout << "*** Starting Veamy ***" << std::endl;

@@ -1,6 +1,8 @@
 #include <veamy/Veamer.h>
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
 #include <veamy/config/VeamyConfig.h>
+#include <veamy/physics/conditions/LinearElasticityConditions.h>
+#include <veamy/problems/VeamyLinearElasticityDiscretization.h>
 
 int main(){
     // Set precision for plotting to output files:    
@@ -20,12 +22,12 @@ int main(){
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
-    std::string meshFileName = "Software/Veamy-master/build/test/polymesher_test_mesh.txt";
-    std::string dispFileName = "Software/Veamy-master/build/test/polymesher_test_displacements.txt";
+    std::string meshFileName = "polymesher_test_mesh.txt";
+    std::string dispFileName = "polymesher_test_displacements.txt";
 
     // File that contains the PolyMesher mesh and boundary conditions. Use Matlab function 
     // PolyMesher2Veamy.m to generate this file
-    std::string polyMesherMeshFileName = "Software/Veamy-master/test/test_files/polymesher2veamy.txt";
+    std::string polyMesherMeshFileName = "polymesher2veamy.txt";
 
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Using a PolyMesher mesh and boundary conditions <--" << std::endl;
@@ -33,11 +35,14 @@ int main(){
 
     std::cout << "+ Defining linear elastic material ... ";
     Material* material = new MaterialPlaneStrain(1e7, 0.3);
+    LinearElasticityConditions* conditions = new LinearElasticityConditions(material);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Preparing the simulation from a PolyMesher mesh and boundary conditions ... ";
-    Veamer v;
-    Mesh<Polygon> mesh = v.initProblemFromFile(polyMesherMeshFileName, material);
+    VeamyLinearElasticityDiscretization* problem = new VeamyLinearElasticityDiscretization(conditions);
+
+    Veamer v(problem);
+    Mesh<Polygon> mesh = v.initProblemFromFile(polyMesherMeshFileName);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing mesh to a file ... ";

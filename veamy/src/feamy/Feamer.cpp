@@ -6,7 +6,7 @@ Feamer::Feamer(ProblemDiscretization<Triangle,Feamer> *problem) :
     this->problem = problem;
 }
 
-void Feamer::initProblem(Mesh<Triangle> m, Conditions* conditions, FeamyElementConstructor *constructor) {
+void Feamer::initProblem(Mesh<Triangle> m, FeamyElementConstructor *constructor) {
     UniqueList<Point>& meshPoints = m.getPoints();
     this->points.push_list(meshPoints);
 

@@ -14,7 +14,6 @@ FeamyLinearElasticityDiscretization::createElement(Feamer *f, Triangle &poly, Un
     VeamyTriangle t (poly);
     FeamyElement* newElement = new FeamyElement(this->conditions, poly, points, f->DOFs, this->numberDOF);
 
-
     newElement->setIntegrables(new LinearElasticityBodyForceIntegrable(conditions->f),
                                new LinearElasticityBoundaryVectorIntegrable(),
                                new LinearElasticityStiffnessMatrixIntegrable(t, points.getList(),

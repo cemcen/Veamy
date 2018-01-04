@@ -8,9 +8,9 @@ FeamyElement::FeamyElement(Conditions *conditions, Triangle &p, UniqueList<Point
 void FeamyElement::setShapeFunctions(ShapeFunctions *N) {
     this->N = N;
 
-    this->stiffnessMatrixIntegrable->setShapeFunctions(this->N);
-    this->bodyForceIntegrable->setShapeFunctions(this->N);
-    this->boundaryVectorIntegrable->setShapeFunctions(this->N);
+    this->stiffnessMatrixIntegrable->setShapeFunctions(N);
+    this->bodyForceIntegrable->setShapeFunctions(N);
+    this->boundaryVectorIntegrable->setShapeFunctions(N);
 }
 
 void FeamyElement::setIntegrables(BodyForceIntegrable *bodyForceIntegrable,

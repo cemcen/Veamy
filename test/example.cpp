@@ -7,6 +7,7 @@
 #include <veamy/models/constraints/values/Function.h>
 #include <chrono>
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
+#include <veamy/problems/VeamyLinearElasticityDiscretization.h>
 
 double tangencial(double x, double y){
     double P = -1000;
@@ -46,35 +47,28 @@ int main(){
     Mesh<Polygon> mesh = meshGenerator.getMesh();
     mesh.printInFile("mesh24x12.txt");
 
-    Veamer v;
+    Material* material = new MaterialPlaneStrain(1e7, 0.3);
+    LinearElasticityConditions* conditions = new LinearElasticityConditions(material);
+    VeamyLinearElasticityDiscretization* problem = new VeamyLinearElasticityDiscretization(conditions);
 
-    EssentialConstraints essential;
     Function* uXConstraint = new Function(uX);
     Function* uYConstraint = new Function(uY);
 
     PointSegment leftSide(Point(0,-2), Point(0,2));
-    SegmentConstraint const1 (leftSide, mesh.getPoints(), Constraint::Direction::Horizontal, uXConstraint);
-    essential.addConstraint(const1, mesh.getPoints());
+    SegmentConstraint const1 (leftSide, mesh.getPoints(), uXConstraint);
+    conditions->addEssentialConstraint(const1, mesh.getPoints(), elasticity_constraints::Direction::Horizontal);
 
-    SegmentConstraint const2 (leftSide, mesh.getPoints(), Constraint::Direction::Vertical, uYConstraint);
-    essential.addConstraint(const2, mesh.getPoints());
-
-    NaturalConstraints natural;
+    SegmentConstraint const2 (leftSide, mesh.getPoints(), uYConstraint);
+    conditions->addEssentialConstraint(const2, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
 
     Function* tangencialLoad = new Function(tangencial);
     PointSegment rightSide(Point(8,-2), Point(8,2));
 
-    SegmentConstraint const3 (rightSide, mesh.getPoints(), Constraint::Direction::Vertical, tangencialLoad);
-    natural.addConstraint(const3, mesh.getPoints());
+    SegmentConstraint const3 (rightSide, mesh.getPoints(), tangencialLoad);
+    conditions->addNaturalConstraint(const3, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
 
-    ConstraintsContainer container;
-    container.addConstraints(essential, mesh.getPoints());
-    container.addConstraints(natural, mesh.getPoints());
-
-    Material* material = new MaterialPlaneStrain(1e7, 0.3);
-    Conditions conditions(container, material);
-
-    v.initProblem(mesh, conditions);
+    Veamer v(problem);
+    v.initProblem(mesh);
 
     Eigen::VectorXd x = v.simulate(mesh);
 

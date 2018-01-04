@@ -14,11 +14,6 @@
 class LinearElasticityBoundaryVectorIntegrable : public BoundaryVectorIntegrable{
 private:
     /*
-     * Shape functions of the element
-     */
-    ShapeFunctions* N;
-
-    /*
      * Constraint of the element (load that is imposed)
      */
     Constraint c;

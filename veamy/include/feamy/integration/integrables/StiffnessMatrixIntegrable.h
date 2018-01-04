@@ -11,7 +11,7 @@
  * shape functions)
  */
 class StiffnessMatrixIntegrable : public IntegrableFunction<Eigen::MatrixXd>{
-private:
+protected:
     /*
      * Shape functions of the element
      */
