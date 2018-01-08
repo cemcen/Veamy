@@ -15,7 +15,7 @@ public:
     * @param points list of points instances which the polygon points reference to (most likely, mesh points)
     * @return list of triangles obtained triangulating the polygon
     */
-    std::vector<Triangle> triangulate(Polygon p, std::vector<Point> points);
+    std::vector<Triangle> triangulate(Polygon p, std::vector<Point>& points);
 };
 
 #endif

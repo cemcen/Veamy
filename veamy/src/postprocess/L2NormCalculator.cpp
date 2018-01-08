@@ -26,7 +26,7 @@ void L2NormCalculator<T>::setCalculator(VeamyIntegrator<T>* integrator) {
     this->num = integrator;
     this->den = den;
 
-    DisplacementCalculator<T>* calculator = new VeamyDisplacementCalculator<T>(this->dofs, this->nodalDisplacements);
+    DisplacementCalculator<T>* calculator = new VeamyDisplacementCalculator<T>(this->dofs, this->nodalDisplacements, this.);
 
     this->num->setComputable(new DisplacementDifferenceComputable<T>(this->value, calculator));
     this->den->setComputable(new DisplacementComputable<T>(this->value));

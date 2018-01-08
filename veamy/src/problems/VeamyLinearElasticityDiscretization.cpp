@@ -72,3 +72,7 @@ Mesh<Polygon> VeamyLinearElasticityDiscretization::initProblemFromFile(Veamer *v
 
     return mesh;
 }
+
+double VeamyLinearElasticityDiscretization::computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon> mesh) {
+    return 0;
+}

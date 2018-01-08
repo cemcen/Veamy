@@ -24,7 +24,6 @@ void Veamer::initProblem(const Mesh<Polygon> &m) {
 }
 
 double Veamer::computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon> mesh) {
-    calculator->setCalculator(new VeamyIntegrator<Polygon>);
-    return calculator->getNorm(mesh);
+    return problem->computeErrorNorm(calculator, mesh);
 }
 

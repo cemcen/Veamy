@@ -35,9 +35,6 @@ void ElasticityVeamyElement::computeK(DOFS &d, UniqueList<Point> &points) {
         Point middleP = prev.middlePoint(points.getList());
         Point middleN = next.middlePoint(points.getList());
 
-        double p = delynoi_utilities::crossProduct(middleP, Point(prevNormal.first, prevNormal.second));
-        double ne = delynoi_utilities::crossProduct(middleN, Point(nextNormal.first, nextNormal.second));
-
         double prevLength = prev.getLength(points.getList());
         double nextLength = next.getLength(points.getList());
 

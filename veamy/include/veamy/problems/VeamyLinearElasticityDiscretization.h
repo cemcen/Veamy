@@ -14,6 +14,7 @@ public:
     Element<Polygon>* createElement(Veamer *v, Polygon &poly, UniqueList<Point> &points);
 
     Mesh<Polygon> initProblemFromFile(Veamer *v, std::string fileName);
+    double computeErrorNorm(NormCalculator<Polygon>* calculator, Mesh<Polygon> mesh);
 };
 
 #endif

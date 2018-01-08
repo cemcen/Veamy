@@ -37,7 +37,7 @@ Triangle EarTriangulationGenerator::getEar(std::vector<Point>& points, std::vect
     return t;
 }
 
-std::vector<Triangle> EarTriangulationGenerator::triangulate(Polygon p, std::vector<Point> points) {
+std::vector<Triangle> EarTriangulationGenerator::triangulate(Polygon p, std::vector<Point>& points) {
     std::vector<Triangle> triangles;
     std::vector<int> pointList = p.getPoints();
 

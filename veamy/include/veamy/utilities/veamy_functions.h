@@ -6,6 +6,9 @@
 #include <veamy/utilities/functions_types.h>
 #include <veamy/postprocess/computables/Computable.h>
 #include <veamy/lib/Eigen/Dense>
+#include <delynoi/triangulation/CenterTriangulationGenerator.h>
+#include <delynoi/triangulation/EarTriangulationGenerator.h>
+#include <feamy/integration/quadrature/gauss_quadrature.h>
 
 /*
  * Namespace that define a number of utility functions of the Veamy library
@@ -40,6 +43,13 @@ namespace veamy_functions{
 
         return result;
     }
+
+    /* Computes a numerical integral approximation using a Gaussian scheme
+     * @param poly polygon in which the integral will be computed
+     * @param points mesh points
+     */
+    extern double gauss_integration(Polygon poly, std::vector<Point>& points, int nGauss,
+                                      Computable<Polygon>* computable);
 
     /* Converts a Trio to an Eigen vector
      * @param vector Trio to convert
@@ -84,6 +94,7 @@ namespace veamy_functions{
      * @return zero
      */
     extern double none_function(double x, double y);
+
 }
 
 #endif

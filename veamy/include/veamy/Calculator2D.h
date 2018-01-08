@@ -28,8 +28,6 @@ protected:
      * Mesh points
      */
     UniqueList<Point> points;
-
-
 public:
     /*
      * Degrees of freedom of the system
