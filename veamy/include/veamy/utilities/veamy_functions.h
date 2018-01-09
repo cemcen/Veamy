@@ -103,10 +103,10 @@ namespace veamy_functions{
 
             norm_utilities::triangle_rules(gaussPoints, t, weights, nGauss, points);
 
-            for (int i = 0; i < gaussPoints.size(); ++i) {
+            for (int i = 0; i < weights.size(); ++i) {
                 Point p = Point(gaussPoints(i,0), gaussPoints(i,1));
 
-                result += computable->apply(p.getX(), p.getY(), 0, t)*weights[i];
+                result += computable->apply(p.getX(), p.getY(), 0, poly)*weights[i];
             }
         }
 

@@ -3,19 +3,19 @@
 
 namespace norm_utilities{
     Eigen::MatrixXd QMatrix(Eigen::MatrixXd &Wc) {
-        int n = Wc.cols()/3;
+        int n = Wc.rows()/2;
 
         Eigen::MatrixXd Q;
-        Q = Eigen::MatrixXd::Zero(2, 2*n);
+        Q = Eigen::MatrixXd::Zero(2*n, 2);
 
         for (int i = 0; i < n; ++i) {
-            double Qi_x = Wc(1, 3*i+2);
-            double Qi_y = Wc(0, 3*i+2);
+            double Qi_x = Wc(2*i+1, 2);
+            double Qi_y = Wc(2*i, 2);
 
-            Q(0, 2*i) = Qi_y;
-            Q(1, 2*i+1) = -Qi_y;
-            Q(0, 2*i) = -Qi_x;
-            Q(1, 2*i+1) = Qi_x;
+            Q(2*i, 0) = Qi_y;
+            Q(2*i, 1) = -Qi_y;
+            Q(2*i+1, 0) = -Qi_x;
+            Q(2*i+1, 1) = Qi_x;
         }
 
         return Q;

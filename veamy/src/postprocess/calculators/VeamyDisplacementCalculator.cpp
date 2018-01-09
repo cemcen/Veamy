@@ -20,8 +20,16 @@ Pair<double> VeamyDisplacementCalculator<T>::getDisplacement(double x, double y,
     Eigen::MatrixXd Wc = norm_utilities::WcMatrix(container, this->points);
     Eigen::VectorXd d =  norm_utilities::getElementNodalValues(container, this->nodalValues, this->dofs);
 
-    Eigen::VectorXd uhProyection = (Wc.transpose()*d).dot(X-Xbar) +
-            (norm_utilities::QMatrix(Wc).transpose()*d).dot(X-Xbar) + norm_utilities::getAverage(d);
+    Eigen::VectorXd PiCGuH = Wc.transpose()*d;
+    Eigen::VectorXd PiRGuH = norm_utilities::QMatrix(Wc).transpose()*d;
+
+    Eigen::Matrix<double,2,2> PiC;
+    Eigen::Matrix<double,2,2> PiR;
+
+    PiC << PiCGuH(0), PiCGuH(2), PiCGuH(2), PiCGuH(1);
+    PiR << 0, PiRGuH(0), PiRGuH(1), 0;
+
+    Eigen::VectorXd uhProyection = PiC*(X-Xbar) + PiR*(X-Xbar) + norm_utilities::getAverage(d);
 
     Pair<double> uH(uhProyection(0), uhProyection(1));
     return uH;
