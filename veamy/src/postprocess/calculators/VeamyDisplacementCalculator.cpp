@@ -9,7 +9,7 @@ VeamyDisplacementCalculator<T>::VeamyDisplacementCalculator(DOFS d, Eigen::Vecto
 
 template <typename T>
 Pair<double> VeamyDisplacementCalculator<T>::getDisplacement(double x, double y, int index, T container) {
-    Point average = container.getAverage();
+    Point average = container.getAverage(this->points);
 
     Eigen::VectorXd X, Xbar;
     X = Eigen::VectorXd::Zero(2), Xbar = Eigen::VectorXd::Zero(2);
@@ -20,8 +20,8 @@ Pair<double> VeamyDisplacementCalculator<T>::getDisplacement(double x, double y,
     Eigen::MatrixXd Wc = norm_utilities::WcMatrix(container, this->points);
     Eigen::VectorXd d =  norm_utilities::getElementNodalValues(container, this->nodalValues, this->dofs);
 
-    Eigen::VectorXd uhProyection = Wc.transpose()*d*(X-Xbar) + norm_utilities::QMatrix(Wc).transpose()*d*(X-Xbar) +
-                                                     norm_utilities::getAverage(d);
+    Eigen::VectorXd uhProyection = (Wc.transpose()*d).dot(X-Xbar) +
+            (norm_utilities::QMatrix(Wc).transpose()*d).dot(X-Xbar) + norm_utilities::getAverage(d);
 
     Pair<double> uH(uhProyection(0), uhProyection(1));
     return uH;

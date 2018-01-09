@@ -9,6 +9,7 @@
 #include <delynoi/triangulation/CenterTriangulationGenerator.h>
 #include <delynoi/triangulation/EarTriangulationGenerator.h>
 #include <feamy/integration/quadrature/gauss_quadrature.h>
+#include <veamy/postprocess/utilities/norm_utilities.h>
 
 /*
  * Namespace that define a number of utility functions of the Veamy library
@@ -44,14 +45,7 @@ namespace veamy_functions{
         return result;
     }
 
-    /* Computes a numerical integral approximation using a Gaussian scheme
-     * @param poly polygon in which the integral will be computed
-     * @param points mesh points
-     */
-    extern double gauss_integration(Polygon poly, std::vector<Point>& points, int nGauss,
-                                      Computable<Polygon>* computable);
-
-    /* Converts a Trio to an Eigen vector
+     /* Converts a Trio to an Eigen vector
      * @param vector Trio to convert
      * @return the same values, in an Eigen vector
      */
@@ -87,6 +81,39 @@ namespace veamy_functions{
         Trio<T> trio (vector(0), vector(1), vector(2));
         return trio;
     }
+
+    /* Computes a numerical integral approximation using a Gaussian scheme
+     * @param poly polygon in which the integral will be computed
+     * @param points mesh points
+     */
+    template <typename T>
+    double gauss_integration(T poly, std::vector<Point>& points, int nGauss, Computable<T>* computable){
+        std::vector<Triangle> triangles;
+        double result = 0;
+
+        if(poly.isConvex(points)){
+            triangles = CenterTriangulationGenerator().triangulate(poly, points);
+        } else {
+            triangles = EarTriangulationGenerator().triangulate(poly, points);
+        }
+
+        for (Triangle t: triangles){
+            Eigen::MatrixXd gaussPoints;
+            std::vector<double> weights;
+
+            norm_utilities::triangle_rules(gaussPoints, t, weights, nGauss, points);
+
+            for (int i = 0; i < gaussPoints.size(); ++i) {
+                Point p = Point(gaussPoints(i,0), gaussPoints(i,1));
+
+                result += computable->apply(p.getX(), p.getY(), 0, t)*weights[i];
+            }
+        }
+
+        return result;
+
+    }
+
 
     /*
      * Defines a function that always returns zero, used for body forces

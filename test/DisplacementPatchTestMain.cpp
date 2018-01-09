@@ -7,7 +7,7 @@
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
 #include <veamy/physics/conditions/LinearElasticityConditions.h>
 #include <veamy/problems/VeamyLinearElasticityDiscretization.h>
-
+#include <veamy/postprocess/L2NormCalculator.h>
 
 double uXPatch(double x, double y){
     return x;
@@ -16,6 +16,12 @@ double uXPatch(double x, double y){
 double uYPatch(double x, double y){
     return x + y;
 }
+
+Pair<double> realDisplacement(double x, double y){
+    return Pair<double>(x, x+y);
+}
+
+
 
 int main(){
     // Set precision for plotting to output files:       
@@ -90,7 +96,6 @@ int main(){
     conditions->addEssentialConstraint(topX, mesh.getPoints(), elasticity_constraints::Direction::Horizontal);
     SegmentConstraint  topY (topSide, mesh.getPoints(), uYConstraint);
     conditions->addEssentialConstraint(topY, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
-
     std::cout << "done" << std::endl;
 
     std::cout << "+ Preparing the simulation ... ";
@@ -107,6 +112,19 @@ int main(){
     std::cout << "+ Printing nodal displacement solution to a file ... ";
     v.writeDisplacements(dispFileName, x);
     std::cout << "done" << std::endl;
+
+    std::cout << "+ Computing error norms ...";
+    DisplacementValue* value = new DisplacementValue(realDisplacement);
+    L2NormCalculator<Polygon>* calculator = new L2NormCalculator<Polygon>(value, x, v.DOFs);
+    double L2norm = problem->computeErrorNorm(calculator, mesh);
+
+    std::cout << " + L2 norm value: ";
+    std::cout << utilities::toString(L2norm) << std::endl;
+
+
+
+
+
     std::cout << "+ Problem finished successfully" << std::endl;
     std::cout << "..." << std::endl;
     std::cout << "Check output files:" << std::endl;

@@ -41,8 +41,27 @@ namespace norm_utilities{
 
         return Wc;
     }
+
+    template <typename T>
+    Eigen::VectorXd getElementNodalValues(T &poly, Eigen::VectorXd &uNodal, DOFS &d) {
+        int n_dofs = d.getNumberOfDOFS();
+        std::vector<int> points = poly.getPoints();
+
+        Eigen::VectorXd uPoly;
+        uPoly = Eigen::VectorXd::Zero(points.size()*n_dofs);
+
+        for (int i = 0; i < points.size(); ++i) {
+            std::vector<int> dofs = d.pointToDOFS(points[i]);
+
+            for (int j = 0; j < dofs.size(); ++j) {
+                uPoly(n_dofs*i+j) = uNodal[dofs[j]];
+            }
+        }
+
+        return uPoly;
+    }
+
     extern Eigen::MatrixXd QMatrix(Eigen::MatrixXd &Wc);
-    extern Eigen::VectorXd getElementNodalValues(Polygon &poly, Eigen::VectorXd &uNodal, DOFS &d);
     extern Eigen::VectorXd getAverage(Eigen::VectorXd u);
     extern Eigen::MatrixXd trianglePoints(Triangle& t, std::vector<Point>& points);
     extern void triangle_rules(Eigen::MatrixXd &points, Triangle &poly, std::vector<double> &weights, int order,

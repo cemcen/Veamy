@@ -7,6 +7,7 @@ FeamyLinearElasticityDiscretization::FeamyLinearElasticityDiscretization(LinearE
         ProblemDiscretization(conditions){
     this->conditions = conditions;
     this->numberDOF = 2;
+    this->conditions->material->setMultiplicativeFactor(1/2);
 }
 
 Element<Triangle> *

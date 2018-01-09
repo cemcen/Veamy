@@ -14,6 +14,10 @@ public:
      * @return list of triangles obtained triangulating the polygon
      */
     virtual std::vector<Triangle> triangulate(Polygon p, std::vector<Point>& points) = 0;
+
+    std::vector<Triangle> triangulate(Triangle p, std::vector<Point>& points){
+        return {p};
+    }
 };
 
 #endif

@@ -35,7 +35,12 @@ public:
     /* Sets the calculators for this norm
      * @param integrator Calculator to use
      */
-    void setCalculator(VeamyIntegrator<T>* integrator);
+    void setCalculator(VeamyIntegrator<T> *integrator, std::vector<Point> &points);
+
+    /* Sets all extra information from the problem conditions that is used for norm computation
+     * @param conditions problem conditions
+     */
+    void setExtraInformation(Conditions* conditions);
 };
 
 #endif

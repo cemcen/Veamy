@@ -2,10 +2,12 @@
 #include <veamy/models/elements/ElasticityVeamyElement.h>
 #include <veamy/models/constraints/values/Constant.h>
 
+
 VeamyLinearElasticityDiscretization::VeamyLinearElasticityDiscretization(LinearElasticityConditions *conditions)
         : ProblemDiscretization(conditions){
     this->conditions = conditions;
     this->numberDOF = 2;
+    this->conditions->material->setMultiplicativeFactor(2);
 }
 
 Element<Polygon> *VeamyLinearElasticityDiscretization::createElement(Veamer *v, Polygon &poly, UniqueList<Point> &points) {
@@ -74,5 +76,8 @@ Mesh<Polygon> VeamyLinearElasticityDiscretization::initProblemFromFile(Veamer *v
 }
 
 double VeamyLinearElasticityDiscretization::computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon> mesh) {
-    return 0;
+    calculator->setCalculator(new VeamyIntegrator<Polygon>, mesh.getPoints().getList());
+    calculator->setExtraInformation(this->conditions);
+
+    return calculator->getNorm(mesh);
 }

@@ -1,31 +1,22 @@
-#ifndef VEAMY_STRAINSTRESSCOMPUTABLE_H
-#define VEAMY_STRAINSTRESSCOMPUTABLE_H
+#ifndef VEAMY_STRAINCOMPUTABLE_H
+#define VEAMY_STRAINCOMPUTABLE_H
 
 #include <veamy/postprocess/analytic/StrainValue.h>
-#include <veamy/postprocess/analytic/StressValue.h>
-#include <delynoi/models/polygon/Triangle.h>
+#include <veamy/lib/Eigen/Dense>
 #include "H1Computable.h"
 
-/*
- * Computes the term sigma dot epsilon of the H1 norm
- */
 template <typename T>
-class StrainStressComputable : public H1Computable<T>{
+class StrainComputable: public H1Computable<T>{
 private:
     /*
      * Analytical strain value
      */
     StrainValue* strainValue;
-
-    /*
-     * Analytical stress value
-     */
-    StressValue* stressValue;
 public:
     /*
      * Constructor
      */
-    StrainStressComputable(StrainValue* strain, StressValue* value);
+    StrainComputable(StrainValue* strain);
 
     /* Calculates the value of this particular computable on a point
      * @param x y coordinates of the point
@@ -34,6 +25,7 @@ public:
      * @return value of the computable
      */
     double apply(double x, double y, int index, T container);
+
 };
 
 #endif

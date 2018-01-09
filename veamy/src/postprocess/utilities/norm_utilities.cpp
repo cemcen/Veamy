@@ -21,24 +21,6 @@ namespace norm_utilities{
         return Q;
     }
 
-    Eigen::VectorXd getElementNodalValues(Polygon &poly, Eigen::VectorXd &uNodal, DOFS &d) {
-        int n_dofs = d.getNumberOfDOFS();
-        std::vector<int> points = poly.getPoints();
-
-        Eigen::VectorXd uPoly;
-        uPoly = Eigen::VectorXd::Zero(points.size()*n_dofs);
-
-        for (int i = 0; i < points.size(); ++i) {
-            std::vector<int> dofs = d.pointToDOFS(points[i]);
-
-            for (int j = 0; j < dofs.size(); ++j) {
-                uPoly(n_dofs*i+j) = uNodal[dofs[j]];
-            }
-        }
-
-        return uPoly;
-    }
-
     Eigen::VectorXd getAverage(Eigen::VectorXd u){
         Eigen::VectorXd uBar;
         uBar = Eigen::VectorXd::Zero(2);
@@ -90,7 +72,7 @@ namespace norm_utilities{
 
         if(order == 2){
             Eigen::Matrix<double,3,3> t;
-            t << 2.0 / 3.0, 1.0 / 6.0, 1.0 / 6.0,
+            t <<    2.0 / 3.0, 1.0 / 6.0, 1.0 / 6.0,
                     1.0 / 6.0, 2.0 / 3.0, 1.0 / 6.0,
                     1.0 / 6.0, 1.0 / 6.0, 2.0 / 3.0;
 
@@ -163,7 +145,7 @@ namespace norm_utilities{
             weights.push_back(0.125939180544827 * area);
             weights.push_back(0.125939180544827 * area);
 
-            points = t * poly;
+            points = t * triangle;
         }
     }
 }
