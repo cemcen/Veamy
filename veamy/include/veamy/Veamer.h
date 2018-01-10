@@ -60,7 +60,7 @@ public:
      * @param mesh mesh associated to the problem
      * @return error norm
      */
-    double computeErrorNorm(NormCalculator<Polygon>* calculator, Mesh<Polygon> mesh);
+    NormResult computeErrorNorm(NormCalculator<Polygon>* calculator, Mesh<Polygon> mesh);
 };
 
 

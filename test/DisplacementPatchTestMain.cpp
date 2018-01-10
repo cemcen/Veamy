@@ -8,6 +8,8 @@
 #include <veamy/physics/conditions/LinearElasticityConditions.h>
 #include <veamy/problems/VeamyLinearElasticityDiscretization.h>
 #include <veamy/postprocess/L2NormCalculator.h>
+#include <veamy/postprocess/analytic/StrainValue.h>
+#include <veamy/postprocess/ElasticityH1NormCalculator.h>
 
 double uXPatch(double x, double y){
     return x;
@@ -21,7 +23,9 @@ Pair<double> realDisplacement(double x, double y){
     return Pair<double>(x, x+y);
 }
 
-
+Trio<double> realStrain(double x, double y){
+    return Trio<double>(1,1,0.5);
+}
 
 int main(){
     // Set precision for plotting to output files:       
@@ -116,14 +120,19 @@ int main(){
     std::cout << "+ Computing error norms ...";
     DisplacementValue* value = new DisplacementValue(realDisplacement);
     L2NormCalculator<Polygon>* calculator = new L2NormCalculator<Polygon>(value, x, v.DOFs);
-    double L2norm = problem->computeErrorNorm(calculator, mesh);
+    NormResult L2norm = problem->computeErrorNorm(calculator, mesh);
 
     std::cout << " + L2 norm value: ";
-    std::cout << utilities::toString(L2norm) << std::endl;
+    std::cout << utilities::toString(L2norm.NormValue) << std::endl;
 
+    std::cout << " + Maximum edge: ";
+    std::cout << utilities::toString(L2norm.MaxEdge) << std::endl;
+    StrainValue* strainValue = new StrainValue(realStrain);
+    ElasticityH1NormCalculator<Polygon>* h1NormCalculator = new ElasticityH1NormCalculator<Polygon>(strainValue, x, v.DOFs);
+    NormResult H1Norm = problem->computeErrorNorm(h1NormCalculator, mesh);
 
-
-
+    std::cout << " +  H1 norm value: ";
+    std::cout << utilities::toString(H1Norm.NormValue) << std::endl;
 
     std::cout << "+ Problem finished successfully" << std::endl;
     std::cout << "..." << std::endl;

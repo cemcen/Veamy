@@ -14,6 +14,7 @@ private:
      * Voronoi diagram in the format of a Delynoi mesh
      */
     Mesh<Polygon> voronoi;
+    Mesh<Polygon> delaunay;
 public:
     /*
      * Constructor. Using the point list (seed points) and a domain it computes the Voronoi diagram and sets it in the
@@ -25,6 +26,11 @@ public:
      * @return voronoi diagram
      */
     Mesh<Polygon> getMesh();
+
+    /*
+     * @return delaunay diagram
+     */
+    Mesh<Polygon> getTriangulation();
 };
 
 #endif

@@ -15,3 +15,6 @@ double StrainComputable<T>::apply(double x, double y, int index, T container) {
 
     return value;
 }
+
+template class StrainComputable<Polygon>;
+template class StrainComputable<Triangle>;

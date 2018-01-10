@@ -12,3 +12,6 @@ Eigen::VectorXd VeamyStrainCalculator<T>::getStrain(double x, double y, T contai
 
     return Wc.transpose()*d;
 }
+
+template class VeamyStrainCalculator<Polygon>;
+template class VeamyStrainCalculator<Triangle>;

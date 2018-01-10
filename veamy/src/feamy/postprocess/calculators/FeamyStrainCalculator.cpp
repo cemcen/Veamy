@@ -20,3 +20,6 @@ Eigen::VectorXd FeamyStrainCalculator<T>::getStrain(double x, double y, T contai
 
     return uH;
 }
+
+template class FeamyStrainCalculator<Polygon>;
+template class FeamyStrainCalculator<Triangle>;

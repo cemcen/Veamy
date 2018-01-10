@@ -4,6 +4,7 @@
 #include <veamy/physics/conditions/LinearElasticityConditions.h>
 #include <veamy/models/Element.h>
 #include <veamy/Veamer.h>
+#include <veamy/postprocess/utilities/NormResult.h>
 #include "ProblemDiscretization.h"
 
 class VeamyLinearElasticityDiscretization : public ProblemDiscretization<Polygon,Veamer>{
@@ -14,7 +15,7 @@ public:
     Element<Polygon>* createElement(Veamer *v, Polygon &poly, UniqueList<Point> &points);
 
     Mesh<Polygon> initProblemFromFile(Veamer *v, std::string fileName);
-    double computeErrorNorm(NormCalculator<Polygon>* calculator, Mesh<Polygon> mesh);
+    NormResult computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon> mesh);
 };
 
 #endif

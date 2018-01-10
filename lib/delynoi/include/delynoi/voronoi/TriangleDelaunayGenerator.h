@@ -49,11 +49,6 @@ private:
      * @param restrictedSegment list of segments inside the domain which must be included in the triangulation
      */
     void callTriangle(std::vector<Point> &point_list, char switches[], std::vector<PointSegment> restrictedSegments);
-
-    /* Creates a Mesh (in Delynoi format) from the information of the Delaunay triangulation
-     * @return Delaunay triangulation in Mesh form
-     */
-    Mesh<Triangle> initializeMesh();
 public:
     /*
      * Constructor
@@ -89,6 +84,32 @@ public:
      * @param regionIndex indexes of the points (in point_list) definining the region
      */
     void writeTriangleInputFile(UniqueList<Point> &point_list, Region region, std::vector<int> regionIndex);
+
+    /* Creates a Mesh (in Delynoi format) from the information of the Delaunay triangulation
+    * @return Delaunay triangulation in Mesh form
+    */
+    template <typename T>
+    Mesh<T> initializeMesh(){
+        UniqueList<Point> points;
+        PointMap* pointMap = new PointMap;
+        std::vector<int> indexes = points.push_list(this->meshPoints);
+
+        std::vector<T> polygons;
+        for (int i = 0;i<triangles.size();i++) {
+            Triangle t = triangles[i];
+            std::vector<int> oldPoints = t.getPoints();
+            std::vector<int> newPoints;
+
+            for (int j = 0; j < oldPoints.size(); ++j) {
+                newPoints.push_back(indexes[oldPoints[j]]);
+                pointMap->insert(meshPoints[newPoints[j]], i);
+            }
+
+            polygons.push_back(T(newPoints, meshPoints));
+        }
+
+        return Mesh<T>(points, polygons, this->delaunayEdges, pointMap);
+    };
 };
 
 #endif

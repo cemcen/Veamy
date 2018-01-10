@@ -8,6 +8,7 @@
 #include <veamy/postprocess/integrator/VeamyIntegrator.h>
 #include <feamy/postprocess/integrator/FeamyIntegrator.h>
 #include <feamy/postprocess/structures/FeamyAdditionalInfo.h>
+#include <veamy/postprocess/utilities/NormResult.h>
 
 /*
  * Abstract class that encapsulates the generic formula used to calculate the norms, leaving responsability to the
@@ -42,7 +43,7 @@ public:
      * @param mesh mesh in which the norm will be computed
      * @return value of the norm
      */
-    double getNorm(Mesh<T> mesh);
+    NormResult getNorm(Mesh<T> mesh);
 
     /* Sets the calculators for this norm
      * @param integrator Calculator to use

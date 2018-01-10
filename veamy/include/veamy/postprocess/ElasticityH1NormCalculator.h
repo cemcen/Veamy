@@ -22,11 +22,10 @@ template <typename T>
 class ElasticityH1NormCalculator : public NormCalculator<T> {
 private:
     /*
-     * Analytical stress, strain and displacement values
+     * Analytical stress and strain values
      */
     StressValue* stressValue;
     StrainValue* strainValue;
-    DisplacementValue* value;
 
     /*
      * Material matrix
@@ -42,12 +41,12 @@ public:
     /*
      * Constructor
      */
-    ElasticityH1NormCalculator(StrainValue *strain, StressValue *stress, DisplacementValue* value, Eigen::VectorXd u, DOFS d);
+    ElasticityH1NormCalculator(StrainValue *strain, StressValue *stress, Eigen::VectorXd u, DOFS d);
 
     /*
     * Constructor
     */
-    ElasticityH1NormCalculator(StrainValue *strain, DisplacementValue* value, Eigen::VectorXd u, DOFS d);
+    ElasticityH1NormCalculator(StrainValue *strain, Eigen::VectorXd u, DOFS d);
 
     /* Sets the calculators for this norm
      * @param integrator Calculator to use

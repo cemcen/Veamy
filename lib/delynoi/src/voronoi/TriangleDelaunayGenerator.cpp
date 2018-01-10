@@ -140,34 +140,13 @@ void TriangleDelaunayGenerator::callTriangle(std::vector<Point> &point_list, cha
     free(out.edgemarkerlist);
 }
 
-Mesh<Triangle> TriangleDelaunayGenerator::initializeMesh() {
-    UniqueList<Point> points;
-    PointMap* pointMap = new PointMap;
-    std::vector<int> indexes = points.push_list(this->meshPoints);
-
-    std::vector<Triangle> polygons;
-    for (int i = 0;i<triangles.size();i++) {
-        Triangle t = triangles[i];
-        std::vector<int> oldPoints = t.getPoints();
-        std::vector<int> newPoints = {indexes[oldPoints[0]], indexes[oldPoints[1]], indexes[oldPoints[2]]};
-
-        pointMap->insert(meshPoints[newPoints[0]], i);
-        pointMap->insert(meshPoints[newPoints[1]], i);
-        pointMap->insert(meshPoints[newPoints[2]], i);
-
-        polygons.push_back(Triangle(newPoints, meshPoints));
-    }
-
-    return Mesh<Triangle>(points, polygons, this->delaunayEdges, pointMap);
-}
-
 Mesh<Triangle> TriangleDelaunayGenerator::getConformingDelaunayTriangulation()  {
     if(!this->empty){
         char switches[] = "pzejDQ";
         callTriangle(seedPoints, switches);
     }
 
-    return initializeMesh();
+    return initializeMesh<Triangle>();
 }
 
 void
@@ -209,7 +188,7 @@ Mesh<Triangle> TriangleDelaunayGenerator::getConstrainedDelaunayTriangulation() 
         callTriangle(seedPoints, switches);
     }
 
-    return initializeMesh();
+    return initializeMesh<Triangle>();
 }
 
 Mesh<Triangle>
@@ -219,5 +198,5 @@ TriangleDelaunayGenerator::getConstrainedDelaunayTriangulation(std::vector<Point
         callTriangle(seedPoints, switches, restrictedSegments);
     }
 
-    return initializeMesh();
+    return initializeMesh<Triangle>();
 }

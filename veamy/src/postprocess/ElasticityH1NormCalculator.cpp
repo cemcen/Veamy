@@ -1,21 +1,19 @@
 #include <veamy/postprocess/ElasticityH1NormCalculator.h>
 
 template <typename T>
-ElasticityH1NormCalculator<T>::ElasticityH1NormCalculator(StrainValue *strain, StressValue *stress, DisplacementValue* value,
+ElasticityH1NormCalculator<T>::ElasticityH1NormCalculator(StrainValue *strain, StressValue *stress,
                                                           Eigen::VectorXd u, DOFS d) : NormCalculator<T>(u, d) {
     this->strainValue = strain;
     this->stressValue = stress;
-    this->value = value;
 
     this->numComputable = new StrainStressDifferenceComputable<T>(this->strainValue, this->stressValue);
     this->denComputable = new StrainStressComputable<T>(this->strainValue, this->stressValue);
 }
 
 template <typename T>
-ElasticityH1NormCalculator<T>::ElasticityH1NormCalculator(StrainValue *strain, DisplacementValue *value, Eigen::VectorXd u,
+ElasticityH1NormCalculator<T>::ElasticityH1NormCalculator(StrainValue *strain, Eigen::VectorXd u,
                                                        DOFS d) : NormCalculator<T>(u, d) {
     this->strainValue = strain;
-    this->value = value;
 
     this->numComputable = new StrainDifferenceComputable<T>(this->strainValue);
     this->denComputable = new StrainComputable<T>(this->strainValue);

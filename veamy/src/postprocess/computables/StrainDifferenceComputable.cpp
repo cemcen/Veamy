@@ -22,3 +22,5 @@ template <typename T>
 void StrainDifferenceComputable<T>::setPolygonIndex(int polyIndex) {
     this->polygonIndex = polyIndex;
 }
+template class StrainDifferenceComputable<Polygon>;
+template class StrainDifferenceComputable<Triangle>;

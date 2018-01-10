@@ -37,7 +37,7 @@ public:
      * @param mesh mesh associated to the problem
      * @return error norm
      */
-    double computeErrorNorm(NormCalculator<Triangle>* calculator, Mesh<Triangle> mesh);
+    NormResult computeErrorNorm(NormCalculator<Triangle>* calculator, Mesh<Triangle> mesh);
 };
 
 #endif

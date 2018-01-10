@@ -23,7 +23,7 @@ void Veamer::initProblem(const Mesh<Polygon> &m) {
     }
 }
 
-double Veamer::computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon> mesh) {
+NormResult Veamer::computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon> mesh) {
     return problem->computeErrorNorm(calculator, mesh);
 }
 

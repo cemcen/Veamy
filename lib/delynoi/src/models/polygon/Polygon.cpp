@@ -333,3 +333,18 @@ Point Polygon::getAverage(std::vector<Point> p) {
 
     return Point(x,y);
 }
+
+double Polygon::getMaxDistance(std::vector<Point> &points) {
+    int n = this->points.size();
+    double maxEdge = LLONG_MIN;
+
+    for (int i = 0; i < this->points.size(); ++i) {
+        double distance = IndexSegment(this->points[i], this->points[(i+1)%n]).length(points);
+
+        if(distance > maxEdge){
+            maxEdge = distance;
+        }
+    }
+
+    return maxEdge;
+}

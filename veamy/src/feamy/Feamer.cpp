@@ -20,10 +20,6 @@ void Feamer::initProblem(Mesh<Triangle> m, FeamyElementConstructor *constructor)
     }
 }
 
-double Feamer::computeErrorNorm(NormCalculator<Triangle>* calculator, Mesh<Triangle> mesh) {
-    /*FeamyAdditionalInfo info(this->elements, this->points.getList(),
-                             this->conditions.material->getMaterialMatrix());
-
-    calculator->setCalculator(new FeamyIntegrator<Triangle>, info);*/
-    return calculator->getNorm(mesh);
+NormResult Feamer::computeErrorNorm(NormCalculator<Triangle>* calculator, Mesh<Triangle> mesh) {
+    return problem->computeErrorNorm(calculator, mesh);
 }

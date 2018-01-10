@@ -1,4 +1,5 @@
 #include <veamy/postprocess/NormCalculator.h>
+#include <veamy/postprocess/utilities/NormResult.h>
 
 template <typename T>
 NormCalculator<T>::NormCalculator(Eigen::VectorXd disp, DOFS dofs) {
@@ -7,19 +8,22 @@ NormCalculator<T>::NormCalculator(Eigen::VectorXd disp, DOFS dofs) {
 }
 
 template <typename T>
-double NormCalculator<T>::getNorm(Mesh<T> mesh) {
+NormResult NormCalculator<T>::getNorm(Mesh<T> mesh) {
     double numerator = 0, denominator = 0;
     std::vector<T> meshElements = mesh.getPolygons();
     UniqueList<Point> points = mesh.getPoints();
+    std::vector<double> maxEdge;
 
     int i = 0;
     for(T elem: meshElements){
         numerator += num->getIntegral(elem, i, points.getList());
         denominator += den->getIntegral(elem, i, points.getList());
+
+        maxEdge.push_back(elem.getMaxDistance(points.getList()));
         i++;
     }
 
-    return std::sqrt(numerator/denominator);
+    return NormResult(std::sqrt(numerator/denominator), *std::min_element(maxEdge.begin(), maxEdge.end()));
 }
 
 template class NormCalculator<Triangle>;
