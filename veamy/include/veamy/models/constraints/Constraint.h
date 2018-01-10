@@ -14,20 +14,15 @@
  * Models a single constraint of the system
  */
 class Constraint{
-public:
-    /*
-     * Possible directions of the constraints
-     */
-    enum Direction {Vertical, Horizontal, Total};
-private:
+protected:
     /*
      * Value of the constraint
      */
     ConstraintValue* v;
     /*
-     * Direction of this particular constraint
+     * Indexes of the DOFs affected by this constraint
      */
-    Direction direction;
+    std::vector<int> direction;
 public:
     /*
      * Default constructor
@@ -37,7 +32,7 @@ public:
     /*
      * Constructor
      */
-    Constraint(Direction d, ConstraintValue* value);
+    Constraint(ConstraintValue* value);
 
     /* Returns the value of the constraint evaluated at a given point
      * @param p point to evaluate the constraint
@@ -48,13 +43,19 @@ public:
     /*
      * @return direction of the constraint
      */
-    Direction getDirection();
+    std::vector<int> getDirection();
 
     /* Checks if a given axis is affected by this constraint
      * @param axis axis to check
      * @return if the axis is affected (1) or not (0)
      */
-    int isAffected(DOF::Axis axis);
+    int isAffected(int axis);
+
+    /* Sets the indexes of the dofs associated to a point affected by this constraint. Example: in the linear elasticity
+     * problem, each point has two dofs (x or y), and a constraint can affect x(0), y(1) or both(0,1)
+     * @param d directions to set
+     */
+    void setDirection(std::vector<int> d);
 };
 
 

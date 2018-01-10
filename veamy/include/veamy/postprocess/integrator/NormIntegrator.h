@@ -1,5 +1,5 @@
-#ifndef VEAMY_CALCULATOR_H
-#define VEAMY_CALCULATOR_H
+#ifndef VEAMY_NORMINTEGRATOR_H
+#define VEAMY_NORMINTEGRATOR_H
 
 #include <vector>
 #include <delynoi/models/basic/Point.h>

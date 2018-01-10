@@ -34,6 +34,11 @@ bool Material::operator==(const Material &other) const{
             std::abs(this->material_v-other.material_v) < config->getTolerance();
 }
 
+void Material::setMultiplicativeFactor(int f) {
+    this->factor = f;
+}
+
+
 
 
 

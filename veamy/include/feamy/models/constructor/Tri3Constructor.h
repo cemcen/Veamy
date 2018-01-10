@@ -4,19 +4,17 @@
 #include "FeamyElementConstructor.h"
 
 /*
- * Creates a linear triangular element
+ * Creates the shape functions of a linear triangular element
  */
 class Tri3Constructor : public FeamyElementConstructor{
 public:
     /*
-     * Creates the FEM element.
-     * @param conditions conditions of the problem
-     * @param t triangle used to create the element
-     * @param points mesh points
-     * @param out degrees of freedom of the system
-     * @return new FEM element
+     * Returns the correct Shape functions associated to the tri3 element
+     * @param t geometry of the element
+     * @param meshPoints mesh points
+     * @return shape functions
      */
-    FeamyElement* createElement(Conditions& conditions, Triangle t, UniqueList<Point>& points, DOFS& out);
+    ShapeFunctions* getShapeFunctions(Triangle& t, UniqueList<Point>& meshPoints);
 };
 
 #endif

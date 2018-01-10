@@ -4,13 +4,13 @@
 #include <veamy/postprocess/analytic/StrainValue.h>
 #include <veamy/postprocess/analytic/StressValue.h>
 #include <delynoi/models/polygon/Triangle.h>
-#include "Computable.h"
+#include "H1Computable.h"
 
 /*
  * Computes the term sigma dot epsilon of the H1 norm
  */
 template <typename T>
-class StrainStressComputable : public Computable<T>{
+class StrainStressComputable : public H1Computable<T>{
 private:
     /*
      * Analytical strain value

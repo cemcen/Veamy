@@ -194,7 +194,7 @@ bool Polygon::inEdges(std::vector<Point>& p, Point point) {
 bool Polygon::isConvex(std::vector<Point>& p) {
     int n = (int) this->points.size();
 
-    double determinant = delynoi_utilities::orientation(p[0],p[1],p[2]);
+    double determinant = delynoi_utilities::orientation(p[this->points[0]],p[this->points[1]],p[this->points[2]]);
 
     for(int i=1;i<n; i++){
         double newResult = delynoi_utilities::orientation(p[this->points[i]],p[this->points[(i+1)%n]],p[this->points[(i+2)%n]]);
@@ -332,4 +332,19 @@ Point Polygon::getAverage(std::vector<Point> p) {
     x = x/this->numberOfSides(); y = y/this->numberOfSides();
 
     return Point(x,y);
+}
+
+double Polygon::getMaxDistance(std::vector<Point> &points) {
+    int n = this->points.size();
+    double maxEdge = LLONG_MIN;
+
+    for (int i = 0; i < this->points.size(); ++i) {
+        double distance = IndexSegment(this->points[i], this->points[(i+1)%n]).length(points);
+
+        if(distance > maxEdge){
+            maxEdge = distance;
+        }
+    }
+
+    return maxEdge;
 }

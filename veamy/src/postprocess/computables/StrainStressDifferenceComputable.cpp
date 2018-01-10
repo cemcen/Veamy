@@ -1,37 +1,16 @@
 #include <veamy/postprocess/computables/StrainStressDifferenceComputable.h>
 
 template <typename T>
-StrainStressDifferenceComputable<T>::StrainStressDifferenceComputable(StrainValue *strain, StressValue *stress,
-                                                                   Eigen::VectorXd u, DOFS d, std::vector<FeamyElement*> elements,
-                                                                   std::vector<Point> p, Eigen::MatrixXd C) {
+StrainStressDifferenceComputable<T>::StrainStressDifferenceComputable(StrainValue *strain, StressValue *stress) {
     this->strainValue = strain;
     this->stressValue = stress;
-    this->nodalValues = u;
-    this->dofs = d;
-    this->elements = elements;
-    this->points = p;
-    this->C = C;
 }
 
 template <typename T>
 double StrainStressDifferenceComputable<T>::apply(double x, double y, int index, T container) {
-    Eigen::VectorXd uH;
-    uH = Eigen::VectorXd::Zero(2*container.numberOfSides());
+    Eigen::VectorXd strain = this->calculator->getStrain(x, y, container, this->polygonIndex);
 
-    std::vector<int> containerPoints = container.getPoints();
-    for (int i = 0; i < container.numberOfSides(); ++i) {
-        Pair<int> point_dofs = dofs.pointToDOFS(containerPoints[i]);
-
-        uH(2*i) = nodalValues[point_dofs.first];
-        uH(2*i + 1) = nodalValues[point_dofs.second];
-
-    }
-
-    Eigen::MatrixXd Be = StiffnessMatrixIntegrable::BeMatrix(Point(x,y), VeamyTriangle(container).getJacobian(this->points),
-                                                           this->elements[this->polygonIndex]->getShapeFunctions());
-
-    Eigen::VectorXd strain = Be*uH;
-    Eigen::VectorXd stress = this->C*strain;
+    Eigen::VectorXd stress = this->D*strain;
 
     Trio<double> eH = veamy_functions::to_trio<double>(strain);
     Trio<double> sH = veamy_functions::to_trio<double>(stress);

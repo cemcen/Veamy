@@ -6,6 +6,10 @@
 #include <veamy/utilities/functions_types.h>
 #include <veamy/postprocess/computables/Computable.h>
 #include <veamy/lib/Eigen/Dense>
+#include <delynoi/triangulation/CenterTriangulationGenerator.h>
+#include <delynoi/triangulation/EarTriangulationGenerator.h>
+#include <feamy/integration/quadrature/gauss_quadrature.h>
+#include <veamy/postprocess/utilities/norm_utilities.h>
 
 /*
  * Namespace that define a number of utility functions of the Veamy library
@@ -41,7 +45,7 @@ namespace veamy_functions{
         return result;
     }
 
-    /* Converts a Trio to an Eigen vector
+     /* Converts a Trio to an Eigen vector
      * @param vector Trio to convert
      * @return the same values, in an Eigen vector
      */
@@ -78,12 +82,46 @@ namespace veamy_functions{
         return trio;
     }
 
+    /* Computes a numerical integral approximation using a Gaussian scheme
+     * @param poly polygon in which the integral will be computed
+     * @param points mesh points
+     */
+    template <typename T>
+    double gauss_integration(T poly, std::vector<Point>& points, int nGauss, Computable<T>* computable){
+        std::vector<Triangle> triangles;
+        double result = 0;
+
+        if(poly.isConvex(points)){
+            triangles = CenterTriangulationGenerator().triangulate(poly, points);
+        } else {
+            triangles = EarTriangulationGenerator().triangulate(poly, points);
+        }
+
+        for (Triangle t: triangles){
+            Eigen::MatrixXd gaussPoints;
+            std::vector<double> weights;
+
+            norm_utilities::triangle_rules(gaussPoints, t, weights, nGauss, points);
+
+            for (int i = 0; i < weights.size(); ++i) {
+                Point p = Point(gaussPoints(i,0), gaussPoints(i,1));
+
+                result += computable->apply(p.getX(), p.getY(), 0, poly)*weights[i];
+            }
+        }
+
+        return result;
+
+    }
+
+
     /*
      * Defines a function that always returns zero, used for body forces
      * @param x y params of the function (not used, left to have the same signature as all body forces functions)
      * @return zero
      */
     extern double none_function(double x, double y);
+
 }
 
 #endif

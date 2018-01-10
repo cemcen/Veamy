@@ -2,7 +2,7 @@
 #define VEAMY_LINEINTEGRATOR_H
 
 #include <veamy/lib/Eigen/Dense>
-#include <feamy/integration/integrables/IntegrableFunction.h>
+#include <feamy/integration/IntegrableFunction.h>
 #include <delynoi/models/basic/PointSegment.h>
 #include <feamy/integration/quadrature/gauss_quadrature.h>
 

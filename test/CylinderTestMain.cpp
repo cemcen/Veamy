@@ -10,9 +10,11 @@
 #include <veamy/models/constraints/values/Function.h>
 #include <veamy/physics/materials/Material.h>
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
-#include <veamy/physics/Conditions.h>
+#include <veamy/physics/conditions/Conditions.h>
 #include <veamy/Veamer.h>
 #include <veamy/config/VeamyConfig.h>
+#include <veamy/physics/conditions/LinearElasticityConditions.h>
+#include <veamy/problems/VeamyLinearElasticityDiscretization.h>
 
 double innerForceX(double x, double y){
     if(x==0){
@@ -56,34 +58,30 @@ int main(){
 
     mesh.printInFile("cylinderMesh.txt");
 
-    EssentialConstraints essential;
+    Material* material = new MaterialPlaneStrain (1000, 0.3);
+    LinearElasticityConditions* conditions = new LinearElasticityConditions(material);
+
     PointSegment downSide(Point(3,0), Point(9,0));
-    SegmentConstraint const1 (downSide, mesh.getPoints(), Constraint::Direction::Vertical, new Constant(0));
-    essential.addConstraint(const1, mesh.getPoints());
+    SegmentConstraint const1 (downSide, mesh.getPoints(), new Constant(0));
+    conditions->addEssentialConstraint(const1, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
 
     PointSegment leftSide(Point(0,3), Point(0,9));
-    SegmentConstraint const2 (leftSide, mesh.getPoints(), Constraint::Direction::Horizontal, new Constant(0));
-    essential.addConstraint(const2, mesh.getPoints());
+    SegmentConstraint const2 (leftSide, mesh.getPoints(), new Constant(0));
+    conditions->addEssentialConstraint(const2, mesh.getPoints(), elasticity_constraints::Direction::Horizontal);
 
     NaturalConstraints natural;
 
     Function* innerX = new Function(innerForceX);
     Function* innerY = new Function(innerForceY);
 
-    SegmentConstraint const3 (segments, mesh.getPoints(), Constraint::Direction::Horizontal, innerX);
-    SegmentConstraint const4 (segments, mesh.getPoints(), Constraint::Direction::Vertical, innerY);
-    natural.addConstraint(const3, mesh.getPoints());
-    natural.addConstraint(const4, mesh.getPoints());
+    SegmentConstraint const3 (segments, mesh.getPoints(), innerX);
+    SegmentConstraint const4 (segments, mesh.getPoints(), innerY);
+    conditions->addNaturalConstraint(const3, mesh.getPoints(), elasticity_constraints::Direction::Horizontal);
+    conditions->addNaturalConstraint(const4, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
 
-    ConstraintsContainer container;
-    container.addConstraints(essential, mesh.getPoints());
-    container.addConstraints(natural, mesh.getPoints());
-
-    Material* material = new MaterialPlaneStrain (1000, 0.3);
-    Conditions conditions(container, material);
-
-    Veamer v;
-    v.initProblem(mesh, conditions);
+    VeamyLinearElasticityDiscretization* problem = new VeamyLinearElasticityDiscretization(conditions);
+    Veamer v(problem);
+    v.initProblem(mesh);
 
     Eigen::VectorXd x = v.simulate(mesh);
 

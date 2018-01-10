@@ -2,8 +2,10 @@
 #define VEAMY_CALCULATOR2D_H
 
 #include <utilities/UniqueList.h>
-#include <veamy/physics/Conditions.h>
+#include <veamy/physics/conditions/Conditions.h>
 #include <veamy/models/dof/DOFS.h>
+#include <veamy/problems/ProblemDiscretization.h>
+#include <veamy/models/Element.h>
 
 /*
  * Abstract class that encapsulates all common behaviour for linear elasticity calculations, no matter the method
@@ -13,9 +15,14 @@ template <typename T>
 class Calculator2D {
 protected:
     /*
-     * Conditions of the linear elasticity problem
+     * Elements of the system
      */
-    Conditions conditions;
+    std::vector<Element<T>*> elements;
+
+    /*
+     * Conditions of the problem to solve
+     */
+    Conditions* conditions;
 
     /*
      * Mesh points
@@ -27,16 +34,13 @@ public:
      */
     DOFS DOFs;
 
+    Calculator2D(Conditions* conditions, int n_dofs);
+
     /* Gets the degrees of freedom indexes related to a point
      * @param point_index point to lookup
-     * @return pair of dofs (x and y) related to the given point
+     * @return dofs related to the given point
      */
-    Pair<int> pointToDOFS(int point_index);
-
-    /*
-     * @return Material instance assigned to the domain
-     */
-    Material* getMaterial();
+    std::vector<int> pointToDOFS(int point_index);
 
     /*
      * @return mesh points
@@ -52,7 +56,7 @@ public:
      * @param Kglobal global stiffness matrix
      * @param fGlobal global load vector
      */
-    virtual void assemble(Eigen::MatrixXd &Kglobal, Eigen::VectorXd &fGlobal) = 0;
+    void assemble(Eigen::MatrixXd &Kglobal, Eigen::VectorXd &fGlobal);
 
     /* Creates the global stiffness matrix and load vector, imposes the essential boundary conditions on the system and
      * solves the problem

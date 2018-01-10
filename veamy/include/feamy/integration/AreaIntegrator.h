@@ -2,7 +2,7 @@
 #define VEAMY_AREAINTEGRATOR_H
 
 #include <veamy/lib/Eigen/Dense>
-#include <feamy/integration/integrables/IntegrableFunction.h>
+#include <feamy/integration/IntegrableFunction.h>
 #include <delynoi/models/basic/Point.h>
 
 /*

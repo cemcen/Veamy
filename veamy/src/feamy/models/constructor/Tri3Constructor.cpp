@@ -1,6 +1,7 @@
 #include <feamy/models/constructor/Tri3Constructor.h>
-#include <feamy/models/element/Tri3Element.h>
+#include <feamy/models/shapefunctions/Tri3ShapeFunctions.h>
 
-FeamyElement *Tri3Constructor::createElement(Conditions& conditions, Triangle t, UniqueList<Point> &points, DOFS &out) {
-    return new Tri3Element(conditions, t, points, out);
+ShapeFunctions *Tri3Constructor::getShapeFunctions(Triangle &t, UniqueList<Point> &meshPoints) {
+    return new Tri3ShapeFunctions(t, meshPoints.getList());
 }
+

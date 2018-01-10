@@ -1,29 +1,28 @@
 #include <veamy/models/constraints/Constraint.h>
 
-Constraint::Constraint() {}
+Constraint::Constraint() {
+    this->direction = {0};
+}
 
-Constraint::Constraint(Constraint::Direction d, ConstraintValue *value) {
+Constraint::Constraint(ConstraintValue *value) {
+    this->direction = {0};
     this->v = value;
-    this->direction = d;
 }
 
 double Constraint::getValue(Point p) {
     return v->getValue(p);
 }
 
-Constraint::Direction Constraint::getDirection() {
+std::vector<int> Constraint::getDirection() {
     return direction;
 }
 
-int Constraint::isAffected(DOF::Axis axis) {
-    switch (direction){
-        case Total:
-            return 1;
-        case Horizontal:
-            return axis == DOF::Axis::x? 1 : 0;
-        case Vertical:
-            return axis == DOF::Axis::y? 1 : 0;
-    }
+int Constraint::isAffected(int axis) {
+    return std::find(direction.begin(), direction.end(), axis) != direction.end();
+}
+
+void Constraint::setDirection(std::vector<int> d) {
+    this->direction.assign(d.begin(), d.end());
 }
 
 

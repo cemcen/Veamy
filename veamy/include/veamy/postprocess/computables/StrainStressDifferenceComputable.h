@@ -5,10 +5,11 @@
 #include <veamy/postprocess/analytic/StressValue.h>
 #include <veamy/lib/Eigen/Dense>
 #include <veamy/models/dof/DOFS.h>
-#include "Computable.h"
-#include <feamy/integration/integrables/StiffnessMatrixIntegrable.h>
+#include "H1Computable.h"
+#include <feamy/problem/linear_elasticity/LinearElasticityStiffnessMatrixIntegrable.h>
 #include <veamy/utilities/veamy_functions.h>
 #include <feamy/models/FeamyElement.h>
+#include <veamy/postprocess/calculators/StrainCalculator.h>
 
 
 /*
@@ -16,38 +17,13 @@
  * this computable is exclusively used in FEM-like methods
  */
 template <typename T>
-class StrainStressDifferenceComputable : public Computable<T>{
+class StrainStressDifferenceComputable : public H1Computable<T>{
 private:
     /*
      * Analytical strain and stress values
      */
     StrainValue* strainValue;
     StressValue* stressValue;
-
-    /*
-     * Nodal displacement values
-     */
-    Eigen::VectorXd nodalValues;
-
-    /*
-     * Material (strain/stress) matrix
-     */
-    Eigen::MatrixXd C;
-
-    /*
-     * Degrees of freedom of the system
-     */
-    DOFS dofs;
-
-    /*
-     * Elements of the system
-     */
-    std::vector<FeamyElement*> elements;
-
-    /*
-     * Mesh points
-     */
-    std::vector<Point> points;
 
     /*
      * Index of the polygon that contains the points that will be used next
@@ -57,9 +33,7 @@ public:
     /*
      * Constructor
      */
-    StrainStressDifferenceComputable(StrainValue *strain, StressValue *stress,
-                                     Eigen::VectorXd u, DOFS d, std::vector<FeamyElement*> elements,
-                                     std::vector<Point> p, Eigen::MatrixXd C);
+    StrainStressDifferenceComputable(StrainValue *strain, StressValue *stress);
 
     /* Computes the value of the necessary term in a given point
      * @param p point to apply the function

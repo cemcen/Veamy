@@ -21,12 +21,12 @@ public:
     /*
      * Constructor. Constraints a single point
      */
-    PointConstraint(Point p, Constraint::Direction d, ConstraintValue* value);
+    PointConstraint(Point p, ConstraintValue* value);
 
     /*
      * Constructor. Constraints a set of points
      */
-    PointConstraint(std::vector<Point> p, Constraint::Direction d, ConstraintValue* value);
+    PointConstraint(std::vector<Point>& p, ConstraintValue* value);
 
     /*
      * @return list of constrained points

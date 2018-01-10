@@ -12,6 +12,7 @@
 #include <utilities/UniqueList.h>
 #include <algorithm>
 #include <delynoi/models/neighbourhood/SegmentMap.h>
+#include <climits>
 
 /*
  * Models a polygon (with an arbitrary number of sides)
@@ -213,6 +214,11 @@ public:
      * @return average point
      */
     Point getAverage(std::vector<Point> p);
+
+    /*
+     *
+     */
+    double getMaxDistance(std::vector<Point>& points);
 };
 
 #endif

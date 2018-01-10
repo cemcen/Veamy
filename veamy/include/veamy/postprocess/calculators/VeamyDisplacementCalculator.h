@@ -12,11 +12,16 @@
  */
 template <typename T>
 class VeamyDisplacementCalculator : public DisplacementCalculator<T>{
+private:
+    /*
+     * Mesh points
+     */
+    std::vector<Point> points;
 public:
     /*
      * Constructor
      */
-    VeamyDisplacementCalculator(DOFS d, Eigen::VectorXd u);
+    VeamyDisplacementCalculator(DOFS d, Eigen::VectorXd u, std::vector<Point>& points);
 
     /* Computes the approximate displacement for a given point
      * @param x y coordinates of the point

@@ -1,6 +1,7 @@
 #include <veamy/postprocess/integrator/VeamyIntegrator.h>
 #include <veamy/utilities/veamy_functions.h>
 #include <delynoi/models/polygon/Triangle.h>
+#include <feamy/config/FeamyConfig.h>
 
 template <typename T>
 VeamyIntegrator<T>::VeamyIntegrator() {}
@@ -12,7 +13,12 @@ VeamyIntegrator<T>::VeamyIntegrator(Computable<T>* computable) {
 
 template <typename T>
 double VeamyIntegrator<T>::getIntegral(T poly, int polyIndex, std::vector<Point> points) {
-    return veamy_functions::nodal_quadrature<T>(poly, points, this->computable);
+    this->computable->setPolygonIndex(polyIndex);
+
+    FeamyConfig* config = FeamyConfig::instance();
+    double result = veamy_functions::gauss_integration(poly, points, config->getNumberOfGaussPoints(), this->computable);
+
+    return result;
 }
 
 template <typename T>

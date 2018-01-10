@@ -4,19 +4,17 @@
 #include <feamy/models/FeamyElement.h>
 
 /*
- * Abstract class that encapsulates the creation of a FEM element (which can be of different shapes and orders)
+ * Abstract class that encapsulates the creation of the shape functions of a FEM element
  */
 class FeamyElementConstructor{
 public:
     /*
-     * Abstract method. Creates a FEM element.
-     * @param conditions conditions of the problem
-     * @param t triangle used to create the element
-     * @param points mesh points
-     * @param out degrees of freedom of the system
-     * @return new FEM element
+     * Abstract method. Returns the correct Shape functions associated to each kind of element
+     * @param t geometry of the element
+     * @param meshPoints mesh points
+     * @return shape functions
      */
-    virtual FeamyElement* createElement(Conditions& conditions, Triangle t, UniqueList<Point>& points, DOFS& out) = 0;
+    virtual ShapeFunctions* getShapeFunctions(Triangle& t, UniqueList<Point>& meshPoints) = 0;
 };
 
 #endif

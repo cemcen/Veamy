@@ -6,16 +6,19 @@
 #include <veamy/postprocess/computables/FunctionComputable.h>
 
 /*
- * Abstract class that models a body force (right hand side of the linear elasticity equation),
- * forces applied to the entire domain
+ * Abstract class that models a body force (right hand side), forces applied to the entire domain
  */
 class BodyForce{
 protected:
     /*
-     * Functions that represent the body force in each axis
+     * Functions that represent the body force
      */
-    FunctionComputable* fX;
-    FunctionComputable* fY;
+    std::vector<FunctionComputable*> f;
+
+    /*
+     * Number of components of the body force function
+     */
+    int components;
 public:
     /*
      * Constructor
@@ -23,19 +26,24 @@ public:
     BodyForce(func fX, func fY);
 
     /*
+     * Constructor
+     */
+    BodyForce(func f);
+
+    /*
      * Default constructor
      */
     BodyForce();
 
     /*
-     * @return function related to the x-axis
+     * @return functions representing this bodyforce
      */
-    FunctionComputable* getX();
+    std::vector<FunctionComputable*> getComponents();
 
     /*
-     * @return function related to the y-axis
+     *
      */
-    FunctionComputable* getY();
+    int numberOfComponents();
 };
 
 #endif

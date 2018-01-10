@@ -18,6 +18,10 @@ protected:
      * Poisson ratio
      */
     double material_v;
+    /*
+     * Multiplicative factor that differs between the implementation of VEM and FEM. Assign as needed.
+     */
+    int factor;
 public:
     /*
      * Constructor. Creates a material from the list of predefined materials included in Veamy
@@ -64,6 +68,11 @@ public:
      * @return if the two instances are equal
      */
     bool operator==(const Material& other) const;
+
+    /* Sets the multiplicative factor
+     * @param f factor to set
+     */
+    void setMultiplicativeFactor(int f);
 };
 
 #endif

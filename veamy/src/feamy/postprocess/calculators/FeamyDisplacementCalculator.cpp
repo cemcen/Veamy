@@ -14,10 +14,10 @@ Pair<double> FeamyDisplacementCalculator<T>::getDisplacement(double x, double y,
     std::vector<int> containerPoints = container.getPoints();
 
     for (int i = 0; i < containerPoints.size(); ++i) {
-        Pair<int> pointDOFS = this->dofs.pointToDOFS(containerPoints[i]);
+        std::vector<int> pointDOFS = this->dofs.pointToDOFS(containerPoints[i]);
 
-        uHx += this->nodalValues[pointDOFS.first]*N[i];
-        uHy += this->nodalValues[pointDOFS.second]*N[i];
+        uHx += this->nodalValues[pointDOFS[0]]*N[i];
+        uHy += this->nodalValues[pointDOFS[1]]*N[i];
     }
 
     return Pair<double>(uHx, uHy);

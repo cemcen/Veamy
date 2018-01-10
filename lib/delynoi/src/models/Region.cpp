@@ -1,5 +1,4 @@
 #include <delynoi/models/Region.h>
-#include <stdexcept>
 
 Region::Region(std::vector<Point>& points) : Polygon(points){
     this->p = points;

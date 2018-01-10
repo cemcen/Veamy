@@ -3,7 +3,7 @@
 
 #include <veamy/lib/Eigen/Dense>
 #include <veamy/models/dof/DOFS.h>
-#include <veamy/physics/Conditions.h>
+#include <veamy/physics/conditions/Conditions.h>
 #include <veamy/physics/traction/TractionVector.h>
 #include <veamy/physics/bodyforces/BodyForceVector.h>
 
@@ -13,6 +13,11 @@
 template <typename T>
 class Element {
 protected:
+    /*
+     * Number of degrees of freedom per point
+     */
+    int n_dofs;
+
     /*
      * List of the indexes of the degrees of freedom of the element
      */
@@ -36,7 +41,7 @@ public:
      * @param point mesh points
      * @param out set of degrees of freedom of the system
      */
-    void initializeElement(Conditions &conditions, T &p, UniqueList<Point> &points, DOFS &out);
+    void initializeElement(Conditions *conditions, T &p, UniqueList<Point> &points, DOFS &out, int n_dofs);
 
     /*
      * @return the geometric equivalent of the element
@@ -57,8 +62,12 @@ public:
      * @param bodyForceVector implementation of a body force vector calculator
      * @param tractionVector implementation of a traction vector calculator
      */
-    void computeF(DOFS d, UniqueList<Point> points, Conditions &conditions, BodyForceVector* bodyForceVector,
-                  TractionVector* tractionVector);
+    void computeF(DOFS d, UniqueList<Point> points, Conditions *conditions, BodyForceVector *bodyForceVector,
+                  TractionVector *tractionVector);
+
+    virtual void computeF(DOFS &d, UniqueList<Point> &points, Conditions *conditions) = 0;
+
+    virtual void computeK(DOFS &d, UniqueList<Point> &points) = 0;
 };
 
 #endif

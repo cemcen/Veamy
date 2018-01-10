@@ -2,20 +2,21 @@
 #include <veamy/physics/traction/point_forces.h>
 #include <veamy/geometry/VeamyTriangle.h>
 #include <feamy/integration/LineIntegrator.h>
-#include <feamy/integration/integrables/BoundaryVectorIntegrable.h>
+#include <feamy/problem/linear_elasticity/LinearElasticityBoundaryVectorIntegrable.h>
 
-FeamyTractionVector::FeamyTractionVector(Triangle t, UniqueList<Point> points, ShapeFunctions *N,
-                                         NaturalConstraints natural, int nGauss) {
+FeamyTractionVector::FeamyTractionVector(Triangle t, UniqueList<Point> points, ShapeFunctions *N, NaturalConstraints natural, int nGauss,
+                                         int n_dofs, BoundaryVectorIntegrable *integrable) : TractionVector(n_dofs){
     this->t = t;
     this->points = points.getList();
     this->N = N;
     this->natural = natural;
     this->nGauss = nGauss;
+    this->integrable = integrable;
 }
 
 Eigen::VectorXd FeamyTractionVector::computeTractionVector(IndexSegment segment) {
-    Eigen::VectorXd result(4);
-    result = Eigen::VectorXd::Zero(4);
+    Eigen::VectorXd result;
+    result = Eigen::VectorXd::Zero(2*this->n_dofs);
     isConstrainedInfo constrainedInfo = natural.isConstrainedBySegment(points, segment);
 
     if (constrainedInfo.isConstrained) {
@@ -29,13 +30,12 @@ Eigen::VectorXd FeamyTractionVector::computeTractionVector(IndexSegment segment)
         std::vector<int> indexes = {indexFirst, indexSecond};
 
         for (Constraint c: constraints) {
-            BoundaryVectorIntegrable* integrable = new BoundaryVectorIntegrable(c, this->N, indexes);
+            integrable->setConditions(c, indexes);
             LineIntegrator::integrate(result, nGauss, s, integrable);
-            delete integrable;
         }
     }
 
-    point_forces::addPointForces(result, natural, points[segment.getFirst()], points[segment.getSecond()]);
+    point_forces::addPointForces(result, natural, points[segment.getFirst()], points[segment.getSecond()], this->n_dofs);
 
     return result;
 }
