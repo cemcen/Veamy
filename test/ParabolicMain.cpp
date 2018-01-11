@@ -145,6 +145,6 @@ int main(){
 
     DisplacementValue* realSolution = new DisplacementValue(analytic);
     L2NormCalculator<Polygon>* l2 = new L2NormCalculator<Polygon>(realSolution, x, v.DOFs);
-    double norm = v.computeErrorNorm(l2, mesh);
-    std::cout << norm;
+    NormResult norm = v.computeErrorNorm(l2, mesh);
+    std::cout << norm.NormValue;
 }
