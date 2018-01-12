@@ -3,7 +3,7 @@
 FeamyConfig* FeamyConfig::s_instance = nullptr;
 
 FeamyConfig::FeamyConfig() {
-    this->gaussPoints = 3;
+    this->gaussPoints = 2; //order!
 }
 
 void FeamyConfig::setNumberOfGaussPoints(int gauss) {
