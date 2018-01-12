@@ -8,15 +8,20 @@
 #include <utilities/utilities.h>
 #include <veamy/physics/materials/MaterialPlaneStress.h>
 #include <veamy/config/VeamyConfig.h>
-#include <veamy/postprocess/analytic/DisplacementValue.h>
 #include <veamy/postprocess/L2NormCalculator.h>
+#include <veamy/postprocess/ElasticityH1NormCalculator.h>
 #include <veamy/physics/conditions/LinearElasticityConditions.h>
 #include <veamy/problems/VeamyLinearElasticityDiscretization.h>
 
-Pair<double> analytic(double x, double y){
+Pair<double> exactDisplacement(double x, double y){
     double E = 3e7, v = 0.3;
 
     return Pair<double> ((v/E)*(1-x), y/E);
+}
+
+Trio<double> exactStrain(double x, double y){
+    double E = 3e7, v = 0.3;
+    return Trio<double>(-v/E,1.0/E,0.0);
 }
 
 int main(){
@@ -45,7 +50,7 @@ int main(){
     std::cout << "..." << std::endl;
 
     // File that contains an external mesh
-    std::string externalMeshFileName = "equilibriumTest_mesh.txt";
+    std::string externalMeshFileName = "VEAMY/Veamy-master/test/test_files/equilibriumTest_mesh.txt";
 
     std::cout << "+ Reading mesh from a file ... ";
     Mesh<Polygon> mesh;
@@ -86,6 +91,18 @@ int main(){
     Eigen::VectorXd x = v.simulate(mesh);
     std::cout << "done" << std::endl;
 
+    std::cout << "+ Calculating norms of the error ... ";
+    DisplacementValue* exactDisplacementSolution = new DisplacementValue(exactDisplacement);
+    L2NormCalculator<Polygon>* L2 = new L2NormCalculator<Polygon>(exactDisplacementSolution, x, v.DOFs);
+    NormResult L2norm = v.computeErrorNorm(L2, mesh);
+    StrainValue* exactStrainSolution = new StrainValue(exactStrain);
+    ElasticityH1NormCalculator<Polygon>* H1 = new ElasticityH1NormCalculator<Polygon>(exactStrainSolution, x, v.DOFs);
+    NormResult H1norm = v.computeErrorNorm(H1, mesh);   
+    std::cout << "done" << std::endl; 
+    std::cout << "  Relative L2-norm    : " << utilities::toString(L2norm.NormValue) << std::endl;
+    std::cout << "  Relative H1-seminorm: " << utilities::toString(H1norm.NormValue) << std::endl;    
+    std::cout << "  Element size        : " << utilities::toString(L2norm.MaxEdge) << std::endl;      
+
     std::cout << "+ Printing nodal displacement solution to a file ... ";
     v.writeDisplacements(dispFileName, x);
     std::cout << "done" << std::endl;
@@ -99,9 +116,4 @@ int main(){
     std::cout << path1 << std::endl;
     std::cout << path2 << std::endl;
     std::cout << "*** Veamy has ended ***" << std::endl;
-
-    DisplacementValue* realSolution = new DisplacementValue(analytic);
-    L2NormCalculator<Polygon>* l2 = new L2NormCalculator<Polygon>(realSolution, x, v.DOFs);
-    double norm = v.computeErrorNorm(l2, mesh);
-    std::cout << norm;
 }
