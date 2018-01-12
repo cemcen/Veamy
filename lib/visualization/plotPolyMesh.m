@@ -99,6 +99,8 @@ function [points,polygons] = plotPolyMesh(meshFile)
   elements = cellfun(padFunc,polygons,'UniformOutput',false);
   elements = vertcat(elements{:});
   patch('Faces',elements,'Vertices',points,'FaceColor','w');
-  axis('square')  
   set(gca, 'FontSize', 12);
+  % axis('square')  
+  axis equal; 
+  axis off;
 end
