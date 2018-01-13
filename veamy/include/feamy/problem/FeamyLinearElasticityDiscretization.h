@@ -13,6 +13,7 @@ public:
     Element<Triangle>* createElement(Feamer *f, Triangle &poly, UniqueList<Point> &points);
 
     Mesh<Triangle> initProblemFromFile(Feamer *f, std::string fileName);
+    NormResult computeErrorNorm(NormCalculator<Triangle> *calculator, Mesh<Triangle> mesh, Feamer* f);
 };
 
 #endif

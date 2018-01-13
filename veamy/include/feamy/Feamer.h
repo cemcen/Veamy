@@ -38,6 +38,11 @@ public:
      * @return error norm
      */
     NormResult computeErrorNorm(NormCalculator<Triangle>* calculator, Mesh<Triangle> mesh);
+
+    /*
+     * @return elements of the system
+     */
+    std::vector<FeamyElement*> getElements();
 };
 
 #endif

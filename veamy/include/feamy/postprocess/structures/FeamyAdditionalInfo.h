@@ -21,17 +21,11 @@ struct FeamyAdditionalInfo{
     std::vector<Point> points;
 
     /*
-     * Material (stress/strain) matrix
-     */
-    Eigen::MatrixXd C;
-
-    /*
      * Constructor
      */
-    FeamyAdditionalInfo(std::vector<FeamyElement*> e, std::vector<Point> p, Eigen::MatrixXd CMatrix){
+    FeamyAdditionalInfo(std::vector<FeamyElement*> e, std::vector<Point> p){
         elements = e;
         points = p;
-        C = CMatrix;
     }
 };
 

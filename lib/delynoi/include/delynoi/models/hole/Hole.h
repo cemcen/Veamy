@@ -65,6 +65,49 @@ public:
     virtual std::vector<Point> getPoints(){
         return this->HolePoints;
     };
+
+    /* Checks if a point is inside the hole
+     * @param p point to check
+     * @return if the point is inside the hole or not
+     */
+    bool containsPoint(Point point){
+        int j = HolePoints.size() - 1 ;
+        bool oddNodes = false;
+
+        for (int i=0; i<HolePoints.size(); i++) {
+            Point pI = HolePoints[i];
+            Point pJ = HolePoints[j];
+
+            if(pI == pJ){
+                continue;
+            }
+
+            if (pI.getY()<=point.getY() && pJ.getY()>point.getY()
+                || pJ.getY()<=point.getY() && pI.getY()>point.getY()) {
+
+                if (pI.getX() + (point.getY()-pI.getY())/(pJ.getY()-pI.getY())*(pJ.getX()-pI.getX())<point.getX()){
+                    oddNodes=!oddNodes;
+                }
+            }
+            j = i;
+        }
+
+        if(oddNodes){
+            return true;
+        }
+
+        IndexSegment container(-1,-1);
+        std::vector<IndexSegment> segments;
+        this->getSegments(segments, 0);
+
+        for(int i=0; i<segments.size(); i++){
+            if(segments[i].contains(HolePoints,point)){
+                container = segments[i];
+            }
+        }
+
+        return container.getFirst()!= -1 && container.getSecond()!= -1;
+    };
 };
 
 #endif

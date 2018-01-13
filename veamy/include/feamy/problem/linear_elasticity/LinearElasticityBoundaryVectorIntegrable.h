@@ -31,7 +31,7 @@ public:
         Eigen::VectorXd t;
         t = Eigen::VectorXd::Zero(2);
 
-        for (int i = 0; i < 2; ++i) {
+        for (int i = 0; i < this->indexes.size(); ++i) {
             N(0,2*i) = Ni[indexes[i]];
             N(1,2*i+1) = Ni[indexes[i]];
 

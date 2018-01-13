@@ -21,5 +21,15 @@ void Feamer::initProblem(Mesh<Triangle> m, FeamyElementConstructor *constructor)
 }
 
 NormResult Feamer::computeErrorNorm(NormCalculator<Triangle>* calculator, Mesh<Triangle> mesh) {
-    return problem->computeErrorNorm(calculator, mesh);
+    return problem->computeErrorNorm(calculator, mesh, this);
+}
+
+std::vector<FeamyElement *> Feamer::getElements() {
+    std::vector<FeamyElement*> feamyElements;
+
+    for(Element<Triangle>* e: this->elements){
+        feamyElements.push_back((FeamyElement*)e);
+    }
+
+    return feamyElements;
 }

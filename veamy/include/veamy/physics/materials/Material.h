@@ -21,7 +21,7 @@ protected:
     /*
      * Multiplicative factor that differs between the implementation of VEM and FEM. Assign as needed.
      */
-    int factor;
+    double factor;
 public:
     /*
      * Constructor. Creates a material from the list of predefined materials included in Veamy
@@ -72,7 +72,7 @@ public:
     /* Sets the multiplicative factor
      * @param f factor to set
      */
-    void setMultiplicativeFactor(int f);
+    void setMultiplicativeFactor(double f);
 };
 
 #endif

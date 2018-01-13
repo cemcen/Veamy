@@ -6,6 +6,9 @@
 #include <veamy/Veamer.h>
 #include "ProblemDiscretization.h"
 
+/*
+ * Class that
+ */
 class VeamyPoissonDiscretization : public ProblemDiscretization<Polygon,Veamer>{
 public:
     PoissonConditions* conditions;

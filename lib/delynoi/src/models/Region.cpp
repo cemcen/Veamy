@@ -134,7 +134,18 @@ void Region::clean() {
     std::vector<Point> newSeeds;
 
     for(int i = 0; i<seedPoints.size(); i++){
-        if(Polygon::containsPoint(p,seedPoints[i])) toKeep.push_back(i);
+        if(Polygon::containsPoint(p,seedPoints[i])){
+            bool keep = true;
+
+            for (Hole h : this->holes){
+                keep = keep && !h.containsPoint(seedPoints[i]);
+            }
+
+            if(keep){
+                toKeep.push_back(i);
+            }
+        }
+
     }
 
     for(int i=0; i<toKeep.size(); i++){

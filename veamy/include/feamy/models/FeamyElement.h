@@ -51,8 +51,9 @@ public:
      */
     void setShapeFunctions(ShapeFunctions* N);
 
-    /*
-     *
+    /* Sets the integrable classes used to compute the stiffness matrix and load vector
+     * @param bodyForceIntegrable class in charge of computing the
+     * @param
      */
     void setIntegrables(BodyForceIntegrable* bodyForceIntegrable, BoundaryVectorIntegrable* boundaryVectorIntegrable,
                         StiffnessMatrixIntegrable* stiffnessMatrixIntegrable);

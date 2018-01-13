@@ -7,7 +7,7 @@ FeamyLinearElasticityDiscretization::FeamyLinearElasticityDiscretization(LinearE
         ProblemDiscretization(conditions){
     this->conditions = conditions;
     this->numberDOF = 2;
-    this->conditions->material->setMultiplicativeFactor(1/2);
+    this->conditions->material->setMultiplicativeFactor(0.5);
 }
 
 Element<Triangle> *
@@ -24,5 +24,16 @@ FeamyLinearElasticityDiscretization::createElement(Feamer *f, Triangle &poly, Un
 }
 
 Mesh<Triangle> FeamyLinearElasticityDiscretization::initProblemFromFile(Feamer *f, std::string fileName) {
+    //TODO: To be implemented
     return Mesh<Triangle>();
+}
+
+NormResult
+FeamyLinearElasticityDiscretization::computeErrorNorm(NormCalculator<Triangle> *calculator, Mesh<Triangle> mesh, Feamer* f) {
+    FeamyAdditionalInfo info(f->getElements(), mesh.getPoints().getList());
+
+    calculator->setCalculator(new FeamyIntegrator<Triangle>, info);
+    calculator->setExtraInformation(this->conditions);
+
+    return calculator->getNorm(mesh);
 }

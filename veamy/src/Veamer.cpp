@@ -24,6 +24,6 @@ void Veamer::initProblem(const Mesh<Polygon> &m) {
 }
 
 NormResult Veamer::computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon> mesh) {
-    return problem->computeErrorNorm(calculator, mesh);
+    return problem->computeErrorNorm(calculator, mesh, this);
 }
 

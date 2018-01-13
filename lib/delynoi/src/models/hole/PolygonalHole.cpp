@@ -10,5 +10,3 @@ PolygonalHole::PolygonalHole(std::vector<Point>& p) : Polygon(p) {
 
 
 
-
-
