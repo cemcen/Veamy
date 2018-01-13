@@ -77,7 +77,7 @@ Mesh<Polygon> VeamyLinearElasticityDiscretization::initProblemFromFile(Veamer *v
 }
 
 NormResult VeamyLinearElasticityDiscretization::computeErrorNorm(NormCalculator<Polygon> *calculator,
-                                                                 Mesh<Polygon> mesh) {
+                                                                 Mesh<Polygon> mesh, Veamer* v) {
     calculator->setCalculator(new VeamyIntegrator<Polygon>, mesh.getPoints().getList());
     calculator->setExtraInformation(this->conditions);
 

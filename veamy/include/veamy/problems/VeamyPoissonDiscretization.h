@@ -34,6 +34,13 @@ public:
      * @param fileName name of the text file
      */
     Mesh<Polygon> initProblemFromFile(Veamer *v, std::string fileName);
+
+    /* Computes an error norm
+     * @param calculator class in charge of calculating the norm
+     * @param mesh mesh in which the error will be computed
+     * @param solver solver that solved the problem
+     */
+    NormResult computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon> mesh, Veamer* solver);
 };
 
 #endif

@@ -14,3 +14,9 @@ Mesh<Polygon> VeamyPoissonDiscretization::initProblemFromFile(Veamer *v, std::st
     //TODO: To be implemented
     return Mesh<Polygon>();
 }
+
+NormResult
+VeamyPoissonDiscretization::computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon> mesh, Veamer *solver) {
+    //TODO: To be implemented
+    return NormResult(0, 0);
+}

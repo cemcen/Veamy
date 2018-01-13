@@ -17,11 +17,31 @@ public:
      */
     LinearElasticityConditions* conditions;
 
+    /*
+     * Constructor
+     */
     VeamyLinearElasticityDiscretization(LinearElasticityConditions* conditions);
+
+    /* Creates a VeamyElasticityElement
+     * @param solver solver representing the method that will be used
+     * @param poly geometric equivalent of the element
+     * @param points mesh points
+     * @return created element
+     */
     Element<Polygon>* createElement(Veamer *v, Polygon &poly, UniqueList<Point> &points);
 
+    /* Creates a problem from a text file
+     * @param solver solver representing the method that will be used
+     * @param fileName name of the text file
+     */
     Mesh<Polygon> initProblemFromFile(Veamer *v, std::string fileName);
-    NormResult computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon> mesh);
+
+    /* Computes an error norm
+    * @param calculator class in charge of calculating the norm
+    * @param mesh mesh in which the error will be computed
+    * @param solver solver that solved the problem
+    */
+    NormResult computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon> mesh, Veamer* veamer);
 };
 
 #endif
