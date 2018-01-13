@@ -50,14 +50,13 @@ int main(){
     TBeam.addHole(hole2);
     TBeam.addHole(hole3);*/
     std::cout << "done" << std::endl;
+    
+    std::cout << "+ Printing geometry to a file ... ";
+    TBeam.printInFile(geoFileName);
+    std::cout << "done" << std::endl;    
 
     std::cout << "+ Generating polygonal mesh ... ";
     TBeam.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 25, 25);
-
-    std::cout << "+ Printing geometry to a file ... ";
-    TBeam.printInFile(geoFileName);
-    std::cout << "done" << std::endl;
-
     std::vector<Point> seeds = TBeam.getSeedPoints();
     TriangleVoronoiGenerator g(seeds, TBeam);
     Mesh<Polygon> mesh = g.getMesh();
