@@ -99,9 +99,7 @@ int main(){
     Region rectangle4x8(rectangle4x8_points);
     std::cout << "done" << std::endl;
 
-    std::cout << "+ Generating 4-node quadrilateral mesh ... ";
-    //4-node quadrilateral meshes of increasing number of elements: 6x3, 12x6, 18x9, 24x12, 30x15 elements
-    //4-node quadrilateral are obtained by using "functions::constant()" in both directions in "PointGenerator"
+    std::cout << "+ Generating 3-node triangular mesh ... ";
     rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 6, 3);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 12, 6);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 18, 9);
