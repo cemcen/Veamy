@@ -7,8 +7,14 @@
 #include <veamy/postprocess/utilities/NormResult.h>
 #include "ProblemDiscretization.h"
 
+/*
+ * Class that represents the resolution of the linear elasticity problem using the Virtual Element Method
+ */
 class VeamyLinearElasticityDiscretization : public ProblemDiscretization<Polygon,Veamer>{
 public:
+    /*
+     * Conditions of the linear elasticity problem
+     */
     LinearElasticityConditions* conditions;
 
     VeamyLinearElasticityDiscretization(LinearElasticityConditions* conditions);

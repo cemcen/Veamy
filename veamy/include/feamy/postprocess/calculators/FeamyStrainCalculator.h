@@ -14,11 +14,6 @@ template <typename T>
 class FeamyStrainCalculator : public StrainCalculator<T> {
 private:
     /*
-     * Mesh points
-     */
-    std::vector<Point> points;
-
-    /*
      * List of elements of the system
      */
     std::vector<FeamyElement*> elements;

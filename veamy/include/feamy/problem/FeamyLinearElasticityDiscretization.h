@@ -5,6 +5,9 @@
 #include <delynoi/models/polygon/Triangle.h>
 #include <veamy/physics/conditions/LinearElasticityConditions.h>
 
+/*
+ * Class that model the resolution of the linear elasticity
+ */
 class FeamyLinearElasticityDiscretization : public ProblemDiscretization<Triangle,Feamer>{
 public:
     LinearElasticityConditions* conditions;

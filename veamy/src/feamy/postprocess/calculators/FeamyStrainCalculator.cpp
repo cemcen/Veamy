@@ -18,7 +18,7 @@ Eigen::VectorXd FeamyStrainCalculator<T>::getStrain(double x, double y, T contai
 
     Eigen::VectorXd strain = Be*uH;
 
-    return uH;
+    return strain;
 }
 
 template class FeamyStrainCalculator<Polygon>;

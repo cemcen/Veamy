@@ -14,10 +14,15 @@ protected:
      * Degrees of freedom of the system
      */
     DOFS d;
+
     /*
-     *
+     * Nodal displacements
      */
     Eigen::VectorXd u;
+
+    /*
+     * Mesh points
+     */
     std::vector<Point> points;
 public:
     /*

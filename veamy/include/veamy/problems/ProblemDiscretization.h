@@ -53,6 +53,7 @@ public:
 
     /* Creates a problem from a text file
      * @param solver solver representing the method that will be used
+     * @param fileName name of the text file
      */
     virtual Mesh<T> initProblemFromFile(N *v, std::string fileName) = 0;
 
