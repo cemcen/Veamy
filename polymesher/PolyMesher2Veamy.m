@@ -85,7 +85,7 @@ fid = fopen('polymesher2veamy.txt','wt');
 NNode = size(Node,1);
 fprintf(fid,'%d\n',NNode);                                    %Nodal coordinates
 for node_i = 1:NNode
-  fprintf(fid,'%.8f %.8f\n', Node(node_i,1), Node(node_i,2));  
+  fprintf(fid,'%.16f %.16f\n', Node(node_i,1), Node(node_i,2));  
 end
 fprintf(fid,'%d\n',NElem);                                 %Element connectivity
 for el = 1:NElem
@@ -105,6 +105,6 @@ end
 NLoad = size(Load,1);                               %Neumann boundary conditions
 fprintf(fid,'%d\n',NLoad);
 for loadednode = 1:NLoad
-  fprintf(fid,'%d %.8f %.8f\n', Load(loadednode,1), Load(loadednode,2),...
+  fprintf(fid,'%d %.16f %.16f\n', Load(loadednode,1), Load(loadednode,2),...
                                       Load(loadednode,3));
 end

@@ -8,7 +8,6 @@
 #include <veamy/physics/conditions/LinearElasticityConditions.h>
 #include <veamy/problems/VeamyLinearElasticityDiscretization.h>
 #include <veamy/postprocess/L2NormCalculator.h>
-#include <veamy/postprocess/analytic/StrainValue.h>
 #include <veamy/postprocess/ElasticityH1NormCalculator.h>
 
 double uXPatch(double x, double y){
@@ -19,11 +18,11 @@ double uYPatch(double x, double y){
     return x + y;
 }
 
-Pair<double> realDisplacement(double x, double y){
+Pair<double> exactDisplacement(double x, double y){
     return Pair<double>(x, x+y);
 }
 
-Trio<double> realStrain(double x, double y){
+Trio<double> exactStrain(double x, double y){
     return Trio<double>(1,1,0.5);
 }
 
@@ -113,26 +112,21 @@ int main(){
     Eigen::VectorXd x = v.simulate(mesh);
     std::cout << "done" << std::endl;
 
+    std::cout << "+ Calculating norms of the error ... ";
+    DisplacementValue* exactDisplacementSolution = new DisplacementValue(exactDisplacement);
+    L2NormCalculator<Polygon>* L2 = new L2NormCalculator<Polygon>(exactDisplacementSolution, x, v.DOFs);
+    NormResult L2norm = v.computeErrorNorm(L2, mesh);
+    StrainValue* exactStrainSolution = new StrainValue(exactStrain);
+    ElasticityH1NormCalculator<Polygon>* H1 = new ElasticityH1NormCalculator<Polygon>(exactStrainSolution, x, v.DOFs);
+    NormResult H1norm = v.computeErrorNorm(H1, mesh);   
+    std::cout << "done" << std::endl; 
+    std::cout << "  Relative L2-norm    : " << utilities::toString(L2norm.NormValue) << std::endl;
+    std::cout << "  Relative H1-seminorm: " << utilities::toString(H1norm.NormValue) << std::endl;    
+    std::cout << "  Element size        : " << utilities::toString(L2norm.MaxEdge) << std::endl;      
+
     std::cout << "+ Printing nodal displacement solution to a file ... ";
     v.writeDisplacements(dispFileName, x);
     std::cout << "done" << std::endl;
-
-    std::cout << "+ Computing error norms ...";
-    DisplacementValue* value = new DisplacementValue(realDisplacement);
-    L2NormCalculator<Polygon>* calculator = new L2NormCalculator<Polygon>(value, x, v.DOFs);
-    NormResult L2norm = problem->computeErrorNorm(calculator, mesh);
-
-    std::cout << " + L2 norm value: ";
-    std::cout << utilities::toString(L2norm.NormValue) << std::endl;
-
-    std::cout << " + Maximum edge: ";
-    std::cout << utilities::toString(L2norm.MaxEdge) << std::endl;
-    StrainValue* strainValue = new StrainValue(realStrain);
-    ElasticityH1NormCalculator<Polygon>* h1NormCalculator = new ElasticityH1NormCalculator<Polygon>(strainValue, x, v.DOFs);
-    NormResult H1Norm = problem->computeErrorNorm(h1NormCalculator, mesh);
-
-    std::cout << " +  H1 norm value: ";
-    std::cout << utilities::toString(H1Norm.NormValue) << std::endl;
 
     std::cout << "+ Problem finished successfully" << std::endl;
     std::cout << "..." << std::endl;

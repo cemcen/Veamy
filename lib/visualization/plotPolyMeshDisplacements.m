@@ -72,6 +72,7 @@
 % titleResultX : title for the plot of nodal results in the X direction (latex format)
 % titleResultY : title for the plot of nodal results in the Y direction (latex format)
 % titleResultNorm : title for the plot of the norm of nodal results (latex format)
+% plotMeshOverResults : 'yes' or 'no'
 %
 % Output
 % ======
@@ -84,7 +85,8 @@
 
 function [points,polygons,displacements] = ...
                plotPolyMeshDisplacements(meshFile,dispFile,titleResultX,...
-                                         titleResultY,titleResultNorm)
+                                         titleResultY,titleResultNorm,...
+                                         plotMeshOverResults)
   close all;
   mesh = fopen(meshFile);
   pointsNumber = sscanf(fgets(mesh),'%f');
@@ -119,20 +121,26 @@ function [points,polygons,displacements] = ...
     displacementsX(index) = values(2);
     displacementsY(index) = values(3);
   end 
-  %set(gcf,'Renderer','painters')
+ 
   figure; title(titleResultNorm,'Interpreter','latex','FontSize',18);
   maxNumVertices = max(cellfun(@numel,polygons));
   padFunc = @(vertList) [vertList' NaN(1,maxNumVertices-numel(vertList))];
   elements = cellfun(padFunc,polygons,'UniformOutput',false);
   elements = vertcat(elements{:});
   data = [points,displacements];
-  patch('Faces',elements,'Vertices',data,...
-        'FaceColor','interp','CData',displacements );
-  axis('square') 
-  xlim([min(points(:, 1)) - 0.5, max(points(:, 1)) + 0.5])
-  ylim([min(points(:, 2)) - 2.5, max(points(:, 2)) + 2.5])  
-  zlim([min(displacements) - 0.1, max(displacements) + 0.1])
-  %zlim([min(displacements) - 100, max(displacements) + 100])
+  if strcmp(plotMeshOverResults,'yes')
+    patch('Faces',elements,'Vertices',data,...
+          'FaceColor','interp','CData',displacements);
+  else
+    patch('Faces',elements,'Vertices',data,...
+          'FaceColor','interp','EdgeColor','interp','CData',displacements);
+  end  
+  % axis('square') 
+  axis equal; 
+  dx = 0; dy = 0; dz = 0;
+  xlim([min(points(:, 1)) - dx, max(points(:, 1)) + dx])
+  ylim([min(points(:, 2)) - dy, max(points(:, 2)) + dy])  
+  zlim([min(displacements) - dz, max(displacements) + dz])
   xlabel('$x$','Interpreter','latex','FontSize',18); 
   ylabel('$y$','Interpreter','latex','FontSize',18); 
   zlabel('$u$','Interpreter','latex','FontSize',18);
@@ -140,18 +148,26 @@ function [points,polygons,displacements] = ...
   colormap jet
   set(gcf,'Renderer','painters')    
   set(gca, 'FontSize', 12);
+
   figure; title(titleResultX,'Interpreter','latex','FontSize',18);
   maxNumVertices = max(cellfun(@numel,polygons));
   padFunc = @(vertList) [vertList' NaN(1,maxNumVertices-numel(vertList))];
   elements = cellfun(padFunc,polygons,'UniformOutput',false);
   elements = vertcat(elements{:});
   data = [points,displacementsX];
-  patch('Faces',elements,'Vertices',data,...
-        'FaceColor','interp','CData',displacementsX);
-  axis('square')
-  xlim([min(points(:,1)) - 0.5, max(points(:,1)) + 0.5])
-  ylim([min(points(:,2)) - 2.5, max(points(:,2)) + 2.5])
-  zlim([min(displacementsX) - 0.1, max(displacementsX) + 0.1])
+  if strcmp(plotMeshOverResults,'yes')
+    patch('Faces',elements,'Vertices',data,...
+          'FaceColor','interp','CData',displacementsX);
+  else
+    patch('Faces',elements,'Vertices',data,...
+          'FaceColor','interp','EdgeColor','interp','CData',displacementsX);
+  end  
+  % axis('square') 
+  axis equal;
+  dx = 0; dy = 0; dz = 0;
+  xlim([min(points(:, 1)) - dx, max(points(:, 1)) + dx])
+  ylim([min(points(:, 2)) - dy, max(points(:, 2)) + dy])  
+  zlim([min(displacementsX) - dz, max(displacementsX) + dz])
   xlabel('$x$','Interpreter','latex','FontSize',18); 
   ylabel('$y$','Interpreter','latex','FontSize',18); 
   zlabel('$u$','Interpreter','latex','FontSize',18);
@@ -159,18 +175,26 @@ function [points,polygons,displacements] = ...
   colormap jet
   set(gcf,'Renderer','painters')  
   set(gca, 'FontSize', 12);
+
   figure; title(titleResultY,'Interpreter','latex','FontSize',18);
   maxNumVertices = max(cellfun(@numel,polygons));
   padFunc = @(vertList) [vertList' NaN(1,maxNumVertices-numel(vertList))];
   elements = cellfun(padFunc,polygons,'UniformOutput',false);
   elements = vertcat(elements{:});
   data = [points,displacementsY];
-  patch('Faces',elements,'Vertices',data,...
-        'FaceColor','interp','CData',displacementsY);
-  axis('square')
-  xlim([min(points(:,1)) - 0.5, max(points(:,1)) + 0.5])
-  ylim([min(points(:,2)) - 2.5, max(points(:,2)) + 2.5])
-  zlim([min(displacementsY) - 0.1, max(displacementsY) + 0.1])
+  if strcmp(plotMeshOverResults,'yes')
+    patch('Faces',elements,'Vertices',data,...
+          'FaceColor','interp','CData',displacementsY);
+  else
+    patch('Faces',elements,'Vertices',data,...
+          'FaceColor','interp','EdgeColor','interp','CData',displacementsY);
+  end  
+  % axis('square') 
+  axis equal;
+  dx = 0; dy = 0; dz = 0;
+  xlim([min(points(:, 1)) - dx, max(points(:, 1)) + dx])
+  ylim([min(points(:, 2)) - dy, max(points(:, 2)) + dy])  
+  zlim([min(displacementsY) - dz, max(displacementsY) + dz])
   xlabel('$x$','Interpreter','latex','FontSize',18); 
   ylabel('$y$','Interpreter','latex','FontSize',18); 
   zlabel('$u$','Interpreter','latex','FontSize',18);
