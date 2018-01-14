@@ -3,6 +3,7 @@
 #include <delynoi/models/polygon/Triangle.h>
 #include <veamy/geometry/VeamyTriangle.h>
 #include <veamy/geometry/VeamyPolygon.h>
+#include <veamy/postprocess/utilities/norm_utilities.h>
 
 template <typename T, typename S>
 void AreaIntegrator<T,S>::integrate(S& result, int nGauss, T element, std::vector<Point> points,
@@ -13,17 +14,14 @@ void AreaIntegrator<T,S>::integrate(S& result, int nGauss, T element, std::vecto
         std::vector<Point> p = t.getPoints(points);
         Eigen::MatrixXd J = t.getJacobian(points);
 
-        std::vector<Point> gaussPoints;
+        Eigen::MatrixXd gaussPoints;
         std::vector<double> weights;
-        gauss_quadrature::gauss_triangle(nGauss, gaussPoints, weights);
+        norm_utilities::triangle_rules(gaussPoints, t, weights, nGauss, points);
 
         for (int i = 0; i < gaussPoints.size(); ++i) {
-            double g1 = p[0].getX() + (p[1].getX() - p[0].getX())*gaussPoints[i].getX()  +
-                    (p[2].getX() - p[0].getX())*gaussPoints[i].getY();
-            double g2 = p[0].getY() + (p[1].getY() - p[0].getY())*gaussPoints[i].getX()  +
-                        (p[2].getY() - p[0].getY())*gaussPoints[i].getY();
+            Point point = Point(gaussPoints(i,0), gaussPoints(i,1));
 
-            result += weights[i] * integrable->apply(Point(g1, g2), t)*J.determinant()/2;
+            result += weights[i] * integrable->apply(point, t)*J.determinant()/2;
         }
     }
 }
