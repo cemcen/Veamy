@@ -72,7 +72,7 @@ Trio<double> exactStrain(double x, double y){
     double duxdy = -(P*((vBar+2)*std::pow(y,2)+x*(6*L-3*x)-(3*std::pow(D,2)*(vBar+1))/2))/(6*Ebar*I)-(P*std::pow(y,2)*(vBar+2))/(3*Ebar*I);
     double duydy = (P*vBar*y*(L-x))/(Ebar*I);   
 
-    return Trio<double>(duxdx,duydy,(duxdy+duydx));
+    return Trio<double>(duxdx,duydy,0.5*(duxdy+duydx));
 }
 
 int main(){
@@ -106,12 +106,12 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Generating polygonal mesh ... ";
-    //Polygonal meshes of increasing number of elements: 6x3, 12x6, 18x9, 24x12, 30x15 elements
-    rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 6, 3);
-    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 12, 6);
+    //Polygonal meshes of increasing number of elements: 12x6, 18x9, 24x12, 30x15, 36x18 elements
+    rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 12, 6);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 18, 9);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 24, 12);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 30, 15);
+    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 36, 18);    
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
     TriangleVoronoiGenerator meshGenerator (seeds, rectangle4x8);
     Mesh<Polygon> mesh = meshGenerator.getMesh();
