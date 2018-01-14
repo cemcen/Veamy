@@ -172,7 +172,8 @@ namespace gauss_quadrature{
             return;
         }
     }
-
+    // These quadratures for triangles are not being used. 
+    // Instead we use those defined in include/veamy/postprocess/utilities/norm_utilities.h
     void gauss_triangle(int order, std::vector<Point>& points, std::vector<double>& weights){
         if(order == 1){
             points.push_back(Point(0.33333333333333,0.33333333333333));
