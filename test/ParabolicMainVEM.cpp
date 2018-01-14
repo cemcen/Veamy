@@ -72,7 +72,7 @@ Trio<double> exactStrain(double x, double y){
     double duxdy = -(P*((vBar+2)*std::pow(y,2)+x*(6*L-3*x)-(3*std::pow(D,2)*(vBar+1))/2))/(6*Ebar*I)-(P*std::pow(y,2)*(vBar+2))/(3*Ebar*I);
     double duydy = (P*vBar*y*(L-x))/(Ebar*I);   
 
-    return Trio<double>(duxdx,duydy,0.5*(duxdy+duydx));
+    return Trio<double>(duxdx,duydy,(duxdy+duydx));
 }
 
 int main(){
