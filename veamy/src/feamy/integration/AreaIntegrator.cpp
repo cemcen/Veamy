@@ -18,7 +18,7 @@ void AreaIntegrator<T,S>::integrate(S& result, int nGauss, T element, std::vecto
         std::vector<double> weights;
         norm_utilities::triangle_rules(gaussPoints, t, weights, nGauss, points);
 
-        for (int i = 0; i < gaussPoints.size(); ++i) {
+        for (int i = 0; i < weights.size(); ++i) {
             Point point = Point(gaussPoints(i,0), gaussPoints(i,1));
 
             result += weights[i] * integrable->apply(point, t)*J.determinant()/2;
