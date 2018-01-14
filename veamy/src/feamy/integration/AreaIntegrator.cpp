@@ -12,7 +12,6 @@ void AreaIntegrator<T,S>::integrate(S& result, int nGauss, T element, std::vecto
 
     for(VeamyTriangle t: triangles){
         std::vector<Point> p = t.getPoints(points);
-        Eigen::MatrixXd J = t.getJacobian(points);
 
         Eigen::MatrixXd gaussPoints;
         std::vector<double> weights;
@@ -20,8 +19,7 @@ void AreaIntegrator<T,S>::integrate(S& result, int nGauss, T element, std::vecto
 
         for (int i = 0; i < weights.size(); ++i) {
             Point point = Point(gaussPoints(i,0), gaussPoints(i,1));
-
-            result += weights[i] * integrable->apply(point, t)*J.determinant()/2;
+            result += weights[i] * integrable->apply(point, t);            
         }
     }
 }
