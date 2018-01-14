@@ -76,6 +76,7 @@ Trio<double> exactStrain(double x, double y){
     double duydy = (P*vBar*y*(L-x))/(Ebar*I);
 
     return Trio<double>(duxdx,duydy,duxdy+duydx);
+    // the third component is defined as in classical FEM: dux/dy + duy/dx 
 }
 
 int main(){
@@ -100,11 +101,11 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Generating 3-node triangular mesh ... ";
-    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 6, 3);
-    rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 12, 6);
+    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 12, 6);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 18, 9);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 24, 12);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 30, 15);
+    rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 36, 18);    
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
     TriangleDelaunayGenerator meshGenerator (seeds, rectangle4x8);
     Mesh<Triangle> mesh = meshGenerator.getConformingDelaunayTriangulation();
@@ -164,9 +165,9 @@ int main(){
     ElasticityH1NormCalculator<Triangle>* H1 = new ElasticityH1NormCalculator<Triangle>(exactStrainSolution, x, v.DOFs);
     NormResult H1norm = v.computeErrorNorm(H1, mesh);
     std::cout << "done" << std::endl;
-    std::cout << "  Relative L2-norm    : " << L2norm.NormValue << std::endl;
-    std::cout << "  Relative H1-seminorm: " << H1norm.NormValue << std::endl;
-    std::cout << "  Element size        : " << L2norm.MaxEdge << std::endl;
+    std::cout << "  Relative L2-norm    : " << utilities::toString(L2norm.NormValue) << std::endl;
+    std::cout << "  Relative H1-seminorm: " << utilities::toString(H1norm.NormValue) << std::endl;
+    std::cout << "  Element size        : " << utilities::toString(L2norm.MaxEdge) << std::endl;
 
     std::cout << "+ Problem finished successfully" << std::endl;
     std::cout << "..." << std::endl;

@@ -22,6 +22,7 @@ Pair<double> exactDisplacement(double x, double y){
 Trio<double> exactStrain(double x, double y){
     double E = 3e7, v = 0.3;
     return Trio<double>(-v/E,1.0/E,0.0);
+    // the third component is defined as in VEM: 0.5*(dux/dy + duy/dx)
 }
 
 int main(){

@@ -73,6 +73,7 @@ Trio<double> exactStrain(double x, double y){
     double duydy = (P*vBar*y*(L-x))/(Ebar*I);   
 
     return Trio<double>(duxdx,duydy,0.5*(duxdy+duydx));
+    // the third component is defined as in VEM: 0.5*(dux/dy + duy/dx)
 }
 
 int main(){
@@ -107,11 +108,11 @@ int main(){
 
     std::cout << "+ Generating polygonal mesh ... ";
     //Polygonal meshes of increasing number of elements: 12x6, 18x9, 24x12, 30x15, 36x18 elements
-    rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 12, 6);
+    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 12, 6);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 18, 9);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 24, 12);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 30, 15);
-    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 36, 18);    
+    rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 36, 18);    
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
     TriangleVoronoiGenerator meshGenerator (seeds, rectangle4x8);
     Mesh<Polygon> mesh = meshGenerator.getMesh();
@@ -167,9 +168,9 @@ int main(){
     ElasticityH1NormCalculator<Polygon>* H1 = new ElasticityH1NormCalculator<Polygon>(exactStrainSolution, x, v.DOFs);
     NormResult H1norm = v.computeErrorNorm(H1, mesh);   
     std::cout << "done" << std::endl; 
-    std::cout << "  Relative L2-norm    : " << L2norm.NormValue << std::endl;
-    std::cout << "  Relative H1-seminorm: " << H1norm.NormValue << std::endl;    
-    std::cout << "  Element size        : " << L2norm.MaxEdge << std::endl;        
+    std::cout << "  Relative L2-norm    : " << utilities::toString(L2norm.NormValue) << std::endl;
+    std::cout << "  Relative H1-seminorm: " << utilities::toString(H1norm.NormValue) << std::endl;    
+    std::cout << "  Element size        : " << utilities::toString(L2norm.MaxEdge) << std::endl;        
 
     std::cout << "+ Printing nodal displacement solution to a file ... ";
     v.writeDisplacements(dispFileName, x);
