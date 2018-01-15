@@ -53,7 +53,7 @@
 % the source code of:
 %
 % [2] O. J. Sutton. The virtual element method in 50 lines of MATLAB.
-%     Numerical Algorithms 2017; 75(4):1141–1159
+%     Numerical Algorithms 2017; 75(4):1141â€“1159
 %-------------------------------------------------------------------------------
 % Purpose
 % =======
@@ -79,7 +79,7 @@
 % points        : (nx2) array containing n nodes of the polygonal mesh
 % polygons      : cell array of size m, where the i-th entry contains the
 %                 the connectivity of the i-th polygonal element
-% displacements : (nx1) array containing the nodal displacements
+% displacements : (2nx1) array containing the nodal displacements
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 
