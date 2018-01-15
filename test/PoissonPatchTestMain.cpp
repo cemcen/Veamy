@@ -30,7 +30,7 @@ int main(){
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
     std::string meshFileName = "poisson_patch_test_mesh.txt";
-    std::string dispFileName = "poisson_patch_test_displacements.txt";
+    std::string dispFileName = "poisson_patch_test_scalarfield.txt";
 
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Poisson patch test <--" << std::endl;
