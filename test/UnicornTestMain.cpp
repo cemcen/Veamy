@@ -31,7 +31,7 @@ int main(){
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
     std::string meshFileName = "unicorn_mesh.txt";
     std::string dispFileName = "unicorn_displacements.txt";
-    std::string geoFileName = "Software/Veamy-master/build/test/unicorn_geometry.txt";
+    std::string geoFileName = "unicorn_geometry.txt";
 	
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Unicorn <--" << std::endl;

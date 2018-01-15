@@ -22,7 +22,6 @@ int main(){
     // from this file. In this case, the default precision, which is 6 digits, will be used.   
     VeamyConfig::instance()->setPrecision(Precision::precision::mid);    
     
-
     // DEFINING PATH FOR THE OUTPUT FILES:
     // If the path for the output files is not given, they are written to /home directory by default.
     // Otherwise, include the path. For instance, for /home/user/Documents/Veamy/output.txt , the path
@@ -56,7 +55,7 @@ int main(){
     std::cout << "done" << std::endl;    
 
     std::cout << "+ Generating polygonal mesh ... ";
-    TBeam.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 25, 25);
+    TBeam.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 16, 16);
     std::vector<Point> seeds = TBeam.getSeedPoints();
     TriangleVoronoiGenerator g(seeds, TBeam);
     Mesh<Polygon> mesh = g.getMesh();
@@ -75,17 +74,14 @@ int main(){
     PointSegment leftSide(Point(0,0), Point(0,44));
     SegmentConstraint left(leftSide, mesh.getPoints(), new Constant(0));
     conditions->addEssentialConstraint(left, mesh.getPoints(), elasticity_constraints::Direction::Total);
-
     NaturalConstraints natural;
     PointSegment rightSide(Point(48,44), Point(48,64));
     SegmentConstraint right(rightSide, mesh.getPoints(), new Constant(6.25));
     conditions->addNaturalConstraint(right, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
-
     std::cout << "done" << std::endl;
 
     std::cout << "+ Preparing the simulation ... ";
     VeamyLinearElasticityDiscretization* problem = new VeamyLinearElasticityDiscretization(conditions);
-
     Veamer v(problem);
     v.initProblem(mesh);
     std::cout << "done" << std::endl;
