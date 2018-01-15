@@ -11,7 +11,7 @@
  * that, as VEM does not use shape functions, the norms use the nodal values directly, so this class is simple
  */
 template <typename T>
-class VeamyDisplacementCalculator : public DisplacementCalculator<T>{
+class VeamyElasticityDisplacementCalculator : public DisplacementCalculator<T>{
 private:
     /*
      * Mesh points
@@ -21,7 +21,7 @@ public:
     /*
      * Constructor
      */
-    VeamyDisplacementCalculator(DOFS d, Eigen::VectorXd u, std::vector<Point>& points);
+    VeamyElasticityDisplacementCalculator(DOFS d, Eigen::VectorXd u, std::vector<Point>& points);
 
     /* Computes the approximate displacement for a given point
      * @param x y coordinates of the point
@@ -29,7 +29,7 @@ public:
      * @param container element that contains the point
      * @return approximated displacement
      */
-    Pair<double> getDisplacement(double x, double y, int index, T container);
+    std::vector<double> getDisplacement(double x, double y, int index, T container);
 };
 
 #endif

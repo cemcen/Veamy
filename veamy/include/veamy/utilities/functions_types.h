@@ -8,7 +8,6 @@
  * Definition of the different function pointers used
  */
 typedef double(*func)(double, double);
-typedef Trio<double>(*func_trio)(double, double);
-typedef Pair<double>(*func_pair)(double, double);
+typedef std::vector<double>(*func_pair)(double, double);
 
 #endif

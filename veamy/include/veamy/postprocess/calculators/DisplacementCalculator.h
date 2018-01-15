@@ -32,7 +32,7 @@ public:
      * @param container element that contains the point
      * @return approximated displacement
      */
-    virtual Pair<double> getDisplacement(double x, double y, int index, T container) = 0;
+    virtual std::vector<double> getDisplacement(double x, double y, int index, T container) = 0;
 
     /* Sets the index of the polygon in which the next points will be contained
      * @param polyIndex index of the polygon

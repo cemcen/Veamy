@@ -13,18 +13,18 @@ private:
     /*
      * Pointer to the function that represents the solution
      */
-    func_trio f;
+    func_pair f;
 public:
     /*
      * Constructor
      */
-    StrainValue(func_trio f);
+    StrainValue(func_pair f);
 
     /* Evaluates the solution function at a given point
      * @param p point to evaluate on
      * @return value of the real displacement on p
      */
-    Trio<double> getValue(Point p);
+    std::vector<double> getValue(Point p);
 };
 
 #endif

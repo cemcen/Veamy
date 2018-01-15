@@ -9,11 +9,17 @@ DisplacementDifferenceComputable<T>::DisplacementDifferenceComputable(Displaceme
 
 template <typename T>
 double DisplacementDifferenceComputable<T>::apply(double x, double y, int index, T container) {
-    Pair<double> u = value->getValue(Point(x,y));
+    std::vector<double> u = value->getValue(Point(x,y));
     calculator->setPolygonIndex(this->polygonIndex);
-    Pair<double> uH = calculator->getDisplacement(x, y, index, container);
+    std::vector<double> uH = calculator->getDisplacement(x, y, index, container);
 
-    return std::pow(u.first - uH.first, 2) + std::pow(u.second - uH.second, 2);
+    double result = 0;
+
+    for (int i = 0; i < u.size(); ++i) {
+        result += std::pow(u[i] - uH[i], 2);
+    }
+
+    return result;
 }
 
 template <typename T>

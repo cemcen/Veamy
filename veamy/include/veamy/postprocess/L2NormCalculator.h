@@ -8,7 +8,7 @@
 #include <feamy/postprocess/structures/FeamyAdditionalInfo.h>
 #include <veamy/postprocess/computables/DisplacementDifferenceComputable.h>
 #include <veamy/postprocess/computables/DisplacementComputable.h>
-#include <veamy/postprocess/calculators/VeamyDisplacementCalculator.h>
+#include <veamy/postprocess/calculators/VeamyElasticityDisplacementCalculator.h>
 
 /*
  * Computes the L2 norm
@@ -35,7 +35,7 @@ public:
     /* Sets the calculators for this norm
      * @param integrator Calculator to use
      */
-    void setCalculator(VeamyIntegrator<T> *integrator, std::vector<Point> &points);
+    void setCalculator(VeamyIntegrator<T> *integrator, DisplacementCalculator<T> *calculator);
 
     /* Sets all extra information from the problem conditions that is used for norm computation
      * @param conditions problem conditions

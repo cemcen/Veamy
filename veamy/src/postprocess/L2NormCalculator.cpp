@@ -13,25 +13,23 @@ void L2NormCalculator<T>::setCalculator(FeamyIntegrator<T>* num, FeamyAdditional
     this->num = num;
     this->den = den;
 
-    DisplacementCalculator<T>* calculator = new FeamyDisplacementCalculator<T>(this->dofs, this->nodalDisplacements, info.elements);
+    DisplacementCalculator<T>* calculator = new FeamyDisplacementCalculator<T>(this->dofs, this->nodalDisplacements,
+                                                                               info.elements);
 
     this->num->setComputable(new DisplacementDifferenceComputable<T>(this->value, calculator));
     this->den->setComputable(new DisplacementComputable<T>(this->value));
 }
 
 template <typename T>
-void L2NormCalculator<T>::setCalculator(VeamyIntegrator<T> *integrator, std::vector<Point> &points) {
+void L2NormCalculator<T>::setCalculator(VeamyIntegrator<T> *integrator, DisplacementCalculator<T> *calculator) {
     NormIntegrator<T>* den = integrator->clone();
 
     this->num = integrator;
     this->den = den;
 
-    DisplacementCalculator<T>* calculator = new VeamyDisplacementCalculator<T>(this->dofs, this->nodalDisplacements, points);
-
     this->num->setComputable(new DisplacementDifferenceComputable<T>(this->value, calculator));
     this->den->setComputable(new DisplacementComputable<T>(this->value));
 }
-
 
 template <typename T>
 void L2NormCalculator<T>::setExtraInformation(Conditions *conditions) {}

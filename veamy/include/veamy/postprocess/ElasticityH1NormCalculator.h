@@ -33,7 +33,7 @@ private:
     Eigen::MatrixXd D;
 
     /*
-     *
+     * Computables corresponding to the numerator and denominator
      */
     H1Computable<T>* numComputable;
     H1Computable<T>* denComputable;

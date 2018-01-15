@@ -24,7 +24,7 @@ public:
      * @param p point to evaluate on
      * @return value of the real displacement on p
      */
-    Pair<double> getValue(Point p);
+    std::vector<double> getValue(Point p);
 };
 
 #endif

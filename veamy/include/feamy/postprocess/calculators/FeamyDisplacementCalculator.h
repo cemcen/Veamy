@@ -25,7 +25,7 @@ public:
     /*
      * Constructor
      */
-    FeamyDisplacementCalculator(DOFS d, Eigen::VectorXd u,  std::vector<FeamyElement*> elements);
+    FeamyDisplacementCalculator(DOFS d, Eigen::VectorXd u, std::vector<FeamyElement *> elements;
 
     /* Computes the approximate displacement for a given point
      * @param x y coordinates of the point
@@ -33,7 +33,7 @@ public:
      * @param container element that contains the point
      * @return approximated displacement
      */
-    Pair<double> getDisplacement(double x, double y, int index, T container);
+    std::vector<double> getDisplacement(double x, double y, int index, T container);
 
     /* Sets the polygon inside which the displacement will be calculated
      * @param polyIndex index of the polygon

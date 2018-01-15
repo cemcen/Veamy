@@ -1,14 +1,14 @@
-#include <veamy/postprocess/calculators/VeamyDisplacementCalculator.h>
+#include <veamy/postprocess/calculators/VeamyElasticityDisplacementCalculator.h>
 #include <veamy/postprocess/utilities/norm_utilities.h>
 
 template <typename T>
-VeamyDisplacementCalculator<T>::VeamyDisplacementCalculator(DOFS d, Eigen::VectorXd u, std::vector<Point>& points) :
+VeamyElasticityDisplacementCalculator<T>::VeamyElasticityDisplacementCalculator(DOFS d, Eigen::VectorXd u, std::vector<Point>& points) :
         DisplacementCalculator<T>(d, u) {
     this->points = points;
 }
 
 template <typename T>
-Pair<double> VeamyDisplacementCalculator<T>::getDisplacement(double x, double y, int index, T container) {
+std::vector<double> VeamyElasticityDisplacementCalculator<T>::getDisplacement(double x, double y, int index, T container) {
     Point average = container.getAverage(this->points);
 
     Eigen::VectorXd X, Xbar;
@@ -31,9 +31,9 @@ Pair<double> VeamyDisplacementCalculator<T>::getDisplacement(double x, double y,
 
     Eigen::VectorXd uhProyection = PiC*(X-Xbar) + PiR*(X-Xbar) + norm_utilities::getAverage(d);
 
-    Pair<double> uH(uhProyection(0), uhProyection(1));
+    std::vector<double> uH = {uhProyection(0), uhProyection(1)};
     return uH;
 }
 
-template class VeamyDisplacementCalculator<Triangle>;
-template class VeamyDisplacementCalculator<Polygon>;
+template class VeamyElasticityDisplacementCalculator<Triangle>;
+template class VeamyElasticityDisplacementCalculator<Polygon>;
