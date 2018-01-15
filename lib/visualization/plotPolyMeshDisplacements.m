@@ -3,8 +3,8 @@
 %                          plotPolyMeshDisplacements
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                                   
-%            Version      : 1.0                         
-%            Date         : August 3, 2017  
+%            Version      : 1.1                         
+%            Date         : January 15, 2018  
 %            Source code  : http://camlab.cl/research/software/veamy/
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -16,7 +16,7 @@
 %
 %                          Copyright and License                               
 %                          =====================                                                                                
-%                           Copyright (c) 2017                     
+%                           Copyright (c) 2017-2018                    
 %                       by Alejandro Ortiz-Bernardin                                                    
 %                   Department of Mechanical Engineering                        
 %                   University of Chile, Santiago, CHILE                        
@@ -38,6 +38,7 @@
 %-------------------------------------------------------------------------------
 % Release notes 
 % =============
+% Version 1.1 (January 15, 2018): various improvements.
 % Version 1.0 (August 3, 2017): initial release of the code.
 %
 %-------------------------------------------------------------------------------
@@ -53,7 +54,7 @@
 % the source code of:
 %
 % [2] O. J. Sutton. The virtual element method in 50 lines of MATLAB.
-%     Numerical Algorithms 2017; 75(4):1141â€“1159
+%     Numerical Algorithms 2017; 75(4):1141–1159
 %-------------------------------------------------------------------------------
 % Purpose
 % =======
@@ -63,7 +64,8 @@
 % =====
 % [points,polygons,displacements] = ...
 %                  plotPolyMeshDisplacements(meshFile,dispFile,titleResultX,...
-%                                            titleResultY,titleResultNorm)
+%                                            titleResultY,titleResultNorm,...
+%                                            plotMeshOverResults)
 %
 % Input
 % =====
@@ -111,11 +113,9 @@ function [points,polygons,displacements] = ...
   displacements = zeros(pointsNumber,1);
   displacementsX = zeros(pointsNumber,1);
   displacementsY = zeros(pointsNumber,1);
-  mult = 1;
   for i=1:pointsNumber
     line = fgets(dispFile);
     values = sscanf(line,'%f');
-    values(2:3) = values(2:3)*mult;
     index = values(1)+1;
     displacements(index) = norm(values(2:3));
     displacementsX(index) = values(2);
