@@ -8,7 +8,7 @@ StrainComputable<T>::StrainComputable(StrainValue *strain) {
 
 template <typename T>
 double StrainComputable<T>::apply(double x, double y, int index, T container) {
-    Trio<double> strain = this->strainValue->getValue(Point(x,y));
+    std::vector<double> strain = this->strainValue->getValue(Point(x,y));
     Eigen::VectorXd strainVector = veamy_functions::to_vector(strain);
 
     double value = strainVector.transpose()*this->D*strainVector;

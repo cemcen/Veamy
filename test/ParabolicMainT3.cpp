@@ -20,7 +20,7 @@
 #include <veamy/postprocess/analytic/DisplacementValue.h>
 #include <veamy/postprocess/L2NormCalculator.h>
 #include <veamy/postprocess/analytic/StrainValue.h>
-#include <veamy/postprocess/ElasticityH1NormCalculator.h>
+#include <veamy/postprocess/H1NormCalculator.h>
 
 double tangencial(double x, double y){
     double P = -1000;

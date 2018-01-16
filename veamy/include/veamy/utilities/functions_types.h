@@ -1,9 +1,7 @@
 #ifndef VEAMY_FUNCTIONS_TYPES_H
 #define VEAMY_FUNCTIONS_TYPES_H
 
-#include <utilities/Trio.h>
-#include <utilities/Pair.h>
-
+#include <vector>
 /*
  * Definition of the different function pointers used
  */

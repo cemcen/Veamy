@@ -9,7 +9,7 @@
 #include <utilities/utilities.h>
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
 #include <veamy/postprocess/L2NormCalculator.h>
-#include <veamy/postprocess/ElasticityH1NormCalculator.h>
+#include <veamy/postprocess/H1NormCalculator.h>
 #include <veamy/config/VeamyConfig.h>
 #include <veamy/physics/conditions/LinearElasticityConditions.h>
 #include <veamy/problems/VeamyLinearElasticityDiscretization.h>

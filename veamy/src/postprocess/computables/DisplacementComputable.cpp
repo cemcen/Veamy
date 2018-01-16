@@ -8,8 +8,14 @@ DisplacementComputable<T>::DisplacementComputable(DisplacementValue *value) {
 
 template <typename T>
 double DisplacementComputable<T>::apply(double x, double y, int index, T container) {
-    Pair<double> u = value->getValue(Point(x,y));
-    return std::pow(u.first,2) + std::pow(u.second,2);
+    std::vector<double> u = value->getValue(Point(x,y));
+    double result = 0;
+
+    for (int i = 0; i < u.size(); ++i) {
+        result += std::pow(u[i],2);
+    }
+
+    return result;
 }
 
 template class DisplacementComputable<Polygon>;

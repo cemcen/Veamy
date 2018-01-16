@@ -9,7 +9,7 @@ VeamyPoissonDisplacementCalculator<T>::VeamyPoissonDisplacementCalculator(DOFS d
 
 template <typename T>
 std::vector<double> VeamyPoissonDisplacementCalculator<T>::getDisplacement(double x, double y, int index, T container) {
-
+    return std::vector<double>();
 }
 
 template class VeamyPoissonDisplacementCalculator<Triangle>;

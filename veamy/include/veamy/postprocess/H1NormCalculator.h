@@ -19,7 +19,7 @@
  * Computes the H1 norm
  */
 template <typename T>
-class ElasticityH1NormCalculator : public NormCalculator<T> {
+class H1NormCalculator : public NormCalculator<T> {
 private:
     /*
      * Analytical stress and strain values
@@ -41,12 +41,12 @@ public:
     /*
      * Constructor
      */
-    ElasticityH1NormCalculator(StrainValue *strain, StressValue *stress, Eigen::VectorXd u, DOFS d);
+    H1NormCalculator(StrainValue *strain, StressValue *stress, Eigen::VectorXd u, DOFS d);
 
     /*
     * Constructor
     */
-    ElasticityH1NormCalculator(StrainValue *strain, Eigen::VectorXd u, DOFS d);
+    H1NormCalculator(StrainValue *strain, Eigen::VectorXd u, DOFS d);
 
     /* Sets the calculators for this norm
      * @param integrator Calculator to use
@@ -57,7 +57,7 @@ public:
     /* Sets the calculators for this norm
      * @param integrator Calculator to use
      */
-    void setCalculator(VeamyIntegrator<T> *integrator, std::vector<Point> &point);
+    void setCalculator(VeamyIntegrator<T> *integrator, Calculator<T> *calculator);
 
     /* Sets all extra information from the problem conditions that is used for norm computation
      * @param conditions problem conditions

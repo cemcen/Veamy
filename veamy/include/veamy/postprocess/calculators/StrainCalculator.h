@@ -3,12 +3,13 @@
 
 #include <veamy/lib/Eigen/Dense>
 #include <veamy/models/dof/DOFS.h>
+#include <veamy/postprocess/calculators/Calculator.h>
 
 /*
  * Abstract class that models the computation of the strain from the nodal results
  */
 template <typename T>
-class StrainCalculator {
+class StrainCalculator : public Calculator<T>{
 protected:
     /*
      * Degrees of freedom of the system

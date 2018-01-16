@@ -4,12 +4,13 @@
 #include <utilities/Pair.h>
 #include <veamy/models/dof/DOFS.h>
 #include <veamy/lib/Eigen/Dense>
+#include <veamy/postprocess/calculators/Calculator.h>
 
 /*
  * Abstract class that models the computation of the displacement from the nodal results
  */
 template <typename T>
-class DisplacementCalculator {
+class DisplacementCalculator : public Calculator<T>{
 protected:
     /*
      * Degrees of freedom of the system

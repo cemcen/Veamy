@@ -1,7 +1,7 @@
-#include <veamy/postprocess/ElasticityH1NormCalculator.h>
+#include <veamy/postprocess/H1NormCalculator.h>
 
 template <typename T>
-ElasticityH1NormCalculator<T>::ElasticityH1NormCalculator(StrainValue *strain, StressValue *stress,
+H1NormCalculator<T>::H1NormCalculator(StrainValue *strain, StressValue *stress,
                                                           Eigen::VectorXd u, DOFS d) : NormCalculator<T>(u, d) {
     this->strainValue = strain;
     this->stressValue = stress;
@@ -11,7 +11,7 @@ ElasticityH1NormCalculator<T>::ElasticityH1NormCalculator(StrainValue *strain, S
 }
 
 template <typename T>
-ElasticityH1NormCalculator<T>::ElasticityH1NormCalculator(StrainValue *strain, Eigen::VectorXd u,
+H1NormCalculator<T>::H1NormCalculator(StrainValue *strain, Eigen::VectorXd u,
                                                        DOFS d) : NormCalculator<T>(u, d) {
     this->strainValue = strain;
 
@@ -20,7 +20,7 @@ ElasticityH1NormCalculator<T>::ElasticityH1NormCalculator(StrainValue *strain, E
 }
 
 template <typename T>
-void ElasticityH1NormCalculator<T>::setCalculator(FeamyIntegrator<T>* integrator, FeamyAdditionalInfo info) {
+void H1NormCalculator<T>::setCalculator(FeamyIntegrator<T>* integrator, FeamyAdditionalInfo info) {
     NormIntegrator<T>* den = integrator->clone();
 
     this->num = integrator;
@@ -35,27 +35,25 @@ void ElasticityH1NormCalculator<T>::setCalculator(FeamyIntegrator<T>* integrator
 }
 
 template <typename T>
-void ElasticityH1NormCalculator<T>::setCalculator(VeamyIntegrator<T> *integrator, std::vector<Point> &point) {
+void H1NormCalculator<T>::setCalculator(VeamyIntegrator<T> *integrator, Calculator<T> *calculator) {
     NormIntegrator<T>* den = integrator->clone();
 
     this->num = integrator;
     this->den = den;
 
-    VeamyStrainCalculator<T>* calculator = new VeamyStrainCalculator<T>(this->dofs, this->nodalDisplacements, point);
-
-    this->numComputable->setCalculator(calculator);
+    this->numComputable->setCalculator(dynamic_cast<StrainCalculator<T>*>(calculator));
 
     this->num->setComputable(this->numComputable);
     this->den->setComputable(this->denComputable);
 }
 
 template <typename T>
-void ElasticityH1NormCalculator<T>::setExtraInformation(Conditions *conditions) {
+void H1NormCalculator<T>::setExtraInformation(Conditions *conditions) {
     LinearElasticityConditions* c = (LinearElasticityConditions*) conditions;
 
     numComputable->setMaterialMatrix(c->material->getMaterialMatrix());
     denComputable->setMaterialMatrix(c->material->getMaterialMatrix());
 }
 
-template class ElasticityH1NormCalculator<Triangle>;
-template class ElasticityH1NormCalculator<Polygon>;
+template class H1NormCalculator<Triangle>;
+template class H1NormCalculator<Polygon>;

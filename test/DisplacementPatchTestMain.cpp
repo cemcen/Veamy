@@ -8,7 +8,7 @@
 #include <veamy/physics/conditions/LinearElasticityConditions.h>
 #include <veamy/problems/VeamyLinearElasticityDiscretization.h>
 #include <veamy/postprocess/L2NormCalculator.h>
-#include <veamy/postprocess/ElasticityH1NormCalculator.h>
+#include <veamy/postprocess/H1NormCalculator.h>
 
 double uXPatch(double x, double y){
     return x;
@@ -18,12 +18,12 @@ double uYPatch(double x, double y){
     return x + y;
 }
 
-Pair<double> exactDisplacement(double x, double y){
-    return Pair<double>(x, x+y);
+std::vector<double> exactDisplacement(double x, double y){
+    return {x, x+y};
 }
 
-Trio<double> exactStrain(double x, double y){
-    return Trio<double>(1,1,0.5);
+std::vector<double> exactStrain(double x, double y){
+    return {1,1,0.5};
 }
 
 int main(){
@@ -117,7 +117,7 @@ int main(){
     L2NormCalculator<Polygon>* L2 = new L2NormCalculator<Polygon>(exactDisplacementSolution, x, v.DOFs);
     NormResult L2norm = v.computeErrorNorm(L2, mesh);
     StrainValue* exactStrainSolution = new StrainValue(exactStrain);
-    ElasticityH1NormCalculator<Polygon>* H1 = new ElasticityH1NormCalculator<Polygon>(exactStrainSolution, x, v.DOFs);
+    H1NormCalculator<Polygon>* H1 = new H1NormCalculator<Polygon>(exactStrainSolution, x, v.DOFs);
     NormResult H1norm = v.computeErrorNorm(H1, mesh);   
     std::cout << "done" << std::endl; 
     std::cout << "  Relative L2-norm    : " << utilities::toString(L2norm.NormValue) << std::endl;

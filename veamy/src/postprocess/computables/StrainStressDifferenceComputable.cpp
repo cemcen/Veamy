@@ -12,12 +12,12 @@ double StrainStressDifferenceComputable<T>::apply(double x, double y, int index,
 
     Eigen::VectorXd stress = this->D*strain;
 
-    Trio<double> eH = veamy_functions::to_trio<double>(strain);
-    Trio<double> sH = veamy_functions::to_trio<double>(stress);
-    Trio<double> e = this->strainValue->getValue(Point(x,y));
-    Trio<double> s = this->stressValue->getValue(Point(x,y));
+    std::vector<double> eH = veamy_functions::to_std_vector<double>(strain);
+    std::vector<double> sH = veamy_functions::to_std_vector<double>(stress);
+    std::vector<double> e = this->strainValue->getValue(Point(x,y));
+    std::vector<double> s = this->stressValue->getValue(Point(x,y));
 
-    return (e - eH).dot(s - sH);
+    return veamy_functions::dot(veamy_functions::substract(e, eH), veamy_functions::substract(s, sH));
 }
 
 template <typename T>

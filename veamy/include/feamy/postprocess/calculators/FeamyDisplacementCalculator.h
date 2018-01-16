@@ -25,7 +25,7 @@ public:
     /*
      * Constructor
      */
-    FeamyDisplacementCalculator(DOFS d, Eigen::VectorXd u, std::vector<FeamyElement *> elements;
+    FeamyDisplacementCalculator(DOFS d, Eigen::VectorXd u, std::vector<FeamyElement *> elements);
 
     /* Computes the approximate displacement for a given point
      * @param x y coordinates of the point

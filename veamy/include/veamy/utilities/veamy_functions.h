@@ -10,6 +10,7 @@
 #include <delynoi/triangulation/EarTriangulationGenerator.h>
 #include <feamy/integration/quadrature/gauss_quadrature.h>
 #include <veamy/postprocess/utilities/norm_utilities.h>
+#include <utilities/Trio.h>
 
 /*
  * Namespace that define a number of utility functions of the Veamy library
@@ -45,41 +46,34 @@ namespace veamy_functions{
         return result;
     }
 
-     /* Converts a Trio to an Eigen vector
-     * @param vector Trio to convert
+    /* Converts a standard vector to an Eigen vector
+     * @param v vector to convert
      * @return the same values, in an Eigen vector
      */
     template <typename T>
-    Eigen::VectorXd to_vector(Trio<T> vector){
-        Eigen::VectorXd result = Eigen::VectorXd::Zero(3);
-        result(0) = vector.first;
-        result(1) = vector.second;
-        result(2) = vector.third;
+    Eigen::VectorXd to_vector(std::vector<T> v){
+        Eigen::VectorXd result = Eigen::VectorXd::Zero(v.size());
+
+        for (int i = 0; i < v.size(); ++i) {
+            result(i) = v[i];
+        }
 
         return result;
     }
 
-    /* Converts a Pair to an Eigen vector
-     * @param vector Pair to convert
-     * @return the same values, in an Eigen vector
+    /* Converts an Eigen vector to a standard vector
+     * @param v vector to convert
+     * @return the same values, in a standard vector
      */
     template <typename T>
-    Eigen::VectorXd to_vector(Pair<T> vector){
-        Eigen::VectorXd result = Eigen::VectorXd::Zero(2);
-        result(0) = vector.first;
-        result(1) = vector.second;
+    std::vector<T> to_std_vector(Eigen::VectorXd v){
+        std::vector<T> result;
+
+        for (int i = 0; i < v.size(); ++i) {
+            result.push_back(v[i]);
+        }
 
         return result;
-    }
-
-    /* Converts an Eigen vector to a Trio
-     * @param vector vector to convert
-     * @return the same values, in a Trio
-     */
-    template <typename T>
-    Trio<T> to_trio(Eigen::VectorXd vector){
-        Trio<T> trio (vector(0), vector(1), vector(2));
-        return trio;
     }
 
     /* Computes a numerical integral approximation using a Gaussian scheme
@@ -114,13 +108,42 @@ namespace veamy_functions{
 
     }
 
-
     /*
      * Defines a function that always returns zero, used for body forces
      * @param x y params of the function (not used, left to have the same signature as all body forces functions)
      * @return zero
      */
     extern double none_function(double x, double y);
+
+    template <typename T>
+    double dot(std::vector<T> v1, std::vector<T> v2){
+        if(v1.size()!=v2.size()){
+            throw std::invalid_argument("Can not compute the dot product between two vectors of different sizes");
+        }
+
+        double result = 0;
+
+        for (int i = 0; i < v1.size(); ++i) {
+            result += v1[i]*v2[i];
+        }
+
+        return result;
+    }
+
+    template <typename T>
+    std::vector<T> substract(std::vector<T> v1, std::vector<T> v2){
+        if(v1.size()!=v2.size()){
+            throw std::invalid_argument("Can not compute the substraction between two vectors of different sizes");
+        }
+
+        std::vector<T> result;
+
+        for (int i = 0; i < v1.size(); ++i) {
+            result.push_back(v1[i] - v2[i]);
+        }
+
+        return result;
+    }
 
 }
 

@@ -13,7 +13,7 @@
 #include <veamy/physics/conditions/LinearElasticityConditions.h>
 #include <veamy/problems/VeamyLinearElasticityDiscretization.h>
 #include <veamy/postprocess/L2NormCalculator.h>
-#include <veamy/postprocess/ElasticityH1NormCalculator.h>
+#include <veamy/postprocess/H1NormCalculator.h>
 #include <feamy/Feamer.h>
 #include <feamy/models/constructor/Tri3Constructor.h>
 #include <feamy/problem/FeamyLinearElasticityDiscretization.h>

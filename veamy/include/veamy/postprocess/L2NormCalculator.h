@@ -35,7 +35,7 @@ public:
     /* Sets the calculators for this norm
      * @param integrator Calculator to use
      */
-    void setCalculator(VeamyIntegrator<T> *integrator, DisplacementCalculator<T> *calculator);
+    void setCalculator(VeamyIntegrator<T> *integrator, Calculator<T> *calculator);
 
     /* Sets all extra information from the problem conditions that is used for norm computation
      * @param conditions problem conditions

@@ -49,7 +49,7 @@ public:
     /* Sets the calculators for this norm
      * @param integrator Calculator to use
      */
-    virtual void setCalculator(VeamyIntegrator<T> *integrator, DisplacementCalculator<T> *calculator) = 0;
+    virtual void setCalculator(VeamyIntegrator<T> *integrator, Calculator<T> *calculator) = 0;
 
     /* Sets the calculators for this norm
      * @param integrator Calculator to use
