@@ -35,13 +35,14 @@ void H1NormCalculator<T>::setCalculator(FeamyIntegrator<T>* integrator, FeamyAdd
 }
 
 template <typename T>
-void H1NormCalculator<T>::setCalculator(VeamyIntegrator<T> *integrator, Calculator<T> *calculator) {
+void H1NormCalculator<T>::setCalculator(VeamyIntegrator<T> *integrator, CalculatorConstructor<T> *calculator,
+                                        std::vector<Point>& points) {
     NormIntegrator<T>* den = integrator->clone();
 
     this->num = integrator;
     this->den = den;
 
-    this->numComputable->setCalculator(dynamic_cast<StrainCalculator<T>*>(calculator));
+    this->numComputable->setCalculator(calculator->getStrainCalculator(points));
 
     this->num->setComputable(this->numComputable);
     this->den->setComputable(this->denComputable);

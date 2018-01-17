@@ -57,5 +57,4 @@ void PoissonVeamyElement::computeK(DOFS &d, UniqueList<Point> &points) {
     P = H*(W.transpose());
 
     this->K = area*W*Ic*W.transpose() + (I - P).transpose()*I*(I - P);
-    //std::cout << K << std::endl << std::endl;
 }

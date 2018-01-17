@@ -4,12 +4,12 @@
 #include "StrainCalculator.h"
 
 template <typename T>
-class VeamyStrainCalculator : public StrainCalculator<T>{
+class VeamyElasticityStrainCalculator : public StrainCalculator<T>{
 public:
     /*
      * Constructor
      */
-    VeamyStrainCalculator(DOFS& d, Eigen::VectorXd u, std::vector<Point>& points);
+    VeamyElasticityStrainCalculator(DOFS& d, Eigen::VectorXd u, std::vector<Point>& points);
 
     /* Computes the approximate strain for a given point
      * @param x y coordinates of the point

@@ -13,7 +13,7 @@
 #include <feamy/postprocess/calculators/FeamyStrainCalculator.h>
 #include <veamy/physics/conditions/LinearElasticityConditions.h>
 #include <veamy/postprocess/computables/StrainDifferenceComputable.h>
-#include <veamy/postprocess/calculators/VeamyStrainCalculator.h>
+#include <veamy/postprocess/calculators/VeamyElasticityStrainCalculator.h>
 
 /*
  * Computes the H1 norm
@@ -57,7 +57,7 @@ public:
     /* Sets the calculators for this norm
      * @param integrator Calculator to use
      */
-    void setCalculator(VeamyIntegrator<T> *integrator, Calculator<T> *calculator);
+    void setCalculator(VeamyIntegrator<T> *integrator, CalculatorConstructor<T> *calculator, std::vector<Point>& points);
 
     /* Sets all extra information from the problem conditions that is used for norm computation
      * @param conditions problem conditions

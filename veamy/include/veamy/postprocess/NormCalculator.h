@@ -9,7 +9,7 @@
 #include <feamy/postprocess/integrator/FeamyIntegrator.h>
 #include <feamy/postprocess/structures/FeamyAdditionalInfo.h>
 #include <veamy/postprocess/utilities/NormResult.h>
-#include <veamy/postprocess/calculators/DisplacementCalculator.h>
+#include <veamy/postprocess/constructors/CalculatorConstructor.h>
 
 /*
  * Abstract class that encapsulates the generic formula used to calculate the norms, leaving responsability to the
@@ -49,7 +49,8 @@ public:
     /* Sets the calculators for this norm
      * @param integrator Calculator to use
      */
-    virtual void setCalculator(VeamyIntegrator<T> *integrator, Calculator<T> *calculator) = 0;
+    virtual void setCalculator(VeamyIntegrator<T> *integrator, CalculatorConstructor<T> *calculator,
+                               std::vector<Point>& points) = 0;
 
     /* Sets the calculators for this norm
      * @param integrator Calculator to use

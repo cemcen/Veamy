@@ -21,14 +21,15 @@ void L2NormCalculator<T>::setCalculator(FeamyIntegrator<T>* num, FeamyAdditional
 }
 
 template <typename T>
-void L2NormCalculator<T>::setCalculator(VeamyIntegrator<T> *integrator, Calculator<T> *calculator) {
+void L2NormCalculator<T>::setCalculator(VeamyIntegrator<T> *integrator, CalculatorConstructor<T> *calculator,
+                                        std::vector<Point>& points) {
     NormIntegrator<T>* den = integrator->clone();
 
     this->num = integrator;
     this->den = den;
 
     this->num->setComputable(new DisplacementDifferenceComputable<T>(this->value,
-                                                                     dynamic_cast<DisplacementCalculator<T>*>(calculator)));
+                                                                     calculator->getDisplacementCalculator(points)));
     this->den->setComputable(new DisplacementComputable<T>(this->value));
 }
 

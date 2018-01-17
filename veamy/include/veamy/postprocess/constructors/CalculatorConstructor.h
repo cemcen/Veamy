@@ -3,17 +3,22 @@
 
 #include <veamy/postprocess/calculators/DisplacementCalculator.h>
 #include <veamy/postprocess/calculators/StrainCalculator.h>
-#include <veamy/postprocess/integrator/VeamyIntegrator.h>
-#include <feamy/postprocess/integrator/FeamyIntegrator.h>
+#include <veamy/models/dof/DOFS.h>
+#include <veamy/lib/Eigen/Dense>
 
 template <typename T>
 class CalculatorConstructor {
+protected:
+    DOFS dofs;
+    Eigen::VectorXd u;
 public:
-    virtual DisplacementCalculator<T> getDisplacementCalculator(VeamyIntegrator* v) = 0;
-    virtual DisplacementCalculator<T> getDisplacementCalculator(FeamyIntegrator* f) = 0;
+    CalculatorConstructor(DOFS d, Eigen::VectorXd u){
+        this->dofs = d;
+        this->u = u;
+    };
 
-    virtual StrainCalculator<T> getStrainCalculator(VeamyIntegrator* v) = 0;
-    virtual StrainCalculator<T> getStrainCalculator(FeamyIntegrator* f) = 0;
+    virtual DisplacementCalculator<T>* getDisplacementCalculator(std::vector<Point>& points) = 0;
+    virtual StrainCalculator<T>* getStrainCalculator(   std::vector<Point> &points) = 0;
 };
 
 #endif

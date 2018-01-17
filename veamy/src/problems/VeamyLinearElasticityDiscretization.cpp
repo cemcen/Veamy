@@ -3,6 +3,7 @@
 #include <veamy/models/constraints/values/Constant.h>
 #include <veamy/postprocess/utilities/NormResult.h>
 #include <veamy/postprocess/calculators/VeamyElasticityDisplacementCalculator.h>
+#include <veamy/postprocess/constructors/ElasticityConstructor.h>
 
 
 VeamyLinearElasticityDiscretization::VeamyLinearElasticityDiscretization(LinearElasticityConditions *conditions)
@@ -79,11 +80,8 @@ Mesh<Polygon> VeamyLinearElasticityDiscretization::initProblemFromFile(Veamer *v
 
 NormResult VeamyLinearElasticityDiscretization::computeErrorNorm(NormCalculator<Polygon> *calculator,
                                                                  Mesh<Polygon> mesh, Veamer* v) {
-    DisplacementCalculator<Polygon>* displacementCalculator =
-            new VeamyElasticityDisplacementCalculator<Polygon>(v->DOFs,
-                                                               calculator->getNodalDisplacements(),
-                                                               mesh.getPoints().getList());
-    calculator->setCalculator(new VeamyIntegrator<Polygon>, displacementCalculator);
+    CalculatorConstructor<Polygon>* constructor = new ElasticityConstructor<Polygon>(v->DOFs, calculator->getNodalDisplacements());
+    calculator->setCalculator(new VeamyIntegrator<Polygon>, constructor, mesh.getPoints().getList());
     calculator->setExtraInformation(this->conditions);
 
     return calculator->getNorm(mesh);
