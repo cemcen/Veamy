@@ -66,7 +66,7 @@ veamer.initProblem(mesh, conditions);</code></pre></li>
 <li>If required, print the nodal displacements to a text file:<br>
 <pre><code>veamer.writeDisplacements(fileName, displacements);</code></pre></li>
 <li>The results can be plotted using the Matlab function <b>plotPolyMeshDisplacements</b> (located in folder <b>/lib/visualization/</b> ):
-<pre><code>[points,polygons,displacements] = plotPolyMeshDisplacements('mesh.txt','displacements.txt','$u_x^h$','$u_y^h$','$||u^h||$');</code></pre>
+<pre><code>[points,polygons,displacements] = plotPolyMeshDisplacements('mesh.txt','displacements.txt','$$u_x^h$$','$$u_y^h$$','$$||u^h||$$','yes');</code></pre>
 </ol>
 
 This and various additional examples are provided in the <b>test/</b> folder located in the root directory of Veamy. 
