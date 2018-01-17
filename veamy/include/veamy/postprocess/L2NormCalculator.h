@@ -9,6 +9,7 @@
 #include <veamy/postprocess/computables/DisplacementDifferenceComputable.h>
 #include <veamy/postprocess/computables/DisplacementComputable.h>
 #include <veamy/postprocess/calculators/VeamyElasticityDisplacementCalculator.h>
+#include <veamy/physics/conditions/PoissonConditions.h>
 
 /*
  * Computes the L2 norm
@@ -40,7 +41,12 @@ public:
     /* Sets all extra information from the problem conditions that is used for norm computation
      * @param conditions problem conditions
      */
-    void setExtraInformation(Conditions* conditions);
+    void setExtraInformation(LinearElasticityConditions* conditions);
+
+    /* Sets all extra information from the problem conditions that is used for norm computation
+     * @param conditions problem conditions
+     */
+    void setExtraInformation(PoissonConditions* conditions);
 };
 
 #endif

@@ -49,11 +49,18 @@ void H1NormCalculator<T>::setCalculator(VeamyIntegrator<T> *integrator, Calculat
 }
 
 template <typename T>
-void H1NormCalculator<T>::setExtraInformation(Conditions *conditions) {
-    LinearElasticityConditions* c = (LinearElasticityConditions*) conditions;
+void H1NormCalculator<T>::setExtraInformation(LinearElasticityConditions *conditions) {
+    numComputable->setMaterialMatrix(conditions->material->getMaterialMatrix());
+    denComputable->setMaterialMatrix(conditions->material->getMaterialMatrix());
+}
 
-    numComputable->setMaterialMatrix(c->material->getMaterialMatrix());
-    denComputable->setMaterialMatrix(c->material->getMaterialMatrix());
+template <typename T>
+void H1NormCalculator<T>::setExtraInformation(PoissonConditions *conditions) {
+    Eigen::MatrixXd I;
+    I = Eigen::MatrixXd::Identity(2,2);
+
+    numComputable->setMaterialMatrix(I);
+    denComputable->setMaterialMatrix(I);
 }
 
 template class H1NormCalculator<Triangle>;

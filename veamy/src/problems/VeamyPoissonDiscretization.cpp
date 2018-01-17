@@ -21,6 +21,7 @@ NormResult
 VeamyPoissonDiscretization::computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon> mesh, Veamer *solver) {
     CalculatorConstructor<Polygon>* constructor = new PoissonConstructor<Polygon>(solver->DOFs, calculator->getNodalDisplacements());
     calculator->setCalculator(new VeamyIntegrator<Polygon>, constructor, mesh.getPoints().getList());
+
     calculator->setExtraInformation(this->conditions);
 
     return calculator->getNorm(mesh);

@@ -6,9 +6,21 @@
 #include <veamy/physics/conditions/PoissonConditions.h>
 #include <veamy/models/constraints/values/Function.h>
 #include <veamy/problems/VeamyPoissonDiscretization.h>
+#include <veamy/postprocess/analytic/DisplacementValue.h>
+#include <veamy/postprocess/L2NormCalculator.h>
+#include <veamy/postprocess/analytic/StrainValue.h>
+#include <veamy/postprocess/H1NormCalculator.h>
 
 double uPatch(double x, double y){
     return x + y;
+}
+
+std::vector<double> exactDisplacement(double x, double y){
+    return {x+y};
+}
+
+std::vector<double> exactStrain(double x, double y){
+    return {1,1};
 }
 
 int main(){
@@ -86,6 +98,19 @@ int main(){
     std::cout << "+ Simulating ... ";
     Eigen::VectorXd x = v.simulate(mesh);
     std::cout << "done" << std::endl;
+
+    std::cout << "+ Calculating norms of the error ... ";
+    DisplacementValue* exactDisplacementSolution = new DisplacementValue(exactDisplacement);
+    L2NormCalculator<Polygon>* L2 = new L2NormCalculator<Polygon>(exactDisplacementSolution, x, v.DOFs);
+    NormResult L2norm = v.computeErrorNorm(L2, mesh);
+    StrainValue* exactStrainSolution = new StrainValue(exactStrain);
+    H1NormCalculator<Polygon>* H1 = new H1NormCalculator<Polygon>(exactStrainSolution, x, v.DOFs);
+    NormResult H1norm = v.computeErrorNorm(H1, mesh);
+    std::cout << "done" << std::endl;
+    std::cout << "  Relative L2-norm    : " << utilities::toString(L2norm.NormValue) << std::endl;
+    std::cout << "  Relative H1-seminorm: " << utilities::toString(H1norm.NormValue) << std::endl;
+    std::cout << "  Element size        : " << utilities::toString(L2norm.MaxEdge) << std::endl;
+
 
     std::cout << "+ Printing nodal displacement solution to a file ... ";
     v.writeDisplacements(dispFileName, x);

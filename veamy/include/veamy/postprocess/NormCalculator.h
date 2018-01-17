@@ -10,6 +10,8 @@
 #include <feamy/postprocess/structures/FeamyAdditionalInfo.h>
 #include <veamy/postprocess/utilities/NormResult.h>
 #include <veamy/postprocess/constructors/CalculatorConstructor.h>
+#include <veamy/physics/conditions/LinearElasticityConditions.h>
+#include <veamy/physics/conditions/PoissonConditions.h>
 
 /*
  * Abstract class that encapsulates the generic formula used to calculate the norms, leaving responsability to the
@@ -61,7 +63,12 @@ public:
     /* Obtains any extra information required for the norm from the problem conditions
      * @param conditions problem conditions
      */
-    virtual void setExtraInformation(Conditions* conditions) = 0;
+    virtual void setExtraInformation(LinearElasticityConditions* conditions) = 0;
+
+    /* Obtains any extra information required for the norm from the problem conditions
+     * @param conditions problem conditions
+     */
+    virtual void setExtraInformation(PoissonConditions* conditions) = 0;
 
     /*
      * @return nodal displacements computed

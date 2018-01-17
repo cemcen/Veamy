@@ -14,6 +14,7 @@
 #include <veamy/physics/conditions/LinearElasticityConditions.h>
 #include <veamy/postprocess/computables/StrainDifferenceComputable.h>
 #include <veamy/postprocess/calculators/VeamyElasticityStrainCalculator.h>
+#include <veamy/physics/conditions/PoissonConditions.h>
 
 /*
  * Computes the H1 norm
@@ -62,7 +63,13 @@ public:
     /* Sets all extra information from the problem conditions that is used for norm computation
      * @param conditions problem conditions
      */
-    void setExtraInformation(Conditions* conditions);
+    void setExtraInformation(LinearElasticityConditions* conditions);
+
+    /* Sets all extra information from the problem conditions that is used for norm computation
+     * @param conditions problem conditions
+     */
+    void setExtraInformation(PoissonConditions* conditions);
+
 };
 
 #endif

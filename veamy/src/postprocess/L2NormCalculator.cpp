@@ -34,7 +34,10 @@ void L2NormCalculator<T>::setCalculator(VeamyIntegrator<T> *integrator, Calculat
 }
 
 template <typename T>
-void L2NormCalculator<T>::setExtraInformation(Conditions *conditions) {}
+void L2NormCalculator<T>::setExtraInformation(LinearElasticityConditions *conditions) {}
+
+template <typename T>
+void L2NormCalculator<T>::setExtraInformation(PoissonConditions *conditions) {}
 
 template class L2NormCalculator<Triangle>;
 template class L2NormCalculator<Polygon>;
