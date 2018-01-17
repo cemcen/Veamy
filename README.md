@@ -75,7 +75,7 @@ In addition, thanks to its extensibility, Veamy is capable of solving the two di
 <h2>Using the Finite Element Method </h2>
 Veamy, being an extensible library, includes the possibility of solving the linear elasticity problem using the Finite Element Method in a module named Feamy. Solving the linear elasticity problem using FEM is similar to VEM, with just a few differences:
 <li> For now, the Finite Element Method only accepts triangular meshes (triangular elements). Triangulations 
-can be generated using the same mesher used for the polygonal mesh generation<br>
+can be generated using the same mesher used for the polygonal mesh generation, as follows:<br>
 <pre><code>std::vector<Point> points = {Point(0,0), Point(1,0), Point(1,1), Point(0,1)};
 Region region(points); 
 region.generateSeedPoints(PointGenerator(functions::random_double(), functions::random_double()), 10, 10);
