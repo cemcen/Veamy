@@ -1,6 +1,6 @@
 <h1> Veamy: an extensible object-oriented C++ library for the virtual element method </h1>
 This repository contains the code for an open source C++ library that implements the virtual element method. The current 
-release of this library allows the solution of 2D linear elastostatic problems.  
+release of this library allows the solution of 2D linear elastostatic problems and the 2D Poisson problem. The 2D linear elastostatic problem can also be solved using the standard three-node finite element. For this, a module called Feamy is available within Veamy.
 
 Features:
 <ul>
@@ -70,23 +70,23 @@ veamer.initProblem(mesh, conditions);</code></pre></li>
 </ol>
 
 This and various additional examples are provided in the <b>test/</b> folder located in the root directory of Veamy. 
+In addition, thanks to its extensibility, Veamy is capable of solving the two dimensional Poisson problem. An example is provided in the <b>test/</b> folder.
 
 <h2>Using the Finite Element Method </h2>
-Veamy, being an extensible library, includes the possibility of solving the same linear elasticity problem but using the Finite Element Method in a
-module named Feamy. Appropriately, solving the linear elasticity problem using FEM is similar to VEM, with just one or two differences:
-<li> For now, the Finite Element Method only accepts triangular meshes (triangular elements). We can generate triangulations 
-using the same mesher used for the polygonal mesh generation<br>
+Veamy, being an extensible library, includes the possibility of solving the linear elasticity problem using the Finite Element Method in a module named Feamy. Solving the linear elasticity problem using FEM is similar to VEM, with just a few differences:
+<li> For now, the Finite Element Method only accepts triangular meshes (triangular elements). Triangulations 
+can be generated using the same mesher used for the polygonal mesh generation<br>
 <pre><code>std::vector<Point> points = {Point(0,0), Point(1,0), Point(1,1), Point(0,1)};
 Region region(points); 
 region.generateSeedPoints(PointGenerator(functions::random_double(), functions::random_double()), 10, 10);
 TriangleDelaunayGenerator generator (region.getSeedPoints(), region);
 Mesh&ltTriangle&gt mesh = generator.getConformingDelaunayTriangulation();</code></pre></li>
-<li> Both the constraints and problem conditions (body forces and material properties) are set exactly as in Veamy. </li>
+<li>Both the constraints and problem conditions (body forces and material properties) are set exactly as in Veamy. </li>
 <li>Create a Feamer instance, an ElementConstructor (which represents the type of elements that will be used for the problem. In our example,
-we use the most simple linear trinagular elements), and initialize the numerical problem: 
+we use linear triangular elements), and initialize the numerical problem: 
 <pre><code>Feamer feamer;
 feamer.initProblem(mesh, conditions, new Tri3Constructor());</code></pre></li>
-<li> Obtaining the displacements and the post processing is exactly equal to Veamy's </li>
+<li> Obtaining the displacements and the post processing is exactly as in Veamy </li>
 
 <h2>Using PolyMesher</h2>
 <ol>
