@@ -102,5 +102,10 @@ function [points,polygons] = plotPolyMesh(meshFile)
   set(gca, 'FontSize', 12);
   % axis('square')  
   axis equal; 
-  axis off;
+  %axis off;
+  dx = 0; dy = 0;
+  xlim([min(points(:, 1)) - dx, max(points(:, 1)) + dx])
+  ylim([min(points(:, 2)) - dy, max(points(:, 2)) + dy])
+  xlabel('$x$','Interpreter','latex','FontSize',18);
+  ylabel('$y$','Interpreter','latex','FontSize',18);
 end
