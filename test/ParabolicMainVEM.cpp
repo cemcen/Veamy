@@ -47,7 +47,7 @@ double uY(double x, double y){
     return P/(6*Ebar*I)*(3*vBar*std::pow(y,2)*(L-x) + (3*L-x)*std::pow(x,2));
 }
 
-Pair<double> exactDisplacement(double x, double y){
+std::vector<double> exactDisplacement(double x, double y){
     double P = -1000;
     double Ebar = 1e7/(1 - std::pow(0.3,2));
     double vBar = 0.3/(1 - 0.3);
@@ -55,12 +55,11 @@ Pair<double> exactDisplacement(double x, double y){
     double L = 8;
     double I = std::pow(D,3)/12;
 
-    return Pair<double>(-P*y/(6*Ebar*I)*((6*L - 3*x)*x + (2+vBar)*std::pow(y,2) - 3*std::pow(D,2)/2*(1+vBar)),
-                        P/(6*Ebar*I)*(3*vBar*std::pow(y,2)*(L-x) + (3*L-x)*std::pow(x,2)));
+    return {-P*y/(6*Ebar*I)*((6*L - 3*x)*x + (2+vBar)*std::pow(y,2) - 3*std::pow(D,2)/2*(1+vBar)),
+                        P/(6*Ebar*I)*(3*vBar*std::pow(y,2)*(L-x) + (3*L-x)*std::pow(x,2))};
 }
 
-Trio<double> exactStrain(double x, double y){
-
+std::vector<double> exactStrain(double x, double y){
     double P = -1000;
     double Ebar = 1e7/(1 - std::pow(0.3,2));
     double vBar = 0.3/(1 - 0.3);
@@ -72,7 +71,7 @@ Trio<double> exactStrain(double x, double y){
     double duxdy = -(P*((vBar+2)*std::pow(y,2)+x*(6*L-3*x)-(3*std::pow(D,2)*(vBar+1))/2))/(6*Ebar*I)-(P*std::pow(y,2)*(vBar+2))/(3*Ebar*I);
     double duydy = (P*vBar*y*(L-x))/(Ebar*I);   
 
-    return Trio<double>(duxdx,duydy,0.5*(duxdy+duydx));
+    return {duxdx,duydy,0.5*(duxdy+duydx)};
     // the third component is defined as in VEM: 0.5*(dux/dy + duy/dx)
 }
 
@@ -110,9 +109,9 @@ int main(){
     //Polygonal meshes of increasing number of elements: 12x6, 18x9, 24x12, 30x15, 36x18 elements
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 12, 6);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 18, 9);
-    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 24, 12);
+    rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 24, 12);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 30, 15);
-    rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 36, 18);    
+    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 36, 18);
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
     TriangleVoronoiGenerator meshGenerator (seeds, rectangle4x8);
     Mesh<Polygon> mesh = meshGenerator.getMesh();
@@ -165,12 +164,12 @@ int main(){
     L2NormCalculator<Polygon>* L2 = new L2NormCalculator<Polygon>(exactDisplacementSolution, x, v.DOFs);
     NormResult L2norm = v.computeErrorNorm(L2, mesh);
     StrainValue* exactStrainSolution = new StrainValue(exactStrain);
-    ElasticityH1NormCalculator<Polygon>* H1 = new ElasticityH1NormCalculator<Polygon>(exactStrainSolution, x, v.DOFs);
+    H1NormCalculator<Polygon>* H1 = new H1NormCalculator<Polygon>(exactStrainSolution, x, v.DOFs);
     NormResult H1norm = v.computeErrorNorm(H1, mesh);   
     std::cout << "done" << std::endl; 
     std::cout << "  Relative L2-norm    : " << utilities::toString(L2norm.NormValue) << std::endl;
-    std::cout << "  Relative H1-seminorm: " << utilities::toString(H1norm.NormValue) << std::endl;    
-    std::cout << "  Element size        : " << utilities::toString(L2norm.MaxEdge) << std::endl;        
+    std::cout << "  Relative H1-seminorm: " << utilities::toString(H1norm.NormValue) << std::endl;
+    std::cout << "  Element size        : " << utilities::toString(L2norm.MaxEdge) << std::endl;
 
     std::cout << "+ Printing nodal displacement solution to a file ... ";
     v.writeDisplacements(dispFileName, x);

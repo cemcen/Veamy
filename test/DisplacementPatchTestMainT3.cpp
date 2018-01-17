@@ -26,23 +26,23 @@ double uYPatch(double x, double y){
     return x + y;
 }
 
-Pair<double> exactDisplacement(double x, double y){
-    return Pair<double>(x, x+y);
+std::vector<double> exactDisplacement(double x, double y){
+    return {x, x+y};
 }
 
-Trio<double> exactStrain(double x, double y){
-    return Trio<double>(1,1,1);
+std::vector<double> exactStrain(double x, double y){
+    return {1,1,1};
     // the third component is defined as in classical FEM: dux/dy + duy/dx 
 }
 
 int main(){
-    // Set precision for plotting to output files:       
-    // OPTION 1: in "VeamyConfig::instance()->setPrecision(Precision::precision::mid)"       
-    // use "small" for 6 digits; "mid" for 10 digits; "large" for 16 digits.       
-    // OPTION 2: set the desired precision, for instance, as:       
-    // VeamyConfig::instance()->setPrecision(12) for 12 digits. Change "12" by the desired precision.       
-    // OPTION 3: Omit any instruction "VeamyConfig::instance()->setPrecision(.....)"       
-    // from this file. In this case, the default precision, which is 6 digits, will be used.      
+    // Set precision for plotting to output files:
+    // OPTION 1: in "VeamyConfig::instance()->setPrecision(Precision::precision::mid)"
+    // use "small" for 6 digits; "mid" for 10 digits; "large" for 16 digits.
+    // OPTION 2: set the desired precision, for instance, as:
+    // VeamyConfig::instance()->setPrecision(12) for 12 digits. Change "12" by the desired precision.
+    // OPTION 3: Omit any instruction "VeamyConfig::instance()->setPrecision(.....)"
+    // from this file. In this case, the default precision, which is 6 digits, will be used.
     VeamyConfig::instance()->setPrecision(Precision::precision::large);
 
     // DEFINING PATH FOR THE OUTPUT FILES:
@@ -61,12 +61,12 @@ int main(){
     std::cout << "..." << std::endl;
 
     std::cout << "+ Defining the domain ... ";
-    std::vector<Point> rectangle4x8_points = {Point(0, -2), Point(8, -2), Point(8, 2), Point(0, 2)};
+    std::vector<Point> rectangle4x8_points = {Point(0, 0), Point(1, 0), Point(1, 1), Point(0, 1)};
     Region rectangle4x8(rectangle4x8_points);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Generating 3-node triangular mesh ... ";
-    rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 12, 6);
+    rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 6, 6);
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
     TriangleDelaunayGenerator meshGenerator (seeds, rectangle4x8);
     Mesh<Triangle> mesh = meshGenerator.getConformingDelaunayTriangulation();
@@ -85,25 +85,25 @@ int main(){
     Function* uXConstraint = new Function(uXPatch);
     Function* uYConstraint = new Function(uYPatch);
 
-    PointSegment leftSide(Point(0,-2), Point(0,2));
+    PointSegment leftSide(Point(0,0), Point(0,1));
     SegmentConstraint leftX (leftSide, mesh.getPoints(), uXConstraint);
     conditions->addEssentialConstraint(leftX, mesh.getPoints(), elasticity_constraints::Direction::Horizontal);
     SegmentConstraint  leftY (leftSide, mesh.getPoints(), uYConstraint);
     conditions->addEssentialConstraint(leftY, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
 
-    PointSegment downSide(Point(0,-2), Point(8,-2));
+    PointSegment downSide(Point(0,0), Point(1,0));
     SegmentConstraint downX (downSide, mesh.getPoints(), uXConstraint);
     conditions->addEssentialConstraint(downX, mesh.getPoints(), elasticity_constraints::Direction::Horizontal);
     SegmentConstraint  downY (downSide, mesh.getPoints(), uYConstraint);
     conditions->addEssentialConstraint(downY, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
 
-    PointSegment rightSide(Point(8,-2), Point(8, 2));
+    PointSegment rightSide(Point(1,0), Point(1, 1));
     SegmentConstraint rightX (rightSide, mesh.getPoints(), uXConstraint);
     conditions->addEssentialConstraint(rightX, mesh.getPoints(), elasticity_constraints::Direction::Horizontal);
     SegmentConstraint  rightY (rightSide, mesh.getPoints(), uYConstraint);
     conditions->addEssentialConstraint(rightY, mesh.getPoints(), elasticity_constraints::Direction::Vertical);
 
-    PointSegment topSide(Point(0, 2), Point(8, 2));
+    PointSegment topSide(Point(0, 1), Point(1, 1));
     SegmentConstraint topX (topSide, mesh.getPoints(), uXConstraint);
     conditions->addEssentialConstraint(topX, mesh.getPoints(), elasticity_constraints::Direction::Horizontal);
     SegmentConstraint  topY (topSide, mesh.getPoints(), uYConstraint);
@@ -126,12 +126,12 @@ int main(){
     L2NormCalculator<Triangle>* L2 = new L2NormCalculator<Triangle>(exactDisplacementSolution, x, v.DOFs);
     NormResult L2norm = v.computeErrorNorm(L2, mesh);
     StrainValue* exactStrainSolution = new StrainValue(exactStrain);
-    ElasticityH1NormCalculator<Triangle>* H1 = new ElasticityH1NormCalculator<Triangle>(exactStrainSolution, x, v.DOFs);
+    H1NormCalculator<Triangle>* H1 = new H1NormCalculator<Triangle>(exactStrainSolution, x, v.DOFs);
     NormResult H1norm = v.computeErrorNorm(H1, mesh);   
     std::cout << "done" << std::endl; 
     std::cout << "  Relative L2-norm    : " << utilities::toString(L2norm.NormValue) << std::endl;
-    std::cout << "  Relative H1-seminorm: " << utilities::toString(H1norm.NormValue) << std::endl;    
-    std::cout << "  Element size        : " << utilities::toString(L2norm.MaxEdge) << std::endl;      
+    std::cout << "  Relative H1-seminorm: " << utilities::toString(H1norm.NormValue) << std::endl;
+    std::cout << "  Element size        : " << utilities::toString(L2norm.MaxEdge) << std::endl;
 
     std::cout << "+ Printing nodal displacement solution to a file ... ";
     v.writeDisplacements(dispFileName, x);

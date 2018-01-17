@@ -50,7 +50,7 @@ double uY(double x, double y){
     return P/(6*Ebar*I)*(3*vBar*std::pow(y,2)*(L-x) + (3*L-x)*std::pow(x,2));
 }
 
-Pair<double> exactDisplacement(double x, double y){
+std::vector<double> exactDisplacement(double x, double y){
     double P = -1000;
     double Ebar = 1e7/(1 - std::pow(0.3,2));
     double vBar = 0.3/(1 - 0.3);
@@ -58,26 +58,26 @@ Pair<double> exactDisplacement(double x, double y){
     double L = 8;
     double I = std::pow(D,3)/12;
 
-    return Pair<double>(-P*y/(6*Ebar*I)*((6*L - 3*x)*x + (2+vBar)*std::pow(y,2) - 3*std::pow(D,2)/2*(1+vBar)),
-                        P/(6*Ebar*I)*(3*vBar*std::pow(y,2)*(L-x) + (3*L-x)*std::pow(x,2)));
+    return {-P*y/(6*Ebar*I)*((6*L - 3*x)*x + (2+vBar)*std::pow(y,2) - 3*std::pow(D,2)/2*(1+vBar)),
+                        P/(6*Ebar*I)*(3*vBar*std::pow(y,2)*(L-x) + (3*L-x)*std::pow(x,2))};
 }
 
-Trio<double> exactStrain(double x, double y){
-
+std::vector<double> exactStrain(double x, double y){
     double P = -1000;
     double Ebar = 1e7/(1 - std::pow(0.3,2));
     double vBar = 0.3/(1 - 0.3);
     double D = 4;
     double L = 8;
-    double I = std::pow(D,3)/12;
+    double I = std::pow(D,3)/12;  
     double duxdx = -(P*y*(6*L-6*x))/(6*Ebar*I);
     double duydx = -(P*(3*vBar*std::pow(y,2)-2*x*(3*L-x)+std::pow(x,2)))/(6*Ebar*I);
     double duxdy = -(P*((vBar+2)*std::pow(y,2)+x*(6*L-3*x)-(3*std::pow(D,2)*(vBar+1))/2))/(6*Ebar*I)-(P*std::pow(y,2)*(vBar+2))/(3*Ebar*I);
-    double duydy = (P*vBar*y*(L-x))/(Ebar*I);
+    double duydy = (P*vBar*y*(L-x))/(Ebar*I);   
 
-    return Trio<double>(duxdx,duydy,duxdy+duydx);
+    return {duxdx,duydy,duxdy+duydx};
     // the third component is defined as in classical FEM: dux/dy + duy/dx 
 }
+
 
 int main(){
     // DEFINING PATH FOR THE OUTPUT FILES:
@@ -103,9 +103,9 @@ int main(){
     std::cout << "+ Generating 3-node triangular mesh ... ";
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 12, 6);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 18, 9);
-    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 24, 12);
+    rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 24, 12);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 30, 15);
-    rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 36, 18);    
+    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 36, 18);
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
     TriangleDelaunayGenerator meshGenerator (seeds, rectangle4x8);
     Mesh<Triangle> mesh = meshGenerator.getConformingDelaunayTriangulation();
@@ -162,7 +162,7 @@ int main(){
     L2NormCalculator<Triangle>* L2 = new L2NormCalculator<Triangle>(exactDisplacementSolution, x, v.DOFs);
     NormResult L2norm = v.computeErrorNorm(L2, mesh);
     StrainValue* exactStrainSolution = new StrainValue(exactStrain);
-    ElasticityH1NormCalculator<Triangle>* H1 = new ElasticityH1NormCalculator<Triangle>(exactStrainSolution, x, v.DOFs);
+    H1NormCalculator<Triangle>* H1 = new H1NormCalculator<Triangle>(exactStrainSolution, x, v.DOFs);
     NormResult H1norm = v.computeErrorNorm(H1, mesh);
     std::cout << "done" << std::endl;
     std::cout << "  Relative L2-norm    : " << utilities::toString(L2norm.NormValue) << std::endl;

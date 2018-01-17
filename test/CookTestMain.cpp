@@ -42,12 +42,12 @@ int main(){
     std::vector<Point> TBeam_points = {Point(0,0), Point(48,44), Point(48,64), Point(0,44)};
     Region TBeam(TBeam_points);
 
-    /*Hole hole1 = CircularHole(Point(8,30), 5);
+    Hole hole1 = CircularHole(Point(8,30), 5);
     Hole hole2 = CircularHole(Point(24,40), 4);
     Hole hole3 = CircularHole(Point(40,50), 3);
     TBeam.addHole(hole1);
     TBeam.addHole(hole2);
-    TBeam.addHole(hole3);*/
+    TBeam.addHole(hole3);
     std::cout << "done" << std::endl;
     
     std::cout << "+ Printing geometry to a file ... ";

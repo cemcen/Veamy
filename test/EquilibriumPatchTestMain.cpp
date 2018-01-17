@@ -13,15 +13,14 @@
 #include <veamy/physics/conditions/LinearElasticityConditions.h>
 #include <veamy/problems/VeamyLinearElasticityDiscretization.h>
 
-Pair<double> exactDisplacement(double x, double y){
+std::vector<double> exactDisplacement(double x, double y){
     double E = 3e7, v = 0.3;
-
-    return Pair<double> ((v/E)*(1-x), y/E);
+    return {(v/E)*(1-x), y/E};
 }
 
-Trio<double> exactStrain(double x, double y){
+std::vector<double> exactStrain(double x, double y){
     double E = 3e7, v = 0.3;
-    return Trio<double>(-v/E,1.0/E,0.0);
+    return {-v/E, 1.0/E, 0.0};
     // the third component is defined as in VEM: 0.5*(dux/dy + duy/dx)
 }
 
@@ -97,12 +96,12 @@ int main(){
     L2NormCalculator<Polygon>* L2 = new L2NormCalculator<Polygon>(exactDisplacementSolution, x, v.DOFs);
     NormResult L2norm = v.computeErrorNorm(L2, mesh);
     StrainValue* exactStrainSolution = new StrainValue(exactStrain);
-    ElasticityH1NormCalculator<Polygon>* H1 = new ElasticityH1NormCalculator<Polygon>(exactStrainSolution, x, v.DOFs);
+    H1NormCalculator<Polygon>* H1 = new H1NormCalculator<Polygon>(exactStrainSolution, x, v.DOFs);
     NormResult H1norm = v.computeErrorNorm(H1, mesh);   
     std::cout << "done" << std::endl; 
     std::cout << "  Relative L2-norm    : " << utilities::toString(L2norm.NormValue) << std::endl;
-    std::cout << "  Relative H1-seminorm: " << utilities::toString(H1norm.NormValue) << std::endl;    
-    std::cout << "  Element size        : " << utilities::toString(L2norm.MaxEdge) << std::endl;      
+    std::cout << "  Relative H1-seminorm: " << utilities::toString(H1norm.NormValue) << std::endl;
+    std::cout << "  Element size        : " << utilities::toString(L2norm.MaxEdge) << std::endl;
 
     std::cout << "+ Printing nodal displacement solution to a file ... ";
     v.writeDisplacements(dispFileName, x);
