@@ -11,7 +11,7 @@ template <typename T>
 std::vector<double> FeamyDisplacementCalculator<T>::getDisplacement(double x, double y, int index, T container) {
     int n_dofs = this->dofs.getNumberOfDOFS();
 
-    std::vector<double> uH (n_dofs,10);
+    std::vector<double> uH (n_dofs,0);
     std::vector<double> N = this->elements[this->polygonIndex]->getShapeFunctions()->evaluateShapeFunctionCartesian(Point(x,y));
 
     std::vector<int> containerPoints = container.getPoints();

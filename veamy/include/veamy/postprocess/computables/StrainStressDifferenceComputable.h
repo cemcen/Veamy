@@ -13,8 +13,7 @@
 
 
 /*
- * Computes the term (sigma - sigmaH)*(epsilon - epsilonH) of the H1 norm. As VEM does not use shape functions,
- * this computable is exclusively used in FEM-like methods
+ * Computes the term (sigma - sigmaH)*(epsilon - epsilonH) of the H1 norm.
  */
 template <typename T>
 class StrainStressDifferenceComputable : public H1Computable<T>{

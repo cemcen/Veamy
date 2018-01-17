@@ -4,6 +4,10 @@
 #include <delynoi/models/polygon/Polygon.h>
 #include "DisplacementCalculator.h"
 
+/*
+ * Class that models the computation of the approximated displacement for norm computation for VEM solving the Poisson
+ * problem
+ */
 template <typename T>
 class VeamyPoissonDisplacementCalculator : public DisplacementCalculator<T>{
 private:

@@ -7,8 +7,8 @@
 #include "DisplacementCalculator.h"
 
 /*
- * Class that models the computation of the approximated displacement for norm computation for VEM. It is important to note
- * that, as VEM does not use shape functions, the norms use the nodal values directly, so this class is simple
+ * Class that models the computation of the approximated displacement for norm computation for VEM solving the linear
+ * elasticity problem
  */
 template <typename T>
 class VeamyElasticityDisplacementCalculator : public DisplacementCalculator<T>{

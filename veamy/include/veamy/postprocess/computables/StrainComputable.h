@@ -5,6 +5,9 @@
 #include <veamy/lib/Eigen/Dense>
 #include "H1Computable.h"
 
+/*
+ * Computes the epsilon*sigma part of the H1 norm
+ */
 template <typename T>
 class StrainComputable: public H1Computable<T>{
 private:

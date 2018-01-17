@@ -4,6 +4,9 @@
 #include <veamy/postprocess/analytic/StrainValue.h>
 #include "H1Computable.h"
 
+/*
+ *  Computes the term (epsilon - epsilonH)*D*(epsilon - epsilonH) of the H1 norm.
+ */
 template <typename T>
 class StrainDifferenceComputable : public H1Computable<T>{
 protected:

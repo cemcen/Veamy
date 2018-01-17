@@ -5,6 +5,9 @@
 #include <veamy/lib/Eigen/Dense>
 #include <veamy/models/Edge.h>
 
+/*
+ * Namespace containing
+ */
 namespace poisson_functions{
     template <typename T>
     Eigen::MatrixXd WMatrix(T &p, std::vector<Point> &points){
