@@ -1,6 +1,6 @@
 <h1> Veamy: an extensible object-oriented C++ library for the virtual element method </h1>
 This repository contains the code for an open source C++ library that implements the virtual element method. The current 
-release of this library allows the solution of 2D linear elastostatic problems and the 2D Poisson problem. The 2D linear elastostatic problem can also be solved using the standard three-node finite element. For this, a module called Feamy is available within Veamy.
+release of this library allows the solution of 2D linear elastostatic problems and the 2D Poisson problem. The 2D linear elastostatic problem can also be solved using the standard three-node finite element triangle. For this, a module called Feamy is available within Veamy.
 
 Features:
 <ul>
@@ -10,12 +10,12 @@ with procedurally generated points.</li>
 <li> Meshes can also be read from OFF-style text files (an example can be found in the test folder: see "EquilibriumPatchTestMain.cpp").</li>
 <li> Allows easy input of boundary conditions by constraining domain segments and nodes.</li>
 <li> The results of the computation can be either written into a file or used directly. </li>
-<li> PolyMesher meshes and boundary conditions can be read straightforwardly in Veamy to solve 2D linear elastostatic 
+<li> PolyMesher's meshes and boundary conditions can be read straightforwardly in Veamy to solve 2D linear elastostatic 
 problems.</li>
 </ul>
 
 <h2>Author</h2>
-<a href="https://github.com/capalvarez">Catalina Alvarez</a> -  Master's Student at Universidad de Chile.
+<a href="https://github.com/capalvarez">Catalina Alvarez</a> -  B.Sc., M.Sc., Universidad de Chile.
 
 <h2>Running a Veamy program</h2>
 Veamy is currently for Unix-like systems only. 
@@ -74,7 +74,7 @@ In addition, thanks to its extensibility, Veamy is capable of solving the two di
 
 <h2>Using the Finite Element Method </h2>
 Veamy, being an extensible library, includes the possibility of solving the linear elasticity problem using the Finite Element Method in a module named Feamy. Solving the linear elasticity problem using FEM is similar to VEM, with just a few differences:
-<li> For now, the Finite Element Method only accepts triangular meshes (triangular elements). Triangulations 
+<li> The current finite element implementation only accepts triangular meshes (three-node triangular elements). Triangulations 
 can be generated using the same mesher used for the polygonal mesh generation, as follows:<br>
 <pre><code>std::vector<Point> points = {Point(0,0), Point(1,0), Point(1,1), Point(0,1)};
 Region region(points); 
@@ -82,22 +82,21 @@ region.generateSeedPoints(PointGenerator(functions::random_double(), functions::
 TriangleDelaunayGenerator generator (region.getSeedPoints(), region);
 Mesh&ltTriangle&gt mesh = generator.getConformingDelaunayTriangulation();</code></pre></li>
 <li>Both the constraints and problem conditions (body forces and material properties) are set exactly as in Veamy. </li>
-<li>Create a Feamer instance, an ElementConstructor (which represents the type of elements that will be used for the problem. In our example,
-we use linear triangular elements), and initialize the numerical problem: 
+<li>Create a Feamer instance, an ElementConstructor (which represents the type of elements to be used for the analysis --- in this case, three-node triangular elements), and initialize the numerical problem: 
 <pre><code>Feamer feamer;
 feamer.initProblem(mesh, conditions, new Tri3Constructor());</code></pre></li>
-<li> Obtaining the displacements and the post processing is exactly as in Veamy </li>
+<li> Displacements computation and post processing are performed exactly as in Veamy </li>
 
 <h2>Using PolyMesher</h2>
 <ol>
 <li>Use the Matlab function <b>PolyMesher2Veamy.m</b> included  in the <b>polymesher/</b> folder and use it to generate a Veamy-format file, whose
 default name is "polymesher2veamy.txt", from PolyMesher. </li>
-<li>Use the previously generated file as parameter of the <b>initProblemFromFile</b> method of the <b>Veamer</b> class. It 
+<li>Use the name of the previously generated file as parameter of the <b>initProblemFromFile</b> method of the <b>Veamer</b> class. It 
 requires the definition of the material properties, and, in the case the problem includes them, a body force pointer:
 <pre><code>Veamer v;
 Material* material = new MaterialPlaneStress(1e7, 0.3);
 Mesh&ltPolygon&gt mesh = v.initProblemFromFile("polymesher2veamy.txt", material); </code></pre></li>
-<li>Proceed exactly as shown from step 6 forward, as boundary conditions are already defined.</li>
+<li>Proceed exactly as shown in steps 6 to 8 of "Usage example" section, as boundary conditions are already defined.</li>
 </ol>
 
 This and various additional examples are provided in the <b>test/</b> folder located in the root directory of Veamy. 
