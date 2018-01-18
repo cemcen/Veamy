@@ -32,7 +32,7 @@ public:
      * @param solver solver representing the method that will be used
      * @param fileName name of the text file
      */
-    Mesh<Triangle> initProblemFromFile(Feamer *f, std::string fileName);
+    Mesh<Triangle> initProblemFromFile(std::string fileName);
 
     /* Computes an error norm
     * @param calculator class in charge of calculating the norm

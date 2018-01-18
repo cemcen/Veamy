@@ -52,10 +52,9 @@ public:
     virtual Element<T>* createElement(N *solver, T &poly, UniqueList<Point> &points) = 0;
 
     /* Creates a problem from a text file
-     * @param solver solver representing the method that will be used
      * @param fileName name of the text file
      */
-    virtual Mesh<T> initProblemFromFile(N *v, std::string fileName) = 0;
+    virtual Mesh<T> initProblemFromFile(std::string fileName) = 0;
 
     /* Computes an error norm
      * @param calculator class in charge of calculating the norm

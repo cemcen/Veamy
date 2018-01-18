@@ -33,7 +33,7 @@ public:
      * @param solver solver representing the method that will be used
      * @param fileName name of the text file
      */
-    Mesh<Polygon> initProblemFromFile(Veamer *v, std::string fileName);
+    Mesh<Polygon> initProblemFromFile(std::string fileName);
 
     /* Computes an error norm
      * @param calculator class in charge of calculating the norm

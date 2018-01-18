@@ -6,7 +6,7 @@ Veamer::Veamer(ProblemDiscretization<Polygon,Veamer>* problem) :
 }
 
 Mesh<Polygon> Veamer::initProblemFromFile(std::string fileName) {
-    Mesh<Polygon> mesh = this->problem->initProblemFromFile(this, fileName);
+    Mesh<Polygon> mesh = this->problem->initProblemFromFile(fileName);
     initProblem(mesh);
 
     return mesh;
