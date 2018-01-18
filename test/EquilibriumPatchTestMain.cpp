@@ -49,7 +49,8 @@ int main(){
     std::cout << "--> Test: Equilibrium patch test / Reading a mesh from a file <--" << std::endl;
     std::cout << "..." << std::endl;
 
-    // File that contains an external mesh: UPDATE PATH ACCORDING TO YOUR FOLDERS
+    // File that contains an external mesh (default file is included inside the folder test/test_files/). 
+    // UPDATE PATH ACCORDING TO YOUR FOLDERS
     std::string externalMeshFileName = "VEAMY/Veamy-master/test/test_files/equilibriumTest_mesh.txt";
 
     std::cout << "+ Reading mesh from a file ... ";
