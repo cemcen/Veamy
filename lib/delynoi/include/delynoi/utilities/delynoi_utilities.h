@@ -49,5 +49,10 @@ namespace delynoi_utilities {
      * @return vector with the points representing the curve
      */
     extern std::vector<Point> generateArcPoints(Point center, double radius, double initAngle, double endAngle);
+
+    /*
+     *
+     */
+    extern void checkTriangleIntegrity(std::vector<int>& trianglePoints);
 }
 #endif

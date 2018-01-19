@@ -105,6 +105,7 @@ public:
                 pointMap->insert(meshPoints[newPoints[j]], i);
             }
 
+            delynoi_utilities::checkTriangleIntegrity(newPoints);
             polygons.push_back(T(newPoints, meshPoints));
         }
 

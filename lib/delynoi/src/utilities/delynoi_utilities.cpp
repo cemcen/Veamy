@@ -47,5 +47,12 @@ namespace delynoi_utilities {
 
         return arcPoints;
     }
+
+    void checkTriangleIntegrity(std::vector<int>& trianglePoints){
+        if(trianglePoints.size()<3 || trianglePoints[0]==trianglePoints[1] ||
+                trianglePoints[1]==trianglePoints[2] || trianglePoints[0]==trianglePoints[2]){
+            throw std::runtime_error("Error generating the mesh. Please try with a different combination of seed points");
+        }
+    }
 }
 
