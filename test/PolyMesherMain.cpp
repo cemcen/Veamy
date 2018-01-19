@@ -28,7 +28,7 @@ int main(){
     // File that contains the PolyMesher mesh and boundary conditions. Use Matlab function 
     // PolyMesher2Veamy.m to generate this file. 
     // UPDATE PATH ACCORDING TO YOUR FOLDERS
-    std::string polyMesherMeshFileName = "polymesher2veamy.txt";
+    std::string polyMesherMeshFileName = "VEAMY/Veamy-master/test/test_files/polymesher2veamy.txt";
 
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Using a PolyMesher mesh and boundary conditions <--" << std::endl;

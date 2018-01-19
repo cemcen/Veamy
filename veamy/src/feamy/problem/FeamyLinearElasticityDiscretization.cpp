@@ -23,7 +23,7 @@ FeamyLinearElasticityDiscretization::createElement(Feamer *f, Triangle &poly, Un
     return newElement;
 }
 
-Mesh<Triangle> FeamyLinearElasticityDiscretization::initProblemFromFile(Feamer *f, std::string fileName) {
+Mesh<Triangle> FeamyLinearElasticityDiscretization::initProblemFromFile(std::string fileName) {
     //TODO: To be implemented
     return Mesh<Triangle>();
 }

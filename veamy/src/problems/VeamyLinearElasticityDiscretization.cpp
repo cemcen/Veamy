@@ -17,11 +17,11 @@ Element<Polygon> *VeamyLinearElasticityDiscretization::createElement(Veamer *v, 
     return new ElasticityVeamyElement(conditions, poly, points, v->DOFs, this->numberDOF);
 }
 
-Mesh<Polygon> VeamyLinearElasticityDiscretization::initProblemFromFile(Veamer *v, std::string fileName) {
+Mesh<Polygon> VeamyLinearElasticityDiscretization::initProblemFromFile(std::string fileName) {
     Mesh<Polygon> mesh;
     std::ifstream infile = utilities::openFile(fileName);
 
-    mesh.createFromStream(infile, 0);
+    mesh.createFromStream(infile, 1);
 
     EssentialConstraints essential;
     std::vector<Point> constrainedPointsX;
