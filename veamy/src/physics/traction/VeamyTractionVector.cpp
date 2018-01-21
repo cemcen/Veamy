@@ -9,7 +9,7 @@ VeamyTractionVector::VeamyTractionVector(Polygon p, UniqueList<Point> points, Na
 }
 
 Eigen::VectorXd VeamyTractionVector::computeTractionVector(IndexSegment segment) {
-    Eigen::VectorXd result(4);
+    Eigen::VectorXd result(2*this->n_dofs);
     isConstrainedInfo constrainedInfo = natural.isConstrainedBySegment(points, segment);
 
     if(constrainedInfo.isConstrained){
@@ -19,9 +19,11 @@ Eigen::VectorXd VeamyTractionVector::computeTractionVector(IndexSegment segment)
         std::vector<SegmentConstraint> constraints = natural.getConstraintInformation(constrainedInfo.container);
 
         Eigen::MatrixXd Nbar;
-        Nbar = Eigen::MatrixXd::Zero(2,2);
-        Nbar(0,0) = 1.0/2;
-        Nbar(1,1) = 1.0/2;
+        Nbar = Eigen::MatrixXd::Zero(this->n_dofs,this->n_dofs);
+
+        for (int j = 0; j < this->n_dofs; ++j) {
+            Nbar(j,j) = 1.0/2;
+        }
 
         Eigen::VectorXd hFirst, hSecond;
         hFirst = Eigen::VectorXd::Zero(this->n_dofs), hSecond = Eigen::VectorXd::Zero(this->n_dofs);

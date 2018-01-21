@@ -54,7 +54,7 @@ void Element<T>::computeF(DOFS d, UniqueList<Point> points, Conditions *conditio
         Eigen::VectorXd naturalConditions = tractionVector->computeTractionVector(segments[i]);
 
         for (int j = 0; j < this->n_dofs; ++j) {
-            this->f((n_dofs*i + j)%m) = this->f((n_dofs*i + j)%m) + bodyForce(n_dofs*i) + naturalConditions(j);
+            this->f((n_dofs*i + j)%m) = this->f((n_dofs*i + j)%m) + bodyForce(n_dofs*i + j) + naturalConditions(j);
         }
 
         for (int j = n_dofs; j < 2*this->n_dofs; ++j) {

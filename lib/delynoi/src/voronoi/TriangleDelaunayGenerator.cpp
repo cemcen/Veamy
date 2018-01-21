@@ -21,8 +21,6 @@ void TriangleDelaunayGenerator::callTriangle(std::vector<Point> &point_list, cha
     pointList.push_list(point_list);
     std::vector<int> regionIndex = pointList.push_list(regionPoints);
 
-    writeTriangleInputFile(pointList, this->region, regionIndex);
-
     in.numberofpoints = pointList.size();
     in.pointlist = (REAL*)malloc(in.numberofpoints*2*sizeof(REAL));
     in.numberofpointattributes = 1;

@@ -215,8 +215,9 @@ public:
      */
     Point getAverage(std::vector<Point> p);
 
-    /*
-     *
+    /* Computes the maximum distance between any two vertexes of the polygon
+     * @param points mesh points
+     * @return max distance between points of the polygon
      */
     double getMaxDistance(std::vector<Point>& points);
 };

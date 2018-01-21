@@ -36,11 +36,12 @@ namespace veamy_functions{
 
             Point point = points[polygonPoints[i]];
             std::vector<Point> smallPolygon = {prev.middlePoint(points), points[polygonPoints[i]],
-                                               next.middlePoint(points), poly.getCentroid()};
+                                               next.middlePoint(points), poly.getAverage(points)};
 
             double area = geometry_functions::area(smallPolygon);
+            double res = f->apply(point.getX(), point.getY(), polygonPoints[i], poly);
 
-            result += area*f->apply(point.getX(), point.getY(), polygonPoints[i], poly);
+            result += area*res;
         }
 
         return result;
