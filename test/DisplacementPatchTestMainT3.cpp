@@ -57,7 +57,7 @@ int main(){
     std::string dispFileName = "disp_patch_test_displacements.txt";
 
     std::cout << "*** Starting Veamy ***" << std::endl;
-    std::cout << "--> Test: Displacement patch test <--" << std::endl;
+    std::cout << "--> Test: Displacement patch test / 3-node FE triangle <--" << std::endl;
     std::cout << "..." << std::endl;
 
     std::cout << "+ Defining the domain ... ";

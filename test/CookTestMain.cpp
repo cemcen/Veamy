@@ -74,7 +74,6 @@ int main(){
     PointSegment leftSide(Point(0,0), Point(0,44));
     SegmentConstraint left(leftSide, mesh.getPoints(), new Constant(0));
     conditions->addEssentialConstraint(left, mesh.getPoints(), elasticity_constraints::Direction::Total);
-    NaturalConstraints natural;
     PointSegment rightSide(Point(48,44), Point(48,64));
     SegmentConstraint right(rightSide, mesh.getPoints(), new Constant(6.25));
     conditions->addNaturalConstraint(right, mesh.getPoints(), elasticity_constraints::Direction::Vertical);

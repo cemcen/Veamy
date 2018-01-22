@@ -96,7 +96,6 @@ int main(){
     PointSegment leftSide(Point(0,3), Point(0,9));
     SegmentConstraint const2 (leftSide, mesh.getPoints(), new Constant(0));
     conditions->addEssentialConstraint(const2, mesh.getPoints(), elasticity_constraints::Direction::Horizontal);
-    NaturalConstraints natural;
     Function* innerX = new Function(innerForceX);
     Function* innerY = new Function(innerForceY);
     std::vector<Point> regionPoints = quarter_circle.getRegionPoints();

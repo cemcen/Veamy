@@ -1,4 +1,5 @@
 #include <veamy/config/VeamyConfig.h>
+#include <chrono>
 #include <string>
 #include <delynoi/models/generator/PointGenerator.h>
 #include <delynoi/models/Region.h>
@@ -55,7 +56,7 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Generating polygonal mesh ... ";
-    rectangle1x1.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 30, 30);
+    rectangle1x1.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 20, 20);
     std::vector<Point> seeds = rectangle1x1.getSeedPoints();
     TriangleVoronoiGenerator meshGenerator (seeds, rectangle1x1);
     Mesh<Polygon> mesh = meshGenerator.getMesh();
@@ -96,8 +97,12 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Simulating ... ";
+    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
     Eigen::VectorXd x = v.simulate(mesh);
+    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();    
     std::cout << "done" << std::endl;
+    std::cout << "  Elapsed simulation time: " << duration/1e6 << " s" <<std::endl;
 
     std::cout << "+ Calculating norms of the error ... ";
     DisplacementValue* exactScalarFieldSolution = new DisplacementValue(exactScalarField);

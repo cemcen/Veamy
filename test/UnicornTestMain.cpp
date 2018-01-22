@@ -79,7 +79,6 @@ int main(){
     conditions->addEssentialConstraint(left, elasticity_constraints::Direction::Total);
     conditions->addEssentialConstraint(right, elasticity_constraints::Direction::Total);
 
-    NaturalConstraints natural;
     PointSegment backSegment(Point(6.7,11.5), Point(3.3,11.3));
     SegmentConstraint back (backSegment, mesh.getPoints(), new Constant(-200));
     conditions->addNaturalConstraint(back, mesh.getPoints(), elasticity_constraints::Direction::Total);

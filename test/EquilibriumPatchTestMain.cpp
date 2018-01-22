@@ -51,7 +51,7 @@ int main(){
 
     // File that contains an external mesh (default file is included inside the folder test/test_files/). 
     // UPDATE PATH ACCORDING TO YOUR FOLDERS
-    std::string externalMeshFileName = "equilibriumTest_mesh.txt";
+    std::string externalMeshFileName = "Software/Veamy-master/test/test_files/equilibriumTest_mesh.txt";
 
     std::cout << "+ Reading mesh from a file ... ";
     Mesh<Polygon> mesh;
@@ -75,7 +75,6 @@ int main(){
     PointConstraint corner(cornerPoint, new Constant(0));
     conditions->addEssentialConstraint(corner, elasticity_constraints::Direction::Horizontal);
 
-    NaturalConstraints natural;
     PointSegment topSide(Point(0,1), Point(1,1));
     SegmentConstraint top (topSide, mesh.getPoints(), new Constant(1));
     conditions->addNaturalConstraint(top, mesh.getPoints(), elasticity_constraints::Direction::Vertical);

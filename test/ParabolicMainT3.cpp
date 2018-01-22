@@ -92,7 +92,7 @@ int main(){
     std::string dispFileName = "parabolic_beam_displacements.txt";
 
     std::cout << "*** Starting Veamy ***" << std::endl;
-    std::cout << "--> Test: Cantilever beam subjected to a parabolic end load <--" << std::endl;
+    std::cout << "--> Test: Cantilever beam subjected to a parabolic end load / 3-node FE triangle <--" << std::endl;
     std::cout << "..." << std::endl;
 
     std::cout << "+ Defining the domain ... ";
