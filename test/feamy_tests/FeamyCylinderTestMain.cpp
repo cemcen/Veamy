@@ -58,7 +58,7 @@ int main(){
     TriangleDelaunayGenerator meshGenerator = TriangleDelaunayGenerator (seeds, quarter_circle);
     Mesh<Triangle> mesh = meshGenerator.getConformingDelaunayTriangulation();
 
-    mesh.printInFile("cylinderMesh_fem.txt");
+    mesh.printInFile("cylinder_fem_mesh.txt");
 
     Material* material = new MaterialPlaneStrain (1000, 0.3);
     LinearElasticityConditions* conditions = new LinearElasticityConditions(material);
@@ -86,5 +86,5 @@ int main(){
     f.initProblem(mesh, constructor);
 
     Eigen::VectorXd x = f.simulate(mesh);
-    f.writeDisplacements("cylinder_displacements_fem.txt", x);
+    f.writeDisplacements("cylinder_fem_displacements.txt", x);
 }

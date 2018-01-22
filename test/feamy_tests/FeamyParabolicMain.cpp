@@ -75,5 +75,5 @@ int main(){
     Feamer feamer(problem);
     feamer.initProblem(mesh, new Tri3Constructor());
     Eigen::VectorXd x = feamer.simulate(mesh);
-    feamer.writeDisplacements("parabolic_fem_results.txt", x);
+    feamer.writeDisplacements("parabolic_fem_displacements.txt", x);
 }
