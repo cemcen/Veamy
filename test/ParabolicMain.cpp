@@ -114,8 +114,12 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Simulating ... ";
+    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
     Eigen::VectorXd x = v.simulate(mesh);
+    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
     std::cout << "done" << std::endl;
+    std::cout << "  Elapsed simulation time: " << duration/1e6 << " s" <<std::endl;
 
     std::cout << "+ Printing nodal displacement solution to a file ... ";
     v.writeDisplacements(dispFileName, x);
