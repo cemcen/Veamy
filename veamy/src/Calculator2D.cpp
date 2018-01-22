@@ -78,8 +78,6 @@ Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
 
     assemble(K, f);
 
-    //std::cout << f << std::endl << std::endl;
-
     //Apply constrained_points
     EssentialConstraints essential = this->conditions->constraints.getEssentialConstraints();
     std::vector<int> c = essential.getConstrainedDOF();
@@ -98,14 +96,33 @@ Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
         f(c[j]) = boundary_values(j);
     }
 
+    std::vector<Eigen::Triplet<double>> coeffs;
+    fromDenseToSparse(K, coeffs);
+
     /*Solve the system: There are various solvers available. The commented one is the slowest but most accurate. We
     leave ldlt as it has the better trade off between speed and accuracy.*/
     //Eigen::VectorXd x = K.fullPivHouseholderQr().solve(f);
-    Eigen::VectorXd x = K.ldlt().solve(f);
+    Eigen::SparseMatrix<double> sparseK(n,n);
+    sparseK.setFromTriplets(coeffs.begin(), coeffs.end());
+
+    Eigen::SparseLU<Eigen::SparseMatrix<double>> chol(sparseK);
+    Eigen::VectorXd x = chol.solve(f);
+
+    //Eigen::VectorXd x = K.ldlt().solve(f);
 
     return x;
 }
 
+template<typename T>
+void Calculator2D<T>::fromDenseToSparse(Eigen::MatrixXd &K, std::vector<Eigen::Triplet<double>> &coeffs) {
+    for(int i=0;i<K.cols();i++){
+        for(int j=0;j<K.cols();j++){
+            if(K(i,j)!=0.0) {
+                coeffs.push_back(Eigen::Triplet<double>(i, j, K(i, j)));
+            }
+        }
+    }
+}
 
 template class Calculator2D<Polygon>;
 template class Calculator2D<Triangle>;

@@ -6,6 +6,7 @@
 #include <veamy/models/dof/DOFS.h>
 #include <veamy/problems/ProblemDiscretization.h>
 #include <veamy/models/Element.h>
+#include <veamy/lib/Eigen/Sparse>
 
 /*
  * Abstract class that encapsulates all common behaviour for linear elasticity calculations, no matter the method
@@ -28,6 +29,11 @@ protected:
      * Mesh points
      */
     UniqueList<Point> points;
+
+    /*
+     *
+     */
+    void fromDenseToSparse(Eigen::MatrixXd& K, std::vector<Eigen::Triplet<double>>& coeffs);
 public:
     /*
      * Degrees of freedom of the system
