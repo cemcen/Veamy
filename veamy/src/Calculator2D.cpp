@@ -96,19 +96,14 @@ Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
         f(c[j]) = boundary_values(j);
     }
 
+    // solve the system of linear equations
     std::vector<Eigen::Triplet<double>> coeffs;
     fromDenseToSparse(K, coeffs);
-
-    /*Solve the system: There are various solvers available. The commented one is the slowest but most accurate. We
-    leave ldlt as it has the better trade off between speed and accuracy.*/
-    //Eigen::VectorXd x = K.fullPivHouseholderQr().solve(f);
     Eigen::SparseMatrix<double> sparseK(n,n);
     sparseK.setFromTriplets(coeffs.begin(), coeffs.end());
 
     Eigen::SparseLU<Eigen::SparseMatrix<double>> chol(sparseK);
     Eigen::VectorXd x = chol.solve(f);
-
-    //Eigen::VectorXd x = K.ldlt().solve(f);
 
     return x;
 }
@@ -122,6 +117,8 @@ void Calculator2D<T>::fromDenseToSparse(Eigen::MatrixXd &K, std::vector<Eigen::T
             }
         }
     }
+    // K is no longer needed. Resize to free memory
+    K.resize(0,0);
 }
 
 template class Calculator2D<Polygon>;
