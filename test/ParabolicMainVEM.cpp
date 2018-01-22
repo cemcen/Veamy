@@ -112,6 +112,7 @@ int main(){
     rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 24, 12);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 30, 15);
     //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 36, 18);
+    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 42, 21);
     std::vector<Point> seeds = rectangle4x8.getSeedPoints();
     TriangleVoronoiGenerator meshGenerator (seeds, rectangle4x8);
     Mesh<Polygon> mesh = meshGenerator.getMesh();

@@ -10,17 +10,18 @@
 #include <veamy/postprocess/L2NormCalculator.h>
 #include <veamy/postprocess/analytic/StrainValue.h>
 #include <veamy/postprocess/H1NormCalculator.h>
+#include <veamy/models/constraints/values/Constant.h>
 
-double uDirichlet(double x, double y){
-    return x + y;
+double sourceTerm(double x, double y){
+    return (32*y*(1-y) + 32*x*(1-x));
 }
 
 std::vector<double> exactScalarField(double x, double y){
-    return {x+y};
+    return {16*x*y*(1-x)*(1-y)};
 }
 
 std::vector<double> exactGradScalarField(double x, double y){
-    return {1,1};
+    return {16*y*(1-y)*(1-2*x),16*x*(1-x)*(1-2*y)};
 }
 
 int main(){
@@ -41,11 +42,11 @@ int main(){
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
-    std::string meshFileName = "poisson_patch_test_mesh.txt";
-    std::string scalarFieldFileName = "poisson_patch_test_scalarfield.txt";
+    std::string meshFileName = "poisson_source_test_mesh.txt";
+    std::string scalarFieldFileName = "poisson_source_test_scalarfield.txt";
 
     std::cout << "*** Starting Veamy ***" << std::endl;
-    std::cout << "--> Test: Poisson patch test <--" << std::endl;
+    std::cout << "--> Test: Poisson source test <--" << std::endl;
     std::cout << "..." << std::endl;
 
     std::cout << "+ Defining the domain ... ";
@@ -54,7 +55,7 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Generating polygonal mesh ... ";
-    rectangle1x1.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 6, 6);
+    rectangle1x1.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 30, 30);
     std::vector<Point> seeds = rectangle1x1.getSeedPoints();
     TriangleVoronoiGenerator meshGenerator (seeds, rectangle1x1);
     Mesh<Polygon> mesh = meshGenerator.getMesh();
@@ -65,26 +66,25 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Defining problem conditions ... ";
-    PoissonConditions* conditions = new PoissonConditions();
+    BodyForce* f = new BodyForce(sourceTerm);
+    PoissonConditions* conditions = new PoissonConditions(f);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Defining Dirichlet and Neumann boundary conditions ... ";
-    Function* uConstraint = new Function(uDirichlet);
-
     PointSegment leftSide(Point(0,0), Point(0,1));
-    SegmentConstraint left (leftSide, mesh.getPoints(), uConstraint);
+    SegmentConstraint left (leftSide, mesh.getPoints(), new Constant(0)); // u=0;
     conditions->addEssentialConstraint(left, mesh.getPoints());
 
     PointSegment downSide(Point(0,0), Point(1,0));
-    SegmentConstraint down (downSide, mesh.getPoints(), uConstraint);
+    SegmentConstraint down (downSide, mesh.getPoints(), new Constant(0)); // u=0;
     conditions->addEssentialConstraint(down, mesh.getPoints());
 
     PointSegment rightSide(Point(1,0), Point(1, 1));
-    SegmentConstraint right (rightSide, mesh.getPoints(), uConstraint);
+    SegmentConstraint right (rightSide, mesh.getPoints(), new Constant(0)); // u=0;
     conditions->addEssentialConstraint(right, mesh.getPoints());
 
     PointSegment topSide(Point(0, 1), Point(1, 1));
-    SegmentConstraint top (topSide, mesh.getPoints(), uConstraint);
+    SegmentConstraint top (topSide, mesh.getPoints(), new Constant(0)); // u=0;
     conditions->addEssentialConstraint(top, mesh.getPoints());
     std::cout << "done" << std::endl;
 
