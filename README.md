@@ -41,7 +41,8 @@ The complete procedure to compute the displacements using the virtual element me
 Region region(points); 
 region.generateSeedPoints(PointGenerator(functions::random_double(), functions::random_double()), 10, 10);
 TriangleVoronoiGenerator generator (region.getSeedPoints(), region);
-Mesh&ltPolygon&gt mesh = generator.getMesh();</code></pre></li>
+Mesh&ltPolygon&gt mesh = generator.getMesh();
+mesh.printInFile("mesh.txt");</code></pre></li>
 <li>If using an externally generated mesh, for example, from PolyMesher, refer to the next section of this tutorial; for a generic mesh format see "EquilibriumPatchTestMain.cpp" in the test folder. </li>
 <li>Create the problem conditions, assigning the domain material properties, the body forces if needed: 
 <pre><code>Material* material = new MaterialPlaneStrain(1e7, 0.3);
@@ -60,7 +61,7 @@ veamer.initProblem(mesh);</code></pre></li>
 <li>Compute the displacements: 
 <pre><code>Eigen::VectorXd displacements = veamer.simulate(mesh);</code></pre></li>
 <li>If required, print the nodal displacements to a text file:<br>
-<pre><code>veamer.writeDisplacements(fileName, displacements);</code></pre></li>
+<pre><code>veamer.writeDisplacements("displacements.txt", displacements);</code></pre></li>
 <li>The results can be plotted using the Matlab function <b>plotPolyMeshDisplacements</b> (located in folder <b>/lib/visualization/</b> ):
 <pre><code>[points,polygons,displacements] = plotPolyMeshDisplacements('mesh.txt','displacements.txt','$$u_x^h$$','$$u_y^h$$','$$||u^h||$$','yes');</code></pre>
 </ol>
