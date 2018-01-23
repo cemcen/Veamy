@@ -10,8 +10,7 @@ with procedurally generated points.</li>
 <li> Meshes can also be read from OFF-style text files (an example can be found in the test folder: see "EquilibriumPatchTestMain.cpp").</li>
 <li> Allows easy input of boundary conditions by constraining domain segments and nodes.</li>
 <li> The results of the computation can be either written into a file or used directly. </li>
-<li> PolyMesher's meshes and boundary conditions can be read straightforwardly in Veamy to solve 2D linear elastostatic 
-problems.</li>
+<li> PolyMesher's meshes and boundary conditions can be read straightforwardly in Veamy to solve problems using the VEM.</li>
 </ul>
 
 <h2>Author</h2>
