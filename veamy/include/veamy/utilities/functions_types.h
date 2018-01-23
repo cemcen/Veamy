@@ -3,7 +3,7 @@
 
 #include <vector>
 /*
- * Definition of the different function pointers used
+ * Definition of the different function pointers used in the library
  */
 typedef double(*func)(double, double);
 typedef std::vector<double>(*func_pair)(double, double);

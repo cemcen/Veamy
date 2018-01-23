@@ -5,6 +5,9 @@
 #include <veamy/problems/poisson/poisson_functions.h>
 #include <veamy/postprocess/utilities/norm_utilities.h>
 
+/*
+ * Class that models the computation of the approximated strain for norm computation for VEM solving the poisson problem
+ */
 template <typename T>
 class VeamyPoissonStrainCalculator : public StrainCalculator<T>{
 public:
@@ -20,7 +23,6 @@ public:
      * @return approximated strain
      */
     Eigen::VectorXd getStrain(double x, double y, T container, int containerIndex);
-
 };
 
 #endif

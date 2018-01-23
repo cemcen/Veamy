@@ -41,6 +41,11 @@ public:
         this->N = N;
     }
 
+    /* Sets the conditions (constraints and vertexes indexes) that will be used to calculate the load vector until
+     * changed again)
+     * @param c constraint related to the load vector
+     * @param indexes indexes of the vertex of the polygon
+     */
     void setConditions(Constraint c, std::vector<int> indexes){
         this->c = c;
         this->indexes = indexes;

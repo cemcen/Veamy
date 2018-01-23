@@ -19,7 +19,7 @@
 #include <veamy/physics/traction/TractionVector.h>
 
 /*
- * Models an element using VEM to solve the linear elasticity problem
+ * Models a VEM element
  */
 class VeamyElement: public Element<Polygon> {
 public:
@@ -31,7 +31,6 @@ public:
     /* Computes the elemental stiffness matrix
      * @param d degrees of freedom of the system
      * @param points mesh points
-     * @param conditions conditions of the problem
      */
     virtual void computeK(DOFS &d, UniqueList<Point> &points) = 0;
 

@@ -96,7 +96,7 @@ namespace veamy_functions{
             Eigen::MatrixXd gaussPoints;
             std::vector<double> weights;
 
-            norm_utilities::triangle_rules(gaussPoints, t, weights, nGauss, points);
+            gauss_quadrature::triangle_rules(gaussPoints, t, weights, nGauss, points);
 
             for (int i = 0; i < weights.size(); ++i) {
                 Point p = Point(gaussPoints(i,0), gaussPoints(i,1));
@@ -116,6 +116,10 @@ namespace veamy_functions{
      */
     extern double none_function(double x, double y);
 
+    /* Computes the dot product between two vectors
+     * @param v1,v2 vectors to operate
+     * @return dot product between v1 and v2
+     */
     template <typename T>
     double dot(std::vector<T> v1, std::vector<T> v2){
         if(v1.size()!=v2.size()){
@@ -131,6 +135,10 @@ namespace veamy_functions{
         return result;
     }
 
+    /* Computes the point-to-point substraction between two vectors
+     * @param v1,v2 vectors to operate
+     * @return result of v1-v2
+     */
     template <typename T>
     std::vector<T> substract(std::vector<T> v1, std::vector<T> v2){
         if(v1.size()!=v2.size()){

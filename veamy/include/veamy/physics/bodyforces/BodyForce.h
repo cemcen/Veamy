@@ -41,7 +41,8 @@ public:
     std::vector<FunctionComputable*> getComponents();
 
     /*
-     *
+     * @return number of components of the body force (depending on the number of degrees of freedom of the problem
+     * to solve)
      */
     int numberOfComponents();
 };

@@ -6,7 +6,7 @@
 #include "H1Computable.h"
 
 /*
- * Computes the epsilon*sigma part of the H1 norm
+ * Computes the epsilon*sigma part of the H1 norm considering only the strain value
  */
 template <typename T>
 class StrainComputable: public H1Computable<T>{

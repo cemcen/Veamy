@@ -65,8 +65,17 @@ public:
     void computeF(DOFS d, UniqueList<Point> points, Conditions *conditions, BodyForceVector *bodyForceVector,
                   TractionVector *tractionVector);
 
+    /* Computes the elemental load vector
+     * @param d degrees of freedom of the system
+     * @param points mesh points
+     * @param conditions conditions of the problem
+     */
     virtual void computeF(DOFS &d, UniqueList<Point> &points, Conditions *conditions) = 0;
 
+    /* Computes the elemental stiffness matrix
+     * @param d degrees of freedom of the system
+     * @param points mesh points
+     */
     virtual void computeK(DOFS &d, UniqueList<Point> &points) = 0;
 };
 

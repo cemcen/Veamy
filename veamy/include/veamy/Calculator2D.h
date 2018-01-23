@@ -30,8 +30,9 @@ protected:
      */
     UniqueList<Point> points;
 
-    /*
-     *
+    /* Transforms a dense matrix to a sparse one
+     * @param K dense matrix
+     * @param coeffs vector where the indexes of the non zero values of K
      */
     void fromDenseToSparse(Eigen::MatrixXd& K, std::vector<Eigen::Triplet<double>>& coeffs);
 public:

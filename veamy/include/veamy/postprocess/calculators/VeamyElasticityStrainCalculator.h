@@ -3,6 +3,10 @@
 
 #include "StrainCalculator.h"
 
+/*
+ * Class that models the computation of the approximated strain for norm computation for VEM solving the linear
+ * elasticity problem
+ */
 template <typename T>
 class VeamyElasticityStrainCalculator : public StrainCalculator<T>{
 public:

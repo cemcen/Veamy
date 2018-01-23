@@ -6,9 +6,14 @@
 #include <veamy/models/Edge.h>
 
 /*
- * Namespace containing
+ * Namespace containing functions used only for poisson problems solved using VEM
  */
 namespace poisson_functions{
+    /* Computes the W matrix used for VEM solving poisson
+     * @param p geometry of the element
+     * @param points mesh points
+     * @return W matrix of p
+     */
     template <typename T>
     Eigen::MatrixXd WMatrix(T &p, std::vector<Point> &points){
         std::vector<int> polygonPoints = p.getPoints();

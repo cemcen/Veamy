@@ -15,7 +15,7 @@ void AreaIntegrator<T,S>::integrate(S& result, int nGauss, T element, std::vecto
 
         Eigen::MatrixXd gaussPoints;
         std::vector<double> weights;
-        norm_utilities::triangle_rules(gaussPoints, t, weights, nGauss, points);
+        gauss_quadrature::triangle_rules(gaussPoints, t, weights, nGauss, points);
 
         for (int i = 0; i < weights.size(); ++i) {
             Point point = Point(gaussPoints(i,0), gaussPoints(i,1));

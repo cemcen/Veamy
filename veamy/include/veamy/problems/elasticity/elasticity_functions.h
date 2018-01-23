@@ -5,7 +5,15 @@
 #include <delynoi/models/basic/Point.h>
 #include <veamy/models/Edge.h>
 
+/*
+ * Namespace containing functions exclusively used for linear elasticity problems
+ */
 namespace elasticity_functions{
+    /* Computes the Wc Matrix for VEM solving linear elasticity
+     * @param p geometry of the element
+     * @param points mesh points
+     * @return Wc matrix of p
+     */
     template <typename T>
     Eigen::MatrixXd WcMatrix(T &p, std::vector<Point> &points) {
         std::vector<int> polygonPoints = p.getPoints();
@@ -41,6 +49,10 @@ namespace elasticity_functions{
         return Wc;
     }
 
+    /* Computes the Q matrix used in linear elasticity VEM for displacement calculation
+     * @param Wc Wc matrix used to obtain the Q coefficients
+     * @return Q matrix
+     */
     extern Eigen::MatrixXd QMatrix(Eigen::MatrixXd &Wc);
 }
 
