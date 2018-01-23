@@ -43,24 +43,20 @@ region.generateSeedPoints(PointGenerator(functions::random_double(), functions::
 TriangleVoronoiGenerator generator (region.getSeedPoints(), region);
 Mesh&ltPolygon&gt mesh = generator.getMesh();</code></pre></li>
 <li>If using an externally generated mesh, for example, from PolyMesher, refer to the next section of this tutorial; for a generic mesh format see "EquilibriumPatchTestMain.cpp" in the test folder. </li>
-<li>Create a boundary conditions container and fill it as desired: <br>
-<pre><code>EssentialConstraints e; NaturalConstraints n;
-PointSegment leftSide (Point(0,0), Point(0,1));
-Constraint leftConstraint (leftSide, mesh.getPoints(), Constraint::Direction::Total, new Constant(0));
-PointSegment rightSide (Point(1,0), Point(1,1));
-Constraint rightConstraint (rightSide, mesh.getPoints(), Constraint::Direction::Horizontal, new Constant(1000));
-e.addConstraint(leftConstraint, mesh.getPoints());
-n.addConstraint(rightConstraint, mesh.getPoints());
-ConstraintsContainer container;
-container.addConstraints(e, mesh);
-container.addConstraints(n, mesh);</code></pre></li>
-<li>Create the problem conditions container (a Conditions instance), assigning the domain material properties, the body forces if needed, and 
-the boundary conditions: 
+<li>Create the problem conditions, assigning the domain material properties, the body forces if needed: 
 <pre><code>Material* material = new MaterialPlaneStrain(1e7, 0.3);
-Conditions conditions(container, material);</code></pre></li>
+LinearElasticityConditions* conditions = new LinearElasticityConditions(material);</code></pre></li>
+<li>Declare and assign boundary conditions: <br>
+<pre><code>PointSegment leftSide (Point(0,0), Point(0,1));
+SegmentConstraint left(leftSide, mesh.getPoints(), new Constant(0));
+conditions->addEssentialConstraint(left, mesh.getPoints(), elasticity_constraints::Direction::Total);
+PointSegment rightSide (Point(1,0), Point(1,1));
+SegmentConstraint right(rightSide, mesh.getPoints(), new Constant(1000));
+conditions->addNaturalConstraint(right, mesh.getPoints(), elasticity_constraints::Direction::Horizontal);</code></pre></li>
 <li>Create a Veamer instance and initialize the numerical problem: 
-<pre><code>Veamer veamer;
-veamer.initProblem(mesh, conditions);</code></pre></li>
+<pre><code>VeamyLinearElasticityDiscretization* problem = new VeamyLinearElasticityDiscretization(conditions);
+Veamer veamer(problem);
+veamer.initProblem(mesh);</code></pre></li>
 <li>Compute the displacements: 
 <pre><code>Eigen::VectorXd displacements = veamer.simulate(mesh);</code></pre></li>
 <li>If required, print the nodal displacements to a text file:<br>
@@ -93,9 +89,11 @@ feamer.initProblem(mesh, conditions, new Tri3Constructor());</code></pre></li>
 default name is "polymesher2veamy.txt", from PolyMesher. </li>
 <li>Use the name of the previously generated file as parameter of the <b>initProblemFromFile</b> method of the <b>Veamer</b> class. It 
 requires the definition of the material properties, and, in the case the problem includes them, a body force pointer:
-<pre><code>Veamer v;
-Material* material = new MaterialPlaneStress(1e7, 0.3);
-Mesh&ltPolygon&gt mesh = v.initProblemFromFile("polymesher2veamy.txt", material); </code></pre></li>
+<pre><code>Material* material = new MaterialPlaneStress(1e7, 0.3);
+LinearElasticityConditions* conditions = new LinearElasticityConditions(material);
+VeamyLinearElasticityDiscretization* problem = new VeamyLinearElasticityDiscretization(conditions);
+Veamer veamer(problem);
+Mesh<Polygon> mesh = veamer.initProblemFromFile("polymesher2veamy.txt");</code></pre></li>
 <li>Proceed exactly as shown in steps 6 to 8 of "Usage example" section, as boundary conditions are already defined.</li>
 </ol>
 
@@ -104,7 +102,7 @@ This and various additional examples are provided in the <b>test/</b> folder loc
 <h2>Acknowledgements</h2>
 Veamy depends on two external open source libraries, whose codes are included in this repository, inside <b>lib</b> folder. 
 <ul>
-<li><a href="https://github.com/capalvarez/Delynoi"> Delynoi: an object-oriented C++ library for the generation of polygonal meshes </a></li>
+<li><a href="http://camlab.cl/research/software/delynoi"> Delynoi: an object-oriented C++ library for the generation of polygonal meshes </a></li>
 </ul>
 Linear algebra aspects are handled using:
 <ul>
