@@ -43,7 +43,7 @@ TriangleVoronoiGenerator generator (region.getSeedPoints(), region);
 Mesh&ltPolygon&gt mesh = generator.getMesh();
 mesh.printInFile("mesh.txt");</code></pre></li>
 <li>If using an externally generated mesh, for example, from PolyMesher, refer to the next section of this tutorial; for a generic mesh format see "EquilibriumPatchTestMain.cpp" in the test folder. </li>
-<li>Create the problem conditions, assigning the domain material properties, the body forces if needed: 
+<li>Create the problem conditions, assigning the domain material properties and the body forces if needed: 
 <pre><code>Material* material = new MaterialPlaneStrain(1e7, 0.3);
 LinearElasticityConditions* conditions = new LinearElasticityConditions(material);</code></pre></li>
 <li>Declare and assign boundary conditions: <br>
@@ -66,7 +66,7 @@ veamer.initProblem(mesh);</code></pre></li>
 </ol>
 
 This and various additional examples are provided in the <b>test/</b> folder located in the root directory of Veamy. 
-In addition, thanks to its extensibility, Veamy is capable of solving the two dimensional Poisson problem. An example is provided in the <b>test/</b> folder.
+In addition, thanks to its extensibility, Veamy is capable of solving the two dimensional Poisson problem. Two examples are provided in the <b>test/</b> folder.
 
 <h2>Using the Finite Element Method </h2>
 Veamy, being an extensible library, includes the possibility of solving the linear elasticity problem using the Finite Element Method in a module named Feamy. Solving the linear elasticity problem using FEM is similar to VEM, with just a few differences:
