@@ -81,12 +81,12 @@ bool Constraints::addConstrainedDOFBySegment(std::vector<Point> points, int DOF_
     isConstrainedInfo info = isConstrainedBySegment(points, s);
 
     if(info.isConstrained){
-        constrainDOFBySegment(info.container, DOF_index, axis);
+        return constrainDOFBySegment(info.container, DOF_index, axis);
     }
     return false;
 }
 
-bool Constraints::addConstrainedDOFByPoint(int DOF_index, int axis, Point p) {
+void Constraints::addConstrainedDOFByPoint(int DOF_index, int axis, Point p) {
     auto iter = point_map.find(p);
 
     if(iter != point_map.end()){
@@ -100,14 +100,10 @@ bool Constraints::addConstrainedDOFByPoint(int DOF_index, int axis, Point p) {
                 point_constraints_map[DOF_index] = constraint;
             }
         }
-
-        return false;
     }
-
-    return false;
 }
 
-bool Constraints::checkIfContainedInConstraint(Point p, std::vector<Point> points, int DOF_index, int axis) {
+void Constraints::checkIfContainedInConstraint(Point p, std::vector<Point> points, int DOF_index, int axis) {
     for(auto seg: constrained_segments){
         std::vector<IndexSegment> segs = seg.second;
 

@@ -51,7 +51,7 @@ int main(){
 
     // File that contains an external mesh (default file is included inside the folder test/test_files/). 
     // UPDATE PATH ACCORDING TO YOUR FOLDERS
-    std::string externalMeshFileName = "Software/Veamy-master/test/test_files/equilibriumTest_mesh.txt";
+    std::string externalMeshFileName = "equilibriumTest_mesh.txt";
 
     std::cout << "+ Reading mesh from a file ... ";
     Mesh<Polygon> mesh;
