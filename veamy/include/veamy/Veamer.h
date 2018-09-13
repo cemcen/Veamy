@@ -43,8 +43,6 @@ public:
     /*
      * Initializes the Veamer instance from the information in a text file
      * @param fileName name of the file to be read
-     * @param material material to assign to the domain
-     * @param force body force imposed on the system
      * @return mesh read from the file (geometric conditions)
      */
     Mesh<Polygon> initProblemFromFile(std::string fileName);

@@ -20,6 +20,13 @@ void Feamer::initProblem(Mesh<Triangle> m, FeamyElementConstructor *constructor)
     }
 }
 
+Mesh<Triangle> Feamer::initProblemFromFile(std::string fileName, FeamyElementConstructor *constructor) {
+    Mesh<Triangle> mesh = this->problem->initProblemFromFile(fileName);
+    initProblem(mesh, constructor);
+
+    return mesh;
+}
+
 NormResult Feamer::computeErrorNorm(NormCalculator<Triangle>* calculator, Mesh<Triangle> mesh) {
     return problem->computeErrorNorm(calculator, mesh, this);
 }

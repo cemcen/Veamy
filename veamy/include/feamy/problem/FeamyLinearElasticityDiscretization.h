@@ -4,6 +4,7 @@
 #include <feamy/Feamer.h>
 #include <delynoi/models/polygon/Triangle.h>
 #include <veamy/physics/conditions/LinearElasticityConditions.h>
+#include <veamy/models/constraints/values/Constant.h>
 
 /*
  * Class that model the resolution of the linear elasticity

@@ -32,6 +32,14 @@ public:
      */
     void initProblem(Mesh<Triangle> m, FeamyElementConstructor *constructor);
 
+    /*
+   * Initializes the Feamer instance from the information in a text file
+   * @param fileName name of the file to be read
+   * @return mesh read from the file (geometric conditions)
+   */
+    Mesh<Triangle> initProblemFromFile(std::string fileName, FeamyElementConstructor *constructor);
+
+
     /* Computes an error norm
      * @param calculator class in charge of computing a norm
      * @param mesh mesh associated to the problem
