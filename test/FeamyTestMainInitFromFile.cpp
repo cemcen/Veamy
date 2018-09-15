@@ -1,11 +1,15 @@
-#include <veamy/Veamer.h>
+#include <feamy/Feamer.h>
 #include <veamy/physics/materials/MaterialPlaneStrain.h>
 #include <veamy/config/VeamyConfig.h>
-#include <veamy/physics/conditions/PoissonConditions.h>
-#include <veamy/problems/VeamyPoissonDiscretization.h>
-#include <veamy/models/constraints/values/Constant.h>
+#include <veamy/physics/conditions/LinearElasticityConditions.h>
+#include <feamy/problem/FeamyLinearElasticityDiscretization.h>
+#include <feamy/models/constructor/Tri3Constructor.h>
 
 int main(){
+    
+    // Usage example of Feamy, the FEM module of Veamy, to solve problems with 3-node triangular FE elements
+    // Problem: reading T3 elements from file containing a mesh and boundary conditions     
+    
     // Set precision for plotting to output files:    
     // OPTION 1: in "VeamyConfig::instance()->setPrecision(Precision::precision::mid)"
     // use "small" for 6 digits; "mid" for 10 digits; "large" for 16 digits.
@@ -23,35 +27,28 @@ int main(){
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
-    std::string meshFileName = "base_poisson_mesh.txt";
-    std::string dispFileName = "base_poisson_displacements.txt";
+    std::string meshFileName = "feamy_test_initfromfile_fem_mesh.txt";
+    std::string dispFileName = "feamy_test_initfromfile_fem_displacements.txt";
 
-    std::string externalMeshFileName = "poisson_mesh.txt";
+    // File that contains an external mesh (default file is included inside the folder test/test_files/). 
+    // UPDATE PATH ACCORDING TO YOUR FOLDERS: 
+    //   in this example folder "Software" is located inside "/home/user/" and "Veamy" is Veamy's root folder
+    std::string externalMeshFileName = "Software/Veamy/test/test_files/feamy_test_initfromfile.txt";
 
-    std::cout << "+ Reading mesh from a file ... ";
-    Mesh<Polygon> mesh;
-    mesh.createFromFile(externalMeshFileName, 1);
+    std::cout << "*** Starting Veamy --> Feamy module ***" << std::endl;
+    std::cout << "--> Test: Reading T3 elements from file containing a mesh and boundary conditions <--" << std::endl;
+    std::cout << "..." << std::endl;
+
+    std::cout << "+ Defining linear elastic material ... ";
+    Material* material = new MaterialPlaneStrain(1e7, 0.3);
+    LinearElasticityConditions* conditions = new LinearElasticityConditions(material);
     std::cout << "done" << std::endl;
 
-    std::cout << "+ Defining problem conditions ... ";
-    PoissonConditions* conditions = new PoissonConditions();
-    std::cout << "done" << std::endl;
+    std::cout << "+ Preparing the simulation from a file containing a mesh and boundary conditions ... ";
+    FeamyLinearElasticityDiscretization* problem = new FeamyLinearElasticityDiscretization(conditions);
 
-    std::cout << "+ Defining Dirichlet and Neumann boundary conditions ... ";
-    Point cornerPoint(Point(3,1));
-    PointConstraint corner(cornerPoint, new Constant(0));
-    conditions->addEssentialConstraint(corner);
-
-    PointSegment bottomSide(Point(0,0), Point(3,0));
-    SegmentConstraint top (bottomSide, mesh.getPoints(), new Constant(1));
-    conditions->addNaturalConstraint(top, mesh.getPoints());
-    std::cout << "done" << std::endl;
-
-    std::cout << "+ Preparing the simulation ... ";
-    VeamyPoissonDiscretization* problem = new VeamyPoissonDiscretization(conditions);
-
-    Veamer v(problem);
-    v.initProblem(mesh);
+    Feamer v(problem);
+    Mesh<Triangle> mesh = v.initProblemFromFile(externalMeshFileName, new Tri3Constructor);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing mesh to a file ... ";

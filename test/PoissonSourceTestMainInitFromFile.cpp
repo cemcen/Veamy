@@ -47,53 +47,28 @@ int main(){
     std::string scalarFieldFileName = "poisson_source_test_scalarfield.txt";
 
     std::cout << "*** Starting Veamy ***" << std::endl;
-    std::cout << "--> Test: Poisson source test <--" << std::endl;
+    std::cout << "--> Test: Poisson source test from file containing a mesh and boundary conditions <--" << std::endl;
     std::cout << "..." << std::endl;
 
-    std::cout << "+ Defining the domain ... ";
-    std::vector<Point> rectangle1x1_points = {Point(0, 0), Point(1, 0), Point(1, 1), Point(0, 1)};
-    Region rectangle1x1(rectangle1x1_points);
-    std::cout << "done" << std::endl;
-
-    std::cout << "+ Generating polygonal mesh ... ";
-    rectangle1x1.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 5, 5);
-    std::vector<Point> seeds = rectangle1x1.getSeedPoints();
-    TriangleVoronoiGenerator meshGenerator (seeds, rectangle1x1);
-    Mesh<Polygon> mesh = meshGenerator.getMesh();
-    std::cout << "done" << std::endl;
-
-    std::cout << "+ Printing mesh to a file ... ";
-    mesh.printInFile(meshFileName);
-    std::cout << "done" << std::endl;
-
+    // File that contains an external mesh (default file is included inside the folder test/test_files/). 
+    // UPDATE PATH ACCORDING TO YOUR FOLDERS: 
+    //   in this example folder "Software" is located inside "/home/user/" and "Veamy" is Veamy's root folder
+    std::string externalMeshFileName = "Software/Veamy/test/test_files/poisson_source_test_initfromfile.txt";
+    
     std::cout << "+ Defining problem conditions ... ";
     BodyForce* f = new BodyForce(sourceTerm);
     PoissonConditions* conditions = new PoissonConditions(f);
     std::cout << "done" << std::endl;
 
-    std::cout << "+ Defining Dirichlet and Neumann boundary conditions ... ";
-    PointSegment leftSide(Point(0,0), Point(0,1));
-    SegmentConstraint left (leftSide, mesh.getPoints(), new Constant(0)); // u=0;
-    conditions->addEssentialConstraint(left, mesh.getPoints());
-
-    PointSegment downSide(Point(0,0), Point(1,0));
-    SegmentConstraint down (downSide, mesh.getPoints(), new Constant(0)); // u=0;
-    conditions->addEssentialConstraint(down, mesh.getPoints());
-
-    PointSegment rightSide(Point(1,0), Point(1, 1));
-    SegmentConstraint right (rightSide, mesh.getPoints(), new Constant(0)); // u=0;
-    conditions->addEssentialConstraint(right, mesh.getPoints());
-
-    PointSegment topSide(Point(0, 1), Point(1, 1));
-    SegmentConstraint top (topSide, mesh.getPoints(), new Constant(0)); // u=0;
-    conditions->addEssentialConstraint(top, mesh.getPoints());
-    std::cout << "done" << std::endl;
-
-    std::cout << "+ Preparing the simulation ... ";
+    std::cout << "+ Preparing the simulation from a file containing a mesh and boundary conditions ... ";
     VeamyPoissonDiscretization* problem = new VeamyPoissonDiscretization(conditions);
 
     Veamer v(problem);
-    v.initProblem(mesh);
+    Mesh<Polygon> mesh = v.initProblemFromFile(externalMeshFileName);
+    std::cout << "done" << std::endl;
+
+    std::cout << "+ Printing mesh to a file ... ";
+    mesh.printInFile(meshFileName);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Simulating ... ";

@@ -64,12 +64,10 @@ int main(){
     mesh.printInFile(meshFileName);
     std::cout << "done" << std::endl;
 
-
     std::cout << "+ Defining linear elastic material ... ";
     Material* material = new MaterialPlaneStrain (1e4, 0.25);
     LinearElasticityConditions* conditions = new LinearElasticityConditions(material);
     std::cout << "done" << std::endl;
-
 
     std::cout << "+ Defining Dirichlet and Neumann boundary conditions ... ";
     Point leftFoot(2,0);

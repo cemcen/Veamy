@@ -75,11 +75,15 @@ std::vector<double> exactStrain(double x, double y){
     double duydy = (P*vBar*y*(L-x))/(Ebar*I);   
 
     return {duxdx,duydy,duxdy+duydx};
-    // the third component is defined as in classical FEM: dux/dy + duy/dx 
+    // the third component is defined as in classical FEM: 2*1/2*(dux/dy + duy/dx)
 }
 
 
 int main(){
+    
+    // Usage example of Feamy, the FEM module of Veamy, to solve problems with 3-node triangular FE elements
+    // Problem: cantilever beam subjected to a parabolic end load    
+    
     // DEFINING PATH FOR THE OUTPUT FILES:
     // If the path for the output files is not given, they are written to /home directory by default.
     // Otherwise, include the path. For instance, for /home/user/Documents/Veamy/output.txt , the path
@@ -88,11 +92,11 @@ int main(){
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
-    std::string meshFileName = "parabolic_beam_mesh.txt";
-    std::string dispFileName = "parabolic_beam_displacements.txt";
+    std::string meshFileName = "parabolic_beam_fem_mesh.txt";
+    std::string dispFileName = "parabolic_beam_fem_displacements.txt";
 
-    std::cout << "*** Starting Veamy ***" << std::endl;
-    std::cout << "--> Test: Cantilever beam subjected to a parabolic end load / 3-node FE triangle <--" << std::endl;
+    std::cout << "*** Starting Veamy --> Feamy module ***" << std::endl;
+    std::cout << "--> Test: Cantilever beam subjected to a parabolic end load using 3-node triangular elements  <--" << std::endl;
     std::cout << "..." << std::endl;
 
     std::cout << "+ Defining the domain ... ";

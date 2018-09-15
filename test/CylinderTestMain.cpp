@@ -54,7 +54,7 @@ int main(){
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
     std::string meshFileName = "cylinder_mesh.txt";
     std::string dispFileName = "cylinder_displacements.txt";
-    std::string geoFileName = "cook_membrane_geometry.txt";    
+    std::string geoFileName = "cylinder_geometry.txt";    
     
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Infinite cylinder subjected to internal pressure <--" << std::endl;

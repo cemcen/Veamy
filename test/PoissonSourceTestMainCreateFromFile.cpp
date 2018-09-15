@@ -45,21 +45,19 @@ int main(){
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
     std::string meshFileName = "poisson_source_test_mesh.txt";
     std::string scalarFieldFileName = "poisson_source_test_scalarfield.txt";
+    
+    // File containing the mesh (default file is included inside the folder test/test_files/). 
+    // UPDATE PATH ACCORDING TO YOUR FOLDERS: 
+    //   in this example folder "Software" is located inside "/home/user/" and "Veamy" is Veamy's root folder
+    std::string externalMeshFileName = "Software/Veamy/test/test_files/poisson_source_test_createfromfile.txt";    
 
     std::cout << "*** Starting Veamy ***" << std::endl;
-    std::cout << "--> Test: Poisson source test <--" << std::endl;
-    std::cout << "..." << std::endl;
+    std::cout << "--> Test: Poisson source test from file containing a mesh without boundary conditions <--" << std::endl;
+    std::cout << "..." << std::endl;  
 
-    std::cout << "+ Defining the domain ... ";
-    std::vector<Point> rectangle1x1_points = {Point(0, 0), Point(1, 0), Point(1, 1), Point(0, 1)};
-    Region rectangle1x1(rectangle1x1_points);
-    std::cout << "done" << std::endl;
-
-    std::cout << "+ Generating polygonal mesh ... ";
-    rectangle1x1.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 5, 5);
-    std::vector<Point> seeds = rectangle1x1.getSeedPoints();
-    TriangleVoronoiGenerator meshGenerator (seeds, rectangle1x1);
-    Mesh<Polygon> mesh = meshGenerator.getMesh();
+    std::cout << "+ Reading mesh from a file ... ";
+    Mesh<Polygon> mesh;
+    mesh.createFromFile(externalMeshFileName, 1);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing mesh to a file ... ";

@@ -26,9 +26,10 @@ int main(){
     std::string dispFileName = "polymesher_test_displacements.txt";
 
     // File that contains the PolyMesher mesh and boundary conditions. Use Matlab function 
-    // PolyMesher2Veamy.m to generate this file. 
-    // UPDATE PATH ACCORDING TO YOUR FOLDERS
-    std::string polyMesherMeshFileName = "Software/Veamy-master/test/test_files/polymesher2veamy.txt";
+    // PolyMesher2Veamy.m to generate this file. Default file is included inside the folder "test/test_files/"
+    // UPDATE PATH ACCORDING TO YOUR FOLDERS:
+    //   in this example folder "Software" is located inside "/home/user/" and "Veamy" is Veamy's root folder   
+    std::string polyMesherMeshFileName = "Software/Veamy/test/test_files/polymesher2veamy.txt";
 
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Using a PolyMesher mesh and boundary conditions <--" << std::endl;

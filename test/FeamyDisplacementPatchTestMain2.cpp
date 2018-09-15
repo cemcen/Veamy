@@ -53,8 +53,8 @@ int main(){
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
-    std::string meshFileName = "disp_patch_test_mesh.txt";
-    std::string dispFileName = "disp_patch_test_displacements.txt";
+    std::string meshFileName = "disp_patch_test_fem_mesh.txt";
+    std::string dispFileName = "disp_patch_test_fem_displacements.txt";
 
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Displacement patch test / 3-node FE triangle <--" << std::endl;

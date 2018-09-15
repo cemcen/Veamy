@@ -24,6 +24,7 @@ std::vector<double> exactDisplacement(double x, double y){
 
 std::vector<double> exactStrain(double x, double y){
     return {1,1,0.5};
+    // the third component is defined as in VEM: 1/2*(dux/dy + duy/dx)    
 }
 
 int main(){
