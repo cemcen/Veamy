@@ -94,25 +94,22 @@ int main(){
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
     std::string meshFileName = "parabolic_beam_fem_mesh.txt";
     std::string dispFileName = "parabolic_beam_fem_displacements.txt";
+    
+    // Instead of using Veamy's mesh generator, we read the mesh from a mesh file.
+    // In this example, the mesh file does not contain the boundary conditions. We will
+    // use the function "createFromFile" to read the mesh file. (Default mesh file is 
+    // included inside the folder test/test_files/.)
+    // UPDATE PATH ACCORDING TO YOUR FOLDERS: 
+    //   in this example folder "Software" is located inside "/home/user/" and "Veamy-2.1" is Veamy's root folder
+    std::string externalMeshFileName = "Software/Veamy-2.1/test/test_files/feamy_parabolic_main_norms_t3_hsize_008.txt";        
 
     std::cout << "*** Starting Veamy --> Feamy module ***" << std::endl;
     std::cout << "--> Test: Cantilever beam subjected to a parabolic end load using 3-node triangular elements  <--" << std::endl;
     std::cout << "..." << std::endl;
 
-    std::cout << "+ Defining the domain ... ";
-    std::vector<Point> rectangle4x8_points = {Point(0, -2), Point(8, -2), Point(8, 2), Point(0, 2)};
-    Region rectangle4x8(rectangle4x8_points);
-    std::cout << "done" << std::endl;
-
-    std::cout << "+ Generating 3-node triangular mesh ... ";
-    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 12, 6);
-    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 18, 9);
-    rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 24, 12);
-    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 30, 15);
-    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 36, 18);
-    std::vector<Point> seeds = rectangle4x8.getSeedPoints();
-    TriangleDelaunayGenerator meshGenerator (seeds, rectangle4x8);
-    Mesh<Triangle> mesh = meshGenerator.getConformingDelaunayTriangulation();
+    std::cout << "+ Reading mesh from a file ... ";
+    Mesh<Triangle> mesh;
+    mesh.createFromFile(externalMeshFileName, 1);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing mesh to a file ... ";

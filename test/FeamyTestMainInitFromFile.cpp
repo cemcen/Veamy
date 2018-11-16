@@ -20,9 +20,9 @@ int main(){
     VeamyConfig::instance()->setPrecision(Precision::precision::mid);
 
     // DEFINING PATH FOR THE OUTPUT FILES:
-    // If the path for the output files is not given, they are written to /home directory by default.
-    // Otherwise, include the path. For instance, for /home/user/Documents/Veamy/output.txt , the path
-    // must be "Documents/Veamy/output.txt"
+    // If the path for the output files is not given, they are written to /home/user/ directory by default.
+    // Otherwise, include the path. For instance, for /home/user/Documents/Veamy-2.1/output.txt , the path
+    // must be "Documents/Veamy-2.1/output.txt"
     // CAUTION: the path must exists either because it is already in your system or becuase it is created
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
@@ -30,10 +30,13 @@ int main(){
     std::string meshFileName = "feamy_test_initfromfile_fem_mesh.txt";
     std::string dispFileName = "feamy_test_initfromfile_fem_displacements.txt";
 
-    // File that contains an external mesh (default file is included inside the folder test/test_files/). 
+    // Instead of using Veamy's mesh generator, we read the mesh from a mesh file.
+    // In this example, the mesh file also contains the boundary conditions. We will
+    // use the function "initProblemFromFile" to read the mesh file containing 
+    // boundary conditions. (Default mesh file is included inside the folder test/test_files/.)
     // UPDATE PATH ACCORDING TO YOUR FOLDERS: 
-    //   in this example folder "Software" is located inside "/home/user/" and "Veamy" is Veamy's root folder
-    std::string externalMeshFileName = "Software/Veamy/test/test_files/feamy_test_initfromfile.txt";
+    //   in this example folder "Software" is located inside "/home/user/" and "Veamy-2.1" is Veamy's root folder
+    std::string externalMeshFileName = "Software/Veamy-2.1/test/test_files/feamy_test_initfromfile.txt";
 
     std::cout << "*** Starting Veamy --> Feamy module ***" << std::endl;
     std::cout << "--> Test: Reading T3 elements from file containing a mesh and boundary conditions <--" << std::endl;

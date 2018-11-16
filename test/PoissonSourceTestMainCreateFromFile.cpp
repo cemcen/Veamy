@@ -36,9 +36,9 @@ int main(){
     VeamyConfig::instance()->setPrecision(Precision::precision::large);
 
     // DEFINING PATH FOR THE OUTPUT FILES:
-    // If the path for the output files is not given, they are written to /home directory by default.
-    // Otherwise, include the path. For instance, for /home/user/Documents/Veamy/output.txt , the path
-    // must be "Documents/Veamy/output.txt"
+    // If the path for the output files is not given, they are written to /home/user/ directory by default.
+    // Otherwise, include the path. For instance, for /home/user/Documents/Veamy-2.1/output.txt , the path
+    // must be "Documents/Veamy-2.1/output.txt"
     // CAUTION: the path must exists either because it is already in your system or becuase it is created
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
@@ -46,10 +46,13 @@ int main(){
     std::string meshFileName = "poisson_source_test_mesh.txt";
     std::string scalarFieldFileName = "poisson_source_test_scalarfield.txt";
     
-    // File containing the mesh (default file is included inside the folder test/test_files/). 
+    // Instead of using Veamy's mesh generator, we read the mesh from a mesh file.
+    // In this example, the mesh file does not contain the boundary conditions. We will
+    // use the function "createFromFile" to read the mesh file. (Default mesh file is 
+    // included inside the folder test/test_files/.)
     // UPDATE PATH ACCORDING TO YOUR FOLDERS: 
-    //   in this example folder "Software" is located inside "/home/user/" and "Veamy" is Veamy's root folder
-    std::string externalMeshFileName = "Software/Veamy/test/test_files/poisson_source_test_createfromfile.txt";    
+    //   in this example folder "Software" is located inside "/home/user/" and "Veamy-2.1" is Veamy's root folder
+    std::string externalMeshFileName = "Software/Veamy-2.1/test/test_files/poisson_source_test_createfromfile.txt";    
 
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Poisson source test from file containing a mesh without boundary conditions <--" << std::endl;

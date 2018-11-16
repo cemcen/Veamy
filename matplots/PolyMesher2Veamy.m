@@ -1,18 +1,50 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
+% Purpose
+% =======
+% Read a PolyMesher [2] mesh and write it into a Veamy mesh format.
 %
-%                            PolyMesher2Veamy
+% Usage
+% =====
+% PolyMesher2Veamy(Node,Element,NElem,Supp,Load)
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                                   
+% Input
+% =====
+% Node    : PolyMesher array containing the nodal coordinates
+% Element : PolyMesher cell array containing the element connectivity 
+% NElem   : number of polygonal elements
+% Supp    : PolyMesher array containing nodal support conditions (0=free,1=fixed)
+% Load    : PolyMesher array containing nodal loads
+%
+% Output
+% ======
+% A text file 'polymesher2veamy.txt' containing a PolyMesh [2] polygonal mesh 
+% along with boundary conditions that is readable into Veamy [1].
+%
+% References 
+% ==========
+% This code has been used for PolyMesher to Veamy mesh translation in Ref. [1].
+%
+% [1] A. Ortiz-Bernardin, C. Alvarez, N. Hitschfeld-Kahler, A. Russo, 
+%     R. Silva, A. Olate-Sanzana. Veamy: an extensible object-oriented 
+%     C++ library for the virtual element method. arXiv:1708.03438 [cs.MS]
+%
+% [2] C Talischi, GH Paulino, A Pereira, IFM Menezes. 
+%     PolyMesher: A general-purpose mesh generator for polygonal elements 
+%     written in Matlab. Struct Multidisc Optim, 2012,
+%     DOI 10.1007/s00158-011-0706-z                                      
+%-------------------------------------------------------------------------------
+
+%-------------------------------------------------------------------------------
 %            Version      : 1.0                         
 %            Date         : August 3, 2017  
 %            Source code  : http://camlab.cl/research/software/veamy/
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
 %            Created by   : A. Ortiz-Bernardin 
 %            E-mail       : aortizb@uchile.cl  
 %            Homepage     : http://camlab.cl/alejandro
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
 %
 %                          Copyright and License                               
 %                          =====================                                                                                
@@ -41,43 +73,6 @@
 % Version 1.0 (August 3, 2017): initial release of the code.
 %
 %-------------------------------------------------------------------------------
-% References 
-% ==========
-% This code has been used for PolyMesher to Veamy mesh translation in Ref. [1].
-%
-% [1] A. Ortiz-Bernardin, C. Alvarez, N. Hitschfeld-Kahler, A. Russo, 
-%     R. Silva, A. Olate-Sanzana, "Veamy: an extensible object-oriented 
-%     C++ library for the virtual element method," XX-XX-XX-XX 2017; 
-%     XX(XX):XX-XX. http://camlab.cl/research/software/veamy
-%
-% [2] C Talischi, GH Paulino, A Pereira, IFM Menezes, 
-%     "PolyMesher: A general-purpose mesh generator for polygonal elements 
-%     written in Matlab", Struct Multidisc Optim, 2012,
-%     DOI 10.1007/s00158-011-0706-z                                      
-%
-%-------------------------------------------------------------------------------
-% Purpose
-% =======
-% Read a PolyMesher [2] mesh and write it into a Veamy mesh format.
-%
-% Usage
-% =====
-% PolyMesher2Veamy(Node,Element,NElem,Supp,Load)
-%
-% Input
-% =====
-% Node    : PolyMesher array containing the nodal coordinates
-% Element : PolyMesher cell array containing the element connectivity 
-% NElem   : number of polygonal elements
-% Supp    : PolyMesher array containing nodal support conditions (0=free,1=fixed)
-% Load    : PolyMesher array containing nodal loads
-%
-% Output
-% ======
-% A text file 'polymesher2veamy.txt' containing a PolyMesh [2] polygonal mesh 
-% along with boundary conditions that is readable into Veamy [1].
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 function PolyMesher2Veamy(Node,Element,NElem,Supp,Load)
 fprintf('Printing mesh to a Veamy mesh format\n');

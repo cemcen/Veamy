@@ -1,18 +1,57 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
+% Purpose
+% =======
+% Plot nodal displacements on a polygonal mesh
 %
-%                          plotPolyMeshDisplacements
+% Usage
+% =====
+% [points,polygons,displacements] = ...
+%                  plotPolyMeshDisplacements(meshFile,dispFile,titleResultX,...
+%                                            titleResultY,titleResultNorm,...
+%                                            plotMeshOverResults)
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                                   
+% Input
+% =====
+% meshfile : name of the file containing the polygonal mesh (string)
+% dispFile : name of the file containing the nodal displacements (string)
+% titleResultX : title for the plot of nodal results in the X direction (latex format)
+% titleResultY : title for the plot of nodal results in the Y direction (latex format)
+% titleResultNorm : title for the plot of the norm of nodal results (latex format)
+% plotMeshOverResults : 'yes' or 'no'
+%
+% Output
+% ======
+% points        : (nx2) array containing n nodes of the polygonal mesh
+% polygons      : cell array of size m, where the i-th entry contains the
+%                 the connectivity of the i-th polygonal element
+% displacements : (2nx1) array containing the nodal displacements
+%
+% References 
+% ==========
+% This code has been used for plots production in Ref. [1].
+%
+% [1] A. Ortiz-Bernardin, C. Alvarez, N. Hitschfeld-Kahler, A. Russo, 
+%     R. Silva, A. Olate-Sanzana. Veamy: an extensible object-oriented 
+%     C++ library for the virtual element method. arXiv:1708.03438 [cs.MS]
+%
+% Part of this code has been taken from the plot_solution.m function provided in
+% the source code of:
+%
+% [2] O. J. Sutton. The virtual element method in 50 lines of MATLAB.
+%     Numerical Algorithms 2017; 75(4):1141–1159
+%-------------------------------------------------------------------------------   
+
+%-------------------------------------------------------------------------------
 %            Version      : 1.1                         
 %            Date         : January 15, 2018  
 %            Source code  : http://camlab.cl/research/software/veamy/
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
 %            Created by   : C. Alvarez, R. Silva, A. Ortiz-Bernardin 
 %            E-mail       : aortizb@uchile.cl  
 %            Homepage     : http://camlab.cl/alejandro
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
 %
 %                          Copyright and License                               
 %                          =====================                                                                                
@@ -42,48 +81,6 @@
 % Version 1.0 (August 3, 2017): initial release of the code.
 %
 %-------------------------------------------------------------------------------
-% References 
-% ==========
-% This code has been used for plots production in Ref. [1].
-%
-% [1] A. Ortiz-Bernardin, C. Alvarez, N. Hitschfeld-Kahler, A. Russo, 
-%     R. Silva, A. Olate-Sanzana. Veamy: an extensible object-oriented 
-%     C++ library for the virtual element method. arXiv:1708.03438 [cs.MS]
-%
-% Part of this code has been taken from the plot_solution.m function provided in
-% the source code of:
-%
-% [2] O. J. Sutton. The virtual element method in 50 lines of MATLAB.
-%     Numerical Algorithms 2017; 75(4):1141–1159
-%-------------------------------------------------------------------------------
-% Purpose
-% =======
-% Plot nodal displacements on a polygonal mesh
-%
-% Usage
-% =====
-% [points,polygons,displacements] = ...
-%                  plotPolyMeshDisplacements(meshFile,dispFile,titleResultX,...
-%                                            titleResultY,titleResultNorm,...
-%                                            plotMeshOverResults)
-%
-% Input
-% =====
-% meshfile : name of the file containing the polygonal mesh (string)
-% dispFile : name of the file containing the nodal displacements (string)
-% titleResultX : title for the plot of nodal results in the X direction (latex format)
-% titleResultY : title for the plot of nodal results in the Y direction (latex format)
-% titleResultNorm : title for the plot of the norm of nodal results (latex format)
-% plotMeshOverResults : 'yes' or 'no'
-%
-% Output
-% ======
-% points        : (nx2) array containing n nodes of the polygonal mesh
-% polygons      : cell array of size m, where the i-th entry contains the
-%                 the connectivity of the i-th polygonal element
-% displacements : (2nx1) array containing the nodal displacements
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 
 function [points,polygons,displacements] = ...
                plotPolyMeshDisplacements(meshFile,dispFile,titleResultX,...

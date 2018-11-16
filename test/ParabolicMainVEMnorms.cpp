@@ -1,26 +1,23 @@
 //**************************************************************
-// Solve the cantilever beam subjected to a parabolic end load
-// using standard 3-node triangular finite elements
+// This is basically the same file ParabolicMain.cpp except 
+// that we add the time, L2-norm and H1-seminorm calculators
 //**************************************************************
 
-#include <delynoi/models/basic/Point.h>
+#include <veamy/models/constraints/Constraint.h>
+#include <veamy/models/constraints/values/Constant.h>
+#include <veamy/Veamer.h>
 #include <delynoi/models/Region.h>
-#include <delynoi/voronoi/TriangleDelaunayGenerator.h>
-#include <veamy/models/constraints/EssentialConstraints.h>
+#include <delynoi/models/generator/functions/functions.h>
+#include <delynoi/voronoi/TriangleVoronoiGenerator.h>
 #include <veamy/models/constraints/values/Function.h>
-#include <veamy/models/constraints/NaturalConstraints.h>
-#include <veamy/models/constraints/ConstraintsContainer.h>
-#include <veamy/physics/conditions/Conditions.h>
-#include <veamy/physics/materials/MaterialPlaneStrain.h>
-#include <feamy/Feamer.h>
-#include <feamy/models/constructor/Tri3Constructor.h>
-#include <veamy/physics/conditions/LinearElasticityConditions.h>
-#include <feamy/problem/FeamyLinearElasticityDiscretization.h>
 #include <chrono>
-#include <veamy/postprocess/analytic/DisplacementValue.h>
+#include <utilities/utilities.h>
+#include <veamy/physics/materials/MaterialPlaneStrain.h>
 #include <veamy/postprocess/L2NormCalculator.h>
-#include <veamy/postprocess/analytic/StrainValue.h>
 #include <veamy/postprocess/H1NormCalculator.h>
+#include <veamy/config/VeamyConfig.h>
+#include <veamy/physics/conditions/LinearElasticityConditions.h>
+#include <veamy/problems/VeamyLinearElasticityDiscretization.h>
 
 double tangencial(double x, double y){
     double P = -1000;
@@ -74,16 +71,20 @@ std::vector<double> exactStrain(double x, double y){
     double duxdy = -(P*((vBar+2)*std::pow(y,2)+x*(6*L-3*x)-(3*std::pow(D,2)*(vBar+1))/2))/(6*Ebar*I)-(P*std::pow(y,2)*(vBar+2))/(3*Ebar*I);
     double duydy = (P*vBar*y*(L-x))/(Ebar*I);   
 
-    return {duxdx,duydy,duxdy+duydx};
-    // the third component is defined as in classical FEM: 2*1/2*(dux/dy + duy/dx)
+    return {duxdx,duydy,0.5*(duxdy+duydx)};
+    // the third component is defined as in VEM: 0.5*(dux/dy + duy/dx)
 }
 
-
 int main(){
-    
-    // Usage example of Feamy, the FEM module of Veamy, to solve problems with 3-node triangular FE elements
-    // Problem: cantilever beam subjected to a parabolic end load    
-    
+    // Set precision for plotting to output files:
+    // OPTION 1: in "VeamyConfig::instance()->setPrecision(Precision::precision::mid)"
+    // use "small" for 6 digits; "mid" for 10 digits; "large" for 16 digits.
+    // OPTION 2: set the desired precision, for instance, as:
+    // VeamyConfig::instance()->setPrecision(12) for 12 digits. Change "12" by the desired precision.
+    // OPTION 3: Omit any instruction "VeamyConfig::instance()->setPrecision(.....)"
+    // from this file. In this case, the default precision, which is 6 digits, will be used.
+    VeamyConfig::instance()->setPrecision(Precision::precision::mid);
+
     // DEFINING PATH FOR THE OUTPUT FILES:
     // If the path for the output files is not given, they are written to /home/user/ directory by default.
     // Otherwise, include the path. For instance, for /home/user/Documents/Veamy-2.1/output.txt , the path
@@ -92,27 +93,24 @@ int main(){
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
     // since "/mycustom_folder" won't be created by Veamy's configuration files.
-    std::string meshFileName = "parabolic_beam_fem_mesh.txt";
-    std::string dispFileName = "parabolic_beam_fem_displacements.txt";
+    std::string meshFileName = "parabolic_beam_mesh.txt";
+    std::string dispFileName = "parabolic_beam_displacements.txt";
+    
+    // Instead of using Veamy's mesh generator, we read the mesh from a mesh file.
+    // In this example, the mesh file does not contain the boundary conditions. We will
+    // use the function "createFromFile" to read the mesh file. (Default mesh file is 
+    // included inside the folder test/test_files/.)
+    // UPDATE PATH ACCORDING TO YOUR FOLDERS: 
+    //   in this example folder "Software" is located inside "/home/user/" and "Veamy-2.1" is Veamy's root folder
+    std::string externalMeshFileName = "Software/Veamy-2.1/test/test_files/parabolic_main_vem_norms_3000poly_elems.txt";    
 
-    std::cout << "*** Starting Veamy --> Feamy module ***" << std::endl;
-    std::cout << "--> Test: Cantilever beam subjected to a parabolic end load using 3-node triangular elements  <--" << std::endl;
+    std::cout << "*** Starting Veamy ***" << std::endl;
+    std::cout << "--> Test: Cantilever beam subjected to a parabolic end load <--" << std::endl;
     std::cout << "..." << std::endl;
-
-    std::cout << "+ Defining the domain ... ";
-    std::vector<Point> rectangle4x8_points = {Point(0, -2), Point(8, -2), Point(8, 2), Point(0, 2)};
-    Region rectangle4x8(rectangle4x8_points);
-    std::cout << "done" << std::endl;
-
-    std::cout << "+ Generating 3-node triangular mesh ... ";
-    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 12, 6);
-    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 18, 9);
-    rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 24, 12);
-    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 30, 15);
-    //rectangle4x8.generateSeedPoints(PointGenerator(functions::constant(), functions::constant()), 36, 18);
-    std::vector<Point> seeds = rectangle4x8.getSeedPoints();
-    TriangleDelaunayGenerator meshGenerator (seeds, rectangle4x8);
-    Mesh<Triangle> mesh = meshGenerator.getConformingDelaunayTriangulation();
+    
+    std::cout << "+ Reading mesh from a file ... ";
+    Mesh<Polygon> mesh;
+    mesh.createFromFile(externalMeshFileName, 1);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Printing mesh to a file ... ";
@@ -143,10 +141,10 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Preparing the simulation ... ";
-    FeamyLinearElasticityDiscretization* problem = new FeamyLinearElasticityDiscretization(conditions);
+    VeamyLinearElasticityDiscretization* problem = new VeamyLinearElasticityDiscretization(conditions);
 
-    Feamer v(problem);
-    v.initProblem(mesh, new Tri3Constructor);
+    Veamer v(problem);
+    v.initProblem(mesh);
     std::cout << "done" << std::endl;
 
     std::cout << "+ Simulating ... ";
@@ -156,23 +154,22 @@ int main(){
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
     std::cout << "done" << std::endl;
     std::cout << "  Elapsed simulation time: " << duration/1e6 << " s" <<std::endl;
-
-    std::cout << "+ Printing nodal displacement solution to a file ... ";
-    v.writeDisplacements(dispFileName, x);
-    std::cout << "done" << std::endl;
-
+    
     std::cout << "+ Calculating norms of the error ... ";
     DisplacementValue* exactDisplacementSolution = new DisplacementValue(exactDisplacement);
-    L2NormCalculator<Triangle>* L2 = new L2NormCalculator<Triangle>(exactDisplacementSolution, x, v.DOFs);
+    L2NormCalculator<Polygon>* L2 = new L2NormCalculator<Polygon>(exactDisplacementSolution, x, v.DOFs);
     NormResult L2norm = v.computeErrorNorm(L2, mesh);
     StrainValue* exactStrainSolution = new StrainValue(exactStrain);
-    H1NormCalculator<Triangle>* H1 = new H1NormCalculator<Triangle>(exactStrainSolution, x, v.DOFs);
-    NormResult H1norm = v.computeErrorNorm(H1, mesh);
-    std::cout << "done" << std::endl;
+    H1NormCalculator<Polygon>* H1 = new H1NormCalculator<Polygon>(exactStrainSolution, x, v.DOFs);
+    NormResult H1norm = v.computeErrorNorm(H1, mesh);   
+    std::cout << "done" << std::endl; 
     std::cout << "  Relative L2-norm    : " << utilities::toString(L2norm.NormValue) << std::endl;
     std::cout << "  Relative H1-seminorm: " << utilities::toString(H1norm.NormValue) << std::endl;
     std::cout << "  Element size        : " << utilities::toString(L2norm.MaxEdge) << std::endl;
 
+    std::cout << "+ Printing nodal displacement solution to a file ... ";
+    v.writeDisplacements(dispFileName, x);
+    std::cout << "done" << std::endl;
     std::cout << "+ Problem finished successfully" << std::endl;
     std::cout << "..." << std::endl;
     std::cout << "Check output files:" << std::endl;

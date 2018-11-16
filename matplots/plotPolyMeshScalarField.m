@@ -1,18 +1,48 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
+% Purpose
+% =======
+% Plot nodal scalar field on a polygonal mesh
 %
-%                          plotPolyMeshScalarField
+% Usage
+% =====
+% [points,polygons,scalarfield] = ...
+%                  plotPolyMeshScalarField(meshFile,scalarfieldFile,titleResult,...
+%                                          plotMeshOverResults)
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                                   
+% Input
+% =====
+% meshfile : name of the file containing the polygonal mesh (string)
+% scalarfieldFile : name of the file containing the nodal scalar field (string)
+% titleResult : title for the plot of nodal results (latex format)
+% plotMeshOverResults : 'yes' or 'no'
+%
+% Output
+% ======
+% points        : (nx2) array containing n nodes of the polygonal mesh
+% polygons      : cell array of size m, where the i-th entry contains the
+%                 the connectivity of the i-th polygonal element
+% scalarfield   : (nx1) array containing the nodal scalar field
+%
+% References 
+% ==========
+% Part of this code has been taken from the plot_solution.m function provided in
+% the source code of:
+%
+% [1] O. J. Sutton. The virtual element method in 50 lines of MATLAB.
+%     Numerical Algorithms 2017; 75(4):1141–1159
+%-------------------------------------------------------------------------------  
+
+%-------------------------------------------------------------------------------                                  
 %            Version      : 1.0                         
 %            Date         : January 15, 2018
 %            Source code  : http://camlab.cl/research/software/veamy/
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
 %            Created by   : C. Alvarez, R. Silva, A. Ortiz-Bernardin 
 %            E-mail       : aortizb@uchile.cl  
 %            Homepage     : http://camlab.cl/alejandro
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%-------------------------------------------------------------------------------
 %
 %                          Copyright and License                               
 %                          =====================                                                                                
@@ -41,39 +71,6 @@
 % Version 1.0 (January 15, 2018): initial release of the code.
 %
 %-------------------------------------------------------------------------------
-% References 
-% ==========
-% Part of this code has been taken from the plot_solution.m function provided in
-% the source code of:
-%
-% [1] O. J. Sutton. The virtual element method in 50 lines of MATLAB.
-%     Numerical Algorithms 2017; 75(4):1141ï¿½1159
-%-------------------------------------------------------------------------------
-% Purpose
-% =======
-% Plot nodal scalar field on a polygonal mesh
-%
-% Usage
-% =====
-% [points,polygons,scalarfield] = ...
-%                  plotPolyMeshScalarField(meshFile,scalarfieldFile,titleResult,...
-%                                          plotMeshOverResults)
-%
-% Input
-% =====
-% meshfile : name of the file containing the polygonal mesh (string)
-% scalarfieldFile : name of the file containing the nodal scalar field (string)
-% titleResult : title for the plot of nodal results (latex format)
-% plotMeshOverResults : 'yes' or 'no'
-%
-% Output
-% ======
-% points        : (nx2) array containing n nodes of the polygonal mesh
-% polygons      : cell array of size m, where the i-th entry contains the
-%                 the connectivity of the i-th polygonal element
-% scalarfield   : (nx1) array containing the nodal scalar field
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
 
 function [points,polygons,scalarfield] = ...
                plotPolyMeshScalarField(meshFile,scalarfieldFile,titleResult,...
