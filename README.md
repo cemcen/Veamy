@@ -61,7 +61,7 @@ veamer.initProblem(mesh);</code></pre></li>
 <pre><code>Eigen::VectorXd displacements = veamer.simulate(mesh);</code></pre></li>
 <li>If required, print the nodal displacements to a text file:<br>
 <pre><code>veamer.writeDisplacements("displacements.txt", displacements);</code></pre></li>
-<li>The results can be plotted using the Matlab function <b>plotPolyMeshDisplacements</b> (located in folder <b>/lib/visualization/</b> ):
+<li>The results can be plotted using the Matlab function <b>plotPolyMeshDisplacements</b> (located in folder <b>matplots/</b> ):
 <pre><code>[points,polygons,displacements] = plotPolyMeshDisplacements('mesh.txt','displacements.txt','$$u_x^h$$','$$u_y^h$$','$$||u^h||$$','yes');</code></pre>
 </ol>
 
@@ -85,7 +85,7 @@ feamer.initProblem(mesh, conditions, new Tri3Constructor());</code></pre></li>
 
 <h2>Using PolyMesher</h2>
 <ol>
-<li>Use the Matlab function <b>PolyMesher2Veamy.m</b> included  in the <b>polymesher/</b> folder and use it to generate a Veamy-format file, whose
+<li>Use the Matlab function <b>PolyMesher2Veamy.m</b> included  in the <b>matplots/</b> folder and use it to generate a Veamy-format file, whose
 default name is "polymesher2veamy.txt", from PolyMesher. </li>
 <li>Use the name of the previously generated file as parameter of the <b>initProblemFromFile</b> method of the <b>Veamer</b> class. It 
 requires the definition of the material properties, and, in the case the problem includes them, a body force pointer:
@@ -100,7 +100,7 @@ Mesh<Polygon> mesh = veamer.initProblemFromFile("polymesher2veamy.txt");</code><
 This and various additional examples are provided in the <b>test/</b> folder located in the root directory of Veamy. 
 
 <h2>Acknowledgements</h2>
-Veamy depends on two external open source libraries, whose codes are included in this repository, inside <b>lib</b> folder. 
+Veamy depends on two external open source libraries, whose codes are included in this repository, inside <b>lib/</b> folder. 
 <ul>
 <li><a href="http://camlab.cl/research/software/delynoi"> Delynoi: an object-oriented C++ library for the generation of polygonal meshes </a></li>
 </ul>
