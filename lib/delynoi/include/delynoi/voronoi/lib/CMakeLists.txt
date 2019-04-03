@@ -1,3 +1,7 @@
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11 -pg")
+SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pg")
+SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -pg")
+
 add_library(triangle STATIC triangle.c)
 target_compile_definitions(triangle PRIVATE -DTRILIBRARY -DANSI_DECLARATORS)
 if(WIN32)

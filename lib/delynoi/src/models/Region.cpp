@@ -89,7 +89,7 @@ void Region::generateSeedPoints(PointGenerator p, int nX, int nY){
     this->clean();
 }
 
-void Region::addSeedPoints(std::vector<Point> seeds) {
+void Region::addSeedPoints(std::vector<Point>& seeds) {
     this->seedPoints.assign(seeds.begin(), seeds.end());
     this->clean();
 }

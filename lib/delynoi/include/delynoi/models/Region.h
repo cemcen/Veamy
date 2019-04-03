@@ -102,7 +102,7 @@ public:
     /* Adds already seed points to the list
      * @param seeds list of points to add
      */
-    void addSeedPoints(std::vector<Point> seeds);
+    void addSeedPoints(std::vector<Point>& seeds);
 
     /* Adds seed points reading them from a file
      * @param fileName name of the file from which the seed points will be read

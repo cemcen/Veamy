@@ -14,7 +14,7 @@ void PointMap::insert(Point p, int neighbour) {
     }
 }
 
-void PointMap::insert(Point p, std::vector<int> neighbours) {
+void PointMap::insert(Point &p, std::vector<int> &neighbours) {
     auto got = this->map.find(p);
 
     if(got == this->map.end()){

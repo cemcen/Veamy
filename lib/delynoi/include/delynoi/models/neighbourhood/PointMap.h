@@ -35,7 +35,7 @@ public:
      * @param p point to insert
      * @param neighbours list of the indexes of polygons that contain the point
      */
-    void insert(Point p, std::vector<int> neighbours);
+    void insert(Point &p, std::vector<int> &neighbours);
 
     /*
      * @param p point to lookup

@@ -22,6 +22,11 @@ private:
      * Boolean flag indicating if the point is in the boundary of the mesh
      */
     bool isBoundaryPoint = false;
+
+    /*
+     * Boolean flag indicating if this point has been initialized
+     */
+    bool isEmpty = false;
 public:
     /*
      * Constructor. Creates a point with its two coordinates.
@@ -32,6 +37,11 @@ public:
      * Default constructor. Creates a point in the origin (0,0)
      */
     Point();
+
+    /*
+     * @return boolean indicating if this point is valid
+     */
+    bool isValid();
 
     /*
      * @return value of the x-axis of the point

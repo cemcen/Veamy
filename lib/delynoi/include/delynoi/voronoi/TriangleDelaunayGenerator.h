@@ -5,6 +5,8 @@
 #include <delynoi/voronoi/structures/PointData.h>
 #include <delynoi/voronoi/structures/DelaunayInfo.h>
 #include <delynoi/models/Mesh.h>
+#include <delynoi/utilities/delynoi_utilities.h>
+#include <chrono>
 
 extern "C"{
 #include <delynoi/voronoi/lib/triangle.h>
@@ -34,6 +36,7 @@ private:
     std::vector<PointData> points;
     UniqueList<int> realPoints;
     std::vector<EdgeData> edges;
+    UniqueList<Point> circumcenters;
     std::unordered_map<Key, int, KeyHasher> edgeMap;
     bool empty = false;
 
@@ -59,7 +62,7 @@ public:
      * segments, are Delaunay through the inclusion of additional points)
      * @return the conforming Delaunay triangulation
      */
-    Mesh<Triangle> getConformingDelaunayTriangulation();
+    Mesh<Triangle>& getConformingDelaunayTriangulation();
 
     /* Returns the constrained Delaunay triangulation (triangles next to constrained segments are not necessarily
      * delaunay)

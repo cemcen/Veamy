@@ -4,124 +4,57 @@
 #include <vector>
 #include <algorithm>
 #include <map>
-#include <utilities/utilities.h>
 
-/*
- * Class that represents a list of unique elements (hence, elements inside a UniqueList list need to be comparable)
- */
 template <class T>
 class UniqueList {
 private:
-    /*
-     * List of elements and map to ensure uniqueness
-     */
     std::vector<T> list;
     std::map<T,int> map;
 public:
-    /*
-     * Default constructor
-     */
     UniqueList();
-
-    /* Adds a new element to the tail of the list (if not in the list)
-     * @param item element to add
-     * @return index where the element was inserted (or found if already in the list)
-     */
+    UniqueList(const UniqueList<T>& other);
     int push_back(T& item);
-
-    /* Adds a new element to the tail of the list (without checking uniqueness). Use at your own risk
-     * @param item element to add
-     * @return index where the element was inserted
-     */
     int force_push_back(T& item);
-
-    /*
-     * @return number of elements on the list
-     */
     int size();
-
-    /* Adds a list of elements to the tail of the unique list (checking each one)
-     * @param list elements to add
-     * @return list of the indexes where each element was inserted
-     */
-    std::vector<int> push_list(std::vector<T> list);
-
-    /* Adds a unique list of elements to the tail of the unique list (checking each one)
-     * @param list elements to add
-     * @return list of the indexes where each element was inserted
-     */
-    std::vector<int> push_list(UniqueList<T> list);
-
-    /*
-     * Deletes the first element of the unique list
-     */
+    std::vector<int> push_list(std::vector<T>& list);
+    std::vector<int> push_list(UniqueList<T>& list);
     void pop_front();
 
-    /*
-     * @return vector inside the unique list
-     */
     std::vector<T> getList() const;
-
-    /*
-     * @return reference to the vector inside the unique list
-     */
     std::vector<T>& getList();
 
-    /* Returns the index of an element in the unique list (-1 if not found)
-     * @param elem element to lookup
-     * @return index of elem
-     */
     int indexOf(T elem);
-
-    /* Gets the element at the given index
-     * @param i index to get the element from
-     * @return element at position i
-     */
     T& operator[](int i);
-
-    /* Equality operator (compares memory direction, not content)
-     * @param other
-     * @return if the two lists are equal or not
-     */
     bool operator==(const UniqueList<T>& other);
-
-    /* Checks if an element is in the list
-     * @param elem element to check
-     * @return if the element is in the list or not
-     */
     bool contains(T elem);
+    bool hasCommonElement(UniqueList<T>& other);
 
-    /* Checks if two lists have common elements
-     * @param other list to compare with
-     * @return if there is at least one common element in the two lists
-     */
-    bool hasCommonElement(UniqueList<T> other);
-
-    /*
-     * Empties the unique list
-     */
     void clear();
-
-    /* Deletes an element from the list
-     * @param item element to delete
-     */
     void delete_element(T item);
 };
 
 template <class T>
 UniqueList<T>::UniqueList() {}
 
+
+template<class T>
+UniqueList<T>::UniqueList(const UniqueList<T> &other) {
+    this->list = other.list;
+    this->map = other.map;
+}
+
 template <class T>
 int UniqueList<T>::push_back(T& item) {
-    auto iter = map.find(item);
+    auto it = map.upper_bound(item);
 
-    if(iter != map.end())
-        return iter->second;
+    if (it == map.begin() || (--it)->first < item) {
+        map.insert(it, std::make_pair(item, list.size()));
+        list.push_back(item);
 
-    map.insert(std::make_pair(item, list.size()));
-    list.push_back(item);
-
-    return (int) list.size()-1;
+        return (int) list.size()-1;
+    }else{
+        return it->second;
+    }
 }
 
 template <class T>
@@ -165,7 +98,7 @@ T& UniqueList<T>::operator[](int i) {
 }
 
 template <class T>
-std::vector<int> UniqueList<T>::push_list(std::vector<T> list) {
+std::vector<int> UniqueList<T>::push_list(std::vector<T>& list) {
     std::vector<int> index;
 
     for(int i=0;i<list.size();i++){
@@ -176,7 +109,7 @@ std::vector<int> UniqueList<T>::push_list(std::vector<T> list) {
 }
 
 template <class T>
-std::vector<int> UniqueList<T>::push_list(UniqueList<T> list) {
+std::vector<int> UniqueList<T>::push_list(UniqueList<T>& list) {
     std::vector<int> index;
 
     for(int i=0;i<list.size();i++){
@@ -198,7 +131,7 @@ std::vector<T>& UniqueList<T>::getList() {
 }
 
 template <class T>
-bool UniqueList<T>::hasCommonElement(UniqueList<T> other) {
+bool UniqueList<T>::hasCommonElement(UniqueList<T>& other) {
     for(int i=0; i<other.size(); i++){
         if(this->contains(other[i])){
             return true;

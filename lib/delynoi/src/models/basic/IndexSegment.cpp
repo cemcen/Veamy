@@ -1,10 +1,14 @@
 #include <delynoi/models/basic/IndexSegment.h>
 
-IndexSegment::IndexSegment(int i1, int i2) : Segment<int>(i1, i2) {}
+IndexSegment::IndexSegment(int i1, int i2) : Segment<int>(i1, i2) {
+    this->hash = utilities::hash32(i1) + utilities::hash32(i2);
+}
 
 IndexSegment::IndexSegment(const IndexSegment &other) {
     this->p1 = other.p1;
     this->p2 = other.p2;
+
+    this->hash = utilities::hash32(this->p1) + utilities::hash32(this->p2);
 }
 
 IndexSegment::IndexSegment() : Segment<int>(){}

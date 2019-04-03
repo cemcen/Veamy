@@ -12,14 +12,9 @@ Polygon::Polygon(std::vector<int>& points, std::vector<Point>& p) {
 
     this->points.assign(points.begin(), points.end());
 
-    std::vector<Point> this_points;
-    for (int i = 0; i < points.size(); i++) {
-        this_points.push_back(p[points[i]]);
-    }
-
-    this->diameter = this->calculateDiameter(this_points);
-    this->area = this->calculateArea(p);
-    this->centroid = this->calculateCentroid(p);
+    this->diameter = -1;
+    this->area = -1;
+    this->centroid = Point();
     calculateHash();
 }
 
@@ -31,16 +26,9 @@ void Polygon::mutate(std::vector<Point> &p) {
         throw std::invalid_argument("Self intersecting polygons are not supported");
     }
 
-    calculateHash();
-
-    std::vector<Point> this_points;
-    for(int i=0;i<points.size();i++){
-        this_points.push_back(p[points[i]]);
-    }
-
-    this->diameter = this->calculateDiameter(this_points);
-    this->area = this->calculateArea(p);
-    this->centroid = this->calculateCentroid(p);
+    this->diameter = -1;
+    this->area = -1;
+    this->centroid = Point();
     calculateHash();
 }
 
@@ -56,9 +44,9 @@ Polygon::Polygon(std::vector<Point> &p) {
         this_points.push_back(p[points[i]]);
     }
 
-    this->diameter = this->calculateDiameter(this_points);
-    this->area = this->calculateArea(p);
-    this->centroid = this->calculateCentroid(p);
+    this->diameter = -1;
+    this->area = -1;
+    this->centroid = Point();
     calculateHash();
 }
 
@@ -91,16 +79,31 @@ double Polygon::calculateArea(std::vector<Point>& p) {
     return geometry_functions::area(p,this->points);
 }
 
-double Polygon::getArea(){
+double Polygon::getArea(std::vector<Point>& points){
+    if(this->area == -1){
+        std::vector<Point> thisPoints = this->getPoints(points);
+        this->calculateArea(thisPoints);
+    }
+
     return this->area;
 }
 
-double Polygon::getDiameter() {
+double Polygon::getDiameter(std::vector<Point>& points) {
+    if(this->diameter < 0){
+        std::vector<Point> thisPoints = this->getPoints(points);
+        this->calculateDiameter(thisPoints);
+    }
+
     return this->diameter;
 }
 
-Point Polygon::getCentroid() {
-   return this->centroid;
+Point Polygon::getCentroid(std::vector<Point>& points) {
+    if(!this->centroid.isValid()){
+        std::vector<Point> thisPoints = this->getPoints(points);
+        this->calculateCentroid(thisPoints);
+    }
+
+    return this->centroid;
 }
 
 double Polygon::signedArea(std::vector<Point>& p) {
@@ -249,7 +252,7 @@ std::string Polygon::getString() {
         base += " " + utilities::toString<double>(this->points[i]);
     }
 
-    return base + " " + getCentroid().getString();
+    return base;
 }
 
 bool Polygon::isVertex(int index) {
@@ -266,14 +269,14 @@ void Polygon::calculateHash() {
     this->hash = hash;
 }
 
-void Polygon::fixCCW(std::vector<Point> p) {
+void Polygon::fixCCW(std::vector<Point> &p) {
     if(isClockwise(p)){
         std::reverse(this->points.begin(), this->points.end());
         this->area = -this->area;
     }
 }
 
-std::vector<Point> Polygon::getPoints(std::vector<Point> p) {
+std::vector<Point> Polygon::getPoints(std::vector<Point> &p) {
     std::vector<Point> returnPoints;
 
     for (int i = 0; i < this->points.size(); ++i) {
@@ -309,7 +312,7 @@ bool Polygon::isSelfIntersecting(std::vector<Point>& points) {
     return false;
 }
 
-bool Polygon::containsEdge(IndexSegment s) {
+bool Polygon::containsEdge(IndexSegment &s) {
     int n = this->numberOfSides();
 
     int i = utilities::indexOf(this->points, s.getFirst());
@@ -318,7 +321,7 @@ bool Polygon::containsEdge(IndexSegment s) {
     return i!=-1 && j!=-1 && (std::abs(i-j)==1 || std::abs(i-j)==(n-1));
 }
 
-Point Polygon::getAverage(std::vector<Point> p) {
+Point Polygon::getAverage(std::vector<Point> &p) {
     double x = 0;
     double y = 0;
 

@@ -5,6 +5,7 @@
 #include <delynoi/models/polygon/Triangle.h>
 #include <delynoi/voronoi/structures/DelaunayInfo.h>
 #include <delynoi/models/Mesh.h>
+#include <chrono>
 
 /*
  * Class in charge of using the Delaunay triangulation to compute the Voronoi diagram
@@ -22,16 +23,16 @@ private:
      * @param edge index of the edge from which we entered triangle
      * @return circumcenter
      */
-    Point getCircumcenter(DelaunayInfo del, int triangle, int edge);
+    int getCircumcenter(DelaunayInfo& del, int triangle, int edge);
 public:
     /*
      * Constructor
      */
-    explicit DelaunayToVoronoi(DelaunayInfo del);
+    explicit DelaunayToVoronoi(DelaunayInfo& del);
     /*
      * @return voronoi diagram in Mesh form
      */
-    Mesh<Polygon> getMesh();
+    Mesh<Polygon>& getMesh();
 };
 
 #endif

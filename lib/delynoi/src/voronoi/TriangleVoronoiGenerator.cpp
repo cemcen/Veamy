@@ -10,11 +10,11 @@ TriangleVoronoiGenerator::TriangleVoronoiGenerator(std::vector<Point> &point_lis
     this->voronoi = DelaunayToVoronoi(delaunay).getMesh();
 }
 
-Mesh<Polygon> TriangleVoronoiGenerator::getMesh() {
+Mesh<Polygon>& TriangleVoronoiGenerator::getMesh() {
     return this->voronoi;
 }
 
-Mesh<Polygon> TriangleVoronoiGenerator::getTriangulation() {
+Mesh<Polygon>& TriangleVoronoiGenerator::getTriangulation() {
     return this->delaunay;
 }
 

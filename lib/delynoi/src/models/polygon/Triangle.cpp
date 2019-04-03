@@ -7,8 +7,23 @@ Triangle::Triangle(std::vector<int> points, std::vector<Point>& p) : Polygon(poi
     this->circumcenter = this->calculateCircumcenter(p);
 }
 
+Triangle::Triangle(std::vector<int> points, std::vector<Point>& p, UniqueList<Point>& circumcenters) : Polygon(points, p) {
+    this->circumcenter = this->calculateCircumcenter(p);
+    this->circumcenterIndex = circumcenters.push_back(this->circumcenter);
+}
+
+Triangle::Triangle(std::vector<int> points, std::vector<Point> &p, std::vector<Point> &circumcenters) : Polygon(points, p){
+    this->circumcenter = this->calculateCircumcenter(p);
+    this->circumcenterIndex = circumcenters.size();
+    circumcenters.push_back(this->circumcenter);
+}
+
 Point Triangle::getCircumcenter() {
     return this->circumcenter;
+}
+
+int Triangle::getCircumcenterIndex() {
+    return this->circumcenterIndex;
 }
 
 Point Triangle::calculateCircumcenter(std::vector<Point>& p){
@@ -24,7 +39,7 @@ Point Triangle::calculateCircumcenter(std::vector<Point>& p){
     return Point(uX,uY);
 }
 
-int Triangle::nextEdge(int center, EdgeData edge, std::unordered_map<Key, int, KeyHasher> edgeMap) {
+int Triangle::nextEdge(int center, EdgeData edge, std::unordered_map<Key, int, KeyHasher>& edgeMap) {
     Key nextEdge = Key(center, thirdPoint(edge));
 
     return edgeMap[nextEdge];

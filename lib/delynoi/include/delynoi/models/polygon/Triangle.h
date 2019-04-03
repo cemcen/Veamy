@@ -16,6 +16,8 @@ private:
      */
     Point circumcenter;
 
+    int circumcenterIndex;
+
     /*
      * Calculates the circumcenter
      * @param p mesh points
@@ -33,10 +35,17 @@ public:
      */
     Triangle(std::vector<int> points, std::vector<Point>& p);
 
+
+    Triangle(std::vector<int> points, std::vector<Point>& p, UniqueList<Point>& circumcenters);
+
+    Triangle(std::vector<int> points, std::vector<Point>& p, std::vector<Point>& circumcenters);
+
     /*
      * @return circumcenter of the triangle
      */
     Point getCircumcenter();
+
+    int getCircumcenterIndex();
 
     /*
      * Given an EdgeData instance and a point, determines the next edge that is to be used in the computation of the
@@ -46,7 +55,7 @@ public:
      * @param edgeMap map with the information relating edge endpoints and EdgeData indexes
      * @return index of the next EdgeData for the Voronoi diagram computation
      */
-    int nextEdge(int center, EdgeData edge, std::unordered_map<Key, int, KeyHasher> edgeMap);
+    int nextEdge(int center, EdgeData edge, std::unordered_map<Key, int, KeyHasher>& edgeMap);
 
     /*
      * Given an edge, it determines the point of the triangle not contained in it

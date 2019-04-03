@@ -10,8 +10,13 @@
 struct Key {
     int first;
     int second;
+    std::size_t hash;
 
-    Key(int f, int s){first=f; second=s;}
+    Key(int f, int s){
+        first=f;
+        second=s;
+        hash=utilities::hash32(first) + utilities::hash32(second);
+    }
 
     bool operator==(const Key &other) const{
         return first == other.first && second == other.second ||
@@ -27,7 +32,7 @@ struct KeyHasher {
         using std::size_t;
         using std::hash;
 
-        return utilities::hash32(k.first) + utilities::hash32(k.second);
+        return k.hash;
     }
 };
 
@@ -40,7 +45,7 @@ struct SegmentHasher {
         using std::size_t;
         using std::hash;
 
-        return utilities::hash32(k.getFirst()) + utilities::hash32(k.getSecond());
+        return k.hash;
     }
 };
 

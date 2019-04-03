@@ -25,7 +25,7 @@ namespace geometry_functions{
      * @param seg1 seg2 segments to test
      * @return are the segments collinear or not
      */
-    extern bool collinear(PointSegment seg1, PointSegment seg2);
+    extern bool collinear(PointSegment& seg1, PointSegment& seg2);
 
     /* Calculates the area of a triangle defined by three points
      * @param p1 p2 origin points that define an area
@@ -38,13 +38,13 @@ namespace geometry_functions{
      * @param index indexes of the points defining the polygon
      * @return area of the polygon
      */
-    extern double area(std::vector<Point> points, std::vector<int> index);
+    extern double area(std::vector<Point>& points, std::vector<int> index);
 
     /* Computes the area of a polygon defined by a set of points
      * @param points points that define the polygon
      * @return area of the polygon
      */
-    extern double area(std::vector<Point> points);
+    extern double area(std::vector<Point>& points);
 }
 
 #endif

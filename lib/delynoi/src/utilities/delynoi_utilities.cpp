@@ -35,7 +35,7 @@ namespace delynoi_utilities {
         int steps = DelynoiConfig::instance()->getDiscretizationGrade();
         double delta = (endAngle - initAngle)/steps;
 
-        for(int i=0; i<=steps;i++){
+        for(int i=0; i<steps;i++){
             double angle = initAngle + delta*i;
 
             double x = center.getX() + radius*std::cos(utilities::radian(angle));
@@ -49,10 +49,11 @@ namespace delynoi_utilities {
     }
 
     void checkTriangleIntegrity(std::vector<int>& trianglePoints){
-        if(trianglePoints.size()<3 || trianglePoints[0]==trianglePoints[1] ||
-                trianglePoints[1]==trianglePoints[2] || trianglePoints[0]==trianglePoints[2]){
-            throw std::runtime_error("Error generating the mesh. Please try with a different combination of seed points");
+        if(trianglePoints.size() != 3 || trianglePoints[0] == trianglePoints[1] || trianglePoints[1] == trianglePoints[2]
+                || trianglePoints[2] == trianglePoints[0]){
+            throw std::invalid_argument("Invalid triangle detected. Stopping meshing.");
         }
+
+
     }
 }
-

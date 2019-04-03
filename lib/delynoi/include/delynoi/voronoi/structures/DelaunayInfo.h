@@ -45,11 +45,15 @@ struct DelaunayInfo{
      */
     std::unordered_map<Key, int, KeyHasher> edgeMap;
 
+
+    UniqueList<Point> circumcenters;
+
     /*
      * Constructor
      */
-    DelaunayInfo( std::vector<Triangle> t, std::vector<Point> p, SegmentMap* e, std::vector<PointData> pD,
-                  UniqueList<int> rP, std::vector<EdgeData> eD, std::unordered_map<Key, int, KeyHasher> eM){
+    DelaunayInfo(std::vector<Triangle>& t, std::vector<Point>& p, SegmentMap* e, std::vector<PointData>& pD,
+                 UniqueList<int>& rP, std::vector<EdgeData>& eD, std::unordered_map<Key, int, KeyHasher>& eM,
+                 UniqueList<Point>& c){
         triangles = t;
         meshPoints = p;
         delaunayEdges = e;
@@ -57,6 +61,7 @@ struct DelaunayInfo{
         realPoints = rP;
         edges = eD;
         edgeMap = eM;
+        circumcenters = c;
     }
 };
 

@@ -10,6 +10,11 @@
 class IndexSegment: public Segment<int>{
 public:
     /*
+     *
+     */
+    std::size_t hash = 0;
+
+    /*
      * Constructor. Creates an empty segment.
      */
     IndexSegment();

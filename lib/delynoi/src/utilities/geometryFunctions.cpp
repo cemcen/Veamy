@@ -26,7 +26,7 @@ namespace geometry_functions{
         return area2(p1,p2,origin)/2.0;
     }
 
-    double area(std::vector<Point> points, std::vector<int> index){
+    double area(std::vector<Point>& points, std::vector<int> index){
         double area = 0.0;
         int n = (int) index.size();
 
@@ -38,7 +38,7 @@ namespace geometry_functions{
         return area;
     }
 
-    double area(std::vector<Point> points){
+    double area(std::vector<Point>& points){
         double area = 0.0;
         int n = (int) points.size();
 

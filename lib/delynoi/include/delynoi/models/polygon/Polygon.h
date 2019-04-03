@@ -78,17 +78,17 @@ public:
     /*
      * @return polygon diameter
      */
-    double getDiameter();
+    double getDiameter(std::vector<Point>& points);
 
     /*
      * @return polygon area
      */
-    double getArea();
+    double getArea(std::vector<Point>& points);
 
     /*
      * @return polygon centroid
      */
-    Point getCentroid();
+    Point getCentroid(std::vector<Point>& points);
 
     /* Gets the polygon segments and set them in the given vector
      * @param segments vector that will contain the segments
@@ -109,7 +109,7 @@ public:
      * @param p mesh points
      * @return polygon point list (Point instances, not their indexes)
      */
-    std::vector<Point> getPoints(std::vector<Point> p);
+    std::vector<Point> getPoints(std::vector<Point> &p);
 
     /*
      * @return number of sides of the polygon
@@ -165,7 +165,7 @@ public:
      * @param s segment to check
      * @return if the segment is part of the polygon
      */
-    bool containsEdge(IndexSegment s);
+    bool containsEdge(IndexSegment &s);
 
     /* Checks if the polygon is convex
      * @param p mesh points
@@ -194,13 +194,13 @@ public:
     /*
      * Hash value of the polygon (calculated using the indexes of the points)
      */
-    std::size_t hash;
+    std::size_t hash = 0;
 
     /* Checks if the polygon is in counter-clockwise or clockwise, and fixes the order of the point if the second is the
      * case.
      * @param p mesh points
      */
-    void fixCCW(std::vector<Point> p);
+    void fixCCW(std::vector<Point> &p);
 
     /* Finds the segment of the polygon that contains a given point
      * @param p mesh points
@@ -213,7 +213,7 @@ public:
      * @param p mesh points
      * @return average point
      */
-    Point getAverage(std::vector<Point> p);
+    Point getAverage(std::vector<Point> &p);
 
     /* Computes the maximum distance between any two vertexes of the polygon
      * @param points mesh points

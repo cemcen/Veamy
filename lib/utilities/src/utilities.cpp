@@ -13,7 +13,6 @@
 #include <fstream>
 #include <regex>
 
-
 namespace utilities {
     std::string toStringWithPrecision(double d, int precision){
         std::stringstream sstream;
@@ -36,7 +35,7 @@ namespace utilities {
         #if defined(_WIN64) || defined(_WIN32)
                 std::string path = std::getenv("USERPROFILE");
                 return  path + "\\";
-        #elif defined(__linux__)  || defined(__APPLE__)
+        #elif defined(__linux__)
                 std::string path = std::getenv("HOME");
                 return path + "/";
         #endif
@@ -83,7 +82,7 @@ namespace utilities {
     }
 
     std::vector<std::string> splitBySpaces(std::string s) {
-        return utilities::split(s, std::regex("\\s+"));
+        return split(s, std::regex("\\s+"));
     }
 
     std::ifstream openFile(std::string fileName){
@@ -91,7 +90,7 @@ namespace utilities {
         std::ifstream infile(completeName);
 
         if(!infile.good()){
-            throw std::runtime_error("File not found");
+            throw std::runtime_error("Could not open file. Please check path.");
         }
 
         return infile;

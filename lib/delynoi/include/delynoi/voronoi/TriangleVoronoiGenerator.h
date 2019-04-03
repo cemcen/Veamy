@@ -25,12 +25,12 @@ public:
     /*
      * @return voronoi diagram
      */
-    Mesh<Polygon> getMesh();
+    Mesh<Polygon>& getMesh();
 
     /*
      * @return delaunay diagram
      */
-    Mesh<Polygon> getTriangulation();
+    Mesh<Polygon>& getTriangulation();
 };
 
 #endif

@@ -14,7 +14,7 @@ namespace convex {
         }
     } comparator;
 
-    void convexHull(std::vector<Point> points, std::vector<Point>& upper, std::vector<Point>& lower){
+    void convexHull(std::vector<Point>& points, std::vector<Point>& upper, std::vector<Point>& lower){
         std::sort(points.begin(), points.end(), comparator);
         for(int i=0;i<points.size();i++){
 
@@ -31,7 +31,7 @@ namespace convex {
         }
     }
 
-    std::vector<std::pair<Point,Point> > rotatingCalipers(std::vector<Point> points) {
+    std::vector<std::pair<Point,Point> > rotatingCalipers(std::vector<Point>& points) {
         std::vector<Point> u;
         std::vector<Point> l;
         convexHull(points,u,l);
