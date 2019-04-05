@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <delynoi/models/basic/Point.h>
+#include <veamy/lib/Eigen/Dense>
 
 /*
  * Namespace which contain functions related to the gaussian quadratures
@@ -48,7 +49,7 @@ namespace gauss_quadrature{
     void triangle_rules(Eigen::MatrixXd &points, T &poly, std::vector<double> &weights, int order,
                                std::vector<Point> &meshPoints) {
         Eigen::MatrixXd triangle = gauss_quadrature::trianglePoints(poly, meshPoints);
-        double area = poly.getArea();
+        double area = poly.getArea(meshPoints);
 
         if (order == 1) {
             Eigen::Matrix<double, 1, 3> t;

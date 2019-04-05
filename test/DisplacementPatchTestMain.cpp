@@ -58,7 +58,7 @@ int main(){
     std::cout << "done" << std::endl;
 
     std::cout << "+ Generating polygonal mesh ... ";
-    rectangle1x1.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 6, 6);
+    rectangle1x1.generateSeedPoints(PointGenerator(functions::constantAlternating(), functions::constant()), 2, 2);
     std::vector<Point> seeds = rectangle1x1.getSeedPoints();
     TriangleVoronoiGenerator meshGenerator (seeds, rectangle1x1);
     Mesh<Polygon> mesh = meshGenerator.getMesh();

@@ -20,7 +20,7 @@ namespace elasticity_functions{
         int n = (int) polygonPoints.size();
         Point average = p.getAverage(points);
 
-        double area = p.getArea();
+        double area = p.getArea(points);
 
         Eigen::MatrixXd Wc;
         Wc = Eigen::MatrixXd::Zero(2*n, 3);

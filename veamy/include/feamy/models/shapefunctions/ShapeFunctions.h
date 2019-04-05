@@ -27,7 +27,7 @@ public:
     /*
      * Constructor
      */
-    ShapeFunctions(Triangle elem, std::vector<Point> meshPoints);
+    ShapeFunctions(Triangle elem, std::vector<Point>& meshPoints);
 
     /* Evaluates the shape functions on a point (in isoparametric coordinates)
      * @param point point where the functions will be evaluated

@@ -81,8 +81,7 @@ double Polygon::calculateArea(std::vector<Point>& p) {
 
 double Polygon::getArea(std::vector<Point>& points){
     if(this->area == -1){
-        std::vector<Point> thisPoints = this->getPoints(points);
-        this->calculateArea(thisPoints);
+        this->area = this->calculateArea(points);
     }
 
     return this->area;
@@ -272,7 +271,7 @@ void Polygon::calculateHash() {
 void Polygon::fixCCW(std::vector<Point> &p) {
     if(isClockwise(p)){
         std::reverse(this->points.begin(), this->points.end());
-        this->area = -this->area;
+        this->area = -1;
     }
 }
 

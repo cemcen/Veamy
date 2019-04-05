@@ -1,7 +1,7 @@
 #include <veamy/physics/bodyforces/VeamyBodyForceVector.h>
 
 
-VeamyBodyForceVector::VeamyBodyForceVector(Polygon p, UniqueList<Point> points) {
+VeamyBodyForceVector::VeamyBodyForceVector(Polygon p, UniqueList<Point>& points) {
     this->polygon = p;
     this->points = points.getList();
 }
@@ -9,7 +9,7 @@ VeamyBodyForceVector::VeamyBodyForceVector(Polygon p, UniqueList<Point> points) 
 Eigen::VectorXd VeamyBodyForceVector::computeForceVector(BodyForce *f) {
     int n = this->polygon.numberOfSides();
     std::vector<int> polygonPoints = this->polygon.getPoints();
-    double area = this->polygon.getArea();
+    double area = this->polygon.getArea(this->points);
 
     int dofs = f->numberOfComponents();
     std::vector<FunctionComputable*> components = f->getComponents();

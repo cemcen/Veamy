@@ -141,14 +141,13 @@ void TriangleDelaunayGenerator::callTriangle(std::vector<Point> &point_list, cha
     free(out.edgemarkerlist);
 }
 
-Mesh<Triangle>& TriangleDelaunayGenerator::getConformingDelaunayTriangulation()  {
+Mesh<Triangle> TriangleDelaunayGenerator::getConformingDelaunayTriangulation()  {
     if(!this->empty){
         char switches[] = "pzejDQ";
         callTriangle(seedPoints, switches);
     }
 
-    Mesh<Triangle> mesh = initializeMesh<Triangle>();
-    return mesh;
+    return initializeMesh<Triangle>();
 }
 
 void

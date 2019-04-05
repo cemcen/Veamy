@@ -23,7 +23,7 @@ public:
     /*
      * Constructor
      */
-    VeamyBodyForceVector(Polygon p, UniqueList<Point> points);
+    VeamyBodyForceVector(Polygon p, UniqueList<Point>& points);
 
     /*
      * Computes the elemental body force vector for VEM given an applied body force

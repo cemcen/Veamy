@@ -62,7 +62,7 @@ public:
      * segments, are Delaunay through the inclusion of additional points)
      * @return the conforming Delaunay triangulation
      */
-    Mesh<Triangle>& getConformingDelaunayTriangulation();
+    Mesh<Triangle> getConformingDelaunayTriangulation();
 
     /* Returns the constrained Delaunay triangulation (triangles next to constrained segments are not necessarily
      * delaunay)

@@ -18,7 +18,7 @@ namespace poisson_functions{
     Eigen::MatrixXd WMatrix(T &p, std::vector<Point> &points){
         std::vector<int> polygonPoints = p.getPoints();
         int n = (int) polygonPoints.size();
-        double area = p.getArea();
+        double area = p.getArea(points);
 
         Eigen::MatrixXd W;
         W = Eigen::MatrixXd::Zero(n, 2);

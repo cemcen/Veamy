@@ -8,10 +8,14 @@ ElasticityVeamyElement::ElasticityVeamyElement(LinearElasticityConditions *condi
 
 void ElasticityVeamyElement::computeK(DOFS &d, UniqueList<Point> &points) {
     std::vector<int> polygonPoints = p.getPoints();
+    std::vector<Point> meshPoints = points.getList();
+
     int n = (int) polygonPoints.size();
     Point average = p.getAverage(points.getList());
 
-    double area = p.getArea();
+    double area = p.getArea(meshPoints);
+
+    std::cout << area << std::endl;
 
     Eigen::MatrixXd Hr;
     Eigen::MatrixXd Wr;
