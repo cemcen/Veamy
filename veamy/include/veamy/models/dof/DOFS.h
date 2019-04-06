@@ -45,7 +45,12 @@ public:
     /*
      *@return list with all DOF instances
      */
-    UniqueList<DOF> getDOFS();
+    UniqueList<DOF> getDOFS() const;
+
+    /*
+     *@return a reference to the list with all DOF instances
+     */
+    UniqueList<DOF>& getDOFS();
 
     /*
      * @return number of DOF contained

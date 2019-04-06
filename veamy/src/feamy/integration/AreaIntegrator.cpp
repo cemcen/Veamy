@@ -6,7 +6,7 @@
 #include <veamy/postprocess/utilities/norm_utilities.h>
 
 template <typename T, typename S>
-void AreaIntegrator<T,S>::integrate(S& result, int nGauss, T element, std::vector<Point> points,
+void AreaIntegrator<T,S>::integrate(S& result, int nGauss, T element, std::vector<Point>& points,
                                           IntegrableFunction<S> *integrable) {
     std::vector<VeamyTriangle> triangles = element.triangulate(points);
 
@@ -19,7 +19,9 @@ void AreaIntegrator<T,S>::integrate(S& result, int nGauss, T element, std::vecto
 
         for (int i = 0; i < weights.size(); ++i) {
             Point point = Point(gaussPoints(i,0), gaussPoints(i,1));
-            result += weights[i] * integrable->apply(point, t);            
+
+            S s = integrable->apply(point, t);
+            result += weights[i] * s;
         }
     }
 }

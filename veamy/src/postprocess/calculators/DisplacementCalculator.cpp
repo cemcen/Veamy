@@ -2,7 +2,7 @@
 #include <veamy/models/dof/DOFS.h>
 
 template <typename T>
-DisplacementCalculator<T>::DisplacementCalculator(DOFS d, Eigen::VectorXd u) {
+DisplacementCalculator<T>::DisplacementCalculator(DOFS &d, Eigen::VectorXd &u) {
     this->dofs = d;
     this->nodalValues = u;
 }

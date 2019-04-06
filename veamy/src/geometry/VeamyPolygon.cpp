@@ -3,7 +3,7 @@
 
 VeamyPolygon::VeamyPolygon(Polygon p) : Polygon(p){}
 
-std::vector<VeamyTriangle> VeamyPolygon::triangulate(std::vector<Point> points) {
+std::vector<VeamyTriangle> VeamyPolygon::triangulate(std::vector<Point> &points) {
     std::vector<VeamyTriangle> veamyTriangles;
     std::vector<Triangle> triangles = EarTriangulationGenerator().triangulate(*this, points);
 

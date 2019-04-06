@@ -1,6 +1,6 @@
 #include <feamy/models/shapefunctions/Tri3ShapeFunctions.h>
 
-Tri3ShapeFunctions::Tri3ShapeFunctions(Triangle t, std::vector<Point> points) : ShapeFunctions(t, points){}
+Tri3ShapeFunctions::Tri3ShapeFunctions(Triangle t, std::vector<Point>& points) : ShapeFunctions(t, points){}
 
 std::vector<double> Tri3ShapeFunctions::evaluateShapeFunction(Point point) {
     double N1 = point.getX();

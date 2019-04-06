@@ -25,7 +25,7 @@ public:
     /*
      * Constructor
      */
-    L2NormCalculator(DisplacementValue* value, Eigen::VectorXd u, DOFS d);
+    L2NormCalculator(DisplacementValue* value, Eigen::VectorXd& u, DOFS& d);
 
     /* Sets the calculators for this norm
      * @param integrator Calculator to use

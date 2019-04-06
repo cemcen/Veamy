@@ -62,7 +62,7 @@ public:
      * @param bodyForceVector implementation of a body force vector calculator
      * @param tractionVector implementation of a traction vector calculator
      */
-    void computeF(DOFS d, UniqueList<Point> points, Conditions *conditions, BodyForceVector *bodyForceVector,
+    void computeF(DOFS d, UniqueList<Point> &points, Conditions *conditions, BodyForceVector *bodyForceVector,
                   TractionVector *tractionVector);
 
     /* Computes the elemental load vector

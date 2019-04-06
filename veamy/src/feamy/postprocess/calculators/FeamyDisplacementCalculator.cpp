@@ -1,8 +1,8 @@
 #include <feamy/postprocess/calculators/FeamyDisplacementCalculator.h>
 
 template <typename T>
-FeamyDisplacementCalculator<T>::FeamyDisplacementCalculator(DOFS d, Eigen::VectorXd u,
-                                                            std::vector<FeamyElement *> elements) :
+FeamyDisplacementCalculator<T>::FeamyDisplacementCalculator(DOFS& d, Eigen::VectorXd& u,
+                                                            std::vector<FeamyElement *>& elements) :
         DisplacementCalculator<T>(d,u){
     this->elements = elements;
 }

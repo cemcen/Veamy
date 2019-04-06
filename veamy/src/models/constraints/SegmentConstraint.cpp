@@ -10,18 +10,18 @@ SegmentConstraint::SegmentConstraint(std::vector<IndexSegment> s, ConstraintValu
     this->constraints.push_list(s);
 }
 
-SegmentConstraint::SegmentConstraint(PointSegment s, std::vector<Point> points, ConstraintValue *value) :
+SegmentConstraint::SegmentConstraint(PointSegment &s, std::vector<Point> &points, ConstraintValue *value) :
         Constraint(value) {
     IndexSegment int_segment = fromPointToInt(s, points);
     this->constraints.push_back(int_segment);
 }
 
-SegmentConstraint::SegmentConstraint(PointSegment s, UniqueList<Point> points, ConstraintValue *value) : Constraint(value) {
+SegmentConstraint::SegmentConstraint(PointSegment &s, UniqueList<Point> &points, ConstraintValue *value) : Constraint(value) {
     IndexSegment int_segment = fromPointToInt(s, points.getList());
     this->constraints.push_back(int_segment);
 }
 
-SegmentConstraint::SegmentConstraint(std::vector<PointSegment> s, std::vector<Point> points, ConstraintValue *value) :
+SegmentConstraint::SegmentConstraint(std::vector<PointSegment> &s, std::vector<Point> &points, ConstraintValue *value) :
         Constraint(value) {
     for(int i = 0; i<s.size(); i++){
         IndexSegment int_segment = fromPointToInt(s[i], points);
@@ -29,7 +29,7 @@ SegmentConstraint::SegmentConstraint(std::vector<PointSegment> s, std::vector<Po
     }
 }
 
-SegmentConstraint::SegmentConstraint(std::vector<PointSegment> s, UniqueList<Point> points, ConstraintValue *value) :
+SegmentConstraint::SegmentConstraint(std::vector<PointSegment> &s, UniqueList<Point> &points, ConstraintValue *value) :
         Constraint(value) {
     for(int i = 0; i<s.size(); i++){
         IndexSegment int_segment = fromPointToInt(s[i], points.getList());

@@ -6,7 +6,7 @@ Feamer::Feamer(ProblemDiscretization<Triangle,Feamer> *problem) :
     this->problem = problem;
 }
 
-void Feamer::initProblem(Mesh<Triangle> m, FeamyElementConstructor *constructor) {
+void Feamer::initProblem(Mesh<Triangle>& m, FeamyElementConstructor *constructor) {
     UniqueList<Point>& meshPoints = m.getPoints();
     this->points.push_list(meshPoints);
 
@@ -27,7 +27,7 @@ Mesh<Triangle> Feamer::initProblemFromFile(std::string fileName, FeamyElementCon
     return mesh;
 }
 
-NormResult Feamer::computeErrorNorm(NormCalculator<Triangle>* calculator, Mesh<Triangle> mesh) {
+NormResult Feamer::computeErrorNorm(NormCalculator<Triangle>* calculator, Mesh<Triangle>& mesh) {
     return problem->computeErrorNorm(calculator, mesh, this);
 }
 

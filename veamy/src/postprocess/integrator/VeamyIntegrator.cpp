@@ -12,7 +12,7 @@ VeamyIntegrator<T>::VeamyIntegrator(Computable<T>* computable) {
 }
 
 template <typename T>
-double VeamyIntegrator<T>::getIntegral(T poly, int polyIndex, std::vector<Point> points) {
+double VeamyIntegrator<T>::getIntegral(T poly, int polyIndex, std::vector<Point>& points) {
     this->computable->setPolygonIndex(polyIndex);
 
     FeamyConfig* config = FeamyConfig::instance();

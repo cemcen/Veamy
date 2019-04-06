@@ -3,7 +3,7 @@
 #include <feamy/problem/linear_elasticity/LinearElasticityBodyForceIntegrable.h>
 #include <veamy/geometry/VeamyTriangle.h>
 
-FeamyBodyForceVector::FeamyBodyForceVector(Triangle t, UniqueList<Point> points, ShapeFunctions *N, int nGauss,
+FeamyBodyForceVector::FeamyBodyForceVector(Triangle t, UniqueList<Point>& points, ShapeFunctions *N, int nGauss,
                                            BodyForceIntegrable *integrable) {
     this->t = t;
     this->points = points.getList();

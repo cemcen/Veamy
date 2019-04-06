@@ -2,7 +2,7 @@
 #include <veamy/models/Edge.h>
 
 namespace norm_utilities{
-    Eigen::VectorXd getAverage(Eigen::VectorXd u, int n_dofs){
+    Eigen::VectorXd getAverage(Eigen::VectorXd &u, int n_dofs){
         Eigen::VectorXd uBar;
         uBar = Eigen::VectorXd::Zero(n_dofs);
 

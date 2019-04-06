@@ -41,7 +41,7 @@ public:
     * @param mesh mesh in which the error will be computed
     * @param solver solver that solved the problem
     */
-    NormResult computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon> mesh, Veamer* veamer);
+    NormResult computeErrorNorm(NormCalculator<Polygon> *calculator, Mesh<Polygon>& mesh, Veamer* veamer);
 };
 
 #endif

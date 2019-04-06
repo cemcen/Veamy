@@ -28,7 +28,7 @@ public:
     /*
      * Constructor
      */
-    StrainCalculator(DOFS& d, Eigen::VectorXd u, std::vector<Point>& points){
+    StrainCalculator(DOFS &d, Eigen::VectorXd &u, std::vector<Point> &points){
         this->d = d;
         this->u = u;
         this->points = points;

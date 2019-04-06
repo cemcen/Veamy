@@ -11,7 +11,7 @@ public:
     /*
      * Constructor
      */
-    Tri3ShapeFunctions(Triangle t, std::vector<Point> points);
+    Tri3ShapeFunctions(Triangle t, std::vector<Point>& points);
 
     /* Evaluates the shape functions on a point (in isoparametric coordinates)
      * @param point point where the functions will be evaluated

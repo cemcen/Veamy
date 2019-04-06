@@ -63,13 +63,13 @@ public:
      * @param c new SegmentConstraint
      * @param p list of mesh points
      */
-    void addConstraint(SegmentConstraint c, std::vector<Point> p);
+    void addConstraint(SegmentConstraint c, std::vector<Point> &p);
 
     /* Adds a new SegmentConstraint to this Constraints
      * @param c new SegmentConstraint
      * @param p unique list of mesh points
      */
-    void addConstraint(SegmentConstraint c, UniqueList<Point> p);
+    void addConstraint(SegmentConstraint c, UniqueList<Point> &p);
 
     /* Adds a new PointConstraint to this Constraints
      * @param new PointConstraint
@@ -81,7 +81,7 @@ public:
      * @param p segment to check
      * @return is p constrained or not
      */
-    isConstrainedInfo isConstrainedBySegment(std::vector<Point> points, IndexSegment p);
+    isConstrainedInfo isConstrainedBySegment(std::vector<Point> &points, IndexSegment p);
 
     /* Checks if a point is constrained
      * @param p point to check
@@ -107,7 +107,7 @@ public:
      * @param pair pair of segments containing the DOF
      * @param dof_point index of the points associated to the DOF
      */
-    void addConstrainedDOF(std::vector<Point> points, int DOF_index, int axis, SegmentPair pair,
+    void addConstrainedDOF(std::vector<Point> &points, int DOF_index, int axis, SegmentPair pair,
                            int dof_point);
 
     /* Adds a new DOF, checking if it is constrained due to SegmentConstraints
@@ -117,7 +117,7 @@ public:
      * @param s segment containing the DOF
      * @return if the DOF is constrained
      */
-    bool addConstrainedDOFBySegment(std::vector<Point> points, int DOF_index, int axis, IndexSegment s);
+    bool addConstrainedDOFBySegment(std::vector<Point> &points, int DOF_index, int axis, IndexSegment s);
 
     /* Adds a new DOF, checking if it is constrained due to PointConstraints
      * @param DOF_index index of the DOF
@@ -132,7 +132,7 @@ public:
      * @param DOF_index index of the DOF
      * @param axis axis of the DOF
      */
-    void checkIfContainedInConstraint(Point p, std::vector<Point> points, int DOF_index, int axis);
+    void checkIfContainedInConstraint(Point p, std::vector<Point> &points, int DOF_index, int axis);
 
     /*
      * @return the map with the constrained segments

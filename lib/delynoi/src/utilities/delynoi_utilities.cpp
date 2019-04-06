@@ -35,7 +35,7 @@ namespace delynoi_utilities {
         int steps = DelynoiConfig::instance()->getDiscretizationGrade();
         double delta = (endAngle - initAngle)/steps;
 
-        for(int i=0; i<steps;i++){
+        for(int i=0; i<=steps;i++){
             double angle = initAngle + delta*i;
 
             double x = center.getX() + radius*std::cos(utilities::radian(angle));

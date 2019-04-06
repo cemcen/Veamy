@@ -1,7 +1,7 @@
 #include <veamy/postprocess/calculators/VeamyPoissonStrainCalculator.h>
 
 template <typename T>
-VeamyPoissonStrainCalculator<T>::VeamyPoissonStrainCalculator(DOFS &d, Eigen::VectorXd u, std::vector<Point> &points)
+VeamyPoissonStrainCalculator<T>::VeamyPoissonStrainCalculator(DOFS &d, Eigen::VectorXd& u, std::vector<Point> &points)
         : StrainCalculator<T>(d, u, points) {}
 
 template <typename T>

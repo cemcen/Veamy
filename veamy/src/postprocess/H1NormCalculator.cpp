@@ -2,7 +2,7 @@
 
 template <typename T>
 H1NormCalculator<T>::H1NormCalculator(StrainValue *strain, StressValue *stress,
-                                                          Eigen::VectorXd u, DOFS d) : NormCalculator<T>(u, d) {
+                                      Eigen::VectorXd &u, DOFS &d) : NormCalculator<T>(u, d) {
     this->strainValue = strain;
     this->stressValue = stress;
 
@@ -11,8 +11,8 @@ H1NormCalculator<T>::H1NormCalculator(StrainValue *strain, StressValue *stress,
 }
 
 template <typename T>
-H1NormCalculator<T>::H1NormCalculator(StrainValue *strain, Eigen::VectorXd u,
-                                                       DOFS d) : NormCalculator<T>(u, d) {
+H1NormCalculator<T>::H1NormCalculator(StrainValue *strain, Eigen::VectorXd &u,
+                                      DOFS &d) : NormCalculator<T>(u, d) {
     this->strainValue = strain;
 
     this->numComputable = new StrainDifferenceComputable<T>(this->strainValue);

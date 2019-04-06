@@ -42,12 +42,12 @@ public:
     /*
      * Constructor
      */
-    H1NormCalculator(StrainValue *strain, StressValue *stress, Eigen::VectorXd u, DOFS d);
+    H1NormCalculator(StrainValue *strain, StressValue *stress, Eigen::VectorXd &u, DOFS &d);
 
     /*
     * Constructor
     */
-    H1NormCalculator(StrainValue *strain, Eigen::VectorXd u, DOFS d);
+    H1NormCalculator(StrainValue *strain, Eigen::VectorXd &u, DOFS &d);
 
     /* Sets the calculators for this norm
      * @param integrator Calculator to use

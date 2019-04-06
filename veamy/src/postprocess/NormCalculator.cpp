@@ -8,7 +8,7 @@ NormCalculator<T>::NormCalculator(Eigen::VectorXd disp, DOFS dofs) {
 }
 
 template <typename T>
-NormResult NormCalculator<T>::getNorm(Mesh<T> mesh) {
+NormResult NormCalculator<T>::getNorm(Mesh<T> &mesh) {
     double numerator = 0, denominator = 0;
     std::vector<T> meshElements = mesh.getPolygons();
     UniqueList<Point> points = mesh.getPoints();

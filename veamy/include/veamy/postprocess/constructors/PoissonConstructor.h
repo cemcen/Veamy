@@ -12,7 +12,7 @@ public:
     /*
      * Constructor
      */
-    PoissonConstructor(DOFS d, Eigen::VectorXd u);
+    PoissonConstructor(DOFS &d, const Eigen::VectorXd &u);
 
     /* Gets the corresponding DisplacementCalculator to poisson
      * @param points mesh points

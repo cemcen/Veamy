@@ -26,7 +26,7 @@ public:
     /*
      * Constructor
      */
-    VeamyTractionVector(Polygon p, UniqueList<Point> points, NaturalConstraints natural,
+    VeamyTractionVector(Polygon p, UniqueList<Point> &points, NaturalConstraints &natural,
                         int n_dofs);
 
     /* Computes the traction load vector related to a segment of an element

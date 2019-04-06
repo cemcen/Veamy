@@ -90,7 +90,7 @@ double Polygon::getArea(std::vector<Point>& points){
 double Polygon::getDiameter(std::vector<Point>& points) {
     if(this->diameter < 0){
         std::vector<Point> thisPoints = this->getPoints(points);
-        this->calculateDiameter(thisPoints);
+        this->diameter = this->calculateDiameter(thisPoints);
     }
 
     return this->diameter;
@@ -98,8 +98,7 @@ double Polygon::getDiameter(std::vector<Point>& points) {
 
 Point Polygon::getCentroid(std::vector<Point>& points) {
     if(!this->centroid.isValid()){
-        std::vector<Point> thisPoints = this->getPoints(points);
-        this->calculateCentroid(thisPoints);
+        this->centroid = this->calculateCentroid(points);
     }
 
     return this->centroid;

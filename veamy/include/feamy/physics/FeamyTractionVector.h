@@ -44,7 +44,7 @@ public:
     /*
      * Constructor
      */
-    FeamyTractionVector(Triangle t, UniqueList<Point> points, ShapeFunctions *N, NaturalConstraints natural, int nGauss,
+    FeamyTractionVector(Triangle t, UniqueList<Point>& points, ShapeFunctions *N, NaturalConstraints natural, int nGauss,
                         int n_dofs, BoundaryVectorIntegrable *integrable);
 
     /* Computes the traction load vector related to a segment of an element

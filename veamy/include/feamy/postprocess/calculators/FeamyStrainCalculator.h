@@ -21,7 +21,7 @@ public:
     /*
      * Constructor
      */
-    FeamyStrainCalculator(std::vector<Point> &points, std::vector<FeamyElement *> elements, Eigen::VectorXd u, DOFS &d);
+    FeamyStrainCalculator(std::vector<Point> &points, std::vector<FeamyElement *>& elements, Eigen::VectorXd& u, DOFS &d);
 
     /* Computes the approximate strain for a given point
      * @param x y coordinates of the point

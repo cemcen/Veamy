@@ -14,12 +14,12 @@ VeamyTriangle::VeamyTriangle(int p1, int p2, int p3) {
     this->points.push_back(p3);
 }
 
-std::vector<VeamyTriangle> VeamyTriangle::triangulate(std::vector<Point> points) {
+std::vector<VeamyTriangle> VeamyTriangle::triangulate(std::vector<Point> &points) {
     std::vector<VeamyTriangle> triangles = {*this};
     return triangles;
 }
 
-Eigen::MatrixXd VeamyTriangle::getJacobian(std::vector<Point> p) {
+Eigen::MatrixXd VeamyTriangle::getJacobian(std::vector<Point> &p) {
     Eigen::MatrixXd J;
     J = Eigen::MatrixXd::Zero(2,2);
 

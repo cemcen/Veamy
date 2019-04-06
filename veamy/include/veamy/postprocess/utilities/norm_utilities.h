@@ -37,7 +37,7 @@ namespace norm_utilities{
      * this function)
      * @return vector with the average of each component of the nodal values
      */
-    extern Eigen::VectorXd getAverage(Eigen::VectorXd u, int n_dofs);
+    extern Eigen::VectorXd getAverage(Eigen::VectorXd &u, int n_dofs);
 }
 
 #endif

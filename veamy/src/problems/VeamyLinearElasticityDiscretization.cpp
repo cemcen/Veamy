@@ -79,7 +79,7 @@ Mesh<Polygon> VeamyLinearElasticityDiscretization::initProblemFromFile(std::stri
 }
 
 NormResult VeamyLinearElasticityDiscretization::computeErrorNorm(NormCalculator<Polygon> *calculator,
-                                                                 Mesh<Polygon> mesh, Veamer* v) {
+                                                                 Mesh<Polygon>& mesh, Veamer* v) {
     CalculatorConstructor<Polygon>* constructor = new ElasticityConstructor<Polygon>(v->DOFs, calculator->getNodalDisplacements());
     calculator->setCalculator(new VeamyIntegrator<Polygon>, constructor, mesh.getPoints().getList());
     calculator->setExtraInformation(this->conditions);

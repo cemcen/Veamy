@@ -20,7 +20,7 @@ namespace utilities{
     }
 
     template <typename T>
-    int indexOf(std::vector<T> vector, T element){
+    int indexOf(const std::vector<T>& vector, T element){
         int pos = std::find(vector.begin(), vector.end(), element) - vector.begin();
 
         return pos < (int) vector.size()? pos : -1;

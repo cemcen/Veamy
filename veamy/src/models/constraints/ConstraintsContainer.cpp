@@ -6,7 +6,7 @@ ConstraintsContainer::ConstraintsContainer() {
     this->essential = EssentialConstraints();
 }
 
-void ConstraintsContainer::addConstrainedDOF(std::vector<Point> points, int DOF_index, int axis, SegmentPair pair,
+void ConstraintsContainer::addConstrainedDOF(std::vector<Point> &points, int DOF_index, int axis, SegmentPair pair,
                                              int point_index) {
     natural.addConstrainedDOF(points, DOF_index, axis, pair, point_index);
     essential.addConstrainedDOF(points, DOF_index, axis, pair, point_index);
@@ -28,7 +28,7 @@ NaturalConstraints ConstraintsContainer::getNaturalConstraints() const{
     return natural;
 }
 
-bool ConstraintsContainer::areConsistent(NaturalConstraints n, EssentialConstraints e, UniqueList<Point> points) {
+bool ConstraintsContainer::areConsistent(NaturalConstraints n, EssentialConstraints e, UniqueList<Point> &points) {
     Point inter;
     std::vector<IndexSegment> naturalSegments;
     std::transform(n.getConstrainedSegments().begin(), n.getConstrainedSegments().end(), std::back_inserter(naturalSegments), map_utils::GetKeys());

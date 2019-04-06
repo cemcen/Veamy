@@ -2,7 +2,7 @@
 
 EssentialConstraints::EssentialConstraints() {}
 
-Eigen::VectorXd EssentialConstraints::getBoundaryValues(std::vector<Point> points, UniqueList<DOF> dofs) {
+Eigen::VectorXd EssentialConstraints::getBoundaryValues(const std::vector<Point> &points, UniqueList<DOF> &dofs) {
     Eigen::VectorXd values;
     values = Eigen::VectorXd::Zero(constrained_dofs.size());
 

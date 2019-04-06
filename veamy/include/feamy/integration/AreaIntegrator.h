@@ -19,7 +19,7 @@ public:
      * @param points mesh points (that element reference)
      * @param integrable function to integrate
      */
-    static void integrate(S& result, int nGauss, T element, std::vector<Point> points, IntegrableFunction<S>* integrable);
+    static void integrate(S& result, int nGauss, T element, std::vector<Point>& points, IntegrableFunction<S>* integrable);
 };
 
 #endif

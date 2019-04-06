@@ -1,7 +1,7 @@
 #include <veamy/physics/traction/VeamyTractionVector.h>
 #include <veamy/physics/traction/point_forces.h>
 
-VeamyTractionVector::VeamyTractionVector(Polygon p, UniqueList<Point> points, NaturalConstraints natural,
+VeamyTractionVector::VeamyTractionVector(Polygon p, UniqueList<Point> &points, NaturalConstraints &natural,
                                          int n_dofs) : TractionVector(n_dofs){
     this->p = p;
     this->points = points.getList();

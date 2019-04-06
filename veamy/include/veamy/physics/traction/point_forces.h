@@ -13,7 +13,7 @@ namespace point_forces{
      * @param p1 p2 points to check
      */
     extern void
-    addPointForces(Eigen::VectorXd &tractionVector, NaturalConstraints natural, Point p1, Point p2, int n_dofs);
+    addPointForces(Eigen::VectorXd &tractionVector, NaturalConstraints &natural, Point p1, Point p2, int n_dofs);
 }
 
 #endif

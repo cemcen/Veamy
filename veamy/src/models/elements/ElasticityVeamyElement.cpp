@@ -15,8 +15,6 @@ void ElasticityVeamyElement::computeK(DOFS &d, UniqueList<Point> &points) {
 
     double area = p.getArea(meshPoints);
 
-    std::cout << area << std::endl;
-
     Eigen::MatrixXd Hr;
     Eigen::MatrixXd Wr;
     Eigen::MatrixXd Hc;

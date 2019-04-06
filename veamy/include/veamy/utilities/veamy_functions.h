@@ -22,7 +22,7 @@ namespace veamy_functions{
      *  @param f computable representing the function to integrate
      */
     template <typename T>
-    double nodal_quadrature(T poly, std::vector<Point> points, Computable<T>* f){
+    double nodal_quadrature(T poly, std::vector<Point> &points, Computable<T> *f){
         double result = 0;
         std::vector<int> polygonPoints = poly.getPoints();
         int n = (int) polygonPoints.size();
@@ -52,7 +52,7 @@ namespace veamy_functions{
      * @return the same values, in an Eigen vector
      */
     template <typename T>
-    Eigen::VectorXd to_vector(std::vector<T> v){
+    Eigen::VectorXd to_vector(std::vector<T> &v){
         Eigen::VectorXd result = Eigen::VectorXd::Zero(v.size());
 
         for (int i = 0; i < v.size(); ++i) {
@@ -67,7 +67,7 @@ namespace veamy_functions{
      * @return the same values, in a standard vector
      */
     template <typename T>
-    std::vector<T> to_std_vector(Eigen::VectorXd v){
+    std::vector<T> to_std_vector(Eigen::VectorXd &v){
         std::vector<T> result;
 
         for (int i = 0; i < v.size(); ++i) {
@@ -121,7 +121,7 @@ namespace veamy_functions{
      * @return dot product between v1 and v2
      */
     template <typename T>
-    double dot(std::vector<T> v1, std::vector<T> v2){
+    double dot(const std::vector<T> &v1, const std::vector<T> &v2){
         if(v1.size()!=v2.size()){
             throw std::invalid_argument("Can not compute the dot product between two vectors of different sizes");
         }
@@ -140,7 +140,7 @@ namespace veamy_functions{
      * @return result of v1-v2
      */
     template <typename T>
-    std::vector<T> substract(std::vector<T> v1, std::vector<T> v2){
+    std::vector<T> substract(const std::vector<T>& v1, const std::vector<T>& v2){
         if(v1.size()!=v2.size()){
             throw std::invalid_argument("Can not compute the substraction between two vectors of different sizes");
         }

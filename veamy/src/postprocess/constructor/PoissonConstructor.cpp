@@ -3,7 +3,7 @@
 #include <veamy/postprocess/calculators/VeamyPoissonStrainCalculator.h>
 
 template <typename T>
-PoissonConstructor<T>::PoissonConstructor(DOFS d, Eigen::VectorXd u) : CalculatorConstructor<T>(d, u) {}
+PoissonConstructor<T>::PoissonConstructor(DOFS &d, const Eigen::VectorXd &u) : CalculatorConstructor<T>(d, u) {}
 
 template <typename T>
 DisplacementCalculator<T> *PoissonConstructor<T>::getDisplacementCalculator(std::vector<Point> &points) {

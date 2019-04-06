@@ -26,19 +26,19 @@ public:
      * @param points mesh points
      * @return the normal vector
      */
-    Pair<double> getNormal(std::vector<Point> points);
+    Pair<double> getNormal(std::vector<Point> &points);
 
     /* Computes the length of the edge
      * @param points mesh points
      * @return length of the edge
      */
-    double getLength(std::vector<Point> points);
+    double getLength(std::vector<Point> &points);
 
     /* Computes the middle point of the edge
      * @param points mesh points
      * @return middle point of the edge
      */
-    Point middlePoint(std::vector<Point> points);
+    Point middlePoint(std::vector<Point> &points);
 };
 
 

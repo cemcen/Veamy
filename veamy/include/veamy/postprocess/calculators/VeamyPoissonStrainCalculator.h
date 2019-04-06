@@ -14,7 +14,7 @@ public:
     /*
      * Constructor
      */
-    VeamyPoissonStrainCalculator(DOFS& d, Eigen::VectorXd u, std::vector<Point>& points);
+    VeamyPoissonStrainCalculator(DOFS &d, Eigen::VectorXd &u, std::vector<Point> &points);
 
     /* Computes the approximate strain for a given point
      * @param x y coordinates of the point

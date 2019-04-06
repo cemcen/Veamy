@@ -102,7 +102,7 @@ int main(){
     // included inside the folder test/test_files/.)
     // UPDATE PATH ACCORDING TO YOUR FOLDERS: 
     //   in this example folder "Software" is located inside "/home/user/" and "Veamy-2.1" is Veamy's root folder
-    std::string externalMeshFileName = "Software/Veamy-2.1/test/test_files/parabolic_main_vem_norms_3000poly_elems.txt";    
+    std::string externalMeshFileName = "Software/Veamy-2.1/test/test_files/parabolic_main_vem_norms_3000poly_elems.txt";
 
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Cantilever beam subjected to a parabolic end load <--" << std::endl;

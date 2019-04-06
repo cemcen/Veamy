@@ -46,7 +46,7 @@ public:
      * @param mesh mesh in which the norm will be computed
      * @return value of the norm
      */
-    NormResult getNorm(Mesh<T> mesh);
+    NormResult getNorm(Mesh<T> &mesh);
 
     /* Sets the calculators for this norm
      * @param integrator Calculator to use
@@ -73,7 +73,7 @@ public:
     /*
      * @return nodal displacements computed
      */
-    Eigen::VectorXd getNodalDisplacements(){
+    Eigen::VectorXd& getNodalDisplacements(){
         return this->nodalDisplacements;
     }
 };

@@ -3,7 +3,8 @@
 #include <veamy/problems/elasticity/elasticity_functions.h>
 
 template <typename T>
-VeamyElasticityDisplacementCalculator<T>::VeamyElasticityDisplacementCalculator(DOFS d, Eigen::VectorXd u, std::vector<Point>& points) :
+VeamyElasticityDisplacementCalculator<T>::VeamyElasticityDisplacementCalculator(DOFS &d, Eigen::VectorXd &u,
+                                                                                std::vector<Point> &points) :
         DisplacementCalculator<T>(d, u) {
     this->points = points;
 }

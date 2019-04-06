@@ -27,7 +27,7 @@ UniqueList <Point> Calculator2D<T>::getPoints() {
 }
 
 template <typename T>
-void Calculator2D<T>::writeDisplacements(std::string fileName, Eigen::VectorXd u) {
+void Calculator2D<T>::writeDisplacements(std::string fileName, Eigen::VectorXd &u) {
     int dofs = this->DOFs.getNumberOfDOFS();
     
     std::string path = utilities::getPath();
@@ -82,7 +82,8 @@ Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
     EssentialConstraints essential = this->conditions->constraints.getEssentialConstraints();
     std::vector<int> c = essential.getConstrainedDOF();
 
-    Eigen::VectorXd boundary_values = essential.getBoundaryValues(this->points.getList(), this->DOFs.getDOFS());
+    UniqueList<DOF> dofs = this->DOFs.getDOFS();
+    Eigen::VectorXd boundary_values = essential.getBoundaryValues(this->points.getList(), dofs);
 
     for (int j = 0; j < c.size(); ++j) {
         for (int i = 0; i < K.rows(); ++i) {
@@ -95,6 +96,7 @@ Eigen::VectorXd Calculator2D<T>::simulate(Mesh<T> &mesh) {
         K(c[j], c[j]) = 1;
         f(c[j]) = boundary_values(j);
     }
+
 
     // solve the system of linear equations
     std::vector<Eigen::Triplet<double>> coeffs;

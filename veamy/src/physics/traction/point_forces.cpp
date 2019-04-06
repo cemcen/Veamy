@@ -4,7 +4,7 @@
 #include <veamy/models/constraints/NaturalConstraints.h>
 
 namespace point_forces{
-    void addPointForces(Eigen::VectorXd &tractionVector, NaturalConstraints natural, Point p1, Point p2, int n_dofs) {
+    void addPointForces(Eigen::VectorXd &tractionVector, NaturalConstraints &natural, Point p1, Point p2, int n_dofs) {
         isConstrainedInfo isConstrainedInfoP1 = natural.isConstrainedByPoint(p1);
         isConstrainedInfo isConstrainedInfoP2 = natural.isConstrainedByPoint(p2);
 

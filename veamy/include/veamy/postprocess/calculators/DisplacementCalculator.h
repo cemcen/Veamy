@@ -24,7 +24,7 @@ public:
     /*
      * Constructor
      */
-    DisplacementCalculator(DOFS d, Eigen::VectorXd u);
+    DisplacementCalculator(DOFS &d, Eigen::VectorXd &u);
 
     /* Computes the approximate displacement for a given point
      * @param x y coordinates of the point

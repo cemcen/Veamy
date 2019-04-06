@@ -85,7 +85,7 @@ Mesh<Triangle> FeamyLinearElasticityDiscretization::initProblemFromFile(std::str
 }
 
 NormResult
-FeamyLinearElasticityDiscretization::computeErrorNorm(NormCalculator<Triangle> *calculator, Mesh<Triangle> mesh, Feamer* f) {
+FeamyLinearElasticityDiscretization::computeErrorNorm(NormCalculator<Triangle> *calculator, Mesh<Triangle>& mesh, Feamer* f) {
     FeamyAdditionalInfo info(f->getElements(), mesh.getPoints().getList());
 
     calculator->setCalculator(new FeamyIntegrator<Triangle>, info);

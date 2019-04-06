@@ -34,7 +34,7 @@ public:
      * @param t container of the point
      * @return the value of the function
      */
-    double apply(Point p,  VeamyTriangle t){
+    double apply(Point p,  const VeamyTriangle& t){
         return this->computable->apply(p.getX(), p.getY(), 0, t);
     }
 };

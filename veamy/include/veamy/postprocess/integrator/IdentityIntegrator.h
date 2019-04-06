@@ -11,7 +11,7 @@
 template <typename T>
 class IdentityIntegrator : public NormIntegrator<T>{
 public:
-    double getIntegral(T poly, int polyIndex, std::vector<Point> points);
+    double getIntegral(T poly, int polyIndex, std::vector<Point>& points);
 
     /* Sets a new Computable to integrate
     * @param c computable to integrate

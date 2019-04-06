@@ -12,7 +12,7 @@ public:
     /*
      * Constructor
      */
-    ElasticityConstructor(DOFS d, Eigen::VectorXd u);
+    ElasticityConstructor(DOFS &d, const Eigen::VectorXd &u);
 
     /* Gets the corresponding DisplacementCalculator to elasticity
      * @param points mesh points

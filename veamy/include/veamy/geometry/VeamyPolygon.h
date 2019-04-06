@@ -19,7 +19,7 @@ public:
      * @param point mesh points
      * @return list of the VeamyTriangles that triangulate the polygon
      */
-    std::vector<VeamyTriangle> triangulate(std::vector<Point> points);
+    std::vector<VeamyTriangle> triangulate(std::vector<Point> &points);
 };
 
 #endif

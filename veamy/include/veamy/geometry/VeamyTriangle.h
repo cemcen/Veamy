@@ -34,13 +34,13 @@ public:
      * @param points mesh points
      * @return list with the triangle triangle (it just contains this instance)
      */
-    std::vector<VeamyTriangle> triangulate(std::vector<Point> points);
+    std::vector<VeamyTriangle> triangulate(std::vector<Point> &points);
 
     /* Computes the jacobian matrix of the triangle
      * @param points list of point the vertex make reference to
      * @return jacobian matrix
      */
-    Eigen::MatrixXd getJacobian(std::vector<Point> points);
+    Eigen::MatrixXd getJacobian(std::vector<Point> &points);
 
     /*
      * @return if the instance is valid or not (has indexes set)

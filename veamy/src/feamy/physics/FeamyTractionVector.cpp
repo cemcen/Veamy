@@ -4,7 +4,7 @@
 #include <feamy/integration/LineIntegrator.h>
 #include <feamy/problem/linear_elasticity/LinearElasticityBoundaryVectorIntegrable.h>
 
-FeamyTractionVector::FeamyTractionVector(Triangle t, UniqueList<Point> points, ShapeFunctions *N, NaturalConstraints natural, int nGauss,
+FeamyTractionVector::FeamyTractionVector(Triangle t, UniqueList<Point>& points, ShapeFunctions *N, NaturalConstraints natural, int nGauss,
                                          int n_dofs, BoundaryVectorIntegrable *integrable) : TractionVector(n_dofs){
     this->t = t;
     this->points = points.getList();

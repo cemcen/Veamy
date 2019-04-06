@@ -61,6 +61,6 @@ public:
      * @param mesh mesh in which the error will be computed
      * @param solver solver that solved the problem
      */
-    virtual NormResult computeErrorNorm(NormCalculator<T> *calculator, Mesh<T> mesh, N* solver) = 0;
+    virtual NormResult computeErrorNorm(NormCalculator<T> *calculator, Mesh<T>& mesh, N* solver) = 0;
 };
 #endif

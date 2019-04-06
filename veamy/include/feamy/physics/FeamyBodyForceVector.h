@@ -39,7 +39,7 @@ public:
     /*
      * Constructor
      */
-    FeamyBodyForceVector(Triangle t, UniqueList<Point> points, ShapeFunctions *N, int nGauss,
+    FeamyBodyForceVector(Triangle t, UniqueList<Point>& points, ShapeFunctions *N, int nGauss,
                          BodyForceIntegrable *integrable);
 
     /*

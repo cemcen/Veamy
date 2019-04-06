@@ -25,7 +25,7 @@ public:
      * @param points mesh points
      * @param dofs list of essentially constrained DOF
      */
-    Eigen::VectorXd getBoundaryValues(std::vector<Point> points, UniqueList<DOF> dofs);
+    Eigen::VectorXd getBoundaryValues(const std::vector<Point> &points, UniqueList<DOF> &dofs);
 };
 
 

@@ -21,7 +21,7 @@ public:
     /*
      * Constructor
      */
-    VeamyElasticityDisplacementCalculator(DOFS d, Eigen::VectorXd u, std::vector<Point>& points);
+    VeamyElasticityDisplacementCalculator(DOFS &d, Eigen::VectorXd &u, std::vector<Point> &points);
 
     /* Computes the approximate displacement for a given point
      * @param x y coordinates of the point

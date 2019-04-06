@@ -22,7 +22,7 @@ public:
      * @param points mesh points
      * @return the value of the integral
      */
-    virtual double getIntegral(T poly, int polyIndex, std::vector<Point> points) = 0;
+    virtual double getIntegral(T poly, int polyIndex, std::vector<Point>& points) = 0;
 
     /* Sets a new Computable to integrate
      * @param c computable to integrate

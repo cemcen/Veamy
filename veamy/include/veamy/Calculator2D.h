@@ -76,7 +76,7 @@ public:
      * @param fileName name of the file to write the displacements to
      * @param u computed displacements
      */
-    void writeDisplacements(std::string fileName, Eigen::VectorXd u);
+    void writeDisplacements(std::string fileName, Eigen::VectorXd &u);
 };
 
 #endif

@@ -3,7 +3,8 @@
 #include <veamy/problems/elasticity/elasticity_functions.h>
 
 template <typename T>
-VeamyElasticityStrainCalculator<T>::VeamyElasticityStrainCalculator(DOFS &d, Eigen::VectorXd u, std::vector<Point> &points) :
+VeamyElasticityStrainCalculator<T>::VeamyElasticityStrainCalculator(DOFS &d, Eigen::VectorXd &u,
+                                                                    std::vector<Point> &points) :
         StrainCalculator<T>(d, u, points) {}
 
 template <typename T>

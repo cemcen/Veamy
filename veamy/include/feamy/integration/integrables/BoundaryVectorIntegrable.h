@@ -46,7 +46,7 @@ public:
      * @param c constraint related to the load vector
      * @param indexes indexes of the vertex of the polygon
      */
-    void setConditions(Constraint c, std::vector<int> indexes){
+    void setConditions(Constraint c, std::vector<int>& indexes){
         this->c = c;
         this->indexes = indexes;
     }

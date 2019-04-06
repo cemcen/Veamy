@@ -35,7 +35,11 @@ DOFS::addDOF(ConstraintsContainer &constraints, std::vector<Point> &points, int 
     return DOF_indexes;
 }
 
-UniqueList<DOF> DOFS:: getDOFS() {
+UniqueList<DOF> DOFS::getDOFS() const{
+    return this->list;
+}
+
+UniqueList<DOF>& DOFS::getDOFS() {
     return this->list;
 }
 

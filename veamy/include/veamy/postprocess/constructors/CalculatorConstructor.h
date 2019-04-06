@@ -26,7 +26,7 @@ public:
     /*
      * Constructor
      */
-    CalculatorConstructor(DOFS d, Eigen::VectorXd u){
+    CalculatorConstructor(DOFS& d, const Eigen::VectorXd& u){
         this->dofs = d;
         this->u = u;
     };

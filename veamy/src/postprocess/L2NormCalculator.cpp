@@ -2,7 +2,7 @@
 #include <feamy/postprocess/calculators/FeamyDisplacementCalculator.h>
 
 template <typename T>
-L2NormCalculator<T>::L2NormCalculator(DisplacementValue *value, Eigen::VectorXd u, DOFS d) : NormCalculator<T>(u, d) {
+L2NormCalculator<T>::L2NormCalculator(DisplacementValue *value, Eigen::VectorXd& u, DOFS& d) : NormCalculator<T>(u, d) {
     this->value = value;
 }
 

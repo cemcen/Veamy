@@ -52,7 +52,7 @@ int main(){
     // included inside the folder test/test_files/.)
     // UPDATE PATH ACCORDING TO YOUR FOLDERS: 
     //   in this example folder "Software" is located inside "/home/user/" and "Veamy-2.1" is Veamy's root folder
-    std::string externalMeshFileName = "Software/Veamy-2.1/test/test_files/poisson_source_test_createfromfile.txt";    
+    std::string externalMeshFileName = "Software/Veamy-2.1/test/test_files/poisson_source_test_createfromfile.txt";
 
     std::cout << "*** Starting Veamy ***" << std::endl;
     std::cout << "--> Test: Poisson source test from file containing a mesh without boundary conditions <--" << std::endl;

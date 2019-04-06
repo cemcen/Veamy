@@ -3,8 +3,8 @@
 #include <veamy/postprocess/utilities/norm_utilities.h>
 
 template <typename T>
-FeamyStrainCalculator<T>::FeamyStrainCalculator(std::vector<Point> &points, std::vector<FeamyElement *> elements,
-                                             Eigen::VectorXd u, DOFS &d) : StrainCalculator<T>(d, u, points) {
+FeamyStrainCalculator<T>::FeamyStrainCalculator(std::vector<Point> &points, std::vector<FeamyElement *>& elements,
+                                             Eigen::VectorXd& u, DOFS &d) : StrainCalculator<T>(d, u, points) {
     this->elements = elements;
 }
 

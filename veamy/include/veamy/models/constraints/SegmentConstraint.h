@@ -39,22 +39,22 @@ public:
     /*
      * Constructor. Constraints a PointSegment (more intuitive to the user)
      */
-    SegmentConstraint(PointSegment s, std::vector<Point> points, ConstraintValue *value);
+    SegmentConstraint(PointSegment &s, std::vector<Point> &points, ConstraintValue *value);
 
     /*
      * Constructor. Constraints a PointSegment
      */
-    SegmentConstraint(PointSegment s, UniqueList<Point> points, ConstraintValue *value);
+    SegmentConstraint(PointSegment &s, UniqueList<Point> &points, ConstraintValue *value);
 
     /*
      * Constructor. Constraints a set of PointSegments
      */
-    SegmentConstraint(std::vector<PointSegment> s, std::vector<Point> points, ConstraintValue *value);
+    SegmentConstraint(std::vector<PointSegment> &s, std::vector<Point> &points, ConstraintValue *value);
 
     /*
      * Constructor. Constraints a set of PointSegments
      */
-    SegmentConstraint(std::vector<PointSegment> s, UniqueList<Point> points, ConstraintValue *value);
+    SegmentConstraint(std::vector<PointSegment> &s, UniqueList<Point> &points, ConstraintValue *value);
 
     /*
      * @return list of segments constrained

@@ -25,7 +25,7 @@ public:
      * @param container triangle that contains the point
      * @return value of the function at p
      */
-    virtual S apply(Point p, VeamyTriangle container){
+    virtual S apply(Point p, const VeamyTriangle& container){
         return this->apply(p);
     }
 };

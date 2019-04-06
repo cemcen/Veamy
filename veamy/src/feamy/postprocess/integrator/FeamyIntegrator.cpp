@@ -13,7 +13,7 @@ FeamyIntegrator<T>::FeamyIntegrator(Computable<T>* computable) {
 }
 
 template <typename T>
-double FeamyIntegrator<T>::getIntegral(T poly, int polyIndex, std::vector<Point> points) {
+double FeamyIntegrator<T>::getIntegral(T poly, int polyIndex, std::vector<Point>& points) {
     this->computable->setPolygonIndex(polyIndex);
     IntegrableFunctionComputable<T>* computable = new IntegrableFunctionComputable<T>(this->computable);
     double result;

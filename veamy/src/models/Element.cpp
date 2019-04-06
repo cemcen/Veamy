@@ -40,7 +40,7 @@ void Element<T>::assemble(DOFS out, Eigen::MatrixXd &Kglobal, Eigen::VectorXd &F
 }
 
 template <typename T>
-void Element<T>::computeF(DOFS d, UniqueList<Point> points, Conditions *conditions, BodyForceVector *bodyForceVector,
+void Element<T>::computeF(DOFS d, UniqueList<Point> &points, Conditions *conditions, BodyForceVector *bodyForceVector,
                           TractionVector *tractionVector) {
     int n = this->p.numberOfSides();
     int m = this->dofs.size();

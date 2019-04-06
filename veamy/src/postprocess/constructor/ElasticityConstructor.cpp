@@ -3,7 +3,7 @@
 #include <veamy/postprocess/calculators/VeamyElasticityStrainCalculator.h>
 
 template <typename T>
-ElasticityConstructor<T>::ElasticityConstructor(DOFS d, Eigen::VectorXd u) : CalculatorConstructor<T>(d, u) {}
+ElasticityConstructor<T>::ElasticityConstructor(DOFS &d, const Eigen::VectorXd &u) : CalculatorConstructor<T>(d, u) {}
 
 template <typename T>
 DisplacementCalculator<T> *

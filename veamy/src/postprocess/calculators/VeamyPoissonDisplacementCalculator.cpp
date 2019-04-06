@@ -3,7 +3,8 @@
 #include <veamy/postprocess/utilities/norm_utilities.h>
 
 template <typename T>
-VeamyPoissonDisplacementCalculator<T>::VeamyPoissonDisplacementCalculator(DOFS d, Eigen::VectorXd u, std::vector<Point>& points) :
+VeamyPoissonDisplacementCalculator<T>::VeamyPoissonDisplacementCalculator(DOFS &d, Eigen::VectorXd &u,
+                                                                          std::vector<Point> &points) :
         DisplacementCalculator<T>(d, u) {
     this->points = points;
 }

@@ -1,7 +1,7 @@
 #include <veamy/models/constraints/Constraints.h>
 #include <delynoi/models/basic/Angle.h>
 
-void Constraints::addConstraint(SegmentConstraint c, std::vector<Point> p) {
+void Constraints::addConstraint(SegmentConstraint c, std::vector<Point> &p) {
     UniqueList<IndexSegment> segments = c.getSegments();
 
     for (int i = 0; i < segments.size(); ++i) {
@@ -16,7 +16,7 @@ void Constraints::addConstraint(SegmentConstraint c, std::vector<Point> p) {
     }
 }
 
-void Constraints::addConstraint(SegmentConstraint c, UniqueList<Point> p) {
+void Constraints::addConstraint(SegmentConstraint c, UniqueList<Point> &p) {
     addConstraint(c, p.getList());
 }
 
@@ -29,7 +29,7 @@ void Constraints::addConstraint(PointConstraint c) {
     }
 }
 
-isConstrainedInfo Constraints::isConstrainedBySegment(std::vector <Point> points, IndexSegment s) {
+isConstrainedInfo Constraints::isConstrainedBySegment(std::vector<Point> &points, IndexSegment s) {
     Angle angle(s.cartesianAngle(points));
     auto iter = constrained_segments.find(angle);
 
@@ -65,7 +65,7 @@ std::vector<int> Constraints::getConstrainedDOF() {
     return constrained_dofs.getList();
 }
 
-void Constraints::addConstrainedDOF(std::vector <Point> points, int DOF_index, int axis, SegmentPair pair,
+void Constraints::addConstrainedDOF(std::vector<Point> &points, int DOF_index, int axis, SegmentPair pair,
                                     int dof_point) {
     bool added1 = addConstrainedDOFBySegment(points, DOF_index, axis, pair.s1);
     bool added2 = addConstrainedDOFBySegment(points, DOF_index, axis, pair.s2);
@@ -77,7 +77,7 @@ void Constraints::addConstrainedDOF(std::vector <Point> points, int DOF_index, i
     addConstrainedDOFByPoint(DOF_index, axis, points[dof_point]);
 }
 
-bool Constraints::addConstrainedDOFBySegment(std::vector<Point> points, int DOF_index, int axis, IndexSegment s) {
+bool Constraints::addConstrainedDOFBySegment(std::vector<Point> &points, int DOF_index, int axis, IndexSegment s) {
     isConstrainedInfo info = isConstrainedBySegment(points, s);
 
     if(info.isConstrained){
@@ -103,7 +103,7 @@ void Constraints::addConstrainedDOFByPoint(int DOF_index, int axis, Point p) {
     }
 }
 
-void Constraints::checkIfContainedInConstraint(Point p, std::vector<Point> points, int DOF_index, int axis) {
+void Constraints::checkIfContainedInConstraint(Point p, std::vector<Point> &points, int DOF_index, int axis) {
     for(auto seg: constrained_segments){
         std::vector<IndexSegment> segs = seg.second;
 

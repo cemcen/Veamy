@@ -23,7 +23,7 @@ struct FeamyAdditionalInfo{
     /*
      * Constructor
      */
-    FeamyAdditionalInfo(std::vector<FeamyElement*> e, std::vector<Point> p){
+    FeamyAdditionalInfo(const std::vector<FeamyElement*>& e, std::vector<Point>& p){
         elements = e;
         points = p;
     }

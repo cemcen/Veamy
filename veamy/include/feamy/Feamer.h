@@ -30,7 +30,7 @@ public:
      * @param conditions physical conditions of the problem
      * @param constructor constructor used to create a certain type of FEM elements
      */
-    void initProblem(Mesh<Triangle> m, FeamyElementConstructor *constructor);
+    void initProblem(Mesh<Triangle>& m, FeamyElementConstructor *constructor);
 
     /*
    * Initializes the Feamer instance from the information in a text file
@@ -45,7 +45,7 @@ public:
      * @param mesh mesh associated to the problem
      * @return error norm
      */
-    NormResult computeErrorNorm(NormCalculator<Triangle>* calculator, Mesh<Triangle> mesh);
+    NormResult computeErrorNorm(NormCalculator<Triangle>* calculator, Mesh<Triangle>& mesh);
 
     /*
      * @return elements of the system

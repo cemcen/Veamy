@@ -22,7 +22,7 @@ private:
      * @param points mesh points
      * @return if there are no problems with the conditions
      */
-    bool areConsistent(NaturalConstraints n, EssentialConstraints e, UniqueList<Point> points);
+    bool areConsistent(NaturalConstraints n, EssentialConstraints e, UniqueList<Point> &points);
 public:
     /*
      * Default constructor
@@ -36,8 +36,8 @@ public:
      * @param pair Pair of segments containing the DOF
      * @param point_index index of the point related to the DOF
      */
-    void addConstrainedDOF(std::vector<Point> points, int DOF_index, int axis, SegmentPair pair,
-                               int point_index);
+    void addConstrainedDOF(std::vector<Point> &points, int DOF_index, int axis, SegmentPair pair,
+                           int point_index);
 
     /*
      * @return essential constraints of the system
