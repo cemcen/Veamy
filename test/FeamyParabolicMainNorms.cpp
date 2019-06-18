@@ -86,8 +86,8 @@ int main(){
     
     // DEFINING PATH FOR THE OUTPUT FILES:
     // If the path for the output files is not given, they are written to /home/user/ directory by default.
-    // Otherwise, include the path. For instance, for /home/user/Documents/Veamy-2.1/output.txt , the path
-    // must be "Documents/Veamy-2.1/output.txt"
+    // Otherwise, include the path. For instance, for /home/user/Documents/Veamy-3.0/output.txt , the path
+    // must be "Documents/Veamy-3.0/output.txt"
     // CAUTION: the path must exists either because it is already in your system or becuase it is created
     // by Veamy's configuration files. For instance, Veamy creates the folder "/test" inside "/build", so
     // one can save the output files to "/build/test/" folder, but not to "/build/test/mycustom_folder",
@@ -100,8 +100,8 @@ int main(){
     // use the function "createFromFile" to read the mesh file. (Default mesh file is 
     // included inside the folder test/test_files/.)
     // UPDATE PATH ACCORDING TO YOUR FOLDERS: 
-    //   in this example folder "Software" is located inside "/home/user/" and "Veamy-2.1" is Veamy's root folder
-    std::string externalMeshFileName = "Software/Veamy-2.1/test/test_files/feamy_parabolic_main_norms_t3_hsize_008.txt";
+    //   in this example folder "Software" is located inside "/home/user/" and "Veamy-3.0" is Veamy's root folder
+    std::string externalMeshFileName = "Software/Veamy-3.0/test/test_files/feamy_parabolic_main_norms_t3_hsize_008.txt";
 
     std::cout << "*** Starting Veamy --> Feamy module ***" << std::endl;
     std::cout << "--> Test: Cantilever beam subjected to a parabolic end load using 3-node triangular elements  <--" << std::endl;
